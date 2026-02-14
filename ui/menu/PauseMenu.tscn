@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://dnk1mn0lm0c3d"]
+
+[ext_resource type="Script" uid="uid://duyv183u3mjyk" path="res://ui/menu/PauseMenu.gd" id="1_8tehv"]
+[ext_resource type="Theme" uid="uid://ckxlwln5s1u4b" path="res://ui/theme/PauseMenuTheme.tres" id="2_8tehv"]
+[ext_resource type="Script" uid="uid://db85fb86bo305" path="res://ui/menu/FocusOnHover.gd" id="3_1q10k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8tehv"]
+
+[node name="PauseMenu" type="PanelContainer" unique_id=1559105625]
+process_mode = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_8tehv")
+script = ExtResource("1_8tehv")
+metadata/_custom_type_script = "uid://vl5uuupklejb"
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1794497336]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("2_8tehv")
+
+[node name="Buttons" type="VBoxContainer" parent="PanelContainer" unique_id=1416196608]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("2_8tehv")
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Resume" type="Button" parent="PanelContainer/Buttons" unique_id=788744212]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_8tehv")
+text = "Resume"
+
+[node name="FocusOnHover" type="Node" parent="PanelContainer/Buttons/Resume" unique_id=1843520116]
+script = ExtResource("3_1q10k")
+metadata/_custom_type_script = "uid://db85fb86bo305"
+
+[node name="Settings" type="Button" parent="PanelContainer/Buttons" unique_id=1162808696]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_8tehv")
+text = "Settings
+"
+
+[node name="FocusOnHover" type="Node" parent="PanelContainer/Buttons/Settings" unique_id=1277614970]
+script = ExtResource("3_1q10k")
+metadata/_custom_type_script = "uid://db85fb86bo305"
+
+[node name="Help" type="Button" parent="PanelContainer/Buttons" unique_id=2048177696]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_8tehv")
+text = "Help
+"
+
+[node name="FocusOnHover" type="Node" parent="PanelContainer/Buttons/Help" unique_id=743006675]
+script = ExtResource("3_1q10k")
+metadata/_custom_type_script = "uid://db85fb86bo305"
+
+[node name="Main Menu" type="Button" parent="PanelContainer/Buttons" unique_id=704385811]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_8tehv")
+text = "Menu
+"
+
+[node name="FocusOnHover" type="Node" parent="PanelContainer/Buttons/Main Menu" unique_id=316757081]
+script = ExtResource("3_1q10k")
+metadata/_custom_type_script = "uid://db85fb86bo305"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="PanelContainer/Buttons/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="PanelContainer/Buttons/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="PanelContainer/Buttons/Help" to="." method="_on_help_pressed"]
+[connection signal="pressed" from="PanelContainer/Buttons/Main Menu" to="." method="_on_main_menu_pressed"]

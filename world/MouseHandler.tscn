@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://mxu6thvv1ycr"]
+
+[ext_resource type="Script" uid="uid://c8brtkfu03h0r" path="res://world/MouseHandler.gd" id="1_kf1s2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_acjvp"]
+
+[node name="MouseHandler" type="Control" unique_id=2036814364]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_kf1s2")
+
+[node name="HideTimer" type="Timer" parent="." unique_id=1562284164]
+one_shot = true
+ignore_time_scale = true
+
+[node name="Panel" type="Panel" parent="." unique_id=187960994]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_acjvp")
+
+[connection signal="timeout" from="HideTimer" to="." method="_on_hide_timer_timeout"]

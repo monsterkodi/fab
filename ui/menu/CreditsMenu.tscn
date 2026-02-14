@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://dlje6krlhyfml"]
+
+[ext_resource type="Script" uid="uid://dw3n8xx600poa" path="res://ui/menu/CreditsMenu.gd" id="1_otcbb"]
+[ext_resource type="Theme" uid="uid://ciw4u7b7yfp0t" path="res://ui/theme/CreditsMenuTheme.tres" id="2_a2aex"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_otcbb"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="CreditsMenu" type="PanelContainer" unique_id=299122305]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_otcbb")
+script = ExtResource("1_otcbb")
+metadata/_custom_type_script = "uid://vl5uuupklejb"
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=21358415]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("2_a2aex")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1771357575]
+layout_mode = 2
+theme_override_constants/separation = 60
+
+[node name="CodeContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1902913712]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/CodeContainer" unique_id=661446850]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.26239687, 0.26239687, 0.26239687, 1)
+theme_override_font_sizes/font_size = 32
+text = "Code / Graphics / Sound"
+horizontal_alignment = 1
+
+[node name="monsterkodi" type="Label" parent="PanelContainer/VBoxContainer/CodeContainer" unique_id=2004216708]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 84
+text = "monsterkodi"
+horizontal_alignment = 1
+
+[node name="Shaders" type="VBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1687386400]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/Shaders" unique_id=535035711]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2627451, 0.2627451, 0.2627451, 1)
+theme_override_constants/line_spacing = -20
+theme_override_font_sizes/font_size = 32
+text = "Title"
+horizontal_alignment = 1
+
+[node name="shader3" type="Label" parent="PanelContainer/VBoxContainer/Shaders" unique_id=88104565]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.47843137, 0, 0, 1)
+text = "Name"
+horizontal_alignment = 1

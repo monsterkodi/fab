@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://c2avn203eitto"]
+
+[ext_resource type="Script" uid="uid://bvomy8grf01e8" path="res://world/MultiMesh.gd" id="1_4npgi"]
+[ext_resource type="Material" uid="uid://xkkna7h26yg2" path="res://materials/EnemyGlowMaterial.tres" id="2_ugn5w"]
+[ext_resource type="Material" uid="uid://iin00aein05e" path="res://materials/SlotMaterial.tres" id="3_5pk03"]
+[ext_resource type="Material" uid="uid://c4xefe7c1f8o7" path="res://materials/BulletGlowMaterial.tres" id="4_5pk03"]
+[ext_resource type="Material" uid="uid://dvw8t7ea0x1st" path="res://materials/DotMaterial.tres" id="4_rowl7"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lh0gu"]
+size = Vector2(3, 3)
+
+[sub_resource type="MultiMesh" id="MultiMesh_lh0gu"]
+resource_local_to_scene = true
+transform_format = 1
+use_colors = true
+mesh = SubResource("PlaneMesh_lh0gu")
+
+[sub_resource type="MultiMesh" id="MultiMesh_4or7h"]
+resource_local_to_scene = true
+transform_format = 1
+use_colors = true
+mesh = SubResource("PlaneMesh_lh0gu")
+
+[sub_resource type="SphereMesh" id="SphereMesh_av0xo"]
+radial_segments = 32
+rings = 16
+
+[sub_resource type="MultiMesh" id="MultiMesh_5pk03"]
+resource_local_to_scene = true
+transform_format = 1
+use_colors = true
+mesh = SubResource("SphereMesh_av0xo")
+
+[sub_resource type="SphereMesh" id="SphereMesh_5pk03"]
+radius = 0.1
+height = 0.2
+radial_segments = 16
+rings = 8
+
+[sub_resource type="MultiMesh" id="MultiMesh_rowl7"]
+resource_local_to_scene = true
+transform_format = 1
+use_colors = true
+mesh = SubResource("SphereMesh_5pk03")
+
+[node name="MultiMesh" type="Node3D"]
+script = ExtResource("1_4npgi")
+
+[node name="Dot" type="MultiMeshInstance3D" parent="."]
+material_override = ExtResource("4_rowl7")
+cast_shadow = 0
+multimesh = SubResource("MultiMesh_lh0gu")
+
+[node name="Slot" type="MultiMeshInstance3D" parent="."]
+material_override = ExtResource("3_5pk03")
+cast_shadow = 0
+multimesh = SubResource("MultiMesh_4or7h")
+
+[node name="Enemy" type="MultiMeshInstance3D" parent="."]
+material_override = ExtResource("2_ugn5w")
+multimesh = SubResource("MultiMesh_5pk03")
+
+[node name="Bullet" type="MultiMeshInstance3D" parent="."]
+material_override = ExtResource("4_5pk03")
+cast_shadow = 0
+multimesh = SubResource("MultiMesh_rowl7")

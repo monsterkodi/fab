@@ -1,0 +1,157 @@
+[gd_scene format=3 uid="uid://b6mskrm1n176r"]
+
+[ext_resource type="Script" uid="uid://b6inujglidn5n" path="res://world/World.gd" id="1_eu7l1"]
+[ext_resource type="PackedScene" uid="uid://b7w2vlfbvmfq7" path="res://utils/camera/Camera.tscn" id="4_bah7m"]
+[ext_resource type="PackedScene" uid="uid://mxu6thvv1ycr" path="res://world/MouseHandler.tscn" id="6_p1v5b"]
+[ext_resource type="PackedScene" uid="uid://dnk1mn0lm0c3d" path="res://ui/menu/PauseMenu.tscn" id="7_wygdx"]
+[ext_resource type="Script" uid="uid://cjj7kxg86ixf" path="res://ui/MenuHandler.gd" id="9_ww6ps"]
+[ext_resource type="PackedScene" uid="uid://dhm8ww2fqxfua" path="res://ui/hud/Hud.tscn" id="10_8mymi"]
+[ext_resource type="PackedScene" uid="uid://dqn51jaojemgy" path="res://ui/menu/SettingsMenu.tscn" id="11_0n6y5"]
+[ext_resource type="Script" uid="uid://srdtmvh7y33a" path="res://snd/MenuSound.gd" id="15_ortil"]
+[ext_resource type="Script" uid="uid://dbjdt42valv4b" path="res://snd/GameSound.gd" id="16_ppjuv"]
+[ext_resource type="PackedScene" uid="uid://crdyanslu6b0r" path="res://ui/menu/MainMenu.tscn" id="23_vqsdb"]
+[ext_resource type="PackedScene" uid="uid://dlje6krlhyfml" path="res://ui/menu/CreditsMenu.tscn" id="24_ph6wr"]
+[ext_resource type="Script" uid="uid://x1xttp2nj2hm" path="res://snd/MusicHandler.gd" id="29_e08lr"]
+[ext_resource type="Script" uid="uid://be584uc1qm16n" path="res://world/Settings.gd" id="41_spsmc"]
+[ext_resource type="PackedScene" uid="uid://d7c8f4mncc7h" path="res://ui/menu/HelpMenu.tscn" id="46_6hf6m"]
+[ext_resource type="Script" uid="uid://crpx0kg4slj7w" path="res://world/InputHandler.gd" id="54_virqv"]
+
+[sub_resource type="Environment" id="Environment_ig7tw"]
+background_color = Color(0.2522139, 0.2522139, 0.2522139, 1)
+background_energy_multiplier = 0.0
+ambient_light_source = 1
+ambient_light_color = Color(0.2484, 0.2484, 0.2484, 1)
+reflected_light_source = 1
+tonemap_mode = 2
+ssao_intensity = 16.0
+ssao_power = 0.123703785
+sdfgi_read_sky_light = false
+sdfgi_min_cell_size = 0.1
+sdfgi_y_scale = 0
+glow_enabled = true
+glow_levels/2 = 1.0
+glow_levels/3 = 0.7
+glow_levels/4 = 0.5
+glow_normalized = true
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0, 0, 0, 1)
+fog_density = 1.0
+
+[node name="World" type="Node3D" unique_id=556522314]
+process_mode = 3
+script = ExtResource("1_eu7l1")
+
+[node name="Camera" parent="." unique_id=179159233 instance=ExtResource("4_bah7m")]
+unique_name_in_owner = true
+process_mode = 3
+
+[node name="Environment" type="WorldEnvironment" parent="." unique_id=1540726424]
+environment = SubResource("Environment_ig7tw")
+
+[node name="Hud" parent="." unique_id=2110492010 instance=ExtResource("10_8mymi")]
+unique_name_in_owner = true
+visible = false
+anchors_preset = -1
+
+[node name="MenuSound" type="Node" parent="." unique_id=1001762966]
+script = ExtResource("15_ortil")
+
+[node name="vanish" type="AudioStreamPlayer2D" parent="MenuSound" unique_id=2008273277]
+unique_name_in_owner = true
+volume_db = 6.0
+pitch_scale = 0.8
+attenuation = 2.6390166
+bus = &"Menu"
+
+[node name="appear" type="AudioStreamPlayer2D" parent="MenuSound" unique_id=1010079771]
+unique_name_in_owner = true
+volume_db = 6.0
+pitch_scale = 0.9
+attenuation = 2.6390157
+bus = &"Menu"
+
+[node name="focus" type="AudioStreamPlayer2D" parent="MenuSound" unique_id=258822003]
+unique_name_in_owner = true
+volume_db = -12.0
+max_polyphony = 10
+bus = &"Menu"
+
+[node name="slider" type="AudioStreamPlayer2D" parent="MenuSound" unique_id=1432009940]
+unique_name_in_owner = true
+volume_db = 6.0
+max_polyphony = 5
+bus = &"Menu"
+
+[node name="check" type="AudioStreamPlayer2D" parent="MenuSound" unique_id=1600770356]
+unique_name_in_owner = true
+volume_db = -4.0
+bus = &"Menu"
+
+[node name="uncheck" type="AudioStreamPlayer2D" parent="MenuSound" unique_id=1700017789]
+unique_name_in_owner = true
+volume_db = -4.0
+bus = &"Menu"
+
+[node name="button" type="AudioStreamPlayer2D" parent="MenuSound" unique_id=1531213206]
+unique_name_in_owner = true
+bus = &"Menu"
+
+[node name="GameSound" type="Node" parent="." unique_id=1532732349]
+unique_name_in_owner = true
+script = ExtResource("16_ppjuv")
+
+[node name="MouseHandler" parent="." unique_id=1746397472 groups=["game"] instance=ExtResource("6_p1v5b")]
+
+[node name="MenuHandler" type="CanvasLayer" parent="." unique_id=3039487]
+unique_name_in_owner = true
+script = ExtResource("9_ww6ps")
+
+[node name="PauseMenu" parent="MenuHandler" unique_id=934581679 instance=ExtResource("7_wygdx")]
+unique_name_in_owner = true
+visible = false
+
+[node name="SettingsMenu" parent="MenuHandler" unique_id=840810836 instance=ExtResource("11_0n6y5")]
+unique_name_in_owner = true
+
+[node name="MainMenu" parent="MenuHandler" unique_id=300304139 instance=ExtResource("23_vqsdb")]
+unique_name_in_owner = true
+process_mode = 2
+visible = false
+
+[node name="CreditsMenu" parent="MenuHandler" unique_id=129362137 instance=ExtResource("24_ph6wr")]
+unique_name_in_owner = true
+process_mode = 2
+visible = false
+
+[node name="HelpMenu" parent="MenuHandler" unique_id=1552816201 instance=ExtResource("46_6hf6m")]
+unique_name_in_owner = true
+process_mode = 2
+visible = false
+
+[node name="MusicHandler" type="Node" parent="." unique_id=2003134120]
+unique_name_in_owner = true
+script = ExtResource("29_e08lr")
+
+[node name="Ambient1" type="AudioStreamPlayer" parent="MusicHandler" unique_id=1006840888]
+unique_name_in_owner = true
+pitch_scale = 0.75
+bus = &"Music"
+
+[node name="Ambient2" type="AudioStreamPlayer" parent="MusicHandler" unique_id=375462482]
+unique_name_in_owner = true
+bus = &"Music"
+
+[node name="Ambient3" type="AudioStreamPlayer" parent="MusicHandler" unique_id=1851085148]
+unique_name_in_owner = true
+bus = &"Music"
+
+[node name="Settings" type="Node" parent="." unique_id=2051269265]
+script = ExtResource("41_spsmc")
+
+[node name="InputHandler" type="Node" parent="." unique_id=469896996]
+script = ExtResource("54_virqv")
+
+[connection signal="playLevel" from="MenuHandler/MainMenu" to="." method="playLevel"]
+
+[editable path="MenuHandler/SettingsMenu"]
