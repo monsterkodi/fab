@@ -108,6 +108,7 @@ func loadLevel(levelRes):
     currentLevel = levelRes.instantiate()
     currentLevel.inert = false
     currentLevelName = currentLevel.name
+    Log.log("currentLevelName", currentLevelName)
     add_child(currentLevel)
     currentLevel.start()
     Post.startLevel.emit()

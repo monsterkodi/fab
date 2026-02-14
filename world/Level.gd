@@ -1,7 +1,7 @@
 class_name Level 
 extends Node3D
 
-var inert       = true
+var inert = true
 
 func _ready():
     

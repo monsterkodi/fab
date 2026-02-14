@@ -159,14 +159,14 @@ script = ExtResource("41_spsmc")
 [node name="InputHandler" type="Node" parent="." unique_id=469896996]
 script = ExtResource("54_virqv")
 
-[node name="MousePointer" type="MeshInstance3D" parent="." unique_id=890479429]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
-mesh = SubResource("PlaneMesh_8u1wm")
-surface_material_override/0 = SubResource("StandardMaterial3D_8u1wm")
-
 [node name="Pointer" type="Node3D" parent="." unique_id=848892079]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
 script = ExtResource("16_y7dlm")
+
+[node name="Dot" type="MeshInstance3D" parent="Pointer" unique_id=890479429]
+mesh = SubResource("PlaneMesh_8u1wm")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_8u1wm")
 
 [connection signal="playLevel" from="MenuHandler/MainMenu" to="." method="playLevel"]
 

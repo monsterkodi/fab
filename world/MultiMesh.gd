@@ -1,58 +1,68 @@
 extends Node3D
 
-var dict = {"dot": [], "slot": [], "enemy": [], "bullet": []}
+var dict = {"dot": [], "belt": []}
 
-func add(typ:String, node:Node3D):
+func _ready():
+    
+    var st = SurfaceTool.new()
+    
+    st.begin(Mesh.PRIMITIVE_TRIANGLES)
+    
+    st.set_uv(Vector2(1,0.5))
+    st.add_vertex(Vector3(0.5,  0, 0))
+    st.set_uv(Vector2(0,0))
+    st.add_vertex(Vector3(0.25, 0, 0.25))
+    st.set_uv(Vector2(0,1))
+    st.add_vertex(Vector3(0.25, 0, -0.25))
+    
+    st.index()
+    st.generate_normals()
+    $Belt.multimesh.mesh = st.commit()
+    
+func add(typ:String, node):
 
-    #Log.log("add", get_parent().get_script().get_global_name(), typ)
     dict[typ].append(node)
     
-func del(typ:String, node:Node3D):
+func del(typ:String, node):
     
-    #Log.log("del", get_parent().get_script().get_global_name(), typ)
     dict[typ].erase(node)
+    
+func clear(typ:String):
+    
+    dict[typ].clear()
 
 func _process(delta:float):
     
-    #if get_parent().inert:
-        #Log.log("mm", get_parent().name, get_parent().inert)
-        
-    var mmi:MultiMeshInstance3D
     var num:int
     
     var dots = dict.dot
     num = dots.size()  
-    mmi = $Dot 
-    mmi.multimesh.instance_count = num 
+    $Dot.multimesh.instance_count = num 
     for i in range(num):
-        var trans = dots[i].global_transform
-        var sc = dots[i].getRadius()
+        var trans = Transform3D.IDENTITY
+        trans.origin.x = dots[i].x
+        trans.origin.z = dots[i].y
+        trans.origin.y = 0.02
+        var sc = 0.25
         trans = trans.scaled_local(Vector3(sc,sc,sc))
-        mmi.multimesh.set_instance_transform(i, trans)
-        mmi.multimesh.set_instance_color(i, dots[i].getColor())
-    
-    var slots = dict.slot
-    num = slots.size()  
-    mmi = $Slot 
-    mmi.multimesh.instance_count = num 
-    for i in range(num):
-        var trans = slots[i].global_transform
-        trans = trans.translated(Vector3(0,0.01,0))
-        mmi.multimesh.set_instance_transform(i, trans)
- 
-    var enemies = dict.enemy
-    num = enemies.size()
-    mmi = $Enemy
-    mmi.multimesh.instance_count = num
-    for i in range(num):
-        mmi.multimesh.set_instance_transform(i, enemies[i].global_transform)
-        mmi.multimesh.set_instance_color(i, enemies[i].getColor())
+        $Dot.multimesh.set_instance_transform(i, trans)
 
-    #var bullets = get_tree().get_nodes_in_group("bullet")
-    var bullets = dict.bullet
-    num = bullets.size()  
-    mmi = $Bullet 
-    mmi.multimesh.instance_count = num 
+    dots = dict.belt
+    num = dots.size()  
+    $Belt.multimesh.instance_count = num 
     for i in range(num):
-        mmi.multimesh.set_instance_transform(i, bullets[i].global_transform)
-        mmi.multimesh.set_instance_color(i, bullets[i].getColor())
+        var trans = Transform3D.IDENTITY
+        
+        if dots[i].z == 2:
+            trans = trans.rotated(Vector3.UP, deg_to_rad(180))
+        elif dots[i].z == 1:
+            trans = trans.rotated(Vector3.UP, deg_to_rad(90))
+        elif dots[i].z == 3:
+            trans = trans.rotated(Vector3.UP, deg_to_rad(-90))
+            
+        trans.origin.x = dots[i].x
+        trans.origin.z = dots[i].y
+        trans.origin.y = 0.02
+                
+        $Belt.multimesh.set_instance_transform(i, trans)
+    

@@ -5,6 +5,7 @@
 [ext_resource type="Material" uid="uid://du8bjg8b10yx2" path="res://materials/TurretBaseMaterial.tres" id="3_mxnmf"]
 [ext_resource type="PackedScene" uid="uid://bmyq0wms5x6rm" path="res://components/HalfCapsuleRounded.tscn" id="4_4eo0i"]
 [ext_resource type="Shader" uid="uid://xcp7amgj7f7x" path="res://materials/visual/Grid.tres" id="5_86ljf"]
+[ext_resource type="PackedScene" uid="uid://c2avn203eitto" path="res://world/MultiMesh.tscn" id="6_lhci3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w56at"]
 size = Vector3(1000, 1, 1000)
@@ -42,3 +43,5 @@ material = ExtResource("3_mxnmf")
 [node name="Grid" type="MeshInstance3D" parent="." unique_id=997294016]
 mesh = SubResource("PlaneMesh_2sqsq")
 surface_material_override/0 = SubResource("ShaderMaterial_ah0pt")
+
+[node name="MultiMesh" parent="." unique_id=434139009 instance=ExtResource("6_lhci3")]

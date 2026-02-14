@@ -1,8 +1,13 @@
 extends Node
 
 signal pointerHover
-signal pointerClick
 signal pointerDrag
+signal pointerClick
+signal pointerRelease
+signal pointerShiftClick
+signal pointerShiftRelease
+signal pointerCancel
+
 signal gamePaused
 signal gameResume
 signal startLevel

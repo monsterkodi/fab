@@ -26,6 +26,7 @@ func _ready():
 func _process(delta:float):
     
     if not current: return
+    if get_tree().paused: return
     
     readInput()
     
@@ -120,6 +121,7 @@ func dbg(msg: Variant, msg2: Variant = Log.nil, msg3: Variant = Log.nil, msg4: V
 func _input(e: InputEvent):
     
     if not current: return
+    if get_tree().paused: return
     
     if e is InputEventMouseMotion:
         if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
