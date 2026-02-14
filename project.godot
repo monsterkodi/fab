@@ -19,8 +19,10 @@ config/version="1.0.0"
 run/main_scene="uid://b6mskrm1n176r"
 run/print_header=false
 config/features=PackedStringArray("4.6", "Forward Plus")
+boot_splash/show_image=false
 boot_splash/stretch_mode=0
 boot_splash/use_filter=false
+boot_splash/image="uid://8hjcwlx4fwlc"
 config/icon="uid://8hjcwlx4fwlc"
 config/macos_native_icon="res://img/fab.icns"
 config/windows_native_icon="res://img/fab.ico"
@@ -33,7 +35,6 @@ buses/default_bus_layout="uid://d2wkvpo6gnur0"
 
 Layer="*res://utils/Layer.gd"
 Post="*res://utils/Post.gd"
-Stats="*res://utils/Stats.gd"
 Utils="*res://utils/Utils.gd"
 Saver="*res://utils/Saver.gd"
 

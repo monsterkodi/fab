@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dqn51jaojemgy" path="res://ui/menu/SettingsMenu.tscn" id="11_0n6y5"]
 [ext_resource type="Script" uid="uid://srdtmvh7y33a" path="res://snd/MenuSound.gd" id="15_ortil"]
 [ext_resource type="Script" uid="uid://dbjdt42valv4b" path="res://snd/GameSound.gd" id="16_ppjuv"]
+[ext_resource type="Script" uid="uid://bt568sten6aq4" path="res://world/Pointer.gd" id="16_y7dlm"]
 [ext_resource type="PackedScene" uid="uid://crdyanslu6b0r" path="res://ui/menu/MainMenu.tscn" id="23_vqsdb"]
 [ext_resource type="PackedScene" uid="uid://dlje6krlhyfml" path="res://ui/menu/CreditsMenu.tscn" id="24_ph6wr"]
 [ext_resource type="Script" uid="uid://x1xttp2nj2hm" path="res://snd/MusicHandler.gd" id="29_e08lr"]
@@ -37,6 +38,12 @@ fog_enabled = true
 fog_mode = 1
 fog_light_color = Color(0, 0, 0, 1)
 fog_density = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_8u1wm"]
+size = Vector2(1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8u1wm"]
+albedo_color = Color(0.2994163, 0.2994163, 0.2994163, 1)
 
 [node name="World" type="Node3D" unique_id=556522314]
 process_mode = 3
@@ -151,6 +158,15 @@ script = ExtResource("41_spsmc")
 
 [node name="InputHandler" type="Node" parent="." unique_id=469896996]
 script = ExtResource("54_virqv")
+
+[node name="MousePointer" type="MeshInstance3D" parent="." unique_id=890479429]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+mesh = SubResource("PlaneMesh_8u1wm")
+surface_material_override/0 = SubResource("StandardMaterial3D_8u1wm")
+
+[node name="Pointer" type="Node3D" parent="." unique_id=848892079]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+script = ExtResource("16_y7dlm")
 
 [connection signal="playLevel" from="MenuHandler/MainMenu" to="." method="playLevel"]
 

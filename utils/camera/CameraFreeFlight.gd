@@ -22,7 +22,6 @@ var tilt         := 0.0
 func _ready():
     
     transform.origin.y = 10
-    #transform.basis = transform.basis.rotated(Vector3(1,0,0), deg_to_rad(10))
 
 func _process(delta:float):
     

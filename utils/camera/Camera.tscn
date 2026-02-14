@@ -19,6 +19,4 @@ script = ExtResource("1_u5kg4")
 
 [node name="SpotLight" type="OmniLight3D" parent="FreeFlight" unique_id=586801475]
 transform = Transform3D(1, 0, 0, 0, 1, -1.0658141e-14, 0, 1.0658141e-14, 1, 0, 0, 0)
-visible = false
-light_color = Color(1, 0, 0, 1)
-light_energy = 0.299
+light_energy = 2.0

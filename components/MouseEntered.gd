@@ -1,9 +1,6 @@
 extends Node3D
 class_name MouseEntered
 
-const HATCHING_MATERIAL = preload("res://materials/HatchingMaterial.tres")
-@export var outline_material : Material = HATCHING_MATERIAL
-
 var collision_object : CollisionObject3D
 
 func _enter_tree():
@@ -20,8 +17,8 @@ func on_mouse_entered():
     
     #Log.log("mouse entered", collision_object)
     var pt = get_parent_node_3d()
-    if pt is MeshInstance3D:
-        pt.material_overlay = outline_material
+    #if pt is MeshInstance3D:
+        #pt.material_overlay = outline_material
 
 func on_mouse_exited():
     

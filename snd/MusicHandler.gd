@@ -41,10 +41,11 @@ func menuVanish(menu:Control):
     pass
 
 func playMenuMusic():
-    
-    if not %MenuMusic.playing:
-        stop(false)
-        %MenuMusic.play()
+
+    pass    
+    #if not %MenuMusic.playing:
+        #stop(false)
+        #%MenuMusic.play()
     
 func levelStart():
     

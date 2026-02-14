@@ -17,3 +17,9 @@ func on_load(data:Dictionary):
     if data.has("Camera"):
         transform = data.Camera.transform
         freeFlight.transform = data.Camera.freeflight_transform
+
+func get_pos():
+    
+    return freeFlight.global_transform.origin
+    
+    

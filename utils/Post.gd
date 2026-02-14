@@ -1,23 +1,8 @@
 extends Node
 
-signal enemyDied # enemy
-signal enemyCorpsed # enemy
-signal enemySpawned
-signal buildingBought
-signal buildingPlaced # building
-signal buildingSold 
-signal buildingGhost
-signal buildingSlotChanged # slot
-signal baseDamaged
-signal baseDestroyed
-signal shieldDamaged
-signal shieldDown
-signal preChooseAnim
-signal chooseCard
-signal cardChosen
-signal cardSold
-signal applyCards
-signal handChosen
+signal pointerHover
+signal pointerClick
+signal pointerDrag
 signal gamePaused
 signal gameResume
 signal startLevel
@@ -35,14 +20,10 @@ signal menuDidAppear
 signal menuSound
 signal gameSound
 signal gameLoop
-signal statChanged 
-signal enemySpeed # speed
 signal newGame
 signal resumeGame
 signal settings
 signal quitGame
-signal clockFactor
-signal clockTick
 
 var sigDict : Dictionary
 
