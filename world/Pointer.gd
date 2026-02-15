@@ -5,14 +5,14 @@ class Belt:
     enum {E ,S, W, N}
     const DIRS    = [E, S, W, N]
     const DIRNAME = ["E", "S", "W", "N"]
-    const I_E = 1 << E
-    const I_S = 1 << S
-    const I_W = 1 << W
-    const I_N = 1 << N
-    const O_E = I_E << 4
-    const O_S = I_S << 4
-    const O_W = I_W << 4
-    const O_N = I_N << 4
+    const I_E     = 1 << E
+    const I_S     = 1 << S
+    const I_W     = 1 << W
+    const I_N     = 1 << N
+    const O_E     = I_E << 4
+    const O_S     = I_S << 4
+    const O_W     = I_W << 4
+    const O_N     = I_N << 4
     const INPUT  = [I_E, I_S, I_W, I_N]
     const OUTPUT = [O_E, O_S, O_W, O_N]
     
@@ -106,9 +106,10 @@ func pointerCancel(pos):
 func updateTemp():
     
     var mm = get_tree().root.get_node("/root/World/Level/MultiMesh")
-    mm.clear("dot")
-    for pos in tempPoints:
-        mm.add("dot", pos)
+    mm.clear("temp")
+    for ti in range(tempPoints.size()):
+        var pos = tempPoints[ti]
+        mm.add("temp", Vector3i(pos.x, pos.y, inputAtTempIndex(ti) | outputAtTempIndex(ti)))
         
 func updateBelt():
         
@@ -157,7 +158,7 @@ func outputAtTempIndex(ti):
     
 func combineBeltTypes(old: int, new: int) -> int:
     
-    # Remove outputs that conflict with new inputs, and vice versa
+    # remove outputs that conflict with new inputs, and vice versa
     var inputs  = (old & 0b00001111) & ~((new >> 4) & 0b00001111)
     var outputs = (old & 0b11110000) & ~((new << 4) & 0b11110000)
     
