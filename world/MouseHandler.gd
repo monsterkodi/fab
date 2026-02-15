@@ -57,6 +57,5 @@ func _input(event: InputEvent):
         elif event.button_index == 2:
             
             if event.pressed:
-                Log.log("cancel")
                 Post.pointerCancel.emit(ipos)
                 
