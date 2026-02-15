@@ -86,11 +86,6 @@ func drawBelt(dots, multimesh, offset):
                     trans = trans.rotated(Vector3.UP, deg_to_rad(90))
                 elif d == 2:
                     pass
-                    #if OUTPUT[0] & t:
-                        #trans = trans.translated(Vector3(offset, 0, 0))
-                    #elif OUTPUT[1] & t:
-                        #trans = trans.rotated(Vector3.UP, deg_to_rad(-offset*90))
-                        #trans = trans.translated(Vector3(0, 0, offset))
                 elif d == 3:
                     trans = trans.rotated(Vector3.UP, deg_to_rad(270))
             else:
