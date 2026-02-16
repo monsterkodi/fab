@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://d4gx35ok5buhu"]
+
+[ext_resource type="Shader" uid="uid://5pp8ti6ukgbo" path="res://materials/visual/Belt_W_NES.tres" id="1_1ftgq"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_1ftgq")
+shader_parameter/RimColor = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
+shader_parameter/SpokeThickness = 0.3
+shader_parameter/SpokeCount = 2
+shader_parameter/Speed = 1.0
+shader_parameter/SpokeThickness2 = 0.3
+shader_parameter/SpokeCount2 = 2
+shader_parameter/Speed2 = 1.0
+shader_parameter/SpokeThickness3 = 0.2
+shader_parameter/Speed3 = 1.0
+shader_parameter/SpokeCount3 = 2

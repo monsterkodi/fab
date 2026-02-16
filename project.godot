@@ -36,6 +36,7 @@ buses/default_bus_layout="uid://d2wkvpo6gnur0"
 Post="*res://utils/Post.gd"
 Utils="*res://utils/Utils.gd"
 Saver="*res://utils/Saver.gd"
+Belt="*uid://dmbnhwltgjekw"
 
 [debug]
 

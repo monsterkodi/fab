@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dh5tee708niij"]
+
+[ext_resource type="Shader" uid="uid://jfui6nx8np5a" path="res://materials/visual/Belt_W_NS.tres" id="1_c6033"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_c6033")
+shader_parameter/RimColor = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
+shader_parameter/SpokeThickness = 0.3
+shader_parameter/SpokeCount = 2
+shader_parameter/Speed = 1.0
+shader_parameter/SpokeThickness2 = 0.3
+shader_parameter/SpokeCount2 = 2
+shader_parameter/Speed2 = 1.0

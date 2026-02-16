@@ -8,15 +8,6 @@ func _input(event: InputEvent):
     
     var cam = get_node("/root/World/Camera")
             
-    #%RayCast3D.global_position = cam.freeFlight.project_ray_origin(event.position)
-    #%RayCast3D.target_position = %RayCast3D.global_position + cam.freeFlight.project_ray_normal(event.position) * 1000
-    #%RayCast3D.force_raycast_update()
-    #var collider = %RayCast3D.get_collider()
-    #if not collider or collider.name != "Floor": return
-    
-    #var pos = %RayCast3D.get_collision_point()
-    #var ipos = Vector2i(round(pos.x), round(pos.z))
-
     var ipos : Vector2i
     var mousePos = get_window().get_mouse_position()
     var camera = get_window().get_viewport().get_camera_3d()
@@ -47,12 +38,6 @@ func _input(event: InputEvent):
                     Post.pointerShiftRelease.emit(ipos)
                 else:
                     Post.pointerRelease.emit(ipos)
-        elif event.button_index == 3:
-            
-            if event.pressed:
-                Post.pointerShiftClick.emit(ipos)
-            else:
-                Post.pointerShiftRelease.emit(ipos)
                 
         elif event.button_index == 2:
             
