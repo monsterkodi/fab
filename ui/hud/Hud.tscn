@@ -2,33 +2,70 @@
 
 [ext_resource type="Script" uid="uid://c4d3iwmln8sl4" path="res://ui/hud/Hud.gd" id="1_1x8ju"]
 [ext_resource type="Theme" uid="uid://g22p2j6a23ol" path="res://ui/theme/HUDTheme.tres" id="2_aaqae"]
+[ext_resource type="ButtonGroup" uid="uid://cf83u33f2ya7m" path="res://ui/hud/ActionButtonGroup.tres" id="3_4sqfl"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wxbmk"]
-bg_color = Color(0.10965204, 0.10965204, 0.10965204, 1)
-draw_center = false
-corner_radius_bottom_right = 30
-corner_radius_bottom_left = 30
+[sub_resource type="InputEventKey" id="InputEventKey_ywxef"]
+device = -1
+keycode = 66
+unicode = 98
+
+[sub_resource type="InputEventKey" id="InputEventKey_4sqfl"]
+device = -1
+keycode = 49
+unicode = 49
+
+[sub_resource type="Shortcut" id="Shortcut_4sqfl"]
+events = [SubResource("InputEventKey_ywxef"), SubResource("InputEventKey_4sqfl")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_by07e"]
+device = -1
+keycode = 88
+unicode = 120
+
+[sub_resource type="Shortcut" id="Shortcut_gt2ij"]
+events = [SubResource("InputEventKey_by07e")]
 
 [node name="Hud" type="Control" unique_id=1410583153]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -988.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 theme = ExtResource("2_aaqae")
 script = ExtResource("1_1x8ju")
 
-[node name="Center" type="PanelContainer" parent="." unique_id=705281221]
+[node name="Actions" type="PanelContainer" parent="." unique_id=705281221]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -41.5
-offset_right = 41.5
-offset_bottom = 65.0
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
-theme = ExtResource("2_aaqae")
-theme_override_styles/panel = SubResource("StyleBoxFlat_wxbmk")
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Actions" unique_id=1736026445]
+layout_mode = 2
+alignment = 1
+
+[node name="Belt" type="Button" parent="Actions/HBoxContainer" unique_id=557335372]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+toggle_mode = true
+button_group = ExtResource("3_4sqfl")
+shortcut = SubResource("Shortcut_4sqfl")
+text = "Belt"
+
+[node name="Del" type="Button" parent="Actions/HBoxContainer" unique_id=481905193]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+toggle_mode = true
+action_mode = 0
+button_group = ExtResource("3_4sqfl")
+shortcut = SubResource("Shortcut_gt2ij")
+text = "Del"
+
+[connection signal="toggled" from="Actions/HBoxContainer/Belt" to="." method="beltToggled"]
+[connection signal="toggled" from="Actions/HBoxContainer/Del" to="." method="delToggled"]

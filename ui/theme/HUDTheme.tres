@@ -8,5 +8,7 @@ bg_color = Color(0.10965204, 0.10965204, 0.10965204, 1)
 [resource]
 default_font = ExtResource("1_kc1wr")
 default_font_size = 48
+Button/colors/font_color = Color(0.43752313, 0.43752313, 0.43752313, 1)
+Button/colors/font_pressed_color = Color(1, 0.90397155, 0, 1)
 Label/constants/line_spacing = 0
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_kc1wr")

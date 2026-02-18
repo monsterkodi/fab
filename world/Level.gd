@@ -2,6 +2,7 @@ class_name Level
 extends Node3D
 
 var inert = true
+@onready var buildings: Buildings = $Buildings
 
 func _ready():
     

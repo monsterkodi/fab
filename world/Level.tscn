@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://b1g34431itmpg"]
 
+[ext_resource type="Script" uid="uid://wdupn7eefvj6" path="res://world/Buildings.gd" id="1_lhci3"]
 [ext_resource type="Script" uid="uid://dm5k4y4py5jhc" path="res://world/Level.gd" id="1_q4iis"]
 [ext_resource type="PhysicsMaterial" uid="uid://dq1r6votcqh1x" path="res://materials/physics/FloorPhysics.tres" id="2_m3clv"]
 [ext_resource type="Material" uid="uid://du8bjg8b10yx2" path="res://materials/TurretBaseMaterial.tres" id="3_mxnmf"]
@@ -46,3 +47,7 @@ mesh = SubResource("PlaneMesh_2sqsq")
 surface_material_override/0 = SubResource("ShaderMaterial_ah0pt")
 
 [node name="MultiMesh" parent="." unique_id=434139009 instance=ExtResource("6_lhci3")]
+
+[node name="Buildings" type="Node" parent="." unique_id=1370802102]
+script = ExtResource("1_lhci3")
+metadata/_custom_type_script = "uid://wdupn7eefvj6"

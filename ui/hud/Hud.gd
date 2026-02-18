@@ -5,4 +5,16 @@ func _ready():
     
     Post.subscribe(self)
     
-    process_mode = Node.PROCESS_MODE_PAUSABLE
+func levelStart():
+    
+    %Belt.set_pressed(true)
+    
+func beltToggled(on: bool):
+    
+    if on:
+        Post.activeAction.emit("Belt")
+
+func delToggled(on: bool):
+
+    if on:
+        Post.activeAction.emit("Del")

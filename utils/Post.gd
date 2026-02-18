@@ -30,6 +30,8 @@ signal resumeGame
 signal settings
 signal quitGame
 
+signal activeAction
+
 var sigDict : Dictionary
 
 func _ready():

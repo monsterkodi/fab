@@ -162,9 +162,9 @@ func resourcesInDir(dir:String) -> Array[Resource]:
 
 func resourceNamesInDir(dir:String) -> PackedStringArray:
 
-    var buildings = ResourceLoader.list_directory(dir)
+    var resrc = ResourceLoader.list_directory(dir)
     var names = PackedStringArray([])
-    for b in buildings:
+    for b in resrc:
         name = b.get_file().get_basename()
         if name not in names:
             names.append(name)
@@ -186,3 +186,11 @@ func wrapFocusVertical(node):
     
     node.get_child(0).focus_neighbor_top     = node.get_child(-1).get_path()
     node.get_child(-1).focus_neighbor_bottom = node.get_child(0).get_path()
+
+func world():
+    
+    return Engine.get_main_loop().root.get_node("World")
+    
+func buildings():
+    
+    return world().currentLevel.buildings

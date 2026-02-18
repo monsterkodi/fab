@@ -10,6 +10,8 @@
 [ext_resource type="Script" uid="uid://srdtmvh7y33a" path="res://snd/MenuSound.gd" id="15_ortil"]
 [ext_resource type="Script" uid="uid://dbjdt42valv4b" path="res://snd/GameSound.gd" id="16_ppjuv"]
 [ext_resource type="Script" uid="uid://bt568sten6aq4" path="res://world/Pointer.gd" id="16_y7dlm"]
+[ext_resource type="Script" uid="uid://c0jnsahm0guxo" path="res://world/BeltBuilder.gd" id="17_ww6ps"]
+[ext_resource type="Script" uid="uid://bcsinm3sf6r4u" path="res://world/Deleter.gd" id="18_ortil"]
 [ext_resource type="PackedScene" uid="uid://crdyanslu6b0r" path="res://ui/menu/MainMenu.tscn" id="23_vqsdb"]
 [ext_resource type="PackedScene" uid="uid://dlje6krlhyfml" path="res://ui/menu/CreditsMenu.tscn" id="24_ph6wr"]
 [ext_resource type="Script" uid="uid://x1xttp2nj2hm" path="res://snd/MusicHandler.gd" id="29_e08lr"]
@@ -55,11 +57,6 @@ process_mode = 3
 
 [node name="Environment" type="WorldEnvironment" parent="." unique_id=1540726424]
 environment = SubResource("Environment_ig7tw")
-
-[node name="Hud" parent="." unique_id=2110492010 instance=ExtResource("10_8mymi")]
-unique_name_in_owner = true
-visible = false
-anchors_preset = -1
 
 [node name="MenuSound" type="Node" parent="." unique_id=1001762966]
 script = ExtResource("15_ortil")
@@ -120,6 +117,7 @@ visible = false
 
 [node name="SettingsMenu" parent="MenuHandler" unique_id=840810836 instance=ExtResource("11_0n6y5")]
 unique_name_in_owner = true
+visible = false
 
 [node name="MainMenu" parent="MenuHandler" unique_id=300304139 instance=ExtResource("23_vqsdb")]
 unique_name_in_owner = true
@@ -159,6 +157,9 @@ script = ExtResource("41_spsmc")
 [node name="InputHandler" type="Node" parent="." unique_id=469896996]
 script = ExtResource("54_virqv")
 
+[node name="Hud" parent="." unique_id=2110492010 instance=ExtResource("10_8mymi")]
+unique_name_in_owner = true
+
 [node name="Pointer" type="Node3D" parent="." unique_id=848892079]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
 script = ExtResource("16_y7dlm")
@@ -167,6 +168,12 @@ script = ExtResource("16_y7dlm")
 mesh = SubResource("PlaneMesh_8u1wm")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_8u1wm")
+
+[node name="BeltBuilder" type="Node" parent="Pointer" unique_id=176865998]
+script = ExtResource("17_ww6ps")
+
+[node name="Deleter" type="Node" parent="Pointer" unique_id=547531162]
+script = ExtResource("18_ortil")
 
 [connection signal="playLevel" from="MenuHandler/MainMenu" to="." method="playLevel"]
 
