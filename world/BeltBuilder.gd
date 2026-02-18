@@ -35,8 +35,8 @@ func addTempPoint(pos):
         elif lastTemp.x > pos.x: tp = initialBeltWithDir(tp, Belt.W)
         elif lastTemp.y > pos.y: tp = initialBeltWithDir(tp, Belt.N)
 
-        if Belt.isInvalidType(tp):
-            Log.log(Belt.stringForType(tp))
+        #if Belt.isInvalidType(tp):
+            #Log.log(Belt.stringForType(tp))
             
         tempPoints[lastTemp] = tp
         trail.push_back(lastTemp)
@@ -48,27 +48,14 @@ func initialBeltWithDir(tp, dir):
     
     tp = Belt.setOutput(tp, dir)
     if tempPoints.size() == 1: 
-        if not areInputBeltsAtPos(lastTemp):
-            tp &= 0b1111_0000
-            tp = Belt.setInput(tp, Belt.OPPOSITE[dir])
-        else:
-            for d in Belt.DIRS:
-                var nt = beltPieces.get(lastTemp + Belt.NEIGHBOR[d], 0)
-                if not (nt & Belt.OUTPUT_DIR[d]) and (tp & Belt.INPUT[d]):
-                    tp = Belt.clearInput(tp, d)
-                if d != dir and (tp & Belt.OUTPUT[d]):
-                    if not nt or not (nt & Belt.INPUT_DIR[d]):
-                        tp = Belt.clearOutput(tp, d)
+        for d in Belt.DIRS:
+            var nt = beltPieces.get(lastTemp + Belt.NEIGHBOR[d], 0)
+            if not (nt & Belt.OUTPUT_DIR[d]) and (tp & Belt.INPUT[d]):
+                tp = Belt.clearInput(tp, d)
+            if d != dir and (tp & Belt.OUTPUT[d]):
+                if not nt or not (nt & Belt.INPUT_DIR[d]):
+                    tp = Belt.clearOutput(tp, d)
     return tp
-    
-func areInputBeltsAtPos(pos):
-    
-    for d in Belt.DIRS:
-        var np = pos + Belt.NEIGHBOR[d]
-        var nt = beltPieces.get(np, 0)
-        if nt & Belt.OUTPUT_DIR[d]:
-            return true
-    return false
     
 func beltTypeAtPos(pos):
     
@@ -119,8 +106,13 @@ func pointerShiftClick(pos):
         pointerDrag(pos)
         
 func popTrail():
-    Log.log("POP")
-    tempPoints[lastTemp] = 0
+    
+    if not trail.is_empty() and tempPoints.has(trail[-1]):
+        if   trail[-1].x < lastTemp.x: tempPoints[trail[-1]] = Belt.clearOutput(tempPoints[trail[-1]], Belt.E)
+        elif trail[-1].y < lastTemp.y: tempPoints[trail[-1]] = Belt.clearOutput(tempPoints[trail[-1]], Belt.S)
+        elif trail[-1].x > lastTemp.x: tempPoints[trail[-1]] = Belt.clearOutput(tempPoints[trail[-1]], Belt.W)
+        elif trail[-1].y > lastTemp.y: tempPoints[trail[-1]] = Belt.clearOutput(tempPoints[trail[-1]], Belt.N)
+    tempPoints.erase(lastTemp)
     lastTemp = trail.pop_back()
     updateTemp()
     
@@ -166,6 +158,8 @@ func pointerRelease(p):
     for pos in tempPoints:
         if Belt.hasNoOutput(tempPoints[pos]):
             tempPoints[pos] = Belt.fixOutput(tempPoints[pos])
+        if Belt.hasNoInput(tempPoints[pos]):
+            tempPoints[pos] = Belt.fixInput(tempPoints[pos])
         if Belt.isInvalidType(tempPoints[pos]):
             Log.warn(Belt.stringForType(tempPoints[pos]))
         beltPieces[pos] = tempPoints[pos]
