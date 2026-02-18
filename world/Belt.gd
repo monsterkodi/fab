@@ -1,4 +1,5 @@
 extends Node
+# singleton Belt
 
 enum {E ,S, W, N}
 const DIRS       = [E, S, W, N]
@@ -50,41 +51,64 @@ func isInvalidType(type):
     
 func fixOutput(type):
     
-    if not type & 0b1111_0000:
+    if hasNoOutput(type):
         return type | ((type & 0b0011) << 6) | ((type & 0b1100) << 2) 
     return type
     
 func fixInput(type):
     
-    if not type & 0b0000_1111:
+    if hasNoInput(type):
         return type | ((type & 0b0011_0000) >> 2) | ((type & 0b1100_0000) >> 6) 
     return type
     
 func setOutput(type, dir):
     
-    return (type | OUTPUT[dir]) & ~INPUT[dir]
+    if dir >= 0:
+        return (type | OUTPUT[dir]) & ~INPUT[dir]
+    return type
     
 func setInput(type, dir):
     
-    return (type | INPUT[dir]) & ~OUTPUT[dir]
+    if dir >= 0:
+        return (type | INPUT[dir]) & ~OUTPUT[dir]
+    return type
     
 func clearInput(type, dir):
     
-    return (type & ~INPUT[dir])
+    if dir >= 0:
+        return (type & ~INPUT[dir])
+    return type
 
 func clearOutput(type, dir):
     
-    return (type & ~OUTPUT[dir])
-    
-func addAnyOutput(type):
-    
-    if hasNoOutput(type):
-        for dir in DIRS:
-            if type & INPUT[dir] and not type & INPUT[OPPOSITE[dir]]:
-                return setOutput(type, OPPOSITE[dir])
-        
-        for dir in DIRS:
-            if not type & INPUT[dir]:
-                return setOutput(type, dir)
+    if dir >= 0:
+        return (type & ~OUTPUT[dir])
     return type
-        
+    
+func isUnset(type, dir):
+    
+    return type & (INPUT[dir] | OUTPUT[dir]) == 0
+       
+func srcConnect(src, tgt, dir):
+    
+    if tgt:
+        if isUnset(src, dir):
+            if   tgt & INPUT_DIR[dir]:  src = setOutput(src, dir)
+            elif tgt & OUTPUT_DIR[dir]: src = setInput(src, dir)
+    
+    return src
+    
+func connectNeighbors(pos, pieces, type):
+    
+    for d in DIRS:
+        var np = pos + NEIGHBOR[d]
+        type = srcConnect(type, pieces.get(np, 0), d)
+    return type
+    
+func dirForPositions(src, tgt):
+    
+    if   src.x < tgt.x: return E
+    elif src.y < tgt.y: return S
+    elif src.x > tgt.x: return W
+    elif src.y > tgt.y: return N
+    return -1
