@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cw0p3qxalvp6y"]
+
+[ext_resource type="Shader" uid="uid://xcp7amgj7f7x" path="res://materials/visual/Grid.tres" id="1_uf5ho"]
+
+[resource]
+render_priority = -100
+shader = ExtResource("1_uf5ho")
+shader_parameter/Subdivisions = 500

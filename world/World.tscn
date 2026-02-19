@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dqn51jaojemgy" path="res://ui/menu/SettingsMenu.tscn" id="11_0n6y5"]
 [ext_resource type="Script" uid="uid://srdtmvh7y33a" path="res://snd/MenuSound.gd" id="15_ortil"]
 [ext_resource type="Script" uid="uid://dbjdt42valv4b" path="res://snd/GameSound.gd" id="16_ppjuv"]
+[ext_resource type="Material" uid="uid://cw0p3qxalvp6y" path="res://materials/WorldGridMaterial.tres" id="16_tx47m"]
 [ext_resource type="Script" uid="uid://bt568sten6aq4" path="res://world/Pointer.gd" id="16_y7dlm"]
 [ext_resource type="Script" uid="uid://c0jnsahm0guxo" path="res://world/BeltBuilder.gd" id="17_ww6ps"]
 [ext_resource type="Script" uid="uid://bcsinm3sf6r4u" path="res://world/Deleter.gd" id="18_ortil"]
@@ -40,6 +41,10 @@ fog_enabled = true
 fog_mode = 1
 fog_light_color = Color(0, 0, 0, 1)
 fog_density = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_fy8qs"]
+size = Vector2(500, 500)
+center_offset = Vector3(0, 0.02, 0)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_8u1wm"]
 size = Vector2(1, 1)
@@ -159,6 +164,11 @@ script = ExtResource("54_virqv")
 
 [node name="Hud" parent="." unique_id=2110492010 instance=ExtResource("10_8mymi")]
 unique_name_in_owner = true
+
+[node name="Grid" type="MeshInstance3D" parent="." unique_id=289551185]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.341934e-05, -0.001149416, 0.0036256313)
+mesh = SubResource("PlaneMesh_fy8qs")
+surface_material_override/0 = ExtResource("16_tx47m")
 
 [node name="Pointer" type="Node3D" parent="." unique_id=848892079]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)

@@ -49,6 +49,9 @@ func isInvalidType(type):
         s+= "input/output overlap!"
     return s
     
+func isValidType(type):
+    return not isInvalidType(type)
+    
 func fixOutput(type):
     
     if hasNoOutput(type):

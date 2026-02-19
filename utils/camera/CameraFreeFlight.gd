@@ -19,9 +19,14 @@ var ascend       := 10.0
 var steer        := 0.0
 var tilt         := 0.0
 
+var resetTransform
+var resetParent
+
 func _ready():
     
     transform.origin.y = 10
+    resetTransform = transform
+    resetParent    = get_parent_node_3d().transform
 
 func _process(delta:float):
     
@@ -81,6 +86,11 @@ func deadZoneAxis(axis):
     
 func readInput():
     
+    if Input.is_action_pressed("reset_view"):
+        transform = resetTransform
+        get_parent_node_3d().transform = resetParent
+        return
+    
     if Input.is_key_pressed(KEY_META): return
     
     forward = -deadZoneAxis(JOY_AXIS_LEFT_Y)
@@ -103,16 +113,16 @@ func readInput():
     if Input.is_action_pressed("ascend"):       ascend += 1
     if Input.is_action_pressed("descend"):      ascend -= 1
     
-    if Input.is_action_pressed("faster"):   faster()
-    if Input.is_action_pressed("slower"):   slower()
-    
-func faster():
-    
-    speed *= 1.05; speed = clampf(speed, 1, MAX_SPEED); Log.log("speed", speed)
-    
-func slower():
-    
-    speed *= 0.95; speed = clampf(speed, 1, MAX_SPEED); Log.log("speed", speed)
+    #if Input.is_action_pressed("faster"):   faster()
+    #if Input.is_action_pressed("slower"):   slower()
+    #
+#func faster():
+    #
+    #speed *= 1.05; speed = clampf(speed, 1, MAX_SPEED); Log.log("speed", speed)
+    #
+#func slower():
+    #
+    #speed *= 0.95; speed = clampf(speed, 1, MAX_SPEED); Log.log("speed", speed)
     
 func dbg(msg: Variant, msg2: Variant = Log.nil, msg3: Variant = Log.nil, msg4: Variant = Log.nil, msg5: Variant = Log.nil, msg6: Variant = Log.nil, msg7: Variant = Log.nil):
     if false:
