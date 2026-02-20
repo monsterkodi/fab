@@ -75,11 +75,14 @@ var beltPieces = {
 func _ready():
     
     for key in beltNames:
-        var mesh : PlaneMesh = get_node("Temp_"+key).multimesh.mesh
-        var material : ShaderMaterial = mesh.material
+        var node = get_node("Belt_"+key).duplicate()
+        node.name = "Temp_"+key
+        node.multimesh = node.multimesh.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
+        var material : ShaderMaterial = node.multimesh.mesh.material
         material.set_shader_parameter("RimColor", Color(0.392, 0.392, 1.0, 1.0))
         material.set_shader_parameter("SpokeColor", Color(0.238, 0.238, 0.61, 1.0))
         material.render_priority = 10
+        add_child(node)
     
 func add(typ:String, node):
 
