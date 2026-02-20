@@ -1,0 +1,63 @@
+class_name BeltState
+extends Node
+
+# children: Array[Item]
+
+var type : int
+var pos : Vector2i
+
+func _ready():
+    pass
+    
+func advanceForDelta(delta:float) -> float:
+    
+    return delta * 0.5
+    
+func position(): return Vector3(pos.x, 0, pos.y)
+    
+func itemPositionAtIndex(index) -> Vector3:
+    
+    var item = get_child(index)
+    return position() + Belt.offsetForAdvanceAndDirection(type, item.advance, item.direction)
+    
+func advanceItems(delta:float):
+    
+    assert(get_child_count() > 0)
+    
+    var tailSpace = 1
+    var advance = advanceForDelta(delta)
+    
+    var headItem = get_child(0)
+    if headItem.advance + advance >= tailSpace:
+        var bs = Utils.fabState().beltStateAtPos(pos + Belt.NEIGHBOR[headItem.direction])
+        if bs:
+            var adv = bs.hasSpace(headItem.halfSize)
+            if adv >= 0:
+                remove_child(headItem)
+                headItem.advance = adv
+                bs.addItem(headItem)
+    
+    for item in get_children():
+        if item != headItem:
+            tailSpace -= item.halfSize
+        item.advance = minf(item.advance + advance, tailSpace)
+        tailSpace = item.advance - item.halfSize
+        if item.advance > 0.5:
+            item.direction = Belt.outputDirForType(type)
+    
+func hasSpace(halfSize, advance: float = 0) -> float:
+
+    if get_child_count() == 0:
+        return advance
+    if get_child_count() > 2:
+        return -1
+    var tailSpace = get_child(-1).advance - get_child(-1).halfSize
+    #Log.log("halfSize, tailSpace, advance", halfSize, tailSpace, get_child(-1).advance, get_child(-1).halfSize)
+    if tailSpace > halfSize:
+        return minf(advance, tailSpace - halfSize)
+    return tailSpace - halfSize
+    
+func addItem(item):
+    #Log.log("add_item", get_child_count())
+    item.direction = Belt.inputDirForType(type)
+    add_child(item)

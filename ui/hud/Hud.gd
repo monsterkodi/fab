@@ -12,9 +12,9 @@ func levelStart():
 func beltToggled(on: bool):
     
     if on:
-        Post.activeAction.emit("Belt")
+        Post.activateBuilder.emit("Belt")
 
 func delToggled(on: bool):
 
     if on:
-        Post.activeAction.emit("Del")
+        Post.activateBuilder.emit("Del")

@@ -30,7 +30,7 @@ signal resumeGame
 signal settings
 signal quitGame
 
-signal activeAction
+signal activateBuilder
 
 var sigDict : Dictionary
 

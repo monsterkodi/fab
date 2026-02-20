@@ -6,6 +6,7 @@ const DIRS       = [E, S, W, N]
 const OPPOSITE   = [W, N, E, S]
 const DIRNAME    = ["E", "S", "W", "N"]
 const NEIGHBOR   = [Vector2i(1,0), Vector2i(0,1), Vector2i(-1,0), Vector2i(0,-1)]
+const NORM       = [Vector3(1,0,0), Vector3(0,0,1), Vector3(-1,0,0), Vector3(0,0,-1)]
 const I_E        = 1 << E
 const I_S        = 1 << S
 const I_W        = 1 << W
@@ -49,8 +50,7 @@ func isInvalidType(type):
         s+= "input/output overlap!"
     return s
     
-func isValidType(type):
-    return not isInvalidType(type)
+func isValidType(type): return not isInvalidType(type)
     
 func fixOutput(type):
     
@@ -115,3 +115,25 @@ func dirForPositions(src, tgt):
     elif src.x > tgt.x: return W
     elif src.y > tgt.y: return N
     return -1
+    
+func offsetForAdvanceAndDirection(type, advance, direction) -> Vector3:
+    
+    if advance <= 0.5:
+        return NORM[direction] * (0.5 - advance)
+    else:
+        return NORM[direction] * (advance - 0.5)
+
+func inputDirForType(type):
+    
+    if type & I_E: return E
+    if type & I_S: return S
+    if type & I_W: return W
+    if type & I_N: return N
+    
+func outputDirForType(type):
+    
+    if type & O_E: return E
+    if type & O_S: return S
+    if type & O_W: return W
+    if type & O_N: return N
+    

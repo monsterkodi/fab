@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bhrehvjlydr2q"]
+
+[ext_resource type="Script" uid="uid://wdupn7eefvj6" path="res://world/FabState.gd" id="1_w3g87"]
+
+[node name="FabState" type="Node" unique_id=261405774]
+script = ExtResource("1_w3g87")
+
+[node name="Machines" type="Node" parent="." unique_id=139877367]
+
+[node name="BeltStates" type="Node" parent="." unique_id=944210268]

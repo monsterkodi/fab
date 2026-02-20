@@ -8,8 +8,8 @@ var trail = []
 
 func start():
     
-    beltPieces = Utils.buildings().beltPieces
-    tempPoints = Utils.buildings().tempPoints
+    beltPieces = Utils.fabState().beltPieces
+    tempPoints = Utils.fabState().tempPoints
     
 func stop():
     
@@ -133,7 +133,7 @@ func pointerRelease(p):
     updateBelt()
     
 func updateTemp():
-    Utils.buildings().updateTemp()
+    Utils.fabState().updateTemp()
     
 func updateBelt():
-    Utils.buildings().updateBelt()
+    Utils.fabState().updateBelt()

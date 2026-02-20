@@ -2,11 +2,13 @@ class_name Level
 extends Node3D
 
 var inert = true
-@onready var buildings: Buildings = $Buildings
+@onready var fabState: FabState = $FabState
 
 func _ready():
     
-    #Log.log("Level._ready", name, "inert:", inert)
+    Log.log("Level._ready", name)
+    
+    fabState.addMachineAtPosOfType(Vector2i(0,0), Mach.Type.Root)
     
     set_process(false)
     

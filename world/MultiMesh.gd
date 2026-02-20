@@ -1,6 +1,6 @@
 extends Node3D
 
-var dict = {"dot": [], "belt": [], "temp": []}
+var dict = {"dot": [], "belt": [], "temp": [], "item": []}
 var beltNames = [
     "ES_W", 
     "NES_W", 
@@ -17,8 +17,6 @@ var beltNames = [
     "W_S",  
     ]
 var beltPieces = {
- #0b0001_0000: ["W_E",   0],
- #0b0000_0100: ["W_E",   0],
  0b0001_0100: ["W_E",   0],
  0b1000_0100: ["W_N",   0],
  0b0010_0100: ["W_S",   0],
@@ -33,8 +31,6 @@ var beltPieces = {
  0b1001_0110: ["SW_NE", 0],
  0b1010_0101: ["WE_NS", 0],
 
- #0b0010_0000: ["W_E",   1],
- #0b0000_1000: ["W_E",   1],
  0b0010_1000: ["W_E",   1],
  0b0001_1000: ["W_N",   1],
  0b0100_1000: ["W_S",   1],
@@ -49,8 +45,6 @@ var beltPieces = {
  0b0011_1100: ["SW_NE", 1],
  0b0101_1010: ["WE_NS", 1],
 
- #0b0100_0000: ["W_E",   2],
- #0b0000_0001: ["W_E",   2],
  0b0100_0001: ["W_E",   2],
  0b0010_0001: ["W_N",   2],
  0b1000_0001: ["W_S",   2],
@@ -64,8 +58,6 @@ var beltPieces = {
  0b0001_1110: ["NES_W", 2],
  0b0110_1001: ["SW_NE", 2],
 
- #0b1000_0000: ["W_E",   3],
- #0b0000_0010: ["W_E",   3],
  0b1000_0010: ["W_E",   3],
  0b0100_0010: ["W_N",   3],
  0b0001_0010: ["W_S",   3],
@@ -104,9 +96,8 @@ func clear(typ:String):
 func _process(delta:float):
     
     var dots = dict.dot
-    var num = dots.size()  
-    $Dot.multimesh.instance_count = num 
-    for i in range(num):
+    $Dot.multimesh.instance_count = dots.size() 
+    for i in range(dots.size()):
         var trans = Transform3D.IDENTITY
         trans.origin.x = dots[i].x
         trans.origin.z = dots[i].y
@@ -114,6 +105,14 @@ func _process(delta:float):
         var sc = 0.25
         trans = trans.scaled_local(Vector3(sc,sc,sc))
         $Dot.multimesh.set_instance_transform(i, trans)
+
+    var items = dict.item
+    $Item.multimesh.instance_count = items.size()  
+    for i in range(items.size()):
+        var trans = Transform3D.IDENTITY
+        trans.origin = items[i]
+        trans.origin.y += 0.29
+        $Item.multimesh.set_instance_transform(i, trans)
 
     drawPieces(dict.belt, "Belt_")
     drawPieces(dict.temp, "Temp_")

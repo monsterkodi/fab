@@ -1,31 +1,29 @@
+class_name BuilderSwitch
 extends Node3D
 
 var builder
 
+func _ready():
+    
+    Post.subscribe(self)
+
 func levelStart():
     
-    pass
-    #activeAction("Belt")
+    activateBuilder("Belt")
 
-func activeAction(action):
-    
-    #Log.log("activeAction", action)
+func activateBuilder(builderName):
     
     if builder: builder.stop()
     
     var color = Color.WHEAT
     
-    match action:
+    match builderName:
         "Belt": builder = $BeltBuilder; color = Color.DODGER_BLUE
         "Del":  builder = $Deleter; color = Color.RED
-        _:      builder = $BeltBuilder
+        _:      builder = $BeltBuilder; color = Color.YELLOW
         
     $Dot.get_surface_override_material(0).albedo_color = color
     builder.start()
-
-func _ready():
-    
-    Post.subscribe(self)
     
 func pointerHover(pos):
     

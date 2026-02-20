@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://srdtmvh7y33a" path="res://snd/MenuSound.gd" id="15_ortil"]
 [ext_resource type="Script" uid="uid://dbjdt42valv4b" path="res://snd/GameSound.gd" id="16_ppjuv"]
 [ext_resource type="Material" uid="uid://cw0p3qxalvp6y" path="res://materials/WorldGridMaterial.tres" id="16_tx47m"]
-[ext_resource type="Script" uid="uid://bt568sten6aq4" path="res://world/Pointer.gd" id="16_y7dlm"]
+[ext_resource type="Script" uid="uid://bt568sten6aq4" path="res://world/BuilderSwitch.gd" id="16_y7dlm"]
 [ext_resource type="Script" uid="uid://c0jnsahm0guxo" path="res://world/BeltBuilder.gd" id="17_ww6ps"]
 [ext_resource type="Script" uid="uid://bcsinm3sf6r4u" path="res://world/Deleter.gd" id="18_ortil"]
 [ext_resource type="PackedScene" uid="uid://crdyanslu6b0r" path="res://ui/menu/MainMenu.tscn" id="23_vqsdb"]
@@ -170,19 +170,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.341934e-05, -0.001149416, 0
 mesh = SubResource("PlaneMesh_fy8qs")
 surface_material_override/0 = ExtResource("16_tx47m")
 
-[node name="Pointer" type="Node3D" parent="." unique_id=848892079]
+[node name="BuilderSwitch" type="Node3D" parent="." unique_id=848892079]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
 script = ExtResource("16_y7dlm")
 
-[node name="Dot" type="MeshInstance3D" parent="Pointer" unique_id=890479429]
+[node name="Dot" type="MeshInstance3D" parent="BuilderSwitch" unique_id=890479429]
 mesh = SubResource("PlaneMesh_8u1wm")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_8u1wm")
 
-[node name="BeltBuilder" type="Node" parent="Pointer" unique_id=176865998]
+[node name="BeltBuilder" type="Node" parent="BuilderSwitch" unique_id=176865998]
 script = ExtResource("17_ww6ps")
 
-[node name="Deleter" type="Node" parent="Pointer" unique_id=547531162]
+[node name="Deleter" type="Node" parent="BuilderSwitch" unique_id=547531162]
 script = ExtResource("18_ortil")
 
 [connection signal="playLevel" from="MenuHandler/MainMenu" to="." method="playLevel"]

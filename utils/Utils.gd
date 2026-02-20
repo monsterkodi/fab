@@ -191,6 +191,6 @@ func world():
     
     return Engine.get_main_loop().root.get_node("World")
     
-func buildings():
+func fabState():
     
-    return world().currentLevel.buildings
+    return world().currentLevel.fabState

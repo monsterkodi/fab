@@ -5,7 +5,7 @@ var beltPieces: Dictionary[Vector2i, int]
 
 func start():
     
-    beltPieces = Utils.buildings().beltPieces
+    beltPieces = Utils.fabState().beltPieces
     
 func stop(): pass
     
@@ -28,4 +28,4 @@ func pointerShiftClick(pos): pass
 func pointerCancel(pos): pass
 
 func updateBelt():
-    Utils.buildings().updateBelt()
+    Utils.fabState().updateBelt()

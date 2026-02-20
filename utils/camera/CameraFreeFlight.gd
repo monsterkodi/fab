@@ -24,7 +24,7 @@ var resetParent
 
 func _ready():
     
-    transform.origin.y = 10
+    transform.origin.y = 3
     resetTransform = transform
     resetParent    = get_parent_node_3d().transform
 

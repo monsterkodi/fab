@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bvomy8grf01e8" path="res://world/MultiMesh.gd" id="1_4npgi"]
 [ext_resource type="Material" uid="uid://dcgyqd114wn5k" path="res://materials/Belt_ES_W.tres" id="3_f2do6"]
+[ext_resource type="Material" uid="uid://baiafbfas607g" path="res://materials/DashedGridMaterial.tres" id="3_n4xvd"]
 [ext_resource type="Material" uid="uid://bfu3w6fnnsjli" path="res://materials/Belt_NES_W.tres" id="4_6s6db"]
 [ext_resource type="Material" uid="uid://dvw8t7ea0x1st" path="res://materials/DotMaterial.tres" id="4_rowl7"]
 [ext_resource type="Material" uid="uid://bnqdvxdyufqu6" path="res://materials/Belt_NE_W.tres" id="5_mxpd2"]
@@ -37,17 +38,15 @@ transform_format = 1
 use_colors = true
 mesh = SubResource("PlaneMesh_4npgi")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4npgi"]
-albedo_color = Color(0.44811547, 0.4440996, 1, 1)
+[sub_resource type="SphereMesh" id="SphereMesh_yyjq7"]
+radius = 0.25
+height = 0.5
+radial_segments = 24
+rings = 16
 
-[sub_resource type="MultiMesh" id="MultiMesh_4npgi"]
+[sub_resource type="MultiMesh" id="MultiMesh_ggf11"]
 transform_format = 1
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ugn5w"]
-albedo_color = Color(0.25338072, 0.25338072, 0.25338072, 1)
-
-[sub_resource type="MultiMesh" id="MultiMesh_5pk03"]
-transform_format = 1
+mesh = SubResource("SphereMesh_yyjq7")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_6isxd"]
 material = ExtResource("3_f2do6")
@@ -418,15 +417,9 @@ material_override = ExtResource("4_rowl7")
 cast_shadow = 0
 multimesh = SubResource("MultiMesh_lh0gu")
 
-[node name="Belt" type="MultiMeshInstance3D" parent="." unique_id=1537164184]
-material_override = SubResource("StandardMaterial3D_4npgi")
-cast_shadow = 0
-multimesh = SubResource("MultiMesh_4npgi")
-
-[node name="Temp" type="MultiMeshInstance3D" parent="." unique_id=1827071932]
-material_override = SubResource("StandardMaterial3D_ugn5w")
-cast_shadow = 0
-multimesh = SubResource("MultiMesh_5pk03")
+[node name="Item" type="MultiMeshInstance3D" parent="." unique_id=1197970336]
+material_override = ExtResource("3_n4xvd")
+multimesh = SubResource("MultiMesh_ggf11")
 
 [node name="Belt_ES_W" type="MultiMeshInstance3D" parent="." unique_id=1134480827]
 multimesh = SubResource("MultiMesh_n4xvd")
