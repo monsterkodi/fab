@@ -32,7 +32,7 @@ func produce():
         var slot = slots[i]
         var bs = Utils.fabState().beltStateAtPos(pos + slot.pos)
         var inDir = Belt.OPPOSITE[slot.dir]
-        var adv = bs.hasSpace(inDir)
+        var adv = bs.inSpace(inDir)
         if adv >= 0:
             bs.addItem(inDir, Item.new())
         

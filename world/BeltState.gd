@@ -13,11 +13,9 @@ func _ready():
     for dir in Belt.DIRS:
         if type & Belt.OUTPUT[dir]:
             outRing.push_back(dir)
-    Log.log("bs", type, outRing)
     
 func _exit_tree():
     
-    #Log.log("exit", name)
     Utils.fabState().beltStates.erase(pos)
     
 func advanceForDelta(delta:float) -> float:
@@ -42,7 +40,7 @@ func advanceItems(delta:float):
             var bs = Utils.fabState().beltStateAtPos(pos + Belt.NEIGHBOR[item.direction])
             if bs:
                 var inDir = Belt.OPPOSITE[item.direction]
-                var adv = bs.hasSpace(inDir)
+                var adv = bs.inSpace(inDir, 1 - item.advance + advance)
                 if adv >= 0:
                     remove_child(item)
                     item.advance = adv
@@ -50,7 +48,7 @@ func advanceItems(delta:float):
     
     for item in get_children():
         if item.advance <= 0.5 and item.advance + advance > 0.5:
-            var space
+            var space = 0
             for index in range(outRing.size()):
                 var ringIndex = (outIndex + index) % outRing.size()
                 var dir = outRing[ringIndex]
@@ -66,7 +64,6 @@ func advanceItems(delta:float):
             item.advance = minf(item.advance + advance, 1.0)
             
     if get_child_count() == 0:
-        #Log.log("queue free", name, pos)
         queue_free()
         
 func outSpace(dir, advance: float = 0.5) -> float:
@@ -83,7 +80,7 @@ func outSpace(dir, advance: float = 0.5) -> float:
                 return space - Belt.HALFSIZE
     return advance
     
-func hasSpace(dir, advance: float = 0) -> float:
+func inSpace(dir, advance: float = 0.0) -> float:
 
     if not type & Belt.INPUT[dir]:
         return -2
@@ -98,7 +95,7 @@ func hasSpace(dir, advance: float = 0) -> float:
     return tailSpace - Belt.HALFSIZE
     
 func addItem(inDir, item):
-    #Log.log("add_item", get_child_count())
+    #Log.log("add_item", get_child_count(), item.advance, inDir)
     assert(type & Belt.INPUT[inDir])
     item.direction = inDir
     add_child(item)
