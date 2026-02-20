@@ -60,8 +60,8 @@ func neighborConnect(pos, type):
     if type == 0:
         type = Belt.I_W | Belt.O_E # 0b0001_0100
         
-    if Belt.isInvalidType(type):
-        Log.warn(Belt.stringForType(type))
+    #if Belt.isInvalidType(type):
+        #Log.warn(Belt.stringForType(type))
 
     return type
              
@@ -123,8 +123,8 @@ func pointerRelease(p):
             
         if Belt.isInvalidType(tempPoints[pos]):
             Log.warn("RELEASE", Belt.stringForType(tempPoints[pos]))
-            
-        beltPieces[pos] = tempPoints[pos]
+        
+        Utils.fabState().addBeltAtPos(pos, tempPoints[pos])    
         
     tempPoints.clear()
     lastTemp = null

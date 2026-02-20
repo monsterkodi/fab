@@ -13,9 +13,14 @@ func _ready():
     var fabState = Utils.fabState()
     for slot in slots:
         #Log.log("slot", slot.pos, slot.type)
-        fabState.beltPieces[pos + slot.pos] = Belt.fixInput(Belt.OUTPUT[slot.type])
+        fabState.beltPieces[pos + slot.pos] = Belt.fixInput(Belt.OUTPUT[slot.dir])
         
     fabState.updateBelt()
+    
+func _exit_tree():
+    
+    Log.log("exit", name)
+    Utils.fabState().machines.erase(pos)    
 
 func consume():
     
@@ -24,8 +29,10 @@ func consume():
 func produce():
     
     for i in range(slots.size()):
-        var bs = Utils.fabState().beltStateAtPos(pos + slots[i].pos)
-        var adv = bs.hasSpace(0.3)
+        var slot = slots[i]
+        var bs = Utils.fabState().beltStateAtPos(pos + slot.pos)
+        var inDir = Belt.OPPOSITE[slot.dir]
+        var adv = bs.hasSpace(inDir)
         if adv >= 0:
-            bs.addItem(Item.new())
+            bs.addItem(inDir, Item.new())
         

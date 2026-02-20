@@ -38,9 +38,38 @@ func addMachineAtPosOfType(pos, type):
     
 func delMachineAtPos(pos):
     
-    if machines.get(pos, 0):
-        $Machines.remove_child(machines.get(pos, 0))
-        machines.erase(pos)    
+    if machines.has(pos):
+        machines[pos].queue_free()
+        $Machines.remove_child(machines[pos])
+        #machines.erase(pos)    
+
+func delBeltStateAtPos(pos):
+    
+    if beltStates.has(pos):
+        beltStates[pos].queue_free()
+        $BeltStates.remove_child(beltStates[pos])
+
+func addBeltAtPos(pos, type):
+    
+    delBeltStateAtPos(pos)
+    beltPieces[pos] = type
+        
+func delBeltAtPos(pos):    
+       
+    delBeltStateAtPos(pos)
+    beltPieces.erase(pos)
+    
+    for d in Belt.DIRS:
+        var np = pos + Belt.NEIGHBOR[d]
+        var bt = beltPieces.get(np, 0)
+        if bt:
+            var clean = Belt.connectNeighbors(np, beltPieces, 0)
+            if Belt.isValidType(clean) and clean != bt:
+                delBeltStateAtPos(np)
+                beltPieces[np] = clean
+                
+    updateBelt()
+    updateItems()
     
 func _process(delta: float):
 

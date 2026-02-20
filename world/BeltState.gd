@@ -9,6 +9,12 @@ var pos : Vector2i
 func _ready():
     pass
     
+func _exit_tree():
+    
+    #assert(get_child_count() == 0)
+    Log.log("exit", name)
+    Utils.fabState().beltStates.erase(pos)
+    
 func advanceForDelta(delta:float) -> float:
     
     return delta * 0.5
@@ -31,33 +37,41 @@ func advanceItems(delta:float):
     if headItem.advance + advance >= tailSpace:
         var bs = Utils.fabState().beltStateAtPos(pos + Belt.NEIGHBOR[headItem.direction])
         if bs:
-            var adv = bs.hasSpace(headItem.halfSize)
+            var inDir = Belt.OPPOSITE[headItem.direction]
+            var adv = bs.hasSpace(inDir)
             if adv >= 0:
                 remove_child(headItem)
                 headItem.advance = adv
-                bs.addItem(headItem)
+                bs.addItem(inDir, headItem)
     
     for item in get_children():
         if item != headItem:
-            tailSpace -= item.halfSize
+            tailSpace -= Belt.HALFSIZE
         item.advance = minf(item.advance + advance, tailSpace)
-        tailSpace = item.advance - item.halfSize
+        tailSpace = item.advance - Belt.HALFSIZE
         if item.advance > 0.5:
             item.direction = Belt.outputDirForType(type)
+            
+    if get_child_count() == 0:
+        Log.log("queue free", name, pos)
+        queue_free()
     
-func hasSpace(halfSize, advance: float = 0) -> float:
+func hasSpace(dir, advance: float = 0) -> float:
 
+    if not type & Belt.INPUT[dir]:
+        return -2
+    
     if get_child_count() == 0:
         return advance
     if get_child_count() > 2:
         return -1
-    var tailSpace = get_child(-1).advance - get_child(-1).halfSize
-    #Log.log("halfSize, tailSpace, advance", halfSize, tailSpace, get_child(-1).advance, get_child(-1).halfSize)
-    if tailSpace > halfSize:
-        return minf(advance, tailSpace - halfSize)
-    return tailSpace - halfSize
+    var tailSpace = get_child(-1).advance - Belt.HALFSIZE
+    if tailSpace > Belt.HALFSIZE:
+        return minf(advance, tailSpace - Belt.HALFSIZE)
+    return tailSpace - Belt.HALFSIZE
     
-func addItem(item):
+func addItem(inDir, item):
     #Log.log("add_item", get_child_count())
-    item.direction = Belt.inputDirForType(type)
+    assert(type & Belt.INPUT[inDir])
+    item.direction = inDir
     add_child(item)

@@ -6,7 +6,7 @@ var inert = true
 
 func _ready():
     
-    Log.log("Level._ready", name)
+    #Log.log("Level._ready", name)
     
     fabState.addMachineAtPosOfType(Vector2i(0,0), Mach.Type.Root)
     

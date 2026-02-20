@@ -2,6 +2,8 @@ extends Node
 # singleton Belt
 
 enum {E ,S, W, N}
+const HALFSIZE   = 0.251
+const FULLSIZE   = HALFSIZE*2
 const DIRS       = [E, S, W, N]
 const OPPOSITE   = [W, N, E, S]
 const DIRNAME    = ["E", "S", "W", "N"]
