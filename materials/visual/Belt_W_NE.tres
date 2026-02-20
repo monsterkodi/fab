@@ -42,6 +42,10 @@ op_type = 0
 output_port_for_preview = 0
 operator = 1
 
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_1fl80"]
+default_input_values = [0, 0.0, 1, 1.5]
+operator = 2
+
 [sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_64he5"]
 output_port_for_preview = 0
 operator = 8
@@ -89,23 +93,9 @@ parameter_name = "Speed"
 default_value_enabled = true
 default_value = 1.0
 
-[sub_resource type="VisualShaderNodeIntParameter" id="VisualShaderNodeIntParameter_k487t"]
-parameter_name = "SpokeCount"
-hint = 1
-min = 1
-max = 5
-default_value_enabled = true
-default_value = 2
-
 [sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_jthjp"]
 default_input_values = [0, 0.0, 1, 4.0]
 operator = 2
-
-[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_6fevm"]
-parameter_name = "SpokeThickness"
-hint = 1
-default_value_enabled = true
-default_value = 0.3
 
 [sub_resource type="VisualShaderNodeMultiplyAdd" id="VisualShaderNodeMultiplyAdd_735mg"]
 default_input_values = [0, 0.0, 1, 2.0, 2, -1.0]
@@ -195,26 +185,12 @@ default_input_values = [0, Vector2(0.2, 0.8), 1, Vector2(0, 0)]
 expanded_output_ports = [0]
 op_type = 1
 
-[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_j8p4u"]
-input_name = "time"
-
 [sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_b1y35"]
 output_port_for_preview = 0
 operator = 1
 
-[sub_resource type="VisualShaderNodeFloatFunc" id="VisualShaderNodeFloatFunc_glfn2"]
-function = 17
-
-[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_817rs"]
-default_input_values = [0, 0.0, 1, 2.0]
-operator = 2
-
 [sub_resource type="VisualShaderNodeFloatFunc" id="VisualShaderNodeFloatFunc_1tjbf"]
 function = 31
-
-[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_g0rok"]
-default_input_values = [0, 0.0, 1, 6.283]
-operator = 2
 
 [sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_snykn"]
 
@@ -233,7 +209,7 @@ output_port_for_preview = 0
 operator = 1
 
 [sub_resource type="VisualShaderNodeIntParameter" id="VisualShaderNodeIntParameter_n5o2s"]
-parameter_name = "SpokeCount3"
+parameter_name = "SpokeCount"
 hint = 1
 min = 1
 max = 5
@@ -250,20 +226,12 @@ op_type = 1
 output_port_for_preview = 0
 operator = 1
 
-[sub_resource type="VisualShaderNodeFloatFunc" id="VisualShaderNodeFloatFunc_imhn7"]
-function = 31
-
 [sub_resource type="VisualShaderNodeFloatFunc" id="VisualShaderNodeFloatFunc_qc2u6"]
 output_port_for_preview = 0
 function = 0
 
-[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_3dx8v"]
-parameter_name = "Speed3"
-default_value_enabled = true
-default_value = 1.0
-
 [sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_ur8o4"]
-parameter_name = "SpokeThickness3"
+parameter_name = "SpokeThickness"
 hint = 1
 default_value_enabled = true
 default_value = 0.2
@@ -322,12 +290,8 @@ nodes/fragment/21/node = SubResource("VisualShaderNodeFloatOp_eeuy4")
 nodes/fragment/21/position = Vector2(-2630, 2050)
 nodes/fragment/22/node = SubResource("VisualShaderNodeFloatParameter_tyk20")
 nodes/fragment/22/position = Vector2(-3630, 2230)
-nodes/fragment/23/node = SubResource("VisualShaderNodeIntParameter_k487t")
-nodes/fragment/23/position = Vector2(-3500, 1720)
 nodes/fragment/24/node = SubResource("VisualShaderNodeFloatOp_jthjp")
 nodes/fragment/24/position = Vector2(-3130, 1720)
-nodes/fragment/25/node = SubResource("VisualShaderNodeFloatParameter_6fevm")
-nodes/fragment/25/position = Vector2(-2510, 1390)
 nodes/fragment/26/node = SubResource("VisualShaderNodeMultiplyAdd_735mg")
 nodes/fragment/26/position = Vector2(-2000, 1360)
 nodes/fragment/27/node = SubResource("VisualShaderNodeFloatFunc_tlok5")
@@ -358,16 +322,8 @@ nodes/fragment/77/node = SubResource("VisualShaderNodeStep_uyfo2")
 nodes/fragment/77/position = Vector2(-3380, 3450)
 nodes/fragment/78/node = SubResource("VisualShaderNodeStep_0lw4e")
 nodes/fragment/78/position = Vector2(-3380, 3840)
-nodes/fragment/79/node = SubResource("VisualShaderNodeInput_j8p4u")
-nodes/fragment/79/position = Vector2(-3370, 2630)
-nodes/fragment/80/node = SubResource("VisualShaderNodeFloatFunc_glfn2")
-nodes/fragment/80/position = Vector2(-2780, 2740)
-nodes/fragment/81/node = SubResource("VisualShaderNodeFloatOp_817rs")
-nodes/fragment/81/position = Vector2(-3040, 2710)
 nodes/fragment/82/node = SubResource("VisualShaderNodeFloatFunc_1tjbf")
 nodes/fragment/82/position = Vector2(-1800, 3170)
-nodes/fragment/83/node = SubResource("VisualShaderNodeFloatOp_g0rok")
-nodes/fragment/83/position = Vector2(-2330, 2710)
 nodes/fragment/84/node = SubResource("VisualShaderNodeFloatOp_snykn")
 nodes/fragment/84/position = Vector2(-2030, 2710)
 nodes/fragment/85/node = SubResource("VisualShaderNodeReroute_xligx")
@@ -379,17 +335,13 @@ nodes/fragment/87/position = Vector2(-2410, 3020)
 nodes/fragment/88/node = SubResource("VisualShaderNodeFloatOp_uusfd")
 nodes/fragment/88/position = Vector2(-3060, 3490)
 nodes/fragment/89/node = SubResource("VisualShaderNodeIntParameter_n5o2s")
-nodes/fragment/89/position = Vector2(-3050, 3140)
+nodes/fragment/89/position = Vector2(-3640, 2480)
 nodes/fragment/90/node = SubResource("VisualShaderNodeFloatOp_gb0a7")
 nodes/fragment/90/position = Vector2(-3060, 3880)
-nodes/fragment/91/node = SubResource("VisualShaderNodeFloatFunc_imhn7")
-nodes/fragment/91/position = Vector2(-2560, 2740)
 nodes/fragment/92/node = SubResource("VisualShaderNodeFloatFunc_qc2u6")
 nodes/fragment/92/position = Vector2(-1700, 2740)
-nodes/fragment/93/node = SubResource("VisualShaderNodeFloatParameter_3dx8v")
-nodes/fragment/93/position = Vector2(-3360, 2770)
 nodes/fragment/94/node = SubResource("VisualShaderNodeFloatParameter_ur8o4")
-nodes/fragment/94/position = Vector2(-2100, 3170)
+nodes/fragment/94/position = Vector2(-3650, 2800)
 nodes/fragment/95/node = SubResource("VisualShaderNodeFloatOp_1stgx")
 nodes/fragment/95/position = Vector2(-870, 3770)
 nodes/fragment/96/node = SubResource("VisualShaderNodeMultiplyAdd_xxdrb")
@@ -412,4 +364,6 @@ nodes/fragment/109/node = SubResource("VisualShaderNodeFloatOp_oqdnv")
 nodes/fragment/109/position = Vector2(-80, 1530)
 nodes/fragment/110/node = SubResource("VisualShaderNodeFloatOp_uq3cx")
 nodes/fragment/110/position = Vector2(630, 1530)
-nodes/fragment/connections = PackedInt32Array(4, 0, 2, 0, 3, 0, 5, 0, 5, 0, 6, 1, 6, 1, 7, 0, 6, 2, 7, 1, 5, 0, 9, 1, 9, 1, 8, 0, 9, 2, 8, 1, 7, 0, 10, 0, 8, 0, 10, 1, 11, 0, 12, 0, 2, 0, 3, 0, 4, 0, 11, 0, 14, 0, 16, 0, 16, 0, 15, 0, 12, 0, 18, 0, 17, 0, 19, 1, 19, 0, 13, 1, 18, 0, 20, 0, 20, 0, 17, 0, 21, 0, 20, 1, 22, 0, 16, 1, 23, 0, 24, 0, 24, 0, 18, 1, 26, 0, 19, 0, 25, 0, 27, 0, 27, 0, 26, 0, 15, 0, 28, 0, 28, 0, 21, 0, 11, 1, 12, 1, 29, 0, 30, 0, 30, 0, 31, 1, 32, 0, 33, 0, 35, 1, 34, 0, 35, 2, 34, 1, 5, 0, 35, 1, 34, 0, 13, 0, 8, 0, 74, 1, 31, 0, 0, 0, 33, 0, 76, 0, 76, 0, 31, 0, 103, 2, 77, 1, 77, 1, 88, 0, 77, 2, 88, 1, 78, 1, 90, 0, 78, 2, 90, 1, 103, 2, 78, 1, 88, 0, 95, 0, 90, 0, 95, 1, 79, 0, 81, 0, 81, 0, 80, 0, 93, 0, 81, 1, 80, 0, 91, 0, 92, 0, 97, 1, 84, 0, 92, 0, 89, 0, 86, 0, 86, 0, 87, 1, 96, 0, 97, 0, 94, 0, 82, 0, 82, 0, 96, 0, 91, 0, 83, 0, 87, 0, 84, 1, 83, 0, 84, 0, 103, 1, 85, 0, 85, 0, 87, 0, 97, 0, 106, 0, 104, 1, 105, 0, 104, 2, 105, 1, 103, 2, 104, 1, 105, 0, 106, 1, 106, 0, 107, 0, 107, 0, 108, 1, 108, 0, 30, 1, 109, 0, 74, 0, 95, 0, 109, 1, 110, 0, 33, 1, 90, 0, 110, 1, 10, 0, 109, 0, 74, 0, 110, 0, 13, 0, 108, 0, 7, 0, 71, 0, 88, 0, 71, 1, 71, 0, 0, 1)
+nodes/fragment/111/node = SubResource("VisualShaderNodeFloatOp_1fl80")
+nodes/fragment/111/position = Vector2(-2450, 1360)
+nodes/fragment/connections = PackedInt32Array(4, 0, 2, 0, 3, 0, 5, 0, 5, 0, 6, 1, 6, 1, 7, 0, 6, 2, 7, 1, 5, 0, 9, 1, 9, 1, 8, 0, 9, 2, 8, 1, 7, 0, 10, 0, 8, 0, 10, 1, 11, 0, 12, 0, 2, 0, 3, 0, 4, 0, 11, 0, 14, 0, 16, 0, 16, 0, 15, 0, 12, 0, 18, 0, 17, 0, 19, 1, 19, 0, 13, 1, 18, 0, 20, 0, 20, 0, 17, 0, 21, 0, 20, 1, 22, 0, 16, 1, 24, 0, 18, 1, 26, 0, 19, 0, 27, 0, 26, 0, 15, 0, 28, 0, 28, 0, 21, 0, 11, 1, 12, 1, 29, 0, 30, 0, 30, 0, 31, 1, 32, 0, 33, 0, 35, 1, 34, 0, 35, 2, 34, 1, 5, 0, 35, 1, 34, 0, 13, 0, 8, 0, 74, 1, 31, 0, 0, 0, 33, 0, 76, 0, 76, 0, 31, 0, 103, 2, 77, 1, 77, 1, 88, 0, 77, 2, 88, 1, 78, 1, 90, 0, 78, 2, 90, 1, 103, 2, 78, 1, 88, 0, 95, 0, 90, 0, 95, 1, 92, 0, 97, 1, 84, 0, 92, 0, 89, 0, 86, 0, 86, 0, 87, 1, 96, 0, 97, 0, 94, 0, 82, 0, 82, 0, 96, 0, 87, 0, 84, 1, 103, 1, 85, 0, 85, 0, 87, 0, 97, 0, 106, 0, 104, 1, 105, 0, 104, 2, 105, 1, 103, 2, 104, 1, 105, 0, 106, 1, 106, 0, 107, 0, 107, 0, 108, 1, 108, 0, 30, 1, 109, 0, 74, 0, 95, 0, 109, 1, 110, 0, 33, 1, 90, 0, 110, 1, 10, 0, 109, 0, 74, 0, 110, 0, 13, 0, 108, 0, 7, 0, 71, 0, 88, 0, 71, 1, 71, 0, 0, 1, 21, 0, 84, 0, 89, 0, 24, 0, 94, 0, 111, 0, 111, 0, 27, 0)

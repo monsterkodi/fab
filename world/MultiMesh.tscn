@@ -157,12 +157,9 @@ render_priority = 0
 shader = ExtResource("16_6isxd")
 shader_parameter/RimColor = Color(0.5019608, 0.5019608, 0.5019608, 1)
 shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
-shader_parameter/SpokeThickness2 = 0.3
-shader_parameter/SpokeCount2 = 2
-shader_parameter/Speed2 = 1.0
-shader_parameter/SpokeThickness3 = 0.2
-shader_parameter/Speed3 = 1.0
-shader_parameter/SpokeCount3 = 2
+shader_parameter/SpokeThickness = 0.2
+shader_parameter/SpokeCount = 2
+shader_parameter/Speed = 1.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_2431l"]
 material = SubResource("ShaderMaterial_uatoq")
@@ -180,12 +177,6 @@ shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
 shader_parameter/SpokeThickness = 0.3
 shader_parameter/SpokeCount = 2
 shader_parameter/Speed = 1.0
-shader_parameter/SpokeThickness2 = 0.3
-shader_parameter/SpokeCount2 = 2
-shader_parameter/Speed2 = 1.0
-shader_parameter/SpokeThickness3 = 0.2
-shader_parameter/Speed3 = 1.0
-shader_parameter/SpokeCount3 = 2
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_smofg"]
 material = SubResource("ShaderMaterial_0ka0d")
@@ -203,9 +194,6 @@ shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
 shader_parameter/SpokeThickness = 0.3
 shader_parameter/SpokeCount = 2
 shader_parameter/Speed = 1.0
-shader_parameter/SpokeThickness3 = 0.2
-shader_parameter/Speed3 = 1.0
-shader_parameter/SpokeCount3 = 2
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_k7pgf"]
 material = SubResource("ShaderMaterial_boh1x")
@@ -223,9 +211,6 @@ shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
 shader_parameter/SpokeThickness = 0.3
 shader_parameter/SpokeCount = 2
 shader_parameter/Speed = 1.0
-shader_parameter/SpokeThickness2 = 0.3
-shader_parameter/SpokeCount2 = 2
-shader_parameter/Speed2 = 1.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_cjirp"]
 material = SubResource("ShaderMaterial_jtotk")
@@ -243,12 +228,6 @@ shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
 shader_parameter/SpokeThickness = 0.3
 shader_parameter/SpokeCount = 2
 shader_parameter/Speed = 1.0
-shader_parameter/SpokeThickness3 = 0.3
-shader_parameter/SpokeCount3 = 2
-shader_parameter/Speed3 = 1.0
-shader_parameter/SpokeThickness2 = 0.2
-shader_parameter/Speed2 = 1.0
-shader_parameter/SpokeCount2 = 2
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_yqlch"]
 material = SubResource("ShaderMaterial_3tihy")
@@ -297,12 +276,9 @@ render_priority = 0
 shader = ExtResource("23_0eatq")
 shader_parameter/RimColor = Color(0.5, 0.5, 0.5, 1)
 shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
-shader_parameter/SpokeThickness2 = 0.3
-shader_parameter/SpokeCount2 = 2
-shader_parameter/Speed2 = 1.0
-shader_parameter/SpokeThickness3 = 0.2
-shader_parameter/Speed3 = 1.0
-shader_parameter/SpokeCount3 = 2
+shader_parameter/SpokeThickness = 0.2
+shader_parameter/SpokeCount = 2
+shader_parameter/Speed = 1.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_r34t7"]
 material = SubResource("ShaderMaterial_831ej")
@@ -337,9 +313,6 @@ shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
 shader_parameter/SpokeThickness = 0.3
 shader_parameter/SpokeCount = 2
 shader_parameter/Speed = 1.0
-shader_parameter/SpokeThickness3 = 0.2
-shader_parameter/Speed3 = 1.0
-shader_parameter/SpokeCount3 = 2
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_muck2"]
 material = SubResource("ShaderMaterial_owoqj")
@@ -354,15 +327,9 @@ render_priority = 0
 shader = ExtResource("26_jmc6f")
 shader_parameter/RimColor = Color(0.5, 0.5, 0.5, 1)
 shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
-shader_parameter/SpokeThickness = 0.3
+shader_parameter/SpokeThickness2 = 0.3
 shader_parameter/SpokeCount = 2
 shader_parameter/Speed = 1.0
-shader_parameter/SpokeThickness2 = 0.3
-shader_parameter/SpokeCount2 = 2
-shader_parameter/Speed2 = 1.0
-shader_parameter/SpokeThickness3 = 0.2
-shader_parameter/Speed3 = 1.0
-shader_parameter/SpokeCount3 = 2
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_m5472"]
 material = SubResource("ShaderMaterial_m8vp7")
@@ -380,9 +347,6 @@ shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
 shader_parameter/SpokeThickness = 0.3
 shader_parameter/SpokeCount = 2
 shader_parameter/Speed = 1.0
-shader_parameter/SpokeThickness2 = 0.3
-shader_parameter/SpokeCount2 = 2
-shader_parameter/Speed2 = 1.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_2wpia"]
 material = SubResource("ShaderMaterial_j0blc")
