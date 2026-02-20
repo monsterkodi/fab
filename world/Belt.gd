@@ -118,7 +118,26 @@ func dirForPositions(src, tgt):
     elif src.y > tgt.y: return N
     return -1
     
+func singleIn(type):  return INPUT_DIR.has (type & 0b1111)
+func singleOut(type): return OUTPUT_DIR.has(type & 0b1111_0000)
+    
+func isSimple(type):
+    
+    return singleIn(type) and singleOut(type)
+    
 func offsetForAdvanceAndDirection(type, advance, direction) -> Vector3:
+    
+    var offset = Vector3.ZERO
+    var rad = advance * PI * 0.5
+    match type:
+        Belt.O_E | Belt.I_S: return Vector3(( 1.0 - cos(rad)) * 0.5, 0, ( 1.0 - sin(rad)) * 0.5) # cw
+        Belt.O_S | Belt.I_W: return Vector3((-1.0 + sin(rad)) * 0.5, 0, ( 1.0 - cos(rad)) * 0.5) # cw
+        Belt.O_W | Belt.I_N: return Vector3((-1.0 + cos(rad)) * 0.5, 0, (-1.0 + sin(rad)) * 0.5) # cw
+        Belt.O_N | Belt.I_E: return Vector3(( 1.0 - sin(rad)) * 0.5, 0, (-1.0 + cos(rad)) * 0.5) # cw
+        Belt.O_E | Belt.I_N: return Vector3(( 1.0 - cos(rad)) * 0.5, 0, (-1.0 + sin(rad)) * 0.5) # ccw
+        Belt.O_S | Belt.I_E: return Vector3(( 1.0 - sin(rad)) * 0.5, 0, ( 1.0 - cos(rad)) * 0.5) # ccw
+        Belt.O_W | Belt.I_S: return Vector3((-1.0 + cos(rad)) * 0.5, 0, ( 1.0 - sin(rad)) * 0.5) # ccw
+        Belt.O_N | Belt.I_W: return Vector3((-1.0 + sin(rad)) * 0.5, 0, (-1.0 + cos(rad)) * 0.5) # ccw
     
     if advance <= 0.5:
         return NORM[direction] * (0.5 - advance)

@@ -7,12 +7,17 @@ var type : int
 var pos : Vector2i
 var outIndex = 0
 var outRing  = [] 
+var inRing   = [] 
+var inQueue  = [] 
 
 func _ready():
     
+    assert(type)
     for dir in Belt.DIRS:
         if type & Belt.OUTPUT[dir]:
             outRing.push_back(dir)
+        if type & Belt.INPUT[dir]:
+            inRing.push_back(dir)
     
 func _exit_tree():
     
@@ -20,7 +25,7 @@ func _exit_tree():
     
 func advanceForDelta(delta:float) -> float:
     
-    return delta * 0.5
+    return delta * 2
     
 func position(): return Vector3(pos.x, 0, pos.y)
     
@@ -31,7 +36,7 @@ func itemPositionAtIndex(index) -> Vector3:
     
 func advanceItems(delta:float):
     
-    assert(get_child_count() > 0)
+    if get_child_count() == 0: return
     
     var advance = advanceForDelta(delta)
     
@@ -40,33 +45,35 @@ func advanceItems(delta:float):
             var bs = Utils.fabState().beltStateAtPos(pos + Belt.NEIGHBOR[item.direction])
             if bs:
                 var inDir = Belt.OPPOSITE[item.direction]
-                var adv = bs.inSpace(inDir, 1 - item.advance + advance)
+                var adv = bs.inSpace(inDir, (item.advance + advance) - 1)
                 if adv >= 0:
                     remove_child(item)
                     item.advance = adv
                     bs.addItem(inDir, item)
     
     for item in get_children():
-        if item.advance <= 0.5 and item.advance + advance > 0.5:
+        if item.advance < 0.5 and item.advance + advance >= 0.5:
             var space = 0
             for index in range(outRing.size()):
+                                
                 var ringIndex = (outIndex + index) % outRing.size()
                 var dir = outRing[ringIndex]
                 space = outSpace(dir, item.advance + advance)
-                if space > 0.5:
+                
+                if space >= 0.5:
                     item.advance = space
                     item.direction = dir
-                    outIndex = (outIndex + 1) % outRing.size()
+                    outIndex = (ringIndex + 1) % outRing.size()
                     break
-            if space <= 0.5:
-                item.advance = 0.5
+            if space < 0.5:
+                item.advance = 0.49999
         else:
             item.advance = minf(item.advance + advance, 1.0)
             
-    if get_child_count() == 0:
+    if get_child_count() == 0 and Belt.isSimple(type):
         queue_free()
         
-func outSpace(dir, advance: float = 0.5) -> float:
+func outSpace(dir, advance: float = 0.5) -> float: 
 
     if not type & Belt.OUTPUT[dir]:
         return -2
@@ -83,16 +90,31 @@ func outSpace(dir, advance: float = 0.5) -> float:
 func inSpace(dir, advance: float = 0.0) -> float:
 
     if not type & Belt.INPUT[dir]:
-        return -2
-    
+        return -1
     if get_child_count() == 0:
         return advance
-    if get_child_count() > 3:
-        return -1
-    var tailSpace = get_child(-1).advance - Belt.HALFSIZE
-    if tailSpace > Belt.HALFSIZE:
-        return minf(advance, tailSpace - Belt.HALFSIZE)
-    return tailSpace - Belt.HALFSIZE
+    if get_child_count() >= 4:
+        return -2
+    if inQueue.size() == 0:
+        var tailSpace = get_child(-1).advance - Belt.HALFSIZE
+        if tailSpace >= Belt.HALFSIZE:
+            return minf(advance, tailSpace - Belt.HALFSIZE)
+        if inRing.size() > 1:
+            inQueue.push_back(dir)
+            #Log.log("inSpace!", pos, dir, get_child(-1).advance, get_child(-1).direction, inQueue)
+        return -3
+    if inQueue[0] == dir:
+        var tailSpace = get_child(-1).advance - Belt.HALFSIZE
+        if tailSpace >= Belt.HALFSIZE:
+            inQueue.pop_front()
+            #Log.log("inSpace>", pos, dir, get_child(-1).advance, get_child(-1).direction, inQueue)
+            return minf(advance, tailSpace - Belt.HALFSIZE)
+    else:
+        if not inQueue.has(dir):
+            inQueue.push_back(dir)
+            #Log.log("inSpace?", pos, dir, get_child(-1).advance, get_child(-1).direction, inQueue)
+            return -4 
+    return -5
     
 func addItem(inDir, item):
     #Log.log("add_item", get_child_count(), item.advance, inDir)
