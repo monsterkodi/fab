@@ -29,10 +29,11 @@ func addBeltStateAtPos(pos):
     $BeltStates.add_child(bs)
     return bs    
     
-func addMachineAtPosOfType(pos, type):
+func addMachineAtPosOfType(pos, type, orientation = 0):
     
     delMachineAtPos(pos)
     var machine = Mach.Class[type].new()
+    machine.setOrientation(orientation)
     machine.pos = pos
     machines[pos] = machine
     $Machines.add_child(machine)

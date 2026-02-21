@@ -155,7 +155,7 @@ func drawPieces(pieces, prefix):
         var trans = Transform3D.IDENTITY
         if beltPieces[t][1]:
             trans = trans.rotated(Vector3.UP, deg_to_rad(-90*beltPieces[t][1]))
-        trans = trans.translated(Vector3(pieces[n].x, 0.04, pieces[n].y))
+        trans = trans.translated(Vector3(pieces[n].x, 0.1, pieces[n].y))
         mm.set_instance_transform(count[key], trans)
         count[key] += 1
         

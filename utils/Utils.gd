@@ -107,7 +107,11 @@ func firstParentWithClass(node:Node, className:String):
         parent = parent.get_parent()
     return null
     
-func level(node:Node): return firstParentWithClass(node, "Level")
+func level(node:Node = null): 
+    if node:
+        return firstParentWithClass(node, "Level")
+    else:
+        return get_node("/root/World/Level")
     
 func childrenWithClass(node:Node, className:String):
     

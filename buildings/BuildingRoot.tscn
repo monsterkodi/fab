@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://h62wu6f77eaq"]
+
+[ext_resource type="PackedScene" uid="uid://dep5xvthu3mc6" path="res://buildings/BuildingSlot.tscn" id="1_ba60f"]
+[ext_resource type="Material" uid="uid://ci4cvsq2gbob7" path="res://materials/BuildingMaterial.tres" id="2_ljicy"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ba60f"]
+size = Vector3(1, 0.5, 1)
+
+[node name="BuildingRoot" type="Node3D" unique_id=1719479523]
+
+[node name="BuildingSlotE" parent="." unique_id=1827591637 instance=ExtResource("1_ba60f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="BuildingSlotS" parent="." unique_id=1825092790 instance=ExtResource("1_ba60f")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 1)
+
+[node name="BuildingSlotW" parent="." unique_id=1570118723 instance=ExtResource("1_ba60f")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1, 0, 0)
+
+[node name="BuildingSlotN" parent="." unique_id=1371364403 instance=ExtResource("1_ba60f")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, -1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1742839002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+mesh = SubResource("BoxMesh_ba60f")
+surface_material_override/0 = ExtResource("2_ljicy")

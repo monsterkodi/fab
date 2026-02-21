@@ -3,21 +3,21 @@ extends Machine
 
 var canProduce = false
 
-func _ready():
+func _init():
     
     type  = Mach.Type.Prism
     
     slots = [
-        {"pos": Belt.NEIGHBOR[Belt.E], "dir": Belt.E},
-        {"pos": Belt.NEIGHBOR[Belt.S], "dir": Belt.S},
-        {"pos": Belt.NEIGHBOR[Belt.N], "dir": Belt.N},
+        {"pos": Belt.NEIGHBOR[Belt.E]+Belt.NEIGHBOR[Belt.N], "dir": Belt.E, "color": Color.RED},
+        {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E, "color": Color.GREEN},
+        {"pos": Belt.NEIGHBOR[Belt.E]+Belt.NEIGHBOR[Belt.S], "dir": Belt.E, "color": Color.BLUE},
         ]
         
     slits = [
         {"pos": Belt.NEIGHBOR[Belt.W], "dir": Belt.W},
     ]
     
-    super._ready()
+    #super._ready()
     
 func consumeItemAtSlit(item, slit):
     
@@ -34,11 +34,8 @@ func produceItemAtSlot(slot):
     
     if not canProduce: return null
     
-    
     var item = Item.new()
-    match slot.dir:
-        Belt.N : item.color = Color.RED; canProduce = false
-        Belt.E : item.color = Color.GREEN
-        Belt.S : item.color = Color.BLUE
+    item.color = slot.color
+    if slot == slots[-1]: canProduce = false
     return item
         

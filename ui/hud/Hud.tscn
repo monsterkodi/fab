@@ -4,18 +4,29 @@
 [ext_resource type="Theme" uid="uid://g22p2j6a23ol" path="res://ui/theme/HUDTheme.tres" id="2_aaqae"]
 [ext_resource type="ButtonGroup" uid="uid://cf83u33f2ya7m" path="res://ui/hud/ActionButtonGroup.tres" id="3_4sqfl"]
 
-[sub_resource type="InputEventKey" id="InputEventKey_ywxef"]
-device = -1
-keycode = 66
-unicode = 98
-
-[sub_resource type="InputEventKey" id="InputEventKey_4sqfl"]
+[sub_resource type="InputEventKey" id="InputEventKey_epdrl"]
 device = -1
 keycode = 49
 unicode = 49
 
 [sub_resource type="Shortcut" id="Shortcut_4sqfl"]
-events = [SubResource("InputEventKey_ywxef"), SubResource("InputEventKey_4sqfl")]
+events = [SubResource("InputEventKey_epdrl")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_4sqfl"]
+device = -1
+keycode = 50
+unicode = 50
+
+[sub_resource type="Shortcut" id="Shortcut_by07e"]
+events = [SubResource("InputEventKey_4sqfl")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_dqfrj"]
+device = -1
+keycode = 51
+unicode = 51
+
+[sub_resource type="Shortcut" id="Shortcut_ks410"]
+events = [SubResource("InputEventKey_dqfrj")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_by07e"]
 device = -1
@@ -24,6 +35,22 @@ unicode = 120
 
 [sub_resource type="Shortcut" id="Shortcut_gt2ij"]
 events = [SubResource("InputEventKey_by07e")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_gt2ij"]
+device = -1
+keycode = 45
+unicode = 45
+
+[sub_resource type="Shortcut" id="Shortcut_dqfrj"]
+events = [SubResource("InputEventKey_gt2ij")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_ks410"]
+device = -1
+keycode = 61
+unicode = 61
+
+[sub_resource type="Shortcut" id="Shortcut_epdrl"]
+events = [SubResource("InputEventKey_ks410")]
 
 [node name="Hud" type="Control" unique_id=1410583153]
 process_mode = 3
@@ -61,21 +88,21 @@ button_group = ExtResource("3_4sqfl")
 shortcut = SubResource("Shortcut_4sqfl")
 text = "Belt"
 
-[node name="Prism" type="Button" parent="Actions/HBoxContainer" unique_id=367692293]
-layout_mode = 2
-mouse_default_cursor_shape = 2
-toggle_mode = true
-button_group = ExtResource("3_4sqfl")
-shortcut = SubResource("Shortcut_4sqfl")
-text = "Prism"
-
 [node name="Storage" type="Button" parent="Actions/HBoxContainer" unique_id=1598963186]
 layout_mode = 2
 mouse_default_cursor_shape = 2
 toggle_mode = true
 button_group = ExtResource("3_4sqfl")
-shortcut = SubResource("Shortcut_4sqfl")
+shortcut = SubResource("Shortcut_by07e")
 text = "Store"
+
+[node name="Prism" type="Button" parent="Actions/HBoxContainer" unique_id=367692293]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+toggle_mode = true
+button_group = ExtResource("3_4sqfl")
+shortcut = SubResource("Shortcut_ks410")
+text = "Prism"
 
 [node name="Del" type="Button" parent="Actions/HBoxContainer" unique_id=481905193]
 layout_mode = 2
@@ -91,6 +118,7 @@ layout_mode = 2
 mouse_behavior_recursive = 2
 mouse_default_cursor_shape = 2
 action_mode = 0
+shortcut = SubResource("Shortcut_dqfrj")
 text = "-"
 
 [node name="Faster" type="Button" parent="Actions/HBoxContainer" unique_id=1968956871]
@@ -98,11 +126,12 @@ layout_mode = 2
 mouse_behavior_recursive = 2
 mouse_default_cursor_shape = 2
 action_mode = 0
+shortcut = SubResource("Shortcut_epdrl")
 text = "+"
 
 [connection signal="toggled" from="Actions/HBoxContainer/Belt" to="." method="beltToggled"]
-[connection signal="toggled" from="Actions/HBoxContainer/Prism" to="." method="prismToggled"]
 [connection signal="toggled" from="Actions/HBoxContainer/Storage" to="." method="storageToggled"]
+[connection signal="toggled" from="Actions/HBoxContainer/Prism" to="." method="prismToggled"]
 [connection signal="toggled" from="Actions/HBoxContainer/Del" to="." method="delToggled"]
 [connection signal="pressed" from="Actions/HBoxContainer/Slower" to="." method="slower"]
 [connection signal="pressed" from="Actions/HBoxContainer/Faster" to="." method="faster"]

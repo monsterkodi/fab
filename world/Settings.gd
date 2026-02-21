@@ -2,17 +2,13 @@ class_name Settings
 extends Node
 
 static var defaults = {
-    "timeScale":     1.0,
-    "enemySpeed":    1.0,
     "brightness":    1.0,
     "hires":         false,
     "volumeMaster":  1.0,
     "volumeMusic":   1.0,
     "volumeGame":    1.0,
     "volumeMenu":    1.0,
-    "clock":         false,
     "fullscreen":    false,
-    "mouseHide":     true,
 }
 
 static var settings = {}

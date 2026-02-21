@@ -27,6 +27,8 @@ func activateBuilder(builderName):
     
 func pointerHover(pos):
     
+    builder.pointerHover(pos)
+    
     $Dot.global_position.x = pos.x
     $Dot.global_position.z = pos.y
 
@@ -50,3 +52,7 @@ func pointerCancel(pos):
 func pointerRelease(pos):
     
     builder.pointerRelease(pos)
+    
+func pointerRotate():
+    
+    builder.pointerRotate()

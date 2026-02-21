@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cnxiw8djnknk6"]
+
+[ext_resource type="Material" uid="uid://ci4cvsq2gbob7" path="res://materials/BuildingMaterial.tres" id="1_a02b6"]
+[ext_resource type="PackedScene" uid="uid://dtjrgrqwsmi2r" path="res://buildings/BuildingSlit.tscn" id="1_rjfq3"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_a02b6"]
+height = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_rjfq3"]
+bottom_radius = 0.1
+height = 0.5
+
+[node name="BuildingStorage" type="Node3D" unique_id=854421983]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=73355699]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.875, 0)
+mesh = SubResource("CylinderMesh_a02b6")
+surface_material_override/0 = ExtResource("1_a02b6")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1429314962]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.252696, 0)
+mesh = SubResource("CylinderMesh_rjfq3")
+surface_material_override/0 = ExtResource("1_a02b6")
+
+[node name="BuildingSlit" parent="." unique_id=1827591637 instance=ExtResource("1_rjfq3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)

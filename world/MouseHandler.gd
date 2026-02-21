@@ -1,5 +1,10 @@
 extends Control
 
+func _process(delta: float):
+    
+    if Input.is_action_just_pressed("rotate"):
+        Post.pointerRotate.emit()
+
 func _gui_input(event: InputEvent):
     
     if get_tree().paused: return

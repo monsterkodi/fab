@@ -10,6 +10,7 @@ script = ExtResource("1_diie0")
 unique_name_in_owner = true
 transform = Transform3D(0.821488, 2.49254e-08, -0.570226, 0.408926, 0.69694, 0.589113, 0.397413, -0.71713, 0.572527, 1.44324, 1.22455, 0)
 shadow_enabled = true
+shadow_opacity = 0.85
 sky_mode = 1
 
 [node name="FreeFlight" type="Camera3D" parent="." unique_id=1841138807]
@@ -19,4 +20,3 @@ script = ExtResource("1_u5kg4")
 
 [node name="SpotLight" type="OmniLight3D" parent="FreeFlight" unique_id=586801475]
 transform = Transform3D(1, 0, 0, 0, 1, -1.0658141e-14, 0, 1.0658141e-14, 1, 0, 0, 0)
-light_size = 10.0

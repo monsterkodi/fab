@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://d4i4sjdrnt324"]
+
+[ext_resource type="PackedScene" uid="uid://dep5xvthu3mc6" path="res://buildings/BuildingSlot.tscn" id="1_p7nmc"]
+[ext_resource type="Material" uid="uid://ci4cvsq2gbob7" path="res://materials/BuildingMaterial.tres" id="2_7r16o"]
+[ext_resource type="PackedScene" uid="uid://dtjrgrqwsmi2r" path="res://buildings/BuildingSlit.tscn" id="2_xuvpp"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_p7nmc"]
+left_to_right = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_xuvpp"]
+
+[node name="BuildingPrism" type="Node3D" unique_id=447020061]
+
+[node name="BuildingSlotE" parent="." unique_id=1429163775 instance=ExtResource("1_p7nmc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="BuildingSlotS" parent="." unique_id=389187059 instance=ExtResource("1_p7nmc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+
+[node name="BuildingSlotN" parent="." unique_id=2063719671 instance=ExtResource("1_p7nmc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1447050192]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.5, 1)
+mesh = SubResource("PrismMesh_p7nmc")
+surface_material_override/0 = ExtResource("2_7r16o")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1747290590]
+transform = Transform3D(-4.371139e-08, -1, 0, -4.371139e-08, 0, -1, 1, -4.371139e-08, -4.3711385e-08, 0, 0.50000006, -1)
+mesh = SubResource("PrismMesh_p7nmc")
+surface_material_override/0 = ExtResource("2_7r16o")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=913342376]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_xuvpp")
+surface_material_override/0 = ExtResource("2_7r16o")
+
+[node name="BuildingSlot" parent="." unique_id=1827591637 instance=ExtResource("2_xuvpp")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1, 0, 0)

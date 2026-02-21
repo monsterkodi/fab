@@ -20,6 +20,18 @@ func _ready():
         
     fabState.updateBelt()
     
+func setOrientation(orientation):
+    Log.log("orientation", orientation)
+    for slot in slots:
+        Log.log("slot before", slot)
+        slot.pos = Belt.orientatePos(orientation, slot.pos)
+        slot.dir = Belt.orientateDir(orientation, slot.dir)
+        Log.log("slot after", slot)
+        
+    for slit in slits:
+        slit.pos = Belt.orientatePos(orientation, slit.pos)
+        slit.dir = Belt.orientateDir(orientation, slit.dir)
+    
 func _exit_tree():
     
     #Log.log("exit", name)

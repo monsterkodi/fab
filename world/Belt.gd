@@ -143,18 +143,26 @@ func offsetForAdvanceAndDirection(type, advance, direction) -> Vector3:
         return NORM[direction] * (0.5 - advance)
     else:
         return NORM[direction] * (advance - 0.5)
+        
+func orientatePos(orientation, pos):
+    
+    return Vector2i(Vector2(pos).rotated(deg_to_rad(90*orientation)).round())
+    
+func orientateDir(orientation, dir):
+    
+    return (dir + orientation) % 4
 
-func inputDirForType(type):
-    
-    if type & I_E: return E
-    if type & I_S: return S
-    if type & I_W: return W
-    if type & I_N: return N
-    
-func outputDirForType(type):
-    
-    if type & O_E: return E
-    if type & O_S: return S
-    if type & O_W: return W
-    if type & O_N: return N
+#func inputDirForType(type):
+    #
+    #if type & I_E: return E
+    #if type & I_S: return S
+    #if type & I_W: return W
+    #if type & I_N: return N
+    #
+#func outputDirForType(type):
+    #
+    #if type & O_E: return E
+    #if type & O_S: return S
+    #if type & O_W: return W
+    #if type & O_N: return N
     

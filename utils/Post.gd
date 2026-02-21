@@ -7,6 +7,7 @@ signal pointerRelease
 signal pointerShiftClick
 signal pointerShiftRelease
 signal pointerCancel
+signal pointerRotate
 
 signal gamePaused
 signal gameResume
