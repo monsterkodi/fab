@@ -19,8 +19,8 @@ func activateBuilder(builderName):
     
     match builderName:
         "Belt": builder = $BeltBuilder; color = Color.DODGER_BLUE
-        "Del":  builder = $Deleter; color = Color.RED
-        _:      builder = $BeltBuilder; color = Color.YELLOW
+        "Del":  builder = $Deleter;     color = Color.RED
+        _:      builder = $BuildingBuilder; builder.setBuilding(builderName)
         
     $Dot.get_surface_override_material(0).albedo_color = color
     builder.start()

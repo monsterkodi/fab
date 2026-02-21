@@ -61,6 +61,22 @@ button_group = ExtResource("3_4sqfl")
 shortcut = SubResource("Shortcut_4sqfl")
 text = "Belt"
 
+[node name="Prism" type="Button" parent="Actions/HBoxContainer" unique_id=367692293]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+toggle_mode = true
+button_group = ExtResource("3_4sqfl")
+shortcut = SubResource("Shortcut_4sqfl")
+text = "Prism"
+
+[node name="Storage" type="Button" parent="Actions/HBoxContainer" unique_id=1598963186]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+toggle_mode = true
+button_group = ExtResource("3_4sqfl")
+shortcut = SubResource("Shortcut_4sqfl")
+text = "Store"
+
 [node name="Del" type="Button" parent="Actions/HBoxContainer" unique_id=481905193]
 layout_mode = 2
 mouse_default_cursor_shape = 2
@@ -85,6 +101,8 @@ action_mode = 0
 text = "+"
 
 [connection signal="toggled" from="Actions/HBoxContainer/Belt" to="." method="beltToggled"]
+[connection signal="toggled" from="Actions/HBoxContainer/Prism" to="." method="prismToggled"]
+[connection signal="toggled" from="Actions/HBoxContainer/Storage" to="." method="storageToggled"]
 [connection signal="toggled" from="Actions/HBoxContainer/Del" to="." method="delToggled"]
 [connection signal="pressed" from="Actions/HBoxContainer/Slower" to="." method="slower"]
 [connection signal="pressed" from="Actions/HBoxContainer/Faster" to="." method="faster"]

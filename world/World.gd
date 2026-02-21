@@ -88,7 +88,7 @@ func settings(backMenu:Menu):
     %MenuHandler.appear(%SettingsMenu)
     
 func clearLevel():
-    Log.log("clearLevel", currentLevel)
+
     if currentLevel:
         currentLevel.clear(Saver.savegame.data)
         Saver.save()

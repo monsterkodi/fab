@@ -25,23 +25,18 @@ use_colors = true
 mesh = SubResource("PlaneMesh_4npgi")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f2do6"]
-shading_mode = 2
 vertex_color_use_as_albedo = true
-metallic = 0.8
-metallic_specular = 0.25
-roughness = 0.74
+metallic = 0.7
+metallic_specular = 1.0
+roughness = 0.6
 
-[sub_resource type="SphereMesh" id="SphereMesh_yyjq7"]
-material = SubResource("StandardMaterial3D_f2do6")
-radius = 0.25
-height = 0.5
-radial_segments = 24
-rings = 16
+[sub_resource type="BoxMesh" id="BoxMesh_f2do6"]
+size = Vector3(0.4, 0.4, 0.4)
 
 [sub_resource type="MultiMesh" id="MultiMesh_ggf11"]
 transform_format = 1
 use_colors = true
-mesh = SubResource("SphereMesh_yyjq7")
+mesh = SubResource("BoxMesh_f2do6")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_6isxd"]
 material = ExtResource("3_f2do6")
@@ -156,6 +151,7 @@ cast_shadow = 0
 multimesh = SubResource("MultiMesh_lh0gu")
 
 [node name="Item" type="MultiMeshInstance3D" parent="." unique_id=1197970336]
+material_override = SubResource("StandardMaterial3D_f2do6")
 multimesh = SubResource("MultiMesh_ggf11")
 
 [node name="Belt_ES_W" type="MultiMeshInstance3D" parent="." unique_id=1134480827]

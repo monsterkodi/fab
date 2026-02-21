@@ -11,22 +11,7 @@ var gameSpeed:     float = 1.0
 func _ready():
     
     Post.subscribe(self)
-    
-func speedFaster(): 
-    
-    setGameSpeed(gameSpeed * 3/2)
-    
-func speedSlower(): 
-    
-    setGameSpeed(gameSpeed * 2/3)
-    
-func setGameSpeed(newSpeed):
-    
-    Log.log("newSpeed", newSpeed)
-    if newSpeed < 20 and newSpeed > 0.1:
-        gameSpeed = newSpeed
-        Post.gameSpeed.emit(gameSpeed)
-    
+        
 func beltStateAtPos(pos):
     
     if beltStates.has(pos):
@@ -126,4 +111,18 @@ func updateItems():
         
 func mm(): return get_tree().root.get_node("/root/World/Level/MultiMesh")
 
+func speedFaster(): 
+    
+    setGameSpeed(gameSpeed * 3/2)
+    
+func speedSlower(): 
+    
+    setGameSpeed(gameSpeed * 2/3)
+    
+func setGameSpeed(newSpeed):
+    
+    if newSpeed < 24 and newSpeed > 0.1:
+        gameSpeed = newSpeed
+        #Log.log(gameSpeed)
+        Post.gameSpeed.emit(gameSpeed)
     

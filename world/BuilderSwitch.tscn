@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bxv2h0isvjwm5"]
+
+[ext_resource type="Script" uid="uid://bt568sten6aq4" path="res://world/BuilderSwitch.gd" id="1_vkwue"]
+[ext_resource type="Script" uid="uid://c0jnsahm0guxo" path="res://world/BeltBuilder.gd" id="2_mhjh0"]
+[ext_resource type="Script" uid="uid://b2qxj22lbsql8" path="res://world/BuildingBuilder.gd" id="3_3r3yl"]
+[ext_resource type="Script" uid="uid://bcsinm3sf6r4u" path="res://world/Deleter.gd" id="3_amlds"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_amlds"]
+size = Vector3(1, 0.3, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vvp0a"]
+shading_mode = 0
+
+[node name="BuilderSwitch" type="Node3D" unique_id=1482098403]
+script = ExtResource("1_vkwue")
+
+[node name="Dot" type="MeshInstance3D" parent="." unique_id=1953182413]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+transparency = 0.95
+cast_shadow = 0
+mesh = SubResource("BoxMesh_amlds")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_vvp0a")
+
+[node name="BeltBuilder" type="Node" parent="." unique_id=1698741172]
+script = ExtResource("2_mhjh0")
+
+[node name="BuildingBuilder" type="Node" parent="." unique_id=845133518]
+script = ExtResource("3_3r3yl")
+
+[node name="Deleter" type="Node" parent="." unique_id=120809101]
+script = ExtResource("3_amlds")

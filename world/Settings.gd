@@ -23,7 +23,6 @@ static func applySetting(key, value):
     
     match key:
         
-        "timeScale":     setTimeScale(value)
         "brightness":    node("Camera/Light").light_energy = value
         "hires":         setHires(value)
         "volumeMaster":  AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(value))
@@ -32,20 +31,8 @@ static func applySetting(key, value):
         "volumeMusic":   
                          AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"),       linear_to_db(value))
                          AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Menu Music"),  linear_to_db(value))
-        "clock":         HudClock.showClock = value
         "fullscreen":    setFullscreen(value)
-        #"mouseHide":     node("MouseHandler").mouseHide = value
     
-static func setTimeScale(value):
-    
-    Engine.time_scale = value
-    if Engine.time_scale > 1:
-        Engine.physics_ticks_per_second = 120
-    else:
-        Engine.physics_ticks_per_second = 60
-        
-    #Log.log("ticks per second", Engine.physics_ticks_per_second, "timescale", Engine.time_scale)    
-
 static func setHires(value):
 
     if value:
@@ -65,7 +52,6 @@ static func setFullscreen(value):
 static func load(data):
     
     if data.has("Settings"): 
-        #Log.log("apply saved data")
         apply(data.Settings)
 
 static func save(data):
@@ -74,7 +60,6 @@ static func save(data):
         
 static func apply(dict):
     
-    #Log.log("dict", dict)
     for key in dict:
         applySetting(key, dict[key])
         

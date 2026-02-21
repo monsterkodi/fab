@@ -13,4 +13,8 @@ func _ready():
     
     super._ready()
     
+func produceItemAtSlot(slot):
     
+    var item = Item.new()
+    item.color = Color(0.01, 0.01, 0.01)
+    return item

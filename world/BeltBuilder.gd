@@ -1,4 +1,4 @@
-extends Node
+extends Builder
 class_name BeltBuilder
 
 var beltPieces: Dictionary[Vector2i, int]

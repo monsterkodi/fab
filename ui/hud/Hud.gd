@@ -9,10 +9,9 @@ func levelStart():
     
     %Belt.set_pressed(true)
     
-func beltToggled(on: bool):
-    
-    if on:
-        Post.activateBuilder.emit("Belt")
+func beltToggled(on: bool):   if on: Post.activateBuilder.emit("Belt")
+func prismToggled(on: bool):  if on: Post.activateBuilder.emit("Prism")
+func storageToggled(on: bool):if on: Post.activateBuilder.emit("Storage")
 
 func delToggled(on: bool):
 
