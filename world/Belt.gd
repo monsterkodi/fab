@@ -2,25 +2,27 @@ extends Node
 # singleton Belt
 
 enum {E ,S, W, N}
-const HALFSIZE   = 0.251
-const FULLSIZE   = HALFSIZE*2
-const DIRS       = [E, S, W, N]
-const OPPOSITE   = [W, N, E, S]
-const DIRNAME    = ["E", "S", "W", "N"]
-const NEIGHBOR   = [Vector2i(1,0), Vector2i(0,1), Vector2i(-1,0), Vector2i(0,-1)]
-const NORM       = [Vector3(1,0,0), Vector3(0,0,1), Vector3(-1,0,0), Vector3(0,0,-1)]
-const I_E        = 1 << E
-const I_S        = 1 << S
-const I_W        = 1 << W
-const I_N        = 1 << N
-const O_E        = I_E << 4
-const O_S        = I_S << 4
-const O_W        = I_W << 4
-const O_N        = I_N << 4
-const INPUT      = [I_E, I_S, I_W, I_N]
-const OUTPUT     = [O_E, O_S, O_W, O_N]
-const INPUT_DIR  = [0b0100, 0b1000, 0b0001, 0b0010]
-const OUTPUT_DIR = [0b0100_0000, 0b1000_0000, 0b0001_0000, 0b0010_0000]
+const HALFSIZE     = 0.251
+const FULLSIZE     = HALFSIZE*2
+const DIRS         = [E, S, W, N]
+const OPPOSITE     = [W, N, E, S]
+const DIRNAME      = ["E", "S", "W", "N"]
+const NEIGHBOR     = [Vector2i(1,0), Vector2i(0,1), Vector2i(-1,0), Vector2i(0,-1)]
+const NORM         = [Vector3(1,0,0), Vector3(0,0,1), Vector3(-1,0,0), Vector3(0,0,-1)]
+const I_E          = 1 << E
+const I_S          = 1 << S
+const I_W          = 1 << W
+const I_N          = 1 << N
+const O_E          = I_E << 4
+const O_S          = I_S << 4
+const O_W          = I_W << 4
+const O_N          = I_N << 4
+const INPUT        = [I_E, I_S, I_W, I_N]
+const OUTPUT       = [O_E, O_S, O_W, O_N]
+const INPUT_DIR    = [0b0100, 0b1000, 0b0001, 0b0010]
+const OUTPUT_DIR   = [0b0100_0000, 0b1000_0000, 0b0001_0000, 0b0010_0000]
+const SINK_TYPES   = [I_W, I_N, I_E, I_S]
+const SOURCE_TYPES = [O_E, O_S, O_W, O_N]
 
 func stringForType(type):
     
@@ -53,6 +55,10 @@ func isInvalidType(type):
     return s
     
 func isValidType(type): return not isInvalidType(type)
+    
+func fixInOut(type):
+    
+    return fixOutput(fixInput(type))
     
 func fixOutput(type):
     
@@ -151,6 +157,23 @@ func orientatePos(orientation, pos):
 func orientateDir(orientation, dir):
     
     return (dir + orientation) % 4
+    
+func dirForSinkType(type):
+    
+    match type:
+        I_W: return E
+        I_E: return W
+        I_N: return S
+        I_S: return N
+    return -1
+    
+func isSinkType(type):
+    
+    return type in SINK_TYPES
+
+func isSourceType(type):
+    
+    return type in SOURCE_TYPES
 
 #func inputDirForType(type):
     #

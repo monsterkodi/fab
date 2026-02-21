@@ -9,7 +9,7 @@ func _init():
         {"pos": Vector2i(0,0), "dir": Belt.W},
     ]
     
-    #super._ready()
+func consumeItemAtSlit(item, slit): 
     
-func consumeItemAtSlit(item, slit): return true
+    return true
     

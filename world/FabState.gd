@@ -32,18 +32,23 @@ func addBeltStateAtPos(pos):
 func addMachineAtPosOfType(pos, type, orientation = 0):
     
     delMachineAtPos(pos)
+    
     var machine = Mach.Class[type].new()
+    
     machine.setOrientation(orientation)
     machine.pos = pos
-    machines[pos] = machine
+    
+    for opos in machine.getOccupied():
+        delBeltAtPos(opos)
+
     $Machines.add_child(machine)
+    return machine
     
 func delMachineAtPos(pos):
     
     if machines.has(pos):
-        machines[pos].queue_free()
-        $Machines.remove_child(machines[pos])
-        #machines.erase(pos)    
+        if machines[pos].type != Mach.Type.Root:
+            machines[pos].free()
 
 func delBeltStateAtPos(pos):
     
@@ -57,7 +62,7 @@ func addBeltAtPos(pos, type):
     beltPieces[pos] = type
         
 func delBeltAtPos(pos):    
-       
+
     delBeltStateAtPos(pos)
     beltPieces.erase(pos)
     
@@ -72,6 +77,18 @@ func delBeltAtPos(pos):
                 
     updateBelt()
     updateItems()
+    
+func delObjectAtPos(pos):
+    
+    if machines.has(pos):
+        delMachineAtPos(pos)
+    elif beltPieces.has(pos):
+        delBeltAtPos(pos)
+        
+func isOccupied(pos):
+    
+    if machines.has(pos): return true
+    return false
     
 func _physics_process(delta: float):
 
@@ -108,7 +125,7 @@ func updateItems():
         var bs = beltStates[pos]
         for idx in range(bs.get_child_count()):
             var item = bs.get_child(idx)
-            mm().add("item", [bs.itemPositionAtIndex(idx), item.color])
+            mm().add("item", [bs.itemPositionAtIndex(idx), item.color, item.scale])
         
 func mm(): return get_tree().root.get_node("/root/World/Level/MultiMesh")
 

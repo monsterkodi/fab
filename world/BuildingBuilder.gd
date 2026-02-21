@@ -14,7 +14,7 @@ func setBuilding(string):
     
     buildingName = string
     buildingType = Mach.typeForString(string)
-    
+    orientation = 0
     ghost = load("res://buildings/Building%s.tscn" % buildingName).instantiate()
     Utils.level().add_child(ghost)
     
@@ -24,8 +24,8 @@ func pointerHover(pos):
 
 func pointerClick(pos): 
     
-    Utils.fabState().addMachineAtPosOfType(pos, buildingType, orientation)
-    Utils.level().add_child(ghost.duplicate())
+    var machine = Utils.fabState().addMachineAtPosOfType(pos, buildingType, orientation)
+    machine.setBuilding(ghost.duplicate())
 
 func pointerRotate():
     

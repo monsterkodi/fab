@@ -77,10 +77,16 @@ func _ready():
     Post.subscribe(self)
     
     for key in beltNames:
-        var node = get_node("Belt_"+key).duplicate()
+        var material : ShaderMaterial
+        var beltNode = get_node("Belt_"+key)
+        material = beltNode.multimesh.mesh.material
+        material.set_shader_parameter("RimColor", Color(0.15, 0.15, 0.15))
+        material.set_shader_parameter("SpokeColor", Color(0.75, 0.75, 3.0))
+        
+        var node = beltNode.duplicate()
         node.name = "Temp_"+key
         node.multimesh = node.multimesh.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
-        var material : ShaderMaterial = node.multimesh.mesh.material
+        material = node.multimesh.mesh.material
         material.set_shader_parameter("RimColor", Color(0.392, 0.392, 1.0, 1.0))
         material.set_shader_parameter("SpokeColor", Color(0.238, 0.238, 0.61, 1.0))
         material.render_priority = 10
@@ -121,8 +127,10 @@ func _process(delta:float):
     $Item.multimesh.instance_count = items.size()  
     for i in range(items.size()):
         var trans = Transform3D.IDENTITY
+        trans = trans.scaled(Vector3(items[i][2],items[i][2],items[i][2]))
         trans.origin = items[i][0]
         trans.origin.y += 0.29
+        
         $Item.multimesh.set_instance_color(i, items[i][1])
         $Item.multimesh.set_instance_transform(i, trans)
 
@@ -137,7 +145,7 @@ func drawPieces(pieces, prefix):
         count[key] = 0
         
     for n in range(pieces.size()):
-        var t = pieces[n].z
+        var t = Belt.fixInOut(pieces[n].z)
         if beltPieces.has(t): 
             count[beltPieces[t][0]] += 1
             
@@ -146,7 +154,7 @@ func drawPieces(pieces, prefix):
         count[key] = 0
         
     for n in range(pieces.size()):
-        var t = pieces[n].z
+        var t = Belt.fixInOut(pieces[n].z)
         if not beltPieces.has(t): 
             #Log.log("nt", n, t, Belt.stringForType(t))
             continue

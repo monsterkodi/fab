@@ -8,8 +8,8 @@ var trail = []
 
 func start():
     
-    beltPieces = Utils.fabState().beltPieces
-    tempPoints = Utils.fabState().tempPoints
+    beltPieces = fabState().beltPieces
+    tempPoints = fabState().tempPoints
     
 func stop():
     
@@ -26,12 +26,16 @@ func pointerClick(pos):
     
 func addTempPoint(pos):
     
+    if fabState().isOccupied(pos):
+        lastTemp = pos
+        return
+    
     if lastTemp:
         trail.push_back(lastTemp)
 
     tempPoints[pos] = beltTypeAtPos(pos)
     
-    if lastTemp:
+    if lastTemp and not fabState().isOccupied(lastTemp):
         tempPoints[lastTemp] = neighborConnect(lastTemp, 0)
         
     lastTemp = pos
@@ -122,9 +126,12 @@ func pointerRelease(p):
     for pos in tempPoints:
             
         if Belt.isInvalidType(tempPoints[pos]):
-            Log.warn("RELEASE", Belt.stringForType(tempPoints[pos]))
+            #Log.warn("FIXINOUT", Belt.stringForType(tempPoints[pos]))
+            tempPoints[pos] = Belt.fixInOut(tempPoints[pos])
+            if Belt.isInvalidType(tempPoints[pos]):
+                Log.warn("RELEASE", Belt.stringForType(tempPoints[pos]))
         
-        Utils.fabState().addBeltAtPos(pos, tempPoints[pos])    
+        fabState().addBeltAtPos(pos, tempPoints[pos])    
         
     tempPoints.clear()
     lastTemp = null
@@ -132,8 +139,5 @@ func pointerRelease(p):
     updateTemp()
     updateBelt()
     
-func updateTemp():
-    Utils.fabState().updateTemp()
-    
-func updateBelt():
-    Utils.fabState().updateBelt()
+func updateTemp(): fabState().updateTemp()
+func updateBelt(): fabState().updateBelt()

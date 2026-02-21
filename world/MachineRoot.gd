@@ -1,7 +1,7 @@
 class_name MachineRoot
 extends Machine
 
-func _ready():
+func _init():
     
     type  = Mach.Type.Root
     slots = [
@@ -11,7 +11,7 @@ func _ready():
         {"pos": Belt.NEIGHBOR[Belt.N], "dir": Belt.N},
         ]
     
-    super._ready()
+    #super._ready()
     
 func produceItemAtSlot(slot):
     

@@ -18,6 +18,9 @@ func _ready():
             outRing.push_back(dir)
         if type & Belt.INPUT[dir]:
             inRing.push_back(dir)
+           
+    if outRing.is_empty():
+        outRing.push_back(Belt.dirForSinkType(type)) 
     
 func _exit_tree():
     
@@ -45,11 +48,12 @@ func advanceItems(delta:float):
             var bs = Utils.fabState().beltStateAtPos(pos + Belt.NEIGHBOR[item.direction])
             if bs:
                 var inDir = Belt.OPPOSITE[item.direction]
-                var adv = bs.inSpace(inDir, (item.advance + advance) - 1)
-                if adv >= 0:
-                    remove_child(item)
-                    item.advance = adv
-                    bs.addItem(inDir, item)
+                if bs.type & Belt.INPUT[inDir]:
+                    var adv = bs.inSpace(inDir, (item.advance + advance) - 1)
+                    if adv >= 0:
+                        remove_child(item)
+                        item.advance = adv
+                        bs.addItem(inDir, item)
     
     for item in get_children():
         if item.advance < 0.5 and item.advance + advance >= 0.5:
@@ -69,15 +73,17 @@ func advanceItems(delta:float):
                 item.advance = 0.49999
         else:
             item.advance = minf(item.advance + advance, 1.0)
-            
+
+        if item.advance > 0.5 and Belt.isSinkType(type):
+            item.scale = 1.0 - 2 * (item.advance-0.5)
+        elif item.advance <= 0.5 and Belt.isSourceType(type):
+            item.scale = item.advance*2
+
     if get_child_count() == 0 and Belt.isSimple(type):
         queue_free()
         
 func outSpace(dir, advance: float = 0.5) -> float: 
 
-    if not type & Belt.OUTPUT[dir]:
-        return -2
-    
     for item in get_children():
         if item.direction == dir:
             var space = item.advance - Belt.HALFSIZE
@@ -89,8 +95,6 @@ func outSpace(dir, advance: float = 0.5) -> float:
     
 func inSpace(dir, advance: float = 0.0) -> float:
 
-    if not type & Belt.INPUT[dir]:
-        return -1
     if get_child_count() == 0:
         return advance
     if get_child_count() >= 4:
@@ -118,6 +122,6 @@ func inSpace(dir, advance: float = 0.0) -> float:
     
 func addItem(inDir, item):
     #Log.log("add_item", get_child_count(), item.advance, inDir)
-    assert(type & Belt.INPUT[inDir])
+    #assert(type & Belt.INPUT[inDir])
     item.direction = inDir
     add_child(item)

@@ -17,8 +17,6 @@ func _init():
         {"pos": Belt.NEIGHBOR[Belt.W], "dir": Belt.W},
     ]
     
-    #super._ready()
-    
 func consumeItemAtSlit(item, slit):
     
     if canProduce: return false
@@ -39,3 +37,11 @@ func produceItemAtSlot(slot):
     if slot == slots[-1]: canProduce = false
     return item
         
+func getOccupied() -> Array[Vector2i]:
+    
+    var posl = super.getOccupied()
+    
+    posl.append(pos + slots[0].pos + slits[0].pos)
+    posl.append(pos + slots[2].pos + slits[0].pos)
+    
+    return posl

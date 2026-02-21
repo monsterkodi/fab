@@ -18,3 +18,5 @@ func pointerCancel(pos): pass
 func pointerRelease(pos): pass
     
 func pointerRotate(): pass
+
+func fabState(): return Utils.fabState()
