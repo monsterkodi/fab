@@ -18,3 +18,9 @@ func delToggled(on: bool):
 
     if on:
         Post.activateBuilder.emit("Del")
+
+func slower():
+    Post.speedSlower.emit()
+
+func faster():
+    Post.speedFaster.emit()

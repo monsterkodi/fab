@@ -28,11 +28,13 @@ events = [SubResource("InputEventKey_by07e")]
 [node name="Hud" type="Control" unique_id=1410583153]
 process_mode = 3
 layout_mode = 3
-anchors_preset = 15
+anchors_preset = 12
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
+mouse_filter = 1
 theme = ExtResource("2_aaqae")
 script = ExtResource("1_1x8ju")
 
@@ -47,6 +49,7 @@ grow_vertical = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Actions" unique_id=1736026445]
 layout_mode = 2
+mouse_filter = 0
 alignment = 1
 
 [node name="Belt" type="Button" parent="Actions/HBoxContainer" unique_id=557335372]
@@ -67,5 +70,21 @@ button_group = ExtResource("3_4sqfl")
 shortcut = SubResource("Shortcut_gt2ij")
 text = "Del"
 
+[node name="Slower" type="Button" parent="Actions/HBoxContainer" unique_id=1730893528]
+layout_mode = 2
+mouse_behavior_recursive = 2
+mouse_default_cursor_shape = 2
+action_mode = 0
+text = "-"
+
+[node name="Faster" type="Button" parent="Actions/HBoxContainer" unique_id=1968956871]
+layout_mode = 2
+mouse_behavior_recursive = 2
+mouse_default_cursor_shape = 2
+action_mode = 0
+text = "+"
+
 [connection signal="toggled" from="Actions/HBoxContainer/Belt" to="." method="beltToggled"]
 [connection signal="toggled" from="Actions/HBoxContainer/Del" to="." method="delToggled"]
+[connection signal="pressed" from="Actions/HBoxContainer/Slower" to="." method="slower"]
+[connection signal="pressed" from="Actions/HBoxContainer/Faster" to="." method="faster"]

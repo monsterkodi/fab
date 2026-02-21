@@ -74,6 +74,8 @@ var beltPieces = {
 
 func _ready():
     
+    Post.subscribe(self)
+    
     for key in beltNames:
         var node = get_node("Belt_"+key).duplicate()
         node.name = "Temp_"+key
@@ -83,7 +85,13 @@ func _ready():
         material.set_shader_parameter("SpokeColor", Color(0.238, 0.238, 0.61, 1.0))
         material.render_priority = 10
         add_child(node)
+        
+func gameSpeed(speed):
     
+    for key in beltNames:
+        get_node("Belt_"+key).multimesh.mesh.material.set_shader_parameter("Speed", speed)
+        get_node("Temp_"+key).multimesh.mesh.material.set_shader_parameter("Speed", speed)
+        
 func add(typ:String, node):
 
     dict[typ].append(node)
@@ -113,8 +121,9 @@ func _process(delta:float):
     $Item.multimesh.instance_count = items.size()  
     for i in range(items.size()):
         var trans = Transform3D.IDENTITY
-        trans.origin = items[i]
+        trans.origin = items[i][0]
         trans.origin.y += 0.29
+        $Item.multimesh.set_instance_color(i, items[i][1])
         $Item.multimesh.set_instance_transform(i, trans)
 
     drawPieces(dict.belt, "Belt_")

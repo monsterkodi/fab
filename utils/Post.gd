@@ -29,6 +29,9 @@ signal newGame
 signal resumeGame
 signal settings
 signal quitGame
+signal speedSlower
+signal speedFaster
+signal gameSpeed
 
 signal activateBuilder
 

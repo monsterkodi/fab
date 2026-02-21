@@ -112,18 +112,7 @@ func readInput():
     ascend = -deadZoneAxis(JOY_AXIS_TRIGGER_LEFT) + deadZoneAxis(JOY_AXIS_TRIGGER_RIGHT)
     if Input.is_action_pressed("ascend"):       ascend += 1
     if Input.is_action_pressed("descend"):      ascend -= 1
-    
-    #if Input.is_action_pressed("faster"):   faster()
-    #if Input.is_action_pressed("slower"):   slower()
-    #
-#func faster():
-    #
-    #speed *= 1.05; speed = clampf(speed, 1, MAX_SPEED); Log.log("speed", speed)
-    #
-#func slower():
-    #
-    #speed *= 0.95; speed = clampf(speed, 1, MAX_SPEED); Log.log("speed", speed)
-    
+        
 func dbg(msg: Variant, msg2: Variant = Log.nil, msg3: Variant = Log.nil, msg4: Variant = Log.nil, msg5: Variant = Log.nil, msg6: Variant = Log.nil, msg7: Variant = Log.nil):
     if false:
         Log.lvl(1, msg, msg2, msg3, msg4, msg5, msg6, msg7)    
@@ -143,8 +132,6 @@ func _input(e: InputEvent):
         if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE):
             dbg("mouse drag middle", e)
             pan_delta(e.relative * 0.005)
-        #if e.button_mask == 0:    
-            #dbg("mouse move", e.position)
             
     elif e is InputEventMouseButton:
         if e.button_index == MOUSE_BUTTON_WHEEL_UP:

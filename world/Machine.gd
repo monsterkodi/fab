@@ -19,7 +19,7 @@ func _ready():
     
 func _exit_tree():
     
-    Log.log("exit", name)
+    #Log.log("exit", name)
     Utils.fabState().machines.erase(pos)    
 
 func consume():
@@ -34,5 +34,13 @@ func produce():
         var inDir = Belt.OPPOSITE[slot.dir]
         var adv = bs.inSpace(inDir)
         if adv >= 0:
-            bs.addItem(inDir, Item.new())
+            var item = Item.new()
+            var color
+            match slot.dir:
+                Belt.E: color = Color.RED
+                Belt.S: color = Color.GREEN
+                Belt.W: color = Color.BLUE
+                Belt.N: color = Color.MEDIUM_PURPLE
+            item.color = color
+            bs.addItem(inDir, item)
         

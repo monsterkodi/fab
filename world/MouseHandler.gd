@@ -1,6 +1,6 @@
 extends Control
 
-func _input(event: InputEvent):
+func _gui_input(event: InputEvent):
     
     if get_tree().paused: return
     

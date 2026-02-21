@@ -25,7 +25,7 @@ func _exit_tree():
     
 func advanceForDelta(delta:float) -> float:
     
-    return delta
+    return delta * 0.5
     
 func position(): return Vector3(pos.x, 0, pos.y)
     

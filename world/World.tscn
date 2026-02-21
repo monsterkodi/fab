@@ -110,8 +110,6 @@ bus = &"Menu"
 unique_name_in_owner = true
 script = ExtResource("16_ppjuv")
 
-[node name="MouseHandler" parent="." unique_id=1746397472 groups=["game"] instance=ExtResource("6_p1v5b")]
-
 [node name="MenuHandler" type="CanvasLayer" parent="." unique_id=3039487]
 unique_name_in_owner = true
 script = ExtResource("9_ww6ps")
@@ -162,9 +160,6 @@ script = ExtResource("41_spsmc")
 [node name="InputHandler" type="Node" parent="." unique_id=469896996]
 script = ExtResource("54_virqv")
 
-[node name="Hud" parent="." unique_id=2110492010 instance=ExtResource("10_8mymi")]
-unique_name_in_owner = true
-
 [node name="Grid" type="MeshInstance3D" parent="." unique_id=289551185]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.341934e-05, -0.001149416, 0.0036256313)
 mesh = SubResource("PlaneMesh_fy8qs")
@@ -184,6 +179,17 @@ script = ExtResource("17_ww6ps")
 
 [node name="Deleter" type="Node" parent="BuilderSwitch" unique_id=547531162]
 script = ExtResource("18_ortil")
+
+[node name="MouseHandler" parent="." unique_id=1746397472 groups=["game"] instance=ExtResource("6_p1v5b")]
+mouse_default_cursor_shape = 3
+
+[node name="Hud" parent="." unique_id=2110492010 instance=ExtResource("10_8mymi")]
+unique_name_in_owner = true
+anchors_preset = 7
+anchor_left = 0.5
+anchor_right = 0.5
+mouse_behavior_recursive = 2
+mouse_default_cursor_shape = 6
 
 [connection signal="playLevel" from="MenuHandler/MainMenu" to="." method="playLevel"]
 

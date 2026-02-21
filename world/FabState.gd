@@ -6,10 +6,26 @@ var tempPoints:    Dictionary[Vector2i, int]
 var machines:      Dictionary[Vector2i, Machine]
 var beltStates:    Dictionary[Vector2i, BeltState]
 var buildings:     Dictionary[Vector2i, int]
+var gameSpeed:     float = 1.0
 
 func _ready():
     
-    pass
+    Post.subscribe(self)
+    
+func speedFaster(): 
+    
+    setGameSpeed(gameSpeed * 3/2)
+    
+func speedSlower(): 
+    
+    setGameSpeed(gameSpeed * 2/3)
+    
+func setGameSpeed(newSpeed):
+    
+    Log.log("newSpeed", newSpeed)
+    if newSpeed < 20 and newSpeed > 0.1:
+        gameSpeed = newSpeed
+        Post.gameSpeed.emit(gameSpeed)
     
 func beltStateAtPos(pos):
     
@@ -71,13 +87,13 @@ func delBeltAtPos(pos):
     updateBelt()
     updateItems()
     
-func _process(delta: float):
+func _physics_process(delta: float):
 
     for machine in $Machines.get_children():
         machine.consume()
         
     for beltState in $BeltStates.get_children():
-        beltState.advanceItems(delta)
+        beltState.advanceItems(delta * gameSpeed)
     
     for machine in $Machines.get_children():
         machine.produce()
@@ -106,8 +122,7 @@ func updateItems():
         var bs = beltStates[pos]
         for idx in range(bs.get_child_count()):
             var item = bs.get_child(idx)
-            #Log.log("item", pos, idx, item.advance)
-            mm().add("item", bs.itemPositionAtIndex(idx))
+            mm().add("item", [bs.itemPositionAtIndex(idx), item.color])
         
 func mm(): return get_tree().root.get_node("/root/World/Level/MultiMesh")
 
