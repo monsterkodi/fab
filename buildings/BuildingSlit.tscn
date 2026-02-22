@@ -15,4 +15,5 @@ surface_material_override/0 = ExtResource("1_t2g8r")
 
 [node name="RegalBox" parent="." unique_id=1821907757 instance=ExtResource("2_t2g8r")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0.5, 0)
+chamfer = 0.5
 material = ExtResource("1_t2g8r")
