@@ -42,6 +42,7 @@ func addMachineAtPosOfType(pos, type, orientation = 0):
         delBeltAtPos(opos)
 
     $Machines.add_child(machine)
+            
     return machine
     
 func delMachineAtPos(pos):
@@ -102,8 +103,6 @@ func _physics_process(delta: float):
         machine.produce()
     
     updateItems()
-    #Log.log("fabState.process")
-    pass
 
 func updateTemp():
     
@@ -115,7 +114,6 @@ func updateBelt():
         
     mm().clear("belt")
     for pos in beltPieces:
-        #Log.log("belt", pos, beltPieces[pos])
         mm().add("belt", Vector3i(pos.x, pos.y, beltPieces[pos]))
 
 func updateItems():
@@ -141,6 +139,31 @@ func setGameSpeed(newSpeed):
     
     if newSpeed < 24 and newSpeed > 0.1:
         gameSpeed = newSpeed
-        #Log.log(gameSpeed)
         Post.gameSpeed.emit(gameSpeed)
     
+func saveGame(data:Dictionary):
+    
+    data.FabState = {}
+    data.FabState.beltPieces = beltPieces
+    data.FabState.gameSpeed  = gameSpeed
+    
+    data.FabState.machines = []
+    for machine in $Machines.get_children():
+        var machineData = {
+            "pos":         machine.pos, 
+            "type":        machine.type, 
+            "orientation": machine.orientation}
+        data.FabState.machines.push_back(machineData)
+    
+func loadGame(data:Dictionary):
+
+    if data.has("FabState"):
+        beltPieces = data.FabState.beltPieces
+        gameSpeed  = data.FabState.gameSpeed
+        
+        if data.FabState.has("machines"):
+            for machine in data.FabState.machines:
+                var pos = Vector2i(machine.pos.x, machine.pos.y)
+                addMachineAtPosOfType(pos, machine.type, machine.orientation)
+        
+        updateBelt()

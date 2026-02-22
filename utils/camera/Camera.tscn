@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cdmoqwyhtu080" path="res://utils/camera/Camera.gd" id="1_diie0"]
 [ext_resource type="Script" uid="uid://cisi34qnple0i" path="res://utils/camera/CameraFreeFlight.gd" id="1_u5kg4"]
 
-[node name="Camera" type="Node3D" unique_id=1552718155 groups=["save"]]
+[node name="Camera" type="Node3D" unique_id=1552718155 groups=["game"]]
 script = ExtResource("1_diie0")
 
 [node name="Light" type="DirectionalLight3D" parent="." unique_id=78565986]

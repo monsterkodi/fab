@@ -24,8 +24,7 @@ func pointerHover(pos):
 
 func pointerClick(pos): 
     
-    var machine = Utils.fabState().addMachineAtPosOfType(pos, buildingType, orientation)
-    machine.setBuilding(ghost.duplicate())
+    Utils.fabState().addMachineAtPosOfType(pos, buildingType, orientation)
 
 func pointerRotate():
     

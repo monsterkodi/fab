@@ -1,5 +1,11 @@
 extends Node
 
+signal loadGame
+signal saveGame
+signal newGame
+signal resumeGame
+signal continueGame
+
 signal pointerHover
 signal pointerDrag
 signal pointerClick
@@ -26,9 +32,7 @@ signal menuDidAppear
 signal menuSound
 signal gameSound
 signal gameLoop
-signal newGame
-signal resumeGame
-signal settings
+signal settingsMenu
 signal quitGame
 signal speedSlower
 signal speedFaster

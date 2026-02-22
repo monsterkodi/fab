@@ -26,7 +26,8 @@ func valueChanged(value, key):
 func appear():
     
     for child in settingsChildren():
-        child.value = Settings.settings[child.name]
+        if Settings.settings.has(child.name):
+            child.value = Settings.settings[child.name]
 
     updateHiresValue()
     super.appear()
@@ -35,6 +36,11 @@ func appeared():
     
     %volumeMaster.slider.grab_focus()
     super.appeared()
+    
+func vanished():
+    
+    Saver.saveSettings()
+    super.vanished()
 
 func onButtonHover(button: Node): 
     

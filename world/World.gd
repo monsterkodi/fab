@@ -1,9 +1,7 @@
 class_name World
 extends Node
 
-var currentLevelName : String
-var currentLevel     : Level
-var currentLevelRes  : PackedScene
+var currentLevel : Level
           
 func _ready():
     
@@ -11,19 +9,23 @@ func _ready():
     
     Post.subscribe(self)
     
-    Settings.apply(Settings.defaults)
-
-    loadGame()
+    var settings = Saver.getSettings()
+    if not settings: settings = Settings.defaults
+    Settings.apply(settings)
     
-    #%MenuHandler.activeMenu = %MainMenu
-    #%MusicHandler.playMenuMusic()
-    newGame()
-    #mainMenu()
+    %MusicHandler.playMenuMusic()
+    get_tree().paused = true
+    
+    if Saver.getSaveGame(): # bypass main menu when savegame exists
+        Post.continueGame.emit()
+        return
         
+    %MenuHandler.appear(%MainMenu)
+    
 func mainMenu():
     
     get_tree().paused = true
-    saveLevel()
+    Saver.saveGame()
     %MenuHandler.appear(%MainMenu)
 
 func _process(delta: float):
@@ -39,11 +41,16 @@ func _unhandled_input(event: InputEvent):
     if Input.is_action_just_pressed("pause"): pauseMenu();   return
     if Input.is_action_just_pressed("quit"):  quitGame();    return
                 
+func continueGame():
+
+    const LEVEL = preload("uid://b1g34431itmpg")
+    loadLevel(LEVEL)
+                
 func newGame():
     
-    Saver.clear()
+    Saver.clearGame()
     const LEVEL = preload("uid://b1g34431itmpg")
-    playLevel(LEVEL)
+    loadLevel(LEVEL)
         
 func pauseMenu():
     
@@ -71,18 +78,9 @@ func resumeGame():
         
 func quitGame():
     
-    Saver.save()
     get_tree().quit()
         
-func saveGame():
-    
-    Saver.save()
-    
-func loadGame():
-    
-    Saver.load()
-    
-func settings(backMenu:Menu):
+func settingsMenu(backMenu:Menu):
     
     %SettingsMenu.backMenu = backMenu
     %MenuHandler.appear(%SettingsMenu)
@@ -91,43 +89,18 @@ func clearLevel():
 
     if currentLevel:
         currentLevel.clear(Saver.savegame.data)
-        Saver.save()
+        Saver.saveGame()
         currentLevel.free()
 
-func retryLevel():
-    
-    loadLevel(currentLevelRes)
-    
-func playLevel(levelRes):
-    
-    loadLevel(levelRes)
-        
 func loadLevel(levelRes):
     
-    currentLevelRes = levelRes
     currentLevel = levelRes.instantiate()
-    currentLevel.inert = false
-    currentLevelName = currentLevel.name
-    #Log.log("currentLevelName", currentLevelName)
     add_child(currentLevel)
+    
     currentLevel.start()
     Post.startLevel.emit()
     
-    var isFresh = true
-    if Saver.savegame.data.has("Level") and Saver.savegame.data.Level.has(currentLevel.name):
-        if Saver.savegame.data.Level[currentLevel.name]:
-            currentLevel.loadLevel(Saver.savegame.data)
-            isFresh = not Saver.savegame.data.Level[currentLevel.name].has("gameTime")
-            Post.levelLoaded.emit()
+    Saver.loadGame()
 
     Post.levelStart.emit()
     resumeGame()
-
-func saveLevel():
-    
-    if currentLevel:
-        
-        currentLevel.save(Saver.savegame.data)
-        saveGame()
-        Post.levelSaved.emit(currentLevel.name)
-        currentLevel.free()

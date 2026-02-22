@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://bmyq0wms5x6rm" path="res://components/HalfCapsuleRounded.tscn" id="4_4eo0i"]
 [ext_resource type="PackedScene" uid="uid://c2avn203eitto" path="res://world/MultiMesh.tscn" id="6_lhci3"]
 [ext_resource type="PackedScene" uid="uid://bhrehvjlydr2q" path="res://world/FabState.tscn" id="6_s30m6"]
-[ext_resource type="PackedScene" uid="uid://h62wu6f77eaq" path="res://buildings/BuildingRoot.tscn" id="7_s30m6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w56at"]
 size = Vector3(1000, 1, 1000)
@@ -37,5 +36,3 @@ material = ExtResource("3_mxnmf")
 [node name="MultiMesh" parent="." unique_id=434139009 instance=ExtResource("6_lhci3")]
 
 [node name="FabState" parent="." unique_id=261405774 instance=ExtResource("6_s30m6")]
-
-[node name="BuildingRoot" parent="." unique_id=1719479523 instance=ExtResource("7_s30m6")]

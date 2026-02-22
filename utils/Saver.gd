@@ -1,37 +1,53 @@
 extends Node
 
-var savegame : SaveGame
+var savegame : SaveData
+var settings : SaveData
 
 func _ready(): 
     
-    savegame = SaveGame.new()
+    savegame = SaveData.new()
     assert(savegame.data != null)
-    #Log.log("Saver.ready")
+    settings = SaveData.new()
+    assert(settings.data != null)
+    Log.log("Saver.ready")
 
-func save():
-
-    var levelData 
-    if savegame and savegame.data.has("Level"):
-        levelData = savegame.data.Level
-    savegame = SaveGame.new()
-    Settings.save(savegame.data)
-    get_tree().call_group("save", "on_save", savegame.data)
-    if levelData:
-        savegame.data.Level = levelData
-    #Log.log("save", savegame.data)
-    ResourceSaver.save(savegame, "user://savegame.tres")
-
-func clear():
+func saveGame():
     
-    savegame = SaveGame.new()
+    savegame = SaveData.new()
+    Post.saveGame.emit(savegame.data)
+    Log.log("saveGame", savegame.data)
     ResourceSaver.save(savegame, "user://savegame.tres")
-    self.load()
     
-func load():
+func clearGame():
+    
+    savegame = SaveData.new()
+    ResourceSaver.save(savegame, "user://savegame.tres")
+    self.loadGame()
+        
+func loadGame():
 
-    if ResourceLoader.exists("user://savegame.tres"):
-        savegame = load("user://savegame.tres")
-        if savegame:
-            #Log.log("load", savegame.data)
-            Settings.load(savegame.data)
-            get_tree().call_group("save", "on_load", savegame.data)
+    var data = getSaveGame()
+    if data:
+        Log.log("loadGame", data)
+        Post.loadGame.emit(data)
+        return data
+    return null
+
+func getSaveData(resource):
+
+    if ResourceLoader.exists(resource):
+        var sd = load(resource)
+        if sd: 
+            #Log.log("getSaveData", resource, sd.data)
+            return sd.data
+    return null
+    
+func getSaveGame(): return getSaveData("user://savegame.tres")
+func getSettings(): return getSaveData("user://settings.tres")
+
+func saveSettings():
+    
+    settings = SaveData.new()
+    settings.data = Settings.settings
+    #Log.log("saveSettings", settings.data)
+    ResourceSaver.save(settings, "user://settings.tres")

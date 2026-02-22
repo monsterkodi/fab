@@ -41,6 +41,42 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 20
 
+[node name="Continue" type="Button" parent="VBoxContainer/Menu/GridContainer/Buttons" unique_id=1042277735]
+visible = false
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_guig7")
+text = "Continue
+"
+
+[node name="FocusOnHover" type="Node" parent="VBoxContainer/Menu/GridContainer/Buttons/Continue" unique_id=1131606237]
+script = ExtResource("3_7ml3v")
+metadata/_custom_type_script = "uid://db85fb86bo305"
+
+[node name="Save Game" type="Button" parent="VBoxContainer/Menu/GridContainer/Buttons" unique_id=1804277457]
+visible = false
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_guig7")
+text = "Save Game
+"
+
+[node name="FocusOnHover" type="Node" parent="VBoxContainer/Menu/GridContainer/Buttons/Save Game" unique_id=430817548]
+script = ExtResource("3_7ml3v")
+metadata/_custom_type_script = "uid://db85fb86bo305"
+
+[node name="Load Game" type="Button" parent="VBoxContainer/Menu/GridContainer/Buttons" unique_id=1238429316]
+visible = false
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_guig7")
+text = "Load Game
+"
+
+[node name="FocusOnHover" type="Node" parent="VBoxContainer/Menu/GridContainer/Buttons/Load Game" unique_id=1160804702]
+script = ExtResource("3_7ml3v")
+metadata/_custom_type_script = "uid://db85fb86bo305"
+
 [node name="New Game" type="Button" parent="VBoxContainer/Menu/GridContainer/Buttons" unique_id=594695380]
 layout_mode = 2
 mouse_default_cursor_shape = 2
@@ -96,6 +132,7 @@ text = "Quit"
 script = ExtResource("3_7ml3v")
 metadata/_custom_type_script = "uid://db85fb86bo305"
 
+[connection signal="pressed" from="VBoxContainer/Menu/GridContainer/Buttons/Continue" to="." method="onContinue"]
 [connection signal="pressed" from="VBoxContainer/Menu/GridContainer/Buttons/New Game" to="." method="onNewGame"]
 [connection signal="pressed" from="VBoxContainer/Menu/GridContainer/Buttons/Settings" to="." method="onSettings"]
 [connection signal="pressed" from="VBoxContainer/Menu/GridContainer/Buttons/Help" to="." method="onHelp"]

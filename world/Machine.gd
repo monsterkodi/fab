@@ -5,6 +5,7 @@ var pos   : Vector2i
 var type  : int
 var slots : Array
 var slits : Array
+var orientation = 0
 var building
 
 func _ready():
@@ -12,21 +13,24 @@ func _ready():
     assert(type)
     
     for slit in slits:
-        #fabState().beltPieces[pos + slit.pos] = Belt.fixOutput(Belt.INPUT[slit.dir])
         fabState().beltPieces[pos + slit.pos] = Belt.INPUT[slit.dir]
 
     for slot in slots:
-        #fabState().beltPieces[pos + slot.pos] = Belt.fixInput(Belt.OUTPUT[slot.dir])
         fabState().beltPieces[pos + slot.pos] = Belt.OUTPUT[slot.dir]
         
     for opos in getOccupied():
         fabState().machines[opos] = self
-        
+                
     fabState().updateBelt()
+
+    building = load("res://buildings/Building%s.tscn" % Mach.stringForType(type)).instantiate()
+    Utils.level().add_child(building)
+    building.global_position = Vector3(pos.x, 0, pos.y)
+    building.transform = building.transform.rotated_local(Vector3.UP, deg_to_rad(orientation * -90))
 
 func _exit_tree():
     
-    building.queue_free()
+    if building: building.queue_free()
     
     for slot in slots:
         fabState().delBeltAtPos(pos + slot.pos)
@@ -35,21 +39,18 @@ func _exit_tree():
         
     for opos in getOccupied():
         fabState().machines.erase(opos)
+        
+func setOrientation(o):
     
-func setBuilding(node):
-    
-    building = node
-    Utils.level().add_child(building)
-    
-func setOrientation(orientation):
+    orientation = o
 
     for slot in slots:
-        slot.pos = Belt.orientatePos(orientation, slot.pos)
-        slot.dir = Belt.orientateDir(orientation, slot.dir)
+        slot.pos = Belt.orientatePos(o, slot.pos)
+        slot.dir = Belt.orientateDir(o, slot.dir)
         
     for slit in slits:
-        slit.pos = Belt.orientatePos(orientation, slit.pos)
-        slit.dir = Belt.orientateDir(orientation, slit.dir)
+        slit.pos = Belt.orientatePos(o, slit.pos)
+        slit.dir = Belt.orientateDir(o, slit.dir)
     
 func consume():
     

@@ -45,15 +45,6 @@ static func setFullscreen(value):
         DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
         DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_RESIZE_DISABLED, false)
         
-static func load(data):
-    
-    if data.has("Settings"): 
-        apply(data.Settings)
-
-static func save(data):
-    
-    data.Settings = settings
-        
 static func apply(dict):
     
     for key in dict:

@@ -15,19 +15,24 @@ func activateBuilder(builderName):
     
     if builder: builder.stop()
     
-    var color = Color.WHEAT
+    var color = Color.TRANSPARENT
     
     match builderName:
         "Belt": builder = $BeltBuilder; color = Color.DODGER_BLUE
         "Del":  builder = $Deleter;     color = Color.RED
         _:      builder = $BuildingBuilder; builder.setBuilding(builderName)
-        
-    $Dot.get_surface_override_material(0).albedo_color = color
+    
+    if color == Color.TRANSPARENT:
+        $Dot.visible = false
+    else:
+        $Dot.visible = true
+        $Dot.get_surface_override_material(0).albedo_color = color
     builder.start()
+    pointerHover(Vector2i($Dot.global_position.x, $Dot.global_position.z))
     
 func pointerHover(pos):
     
-    builder.pointerHover(pos)
+    if builder: builder.pointerHover(pos)
     
     $Dot.global_position.x = pos.x
     $Dot.global_position.z = pos.y

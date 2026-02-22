@@ -6,13 +6,15 @@ func _ready():
     
     freeFlight.current = true
     
-func on_save(data:Dictionary):
+    Post.subscribe(self)
+    
+func saveGame(data:Dictionary):
 
     data.Camera = {}
     data.Camera.freeflight_transform = freeFlight.transform
     data.Camera.transform   = transform
     
-func on_load(data:Dictionary):
+func loadGame(data:Dictionary):
 
     if data.has("Camera"):
         transform = data.Camera.transform

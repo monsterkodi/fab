@@ -154,53 +154,6 @@ theme = ExtResource("1_rd3qm")
 text = "Fullscreen"
 script = ExtResource("4_008yk")
 
-[node name="clock" type="CheckButton" parent="PanelContainer/MarginContainer/Grid/DisplaySettings" unique_id=138158207]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 0
-theme = ExtResource("1_rd3qm")
-text = "Clock"
-script = ExtResource("4_008yk")
-
-[node name="GameLabel" type="Label" parent="PanelContainer/MarginContainer/Grid" unique_id=578917555]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(0.19451028, 0.19451028, 0.19451028, 1)
-theme_override_font_sizes/font_size = 80
-text = "Game"
-
-[node name="GameSettings" type="VBoxContainer" parent="PanelContainer/MarginContainer/Grid" unique_id=1762477812]
-custom_minimum_size = Vector2(800, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-theme = ExtResource("1_rd3qm")
-theme_override_constants/separation = -10
-
-[node name="timeScale" type="HBoxContainer" parent="PanelContainer/MarginContainer/Grid/GameSettings" unique_id=53124116]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(460, 20)
-layout_mode = 2
-size_flags_vertical = 4
-script = ExtResource("3_emk4v")
-text = "Time Scale"
-value = 4.0
-valueMin = 0.5
-valueMax = 4.0
-valueStep = 0.1
-metadata/_custom_type_script = "uid://dxpjww7lq0w6w"
-
-[node name="mouseHide" type="CheckButton" parent="PanelContainer/MarginContainer/Grid/GameSettings" unique_id=511334683]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(360, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-theme = ExtResource("1_rd3qm")
-text = "Mouse Hide"
-script = ExtResource("4_008yk")
-
 [connection signal="resized" from="." to="." method="onResize"]
 [connection signal="valueChanged" from="PanelContainer/MarginContainer/Grid/AudioSettings/volumeMaster" to="." method="onMasterVolume"]
 [connection signal="valueChanged" from="PanelContainer/MarginContainer/Grid/AudioSettings/volumeMusic" to="." method="onMusicVolume"]
@@ -209,6 +162,3 @@ script = ExtResource("4_008yk")
 [connection signal="valueChanged" from="PanelContainer/MarginContainer/Grid/DisplaySettings/brightness" to="." method="onBrightness"]
 [connection signal="toggled" from="PanelContainer/MarginContainer/Grid/DisplaySettings/hiresContainer/hires" to="." method="onHires"]
 [connection signal="toggled" from="PanelContainer/MarginContainer/Grid/DisplaySettings/fullscreen" to="." method="onFullscreen"]
-[connection signal="toggled" from="PanelContainer/MarginContainer/Grid/DisplaySettings/clock" to="." method="onClock"]
-[connection signal="valueChanged" from="PanelContainer/MarginContainer/Grid/GameSettings/timeScale" to="." method="onTimescale"]
-[connection signal="toggled" from="PanelContainer/MarginContainer/Grid/GameSettings/mouseHide" to="." method="onMouseHide"]
