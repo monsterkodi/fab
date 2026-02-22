@@ -2,39 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c4d3iwmln8sl4" path="res://ui/hud/Hud.gd" id="1_1x8ju"]
 [ext_resource type="Theme" uid="uid://g22p2j6a23ol" path="res://ui/theme/HUDTheme.tres" id="2_aaqae"]
-[ext_resource type="ButtonGroup" uid="uid://cf83u33f2ya7m" path="res://ui/hud/ActionButtonGroup.tres" id="3_4sqfl"]
-
-[sub_resource type="InputEventKey" id="InputEventKey_epdrl"]
-device = -1
-keycode = 49
-unicode = 49
-
-[sub_resource type="Shortcut" id="Shortcut_4sqfl"]
-events = [SubResource("InputEventKey_epdrl")]
-
-[sub_resource type="InputEventKey" id="InputEventKey_4sqfl"]
-device = -1
-keycode = 50
-unicode = 50
-
-[sub_resource type="Shortcut" id="Shortcut_by07e"]
-events = [SubResource("InputEventKey_4sqfl")]
-
-[sub_resource type="InputEventKey" id="InputEventKey_dqfrj"]
-device = -1
-keycode = 51
-unicode = 51
-
-[sub_resource type="Shortcut" id="Shortcut_ks410"]
-events = [SubResource("InputEventKey_dqfrj")]
-
-[sub_resource type="InputEventKey" id="InputEventKey_by07e"]
-device = -1
-keycode = 88
-unicode = 120
-
-[sub_resource type="Shortcut" id="Shortcut_gt2ij"]
-events = [SubResource("InputEventKey_by07e")]
+[ext_resource type="PackedScene" uid="uid://bp3vplo7lbscx" path="res://ui/hud/IconButtonGrid.tscn" id="4_by07e"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_gt2ij"]
 device = -1
@@ -67,54 +35,28 @@ script = ExtResource("1_1x8ju")
 
 [node name="Actions" type="PanelContainer" parent="." unique_id=705281221]
 layout_mode = 1
-anchors_preset = 12
+anchors_preset = 7
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
+offset_left = -34.0
+offset_top = -34.0
+offset_right = 34.0
 grow_horizontal = 2
 grow_vertical = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Actions" unique_id=1736026445]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 mouse_filter = 0
 alignment = 1
 
-[node name="Belt" type="Button" parent="Actions/HBoxContainer" unique_id=557335372]
-unique_name_in_owner = true
-layout_mode = 2
-mouse_default_cursor_shape = 2
-toggle_mode = true
-button_group = ExtResource("3_4sqfl")
-shortcut = SubResource("Shortcut_4sqfl")
-text = "Belt"
-
-[node name="Storage" type="Button" parent="Actions/HBoxContainer" unique_id=1598963186]
-layout_mode = 2
-mouse_default_cursor_shape = 2
-toggle_mode = true
-button_group = ExtResource("3_4sqfl")
-shortcut = SubResource("Shortcut_by07e")
-text = "Store"
-
-[node name="Prism" type="Button" parent="Actions/HBoxContainer" unique_id=367692293]
-layout_mode = 2
-mouse_default_cursor_shape = 2
-toggle_mode = true
-button_group = ExtResource("3_4sqfl")
-shortcut = SubResource("Shortcut_ks410")
-text = "Prism"
-
-[node name="Del" type="Button" parent="Actions/HBoxContainer" unique_id=481905193]
-layout_mode = 2
-mouse_default_cursor_shape = 2
-toggle_mode = true
-action_mode = 0
-button_group = ExtResource("3_4sqfl")
-shortcut = SubResource("Shortcut_gt2ij")
-text = "Del"
-
 [node name="Slower" type="Button" parent="Actions/HBoxContainer" unique_id=1730893528]
 layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
 mouse_behavior_recursive = 2
 mouse_default_cursor_shape = 2
 action_mode = 0
@@ -123,15 +65,28 @@ text = "-"
 
 [node name="Faster" type="Button" parent="Actions/HBoxContainer" unique_id=1968956871]
 layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
 mouse_behavior_recursive = 2
 mouse_default_cursor_shape = 2
 action_mode = 0
 shortcut = SubResource("Shortcut_epdrl")
 text = "+"
 
-[connection signal="toggled" from="Actions/HBoxContainer/Belt" to="." method="beltToggled"]
-[connection signal="toggled" from="Actions/HBoxContainer/Storage" to="." method="storageToggled"]
-[connection signal="toggled" from="Actions/HBoxContainer/Prism" to="." method="prismToggled"]
-[connection signal="toggled" from="Actions/HBoxContainer/Del" to="." method="delToggled"]
+[node name="IconButtonGrid" parent="." unique_id=1812349297 instance=ExtResource("4_by07e")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -99.53
+offset_bottom = -99.53
+grow_horizontal = 2
+grow_vertical = 0
+icons = Array[String](["res://icons/buildings/BuildingDel.png", "res://icons/buildings/BuildingRect.png", "", "res://icons/buildings/BuildingBelt.png", "res://icons/buildings/BuildingStorage.png", "res://icons/buildings/BuildingPrism.png"])
+
 [connection signal="pressed" from="Actions/HBoxContainer/Slower" to="." method="slower"]
 [connection signal="pressed" from="Actions/HBoxContainer/Faster" to="." method="faster"]
+[connection signal="buttonPressed" from="IconButtonGrid" to="." method="buttonPressed"]

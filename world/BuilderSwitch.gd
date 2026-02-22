@@ -20,6 +20,7 @@ func activateBuilder(builderName):
     match builderName:
         "Belt": builder = $BeltBuilder; color = Color.DODGER_BLUE
         "Del":  builder = $Deleter;     color = Color.RED
+        "Rect": builder = $RectSelect;  color = Color.WHITE
         _:      builder = $BuildingBuilder; builder.setBuilding(builderName)
     
     if color == Color.TRANSPARENT:

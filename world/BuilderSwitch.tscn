@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://c0jnsahm0guxo" path="res://world/BeltBuilder.gd" id="2_mhjh0"]
 [ext_resource type="Script" uid="uid://b2qxj22lbsql8" path="res://world/BuildingBuilder.gd" id="3_3r3yl"]
 [ext_resource type="Script" uid="uid://bcsinm3sf6r4u" path="res://world/Deleter.gd" id="3_amlds"]
+[ext_resource type="Script" uid="uid://dglyvr2fipdt6" path="res://world/RectSelect.gd" id="5_3r3yl"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_amlds"]
 size = Vector3(1, 0.3, 1)
@@ -30,3 +31,6 @@ script = ExtResource("3_3r3yl")
 
 [node name="Deleter" type="Node" parent="." unique_id=120809101]
 script = ExtResource("3_amlds")
+
+[node name="RectSelect" type="Node" parent="." unique_id=968464712]
+script = ExtResource("5_3r3yl")

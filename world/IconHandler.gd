@@ -1,11 +1,9 @@
 class_name IconHandler
 extends Control
 
-const BUILDING_ROOT    = preload("uid://h62wu6f77eaq")
-const BUILDING_STORAGE = preload("uid://cnxiw8djnknk6")
-const BUILDING_PRISM   = preload("uid://d4i4sjdrnt324")
-
 func _ready():
+    
+    if not is_visible_in_tree(): return
 
     if not DirAccess.dir_exists_absolute("res://icons/buildings/"):
         DirAccess.make_dir_recursive_absolute("res://icons/buildings/")
@@ -14,19 +12,64 @@ func _ready():
     
     for res in Utils.resourcesInDir("res://buildings/"):    
         generateIcon(res, "res://icons/buildings/")
+        
+func get_full_aabb(node: Node3D) -> AABB:
+    
+    var total_aabb: AABB = AABB()
+    var found_first_mesh = false
 
-func generateIcon(itemRes, path: String):
+    var stack = [node]
+    while stack.size() > 0:
+        var current = stack.pop_back()
+        
+        if current is VisualInstance3D:
+            var local_aabb = current.get_aabb()
+            # Transform the local AABB to the root node's local space
+            #var world_aabb = current.transform * instance_aabb
+            #var world_aabb = current.global_transform * local_aabb
+            
+            var reltrans = node.global_transform.affine_inverse() * current.global_transform
+            var world_aabb = reltrans * local_aabb
+            
+            if not found_first_mesh:
+                total_aabb = world_aabb
+                found_first_mesh = true
+            else:
+                total_aabb = total_aabb.merge(world_aabb)
+        
+        stack.append_array(current.get_children())
+        
+    return total_aabb    
+    
+func frame_camera_on_item(camera: Camera3D, item: Node3D):
+    
+    var aabb   = get_full_aabb(item)
+    var center = aabb.get_center()
+    var length = aabb.size.length()
+    length = maxf(aabb.size.z, maxf(aabb.size.x, aabb.size.y))
+    
+    var distance = (length / 2.0) / tan(deg_to_rad(camera.fov) / 2.0)
+    
+    distance *= 1.4
+    
+    camera.position = center + Vector3(-1, 1, 1).normalized() * distance
+    camera.look_at(center)        
+
+func generateIcon(itemRes : PackedScene, path: String):
 
     var container = %Container.duplicate()
     var viewport = container.get_node("Viewport")
-    var itemNode = itemRes.instantiate()
+    var item : Node3D = itemRes.instantiate()
+    var camera : Camera3D  = viewport.get_node("Camera")
 
-    viewport.add_child(itemNode)
+    viewport.add_child(item)
     %Grid.add_child(container)
+
+    frame_camera_on_item(camera, item)
     
     await RenderingServer.frame_post_draw # wait for the frame to render
     
-    var iconPath = path + itemNode.name + ".png"
+    var iconPath = path + item.name + ".png"
     var error = viewport.get_texture().get_image().save_png(iconPath)
     if error != OK:
         push_error("Failed to save icon: ", error, iconPath)

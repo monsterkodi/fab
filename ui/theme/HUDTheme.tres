@@ -4,10 +4,12 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kc1wr"]
 bg_color = Color(0.10965204, 0.10965204, 0.10965204, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
 
 [resource]
 default_font = ExtResource("1_kc1wr")
-default_font_size = 48
+default_font_size = 18
 Button/colors/font_color = Color(0.43752313, 0.43752313, 0.43752313, 1)
 Button/colors/font_pressed_color = Color(1, 0.90397155, 0, 1)
 Label/constants/line_spacing = 0

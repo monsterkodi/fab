@@ -7,19 +7,15 @@ func _ready():
     
 func levelStart():
     
-    %Belt.set_pressed(true)
+    var btn = %IconButtonGrid.buttonGroup.get_buttons()[0]
+    btn.button_pressed = true
     
-func beltToggled(on: bool):   if on: Post.activateBuilder.emit("Belt")
-func prismToggled(on: bool):  if on: Post.activateBuilder.emit("Prism")
-func storageToggled(on: bool):if on: Post.activateBuilder.emit("Storage")
-
-func delToggled(on: bool):
-
-    if on:
-        Post.activateBuilder.emit("Del")
-
 func slower():
     Post.speedSlower.emit()
 
 func faster():
     Post.speedFaster.emit()
+
+func buttonPressed(buildingName : String):
+   
+    Post.activateBuilder.emit(buildingName.replace("Building", ""))

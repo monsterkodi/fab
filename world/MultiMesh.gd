@@ -129,7 +129,7 @@ func _process(delta:float):
         var trans = Transform3D.IDENTITY
         trans = trans.scaled(Vector3(items[i][2],items[i][2],items[i][2]))
         trans.origin = items[i][0]
-        trans.origin.y += 0.29
+        trans.origin.y += Belt.HALFSIZE + Belt.GLOBAL_Y
         
         $Item.multimesh.set_instance_color(i, items[i][1])
         $Item.multimesh.set_instance_transform(i, trans)
@@ -156,14 +156,14 @@ func drawPieces(pieces, prefix):
     for n in range(pieces.size()):
         var t = Belt.fixInOut(pieces[n].z)
         if not beltPieces.has(t): 
-            #Log.log("nt", n, t, Belt.stringForType(t))
+            Log.log("nt", n, t, Belt.stringForType(t))
             continue
         var key = beltPieces[t][0]
         var mm = get_node(prefix+key).multimesh
         var trans = Transform3D.IDENTITY
         if beltPieces[t][1]:
             trans = trans.rotated(Vector3.UP, deg_to_rad(-90*beltPieces[t][1]))
-        trans = trans.translated(Vector3(pieces[n].x, 0.1, pieces[n].y))
+        trans = trans.translated(Vector3(pieces[n].x, Belt.GLOBAL_Y, pieces[n].y))
         mm.set_instance_transform(count[key], trans)
         count[key] += 1
         

@@ -2,7 +2,8 @@ extends Node
 # singleton Belt
 
 enum {E ,S, W, N}
-const HALFSIZE     = 0.251
+const GLOBAL_Y     = 0.205 # height above ground, slightly bigger than slot thickness
+const HALFSIZE     = 0.251 # half of the maximum distance between items
 const FULLSIZE     = HALFSIZE*2
 const DIRS         = [E, S, W, N]
 const OPPOSITE     = [W, N, E, S]
