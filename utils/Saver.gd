@@ -21,7 +21,7 @@ func loadGame():
 
     var data = getSaveGame()
     if data:
-        Log.log("loadGame", data)
+        #Log.log("loadGame", data)
         Post.loadGame.emit(data)
 
 func getSaveData(resource):

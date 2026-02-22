@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://oakjmrs1pqvw"]
+
+[ext_resource type="Script" uid="uid://bcor1hnvfrvi8" path="res://world/IconHandler.gd" id="1_dbmj7"]
+
+[sub_resource type="Environment" id="Environment_dbmj7"]
+glow_enabled = true
+glow_normalized = true
+
+[sub_resource type="World3D" id="World3D_dbmj7"]
+environment = SubResource("Environment_dbmj7")
+
+[node name="IconHandler" type="Control" unique_id=420945436]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dbmj7")
+
+[node name="Container" type="SubViewportContainer" parent="." unique_id=115569102]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Viewport" type="SubViewport" parent="Container" unique_id=1018082909]
+unique_name_in_owner = true
+own_world_3d = true
+world_3d = SubResource("World3D_dbmj7")
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="Light" type="DirectionalLight3D" parent="Container/Viewport" unique_id=1873427284]
+transform = Transform3D(0.5934189, 0.6028298, -0.5333388, 0, 0.66262007, 0.7489557, 0.8048938, -0.44444448, 0.39321128, 0, 0, 0)
+shadow_enabled = true
+shadow_opacity = 0.66
+
+[node name="Camera" type="Camera3D" parent="Container/Viewport" unique_id=970843116]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3, 3)
+
+[node name="Grid" type="GridContainer" parent="." unique_id=1005621341]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+columns = 4

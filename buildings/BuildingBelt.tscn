@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://d28sw81e1dm1v"]
+
+[ext_resource type="Material" uid="uid://xnp2xrokwe1h" path="res://materials/Belt_W_E.tres" id="1_l44yn"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ckhb6"]
+
+[node name="BuildingBelt" type="Node3D" unique_id=1014804918]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1566043692]
+mesh = SubResource("PlaneMesh_ckhb6")
+surface_material_override/0 = ExtResource("1_l44yn")
