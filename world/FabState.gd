@@ -154,10 +154,15 @@ func saveGame(data:Dictionary):
             "type":        machine.type, 
             "orientation": machine.orientation}
         data.FabState.machines.push_back(machineData)
+        
+    data.FabState.beltStates = []
+    for bs in $BeltStates.get_children():
+        data.FabState.beltStates.push_back(bs.store())
     
 func loadGame(data:Dictionary):
 
     if data.has("FabState"):
+        
         beltPieces = data.FabState.beltPieces
         gameSpeed  = data.FabState.gameSpeed
         
@@ -165,5 +170,12 @@ func loadGame(data:Dictionary):
             for machine in data.FabState.machines:
                 var pos = Vector2i(machine.pos.x, machine.pos.y)
                 addMachineAtPosOfType(pos, machine.type, machine.orientation)
+        
+        if data.FabState.has("beltStates"):
+            #beltStates.clear()
+            #Utils.freeChildren($BeltStates)
+            for state in data.FabState.beltStates:
+                var bs = addBeltStateAtPos(Vector2i(state[0][0], state[0][1]))
+                bs.restore(state)
         
         updateBelt()

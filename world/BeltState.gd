@@ -4,11 +4,12 @@ extends Node
 # children: Array[Item]
 
 var type : int
-var pos : Vector2i
+var pos  : Vector2i
 var outIndex = 0
-var outRing  = [] 
-var inRing   = [] 
 var inQueue  = [] 
+
+var inRing   = [] 
+var outRing  = []
 
 func _ready():
     
@@ -121,7 +122,20 @@ func inSpace(dir, advance: float = 0.0) -> float:
     return -5
     
 func addItem(inDir, item):
-    #Log.log("add_item", get_child_count(), item.advance, inDir)
-    #assert(type & Belt.INPUT[inDir])
+
     item.direction = inDir
     add_child(item)
+    
+func store():
+    
+    var items = []
+    for child in get_children():
+        items.push_back(inst_to_dict(child))
+    return [pos, outIndex, inQueue, items]
+    
+func restore(data):
+    
+    outIndex = data[1]
+    inQueue  = data[2]
+    for child in data[3]:
+        add_child(dict_to_inst(child))

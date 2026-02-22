@@ -9,8 +9,9 @@ func _ready():
     
     Post.subscribe(self)
     
-    var settings = Saver.getSettings()
-    if not settings: settings = Settings.defaults
+    var settings = Settings.defaults
+    var sd = Saver.getSettings()
+    if sd: settings = sd.data
     Settings.apply(settings)
     
     %MusicHandler.playMenuMusic()
@@ -32,9 +33,10 @@ func _process(delta: float):
     
     var orphan = Node.get_orphan_node_ids()
     if not orphan.is_empty():
+        Log.log(orphan.size(), "orphans")
         Node.print_orphan_nodes()
-        Log.log("orphans")
         #quitGame()
+        pass
         
 func _unhandled_input(event: InputEvent):
     
