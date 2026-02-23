@@ -14,7 +14,7 @@ func _init():
         ]
         
     slits = [
-        {"pos": Belt.NEIGHBOR[Belt.W], "dir": Belt.W},
+        {"pos": Vector2.ZERO, "dir": Belt.W},
     ]
     
 func consumeItemAtSlit(item, slit):

@@ -9,6 +9,36 @@ left_to_right = 1.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_xuvpp"]
 
+[sub_resource type="BoxMesh" id="BoxMesh_7r16o"]
+size = Vector3(0.4, 0.4, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bv6hv"]
+albedo_color = Color(0.01, 0.01, 0.01, 1)
+metallic = 0.7
+metallic_specular = 1.0
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_m6kgh"]
+size = Vector3(0.4, 0.4, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_thl77"]
+albedo_color = Color(1, 0, 0, 1)
+metallic = 0.7
+metallic_specular = 1.0
+roughness = 0.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7r16o"]
+albedo_color = Color(0, 1, 0, 1)
+metallic = 0.7
+metallic_specular = 1.0
+roughness = 0.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7m7dl"]
+albedo_color = Color(0, 0, 1, 1)
+metallic = 0.7
+metallic_specular = 1.0
+roughness = 0.6
+
 [node name="BuildingPrism" type="Node3D" unique_id=447020061]
 
 [node name="BuildingSlotE" parent="." unique_id=1429163775 instance=ExtResource("1_p7nmc")]
@@ -22,18 +52,41 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1447050192]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.5, 1)
+visible = false
 mesh = SubResource("PrismMesh_p7nmc")
 surface_material_override/0 = ExtResource("2_7r16o")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1747290590]
 transform = Transform3D(-4.371139e-08, -1, 0, -4.371139e-08, 0, -1, 1, -4.371139e-08, -4.3711385e-08, 0, 0.50000006, -1)
+visible = false
 mesh = SubResource("PrismMesh_p7nmc")
 surface_material_override/0 = ExtResource("2_7r16o")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=913342376]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+visible = false
 mesh = SubResource("BoxMesh_xuvpp")
 surface_material_override/0 = ExtResource("2_7r16o")
 
-[node name="BuildingSlot" parent="." unique_id=1827591637 instance=ExtResource("2_xuvpp")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1, 0, 0)
+[node name="BuildingSlit" parent="." unique_id=1827591637 instance=ExtResource("2_xuvpp")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0.00097191334, 0, 0)
+
+[node name="CubeBlack" type="MeshInstance3D" parent="." unique_id=870842802]
+transform = Transform3D(0, 0, 0.9999999, 0, 0.9999999, 0, -0.99999994, 0, 0, -0.0020391643, 1.3325473, 0)
+mesh = SubResource("BoxMesh_7r16o")
+surface_material_override/0 = SubResource("StandardMaterial3D_bv6hv")
+
+[node name="CubeRed" type="MeshInstance3D" parent="." unique_id=1395860824]
+transform = Transform3D(0.70710677, 0, 0.7071067, 0, 0.9999999, 0, -0.70710677, 0, 0.7071067, 1.0119143, 1.3055304, -1)
+mesh = SubResource("BoxMesh_m6kgh")
+surface_material_override/0 = SubResource("StandardMaterial3D_thl77")
+
+[node name="CubeGreen" type="MeshInstance3D" parent="." unique_id=1716103799]
+transform = Transform3D(0.70710677, 0, 0.7071067, 0, 0.9999999, 0, -0.70710677, 0, 0.7071067, 1.0154803, 1.302421, 0)
+mesh = SubResource("BoxMesh_m6kgh")
+surface_material_override/0 = SubResource("StandardMaterial3D_7r16o")
+
+[node name="CubeBlue" type="MeshInstance3D" parent="." unique_id=937437198]
+transform = Transform3D(0.70710677, 0, 0.7071067, 0, 0.9999999, 0, -0.70710677, 0, 0.7071067, 1.0161159, 1.3051721, 1)
+mesh = SubResource("BoxMesh_m6kgh")
+surface_material_override/0 = SubResource("StandardMaterial3D_7m7dl")

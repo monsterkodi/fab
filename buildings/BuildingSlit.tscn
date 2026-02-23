@@ -2,18 +2,19 @@
 
 [ext_resource type="Material" uid="uid://ci4cvsq2gbob7" path="res://materials/BuildingMaterial.tres" id="1_t2g8r"]
 [ext_resource type="PackedScene" uid="uid://c8r47tsgpykta" path="res://components/RegalBox.tscn" id="2_t2g8r"]
-
-[sub_resource type="PrismMesh" id="PrismMesh_gn1fc"]
-size = Vector3(0.8, 0.4, 0.1)
+[ext_resource type="PackedScene" uid="uid://btam4sdbpctuw" path="res://components/Arrow.tscn" id="3_wq0f2"]
+[ext_resource type="Material" uid="uid://dyve1kwebmy41" path="res://materials/InArrow.tres" id="4_6vcmn"]
 
 [node name="BuildingSlit" type="Node3D" unique_id=1827591637]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=829191257]
-transform = Transform3D(1.3113416e-07, -1, 0, -4.371138e-08, -7.642741e-15, -1, 1, 1.3113416e-07, -4.3711385e-08, 0.30033702, 1.05, -7.387705e-09)
-mesh = SubResource("PrismMesh_gn1fc")
-surface_material_override/0 = ExtResource("1_t2g8r")
 
 [node name="RegalBox" parent="." unique_id=1821907757 instance=ExtResource("2_t2g8r")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0.5, 0)
 chamfer = 0.5
 material = ExtResource("1_t2g8r")
+
+[node name="Arrow" parent="." unique_id=1573350988 instance=ExtResource("3_wq0f2")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.1, 1, 0)
+height = 0.2
+width = 0.6
+thickness = 0.33
+material = ExtResource("4_6vcmn")

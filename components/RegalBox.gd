@@ -40,8 +40,6 @@ func generate():
     
     st.begin(Mesh.PRIMITIVE_TRIANGLES)
     
-    var tip  = height*Vector3.UP
-    
     var w  = width/2
     var h  = height/2
     var d  = depth/2

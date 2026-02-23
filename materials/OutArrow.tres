@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dlc24r3ng1x47"]
+
+[resource]
+albedo_color = Color(0.4845292, 0.4845292, 1.8247963, 1)
+emission = Color(0.2525773, 0, 1, 1)
+emission_energy_multiplier = 2.6

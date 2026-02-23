@@ -48,7 +48,8 @@ func addMachineAtPosOfType(pos, type, orientation = 0):
 func delMachineAtPos(pos):
     
     if machines.has(pos):
-        if machines[pos].type != Mach.Type.Root:
+        #if machines[pos].type != Mach.Type.Root:
+        if machines[pos].pos != Vector2i(0,0):
             machines[pos].free()
 
 func delBeltStateAtPos(pos):

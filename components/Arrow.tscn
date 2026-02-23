@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://btam4sdbpctuw"]
+
+[ext_resource type="Script" uid="uid://ci54lpn08qvhn" path="res://components/Arrow.gd" id="1_8435s"]
+
+[node name="Arrow" type="Node3D" unique_id=1573350988]
+script = ExtResource("1_8435s")
+height = 0.01
+thickness = 0.438

@@ -2,23 +2,19 @@
 
 [ext_resource type="PackedScene" uid="uid://c8r47tsgpykta" path="res://components/RegalBox.tscn" id="1_6h605"]
 [ext_resource type="Material" uid="uid://ci4cvsq2gbob7" path="res://materials/BuildingMaterial.tres" id="1_gn1fc"]
-
-[sub_resource type="PrismMesh" id="PrismMesh_gn1fc"]
-size = Vector3(0.8, 0.4, 0.1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gn1fc"]
-albedo_color = Color(0.5098648, 0.5098648, 0.5098648, 1)
-metallic = 0.5
-roughness = 0.5
+[ext_resource type="PackedScene" uid="uid://btam4sdbpctuw" path="res://components/Arrow.tscn" id="3_6h605"]
+[ext_resource type="Material" uid="uid://dlc24r3ng1x47" path="res://materials/OutArrow.tres" id="4_f2ptr"]
 
 [node name="BuildingSlot" type="Node3D" unique_id=1827591637]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=829191257]
-transform = Transform3D(-4.371139e-08, 1, 0, 4.371139e-08, 0, -1, -1, -4.371139e-08, -4.3711385e-08, 0.3, 1.05, 0)
-mesh = SubResource("PrismMesh_gn1fc")
-surface_material_override/0 = SubResource("StandardMaterial3D_gn1fc")
 
 [node name="RegalBox" parent="." unique_id=1821907757 instance=ExtResource("1_6h605")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0.5, 0)
 chamfer = 0.5
 material = ExtResource("1_gn1fc")
+
+[node name="Arrow" parent="." unique_id=1573350988 instance=ExtResource("3_6h605")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.5, 1, 0)
+height = 0.2
+width = 0.6
+thickness = 0.33
+material = ExtResource("4_f2ptr")
