@@ -37,11 +37,11 @@ func produceItemAtSlot(slot):
     if slot == slots[-1]: canProduce = false
     return item
         
-func getOccupied() -> Array[Vector2i]:
+#func getOccupied() -> Array[Vector2i]:
+    #
+    #var posl = super.getOccupied()
     
-    var posl = super.getOccupied()
+    #posl.append(pos + slots[0].pos + slits[0].pos)
+    #posl.append(pos + slots[2].pos + slits[0].pos)
     
-    posl.append(pos + slots[0].pos + slits[0].pos)
-    posl.append(pos + slots[2].pos + slits[0].pos)
-    
-    return posl
+    #return posl

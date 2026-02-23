@@ -86,7 +86,7 @@ offset_bottom = -99.53
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("2_aaqae")
-icons = Array[String](["res://icons/buildings/BuildingDel.png", "res://icons/buildings/BuildingRect.png", "res://icons/buildings/BuildingRoot.png", "res://icons/buildings/BuildingBelt.png", "res://icons/buildings/BuildingStorage.png", "res://icons/buildings/BuildingPrism.png"])
+icons = Array[String](["res://icons/buildings/BuildingBelt.png", "res://icons/buildings/BuildingRect.png", "res://icons/buildings/BuildingRoot.png", "res://icons/buildings/BuildingStorage.png", "res://icons/buildings/BuildingPrism.png", "res://icons/buildings/BuildingDel.png"])
 
 [connection signal="pressed" from="Actions/HBoxContainer/Slower" to="." method="slower"]
 [connection signal="pressed" from="Actions/HBoxContainer/Faster" to="." method="faster"]

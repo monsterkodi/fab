@@ -30,25 +30,24 @@ func addBeltStateAtPos(pos):
     return bs    
     
 func addMachineAtPosOfType(pos, type, orientation = 0):
-    
-    delMachineAtPos(pos)
-    
+        
     var machine = Mach.Class[type].new()
     
     machine.setOrientation(orientation)
     machine.pos = pos
     
     for opos in machine.getOccupied():
+        delMachineAtPos(opos)
         delBeltAtPos(opos)
-
+        machines[opos] = machine
+        
     $Machines.add_child(machine)
-            
+    
     return machine
     
 func delMachineAtPos(pos):
-    
+    Log.log("delMachineAtPos", pos, machines.has(pos))
     if machines.has(pos):
-        #if machines[pos].type != Mach.Type.Root:
         if machines[pos].pos != Vector2i(0,0):
             machines[pos].free()
 

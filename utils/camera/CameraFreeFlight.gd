@@ -94,12 +94,12 @@ func readInput():
     if Input.is_key_pressed(KEY_META): return
     
     forward = -deadZoneAxis(JOY_AXIS_LEFT_Y)
-    if Input.is_action_pressed("forward"):      forward += 1
-    if Input.is_action_pressed("backward"):     forward -= 1
+    if Input.is_action_pressed("forward"):      forward += 2
+    if Input.is_action_pressed("backward"):     forward -= 2
     
     strafe = deadZoneAxis(JOY_AXIS_LEFT_X)
-    if Input.is_action_pressed("right"):        strafe += 1
-    if Input.is_action_pressed("left"):         strafe -= 1
+    if Input.is_action_pressed("right"):        strafe += 2
+    if Input.is_action_pressed("left"):         strafe -= 2
 
     steer = deadZoneAxis(JOY_AXIS_RIGHT_X)
     if Input.is_action_pressed("steer_right"):  steer += 1

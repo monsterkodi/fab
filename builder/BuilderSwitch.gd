@@ -20,8 +20,10 @@ func activateBuilder(builderName):
     match builderName:
         "Belt": builder = $BeltBuilder; color = Color.DODGER_BLUE
         "Del":  builder = $Deleter;     color = Color.RED
-        "Rect": builder = $RectSelect;  color = Color.WHITE
+        "Rect": builder = $RectSelect
         _:      builder = $BuildingBuilder; builder.setBuilding(builderName)
+    
+    Utils.world("MouseHandler").mouse_default_cursor_shape = builder.cursorShape
     
     if color == Color.TRANSPARENT:
         $Dot.visible = false

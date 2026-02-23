@@ -6,6 +6,10 @@ var buildingType
 var orientation = 0
 var ghost
 
+func _ready():
+    
+    cursorShape = Control.CURSOR_CAN_DROP
+
 func stop():
     
     ghost.free()

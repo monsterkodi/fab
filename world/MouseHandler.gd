@@ -11,7 +11,7 @@ func _gui_input(event: InputEvent):
     
     if event is not InputEventMouseMotion and event is not InputEventMouseButton: return
     
-    var cam = get_node("/root/World/Camera")
+    var cam = Utils.world("Camera")
             
     var ipos : Vector2i
     var mousePos = get_window().get_mouse_position()

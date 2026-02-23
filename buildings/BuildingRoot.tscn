@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dep5xvthu3mc6" path="res://buildings/BuildingSlot.tscn" id="1_ba60f"]
 [ext_resource type="Material" uid="uid://b4ub3lehiu3ut" path="res://materials/RootCube.tres" id="2_ljicy"]
-[ext_resource type="Script" uid="uid://j8fhmkfl01wu" path="res://world/BuildingRoot.gd" id="3_1kh71"]
+[ext_resource type="Script" uid="uid://j8fhmkfl01wu" path="res://builder/BuildingRoot.gd" id="3_1kh71"]
 [ext_resource type="PackedScene" uid="uid://c8r47tsgpykta" path="res://components/RegalBox.tscn" id="4_0r73v"]
 [ext_resource type="Material" uid="uid://ci4cvsq2gbob7" path="res://materials/BuildingMaterial.tres" id="5_gfyf6"]
 

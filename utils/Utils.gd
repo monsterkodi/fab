@@ -191,10 +191,10 @@ func wrapFocusVertical(node):
     node.get_child(0).focus_neighbor_top     = node.get_child(-1).get_path()
     node.get_child(-1).focus_neighbor_bottom = node.get_child(0).get_path()
 
-func world():
+func world(path : String = ""):
     
-    return Engine.get_main_loop().root.get_node("World")
+    var worldNode = Engine.get_main_loop().root.get_node("World")
+    if path.is_empty(): return worldNode
+    return worldNode.get_node(path)
     
-func fabState():
-    
-    return world().currentLevel.fabState
+func fabState(): return world().currentLevel.fabState

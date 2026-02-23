@@ -3,6 +3,10 @@ extends Builder
 
 var beltPieces: Dictionary[Vector2i, int]
 
+func _ready():
+    
+    cursorShape = Control.CURSOR_FORBIDDEN
+
 func start():
     
     beltPieces = Utils.fabState().beltPieces

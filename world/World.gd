@@ -11,7 +11,7 @@ func _ready():
     
     var settings = Settings.defaults
     var sd = Saver.getSettings()
-    if sd: settings = sd.data
+    if sd: settings = sd
     Settings.apply(settings)
     
     %MusicHandler.playMenuMusic()

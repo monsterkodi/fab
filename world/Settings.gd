@@ -19,7 +19,7 @@ static func applySetting(key, value):
     
     match key:
         
-        "brightness":    node("Camera/Light").light_energy = value
+        "brightness":    Utils.world("Camera/Light").light_energy = value
         "hires":         setHires(value)
         "volumeMaster":  AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(value))
         "volumeGame":    AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Game"),   linear_to_db(value))
@@ -32,9 +32,9 @@ static func applySetting(key, value):
 static func setHires(value):
 
     if value:
-        world().get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
+        Utils.world().get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
     else:
-        world().get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_VIEWPORT
+        Utils.world().get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_VIEWPORT
         
 static func setFullscreen(value):
     
@@ -50,11 +50,4 @@ static func apply(dict):
     for key in dict:
         applySetting(key, dict[key])
         
-static func world():
-    
-    return Engine.get_main_loop().root.get_node("World")
-        
-static func node(path): 
-    
-    return world().get_node(path)
         

@@ -6,6 +6,10 @@ var tempPoints: Dictionary[Vector2i, int]
 var lastTemp
 var trail = []
 
+func _ready():
+    
+    cursorShape = Control.CURSOR_MOVE
+
 func start():
     
     beltPieces = fabState().beltPieces

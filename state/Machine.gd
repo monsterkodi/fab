@@ -30,7 +30,8 @@ func _ready():
 
 func _exit_tree():
     
-    if building: building.queue_free()
+    if building:
+        building.queue_free()
     
     for slot in slots:
         fabState().delBeltAtPos(pos + slot.pos)
