@@ -97,3 +97,12 @@ func getOccupied() -> Array[Vector2i]:
         posl.push_front(pos)    
     return posl
         
+func createGhost(material):
+    
+    var ghost = load("res://buildings/%s.tscn" % Mach.buildingNameForType(type)).instantiate()
+    if material: Utils.setMaterial(ghost, material)
+    Utils.level().add_child(ghost)
+    Utils.rotateForOrientation(ghost, orientation)
+    ghost.global_position = Vector3(pos.x, 0, pos.y)
+    return ghost
+    

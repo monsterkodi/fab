@@ -1,9 +1,5 @@
 extends Node
 
-func _ready(): 
-    
-    Log.log("Saver.ready")
-
 func saveGame():
     
     var savegame = SaveData.new()

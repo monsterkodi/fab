@@ -26,5 +26,5 @@ func addIcon(resPath):
 
 func onButtonPressed(button):
     
-    Log.log("pressed", button.icon.resource_path.get_file().get_basename())
+    #Log.log("pressed", button.icon.resource_path.get_file().get_basename())
     buttonPressed.emit(button.icon.resource_path.get_file().get_basename())

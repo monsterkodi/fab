@@ -13,15 +13,22 @@ size = Vector3(1, 0.3, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vvp0a"]
 shading_mode = 0
 
+[sub_resource type="BoxMesh" id="BoxMesh_kklv8"]
+size = Vector3(1, 0.26, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kklv8"]
+render_priority = 20
+shading_mode = 0
+
 [node name="BuilderSwitch" type="Node3D" unique_id=1482098403]
 script = ExtResource("1_vkwue")
 
 [node name="Dot" type="MeshInstance3D" parent="." unique_id=1953182413]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+visible = false
 transparency = 0.95
 cast_shadow = 0
 mesh = SubResource("BoxMesh_amlds")
-skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_vvp0a")
 
 [node name="BeltBuilder" type="Node" parent="." unique_id=1698741172]
@@ -37,7 +44,6 @@ script = ExtResource("3_amlds")
 script = ExtResource("5_3r3yl")
 
 [node name="RectCorners" type="Node3D" parent="." unique_id=1495750243]
-visible = false
 
 [node name="CornerNE" type="Node3D" parent="RectCorners" unique_id=1580235594]
 
@@ -70,3 +76,11 @@ transform = Transform3D(-0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, -0.707
 height = 0.26
 width = 0.7
 thickness = 0.5
+
+[node name="Center" type="MeshInstance3D" parent="RectCorners" unique_id=392540616]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13, 0)
+transparency = 0.95
+cast_shadow = 0
+mesh = SubResource("BoxMesh_kklv8")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_kklv8")

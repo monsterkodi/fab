@@ -97,7 +97,7 @@ func isClass(node:Node, className:String):
     return node.get_class() == className or \
         ClassDB.is_parent_class(node.get_class(), className) or \
         isScriptClass(node.get_script(), className)
-
+        
 func firstParentWithClass(node:Node, className:String):
     
     var parent = node.get_parent()
@@ -198,3 +198,26 @@ func world(path : String = ""):
     return worldNode.get_node(path)
     
 func fabState(): return world().currentLevel.fabState
+
+const materialClasses = ["HalfCapsuleTurret", "HalfCapsuleRounded", "RegalBox", "Arrow"]
+
+func setMaterial(node, material):
+    
+    var meshes = node.find_children("*", "Node3D")
+    for mesh in meshes:
+        var found = false
+        for className in materialClasses:
+            if Utils.isClass(mesh, className):
+                mesh.material = material
+                found = true
+                break
+        if found: continue
+        if Utils.isClass(mesh, "MeshInstance3D") or mesh.has_method("set_surface_override_material"):
+            mesh.set_surface_override_material(0, material)
+        else:
+            #Log.log("mesh not a MeshInstance3D", mesh.name, mesh)
+            setMaterial(mesh, material)
+
+func rotateForOrientation(node, orientation):
+    
+    node.transform.basis = Basis(Vector3.UP, deg_to_rad(-90*orientation))

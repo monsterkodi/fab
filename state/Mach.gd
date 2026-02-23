@@ -30,3 +30,6 @@ func typeForString(string):
         "Prism":   return Type.Prism
         "Storage": return Type.Storage
         _:         return Type.Invalid
+
+func buildingNameForType(type): return "Building" + stringForType(type)
+    

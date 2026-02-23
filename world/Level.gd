@@ -14,7 +14,7 @@ func _ready():
         
 func start():
     
-    Log.log("Level.start", get_path())
+    #Log.log("Level.start", get_path())
     add_to_group("game")
     set_process(true)
     Post.subscribe(self)

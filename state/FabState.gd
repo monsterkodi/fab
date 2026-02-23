@@ -46,7 +46,7 @@ func addMachineAtPosOfType(pos, type, orientation = 0):
     return machine
     
 func delMachineAtPos(pos):
-    Log.log("delMachineAtPos", pos, machines.has(pos))
+    #Log.log("delMachineAtPos", pos, machines.has(pos))
     if machines.has(pos):
         if machines[pos].pos != Vector2i(0,0):
             machines[pos].free()

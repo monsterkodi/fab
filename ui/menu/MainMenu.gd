@@ -18,7 +18,7 @@ var lastFocused = null
 
 func _ready():
     
-    Log.log("MainMenu ready")
+    #Log.log("MainMenu ready")
     if Saver.getSaveGame():
         %Buttons.get_node("Continue").visible = true
         #%Buttons.get_node("Save Game").visible = true
