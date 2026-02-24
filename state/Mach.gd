@@ -33,3 +33,34 @@ func typeForString(string):
 
 func buildingNameForType(type): return "Building" + stringForType(type)
     
+func slotsForType(type):
+    
+    match type:
+        Type.Prism: 
+            return [
+                {"pos": Belt.NEIGHBOR[Belt.E]+Belt.NEIGHBOR[Belt.N], "dir": Belt.E, "color": Color.RED},
+                {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E, "color": Color.GREEN},
+                {"pos": Belt.NEIGHBOR[Belt.E]+Belt.NEIGHBOR[Belt.S], "dir": Belt.E, "color": Color.BLUE},
+                ]
+        Type.Root:   
+            return [
+                {"pos": Belt.NEIGHBOR[Belt.E], "dir": Belt.E},
+                {"pos": Belt.NEIGHBOR[Belt.S], "dir": Belt.S},
+                {"pos": Belt.NEIGHBOR[Belt.W], "dir": Belt.W},
+                {"pos": Belt.NEIGHBOR[Belt.N], "dir": Belt.N},
+                ]
+    return []
+
+func slitsForType(type):        
+    
+    match type:
+        Type.Prism: 
+            return [
+                {"pos": Vector2i.ZERO, "dir": Belt.W},
+            ]
+        Type.Storage: 
+            return [
+                {"pos": Vector2i(0,0), "dir": Belt.W},
+            ]
+            
+    return []

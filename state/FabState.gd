@@ -172,10 +172,22 @@ func loadGame(data:Dictionary):
                 addMachineAtPosOfType(pos, machine.type, machine.orientation)
         
         if data.FabState.has("beltStates"):
-            #beltStates.clear()
-            #Utils.freeChildren($BeltStates)
             for state in data.FabState.beltStates:
                 var bs = addBeltStateAtPos(Vector2i(state[0][0], state[0][1]))
                 bs.restore(state)
         
         updateBelt()
+
+func newGhost(type, pos, orientation, material):
+    
+    var ghost = Ghost.new()
+    
+    ghost.pos         = pos
+    ghost.type        = type
+    ghost.orientation = orientation
+
+    $Ghosts.add_child(ghost)
+    
+    if material: Utils.setMaterial(ghost.building, material)
+    
+    return ghost

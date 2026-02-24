@@ -6,16 +6,8 @@ var canProduce = false
 func _init():
     
     type  = Mach.Type.Prism
-    
-    slots = [
-        {"pos": Belt.NEIGHBOR[Belt.E]+Belt.NEIGHBOR[Belt.N], "dir": Belt.E, "color": Color.RED},
-        {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E, "color": Color.GREEN},
-        {"pos": Belt.NEIGHBOR[Belt.E]+Belt.NEIGHBOR[Belt.S], "dir": Belt.E, "color": Color.BLUE},
-        ]
-        
-    slits = [
-        {"pos": Vector2.ZERO, "dir": Belt.W},
-    ]
+    slots = Mach.slotsForType(type)
+    slits = Mach.slitsForType(type)
     
 func consumeItemAtSlit(item, slit):
     
@@ -38,7 +30,7 @@ func produceItemAtSlot(slot):
     return item
         
 #func getOccupied() -> Array[Vector2i]:
-    #
+    
     #var posl = super.getOccupied()
     
     #posl.append(pos + slots[0].pos + slits[0].pos)

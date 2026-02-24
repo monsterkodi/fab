@@ -199,7 +199,7 @@ func world(path : String = ""):
     
 func fabState(): return world().currentLevel.fabState
 
-const materialClasses = ["HalfCapsuleTurret", "HalfCapsuleRounded", "RegalBox", "Arrow"]
+const materialClasses = ["HalfCapsuleRounded", "RegalBox", "Arrow"]
 
 func setMaterial(node, material):
     
@@ -209,10 +209,12 @@ func setMaterial(node, material):
         for className in materialClasses:
             if Utils.isClass(mesh, className):
                 mesh.material = material
+                #Log.log("class", mesh.name, mesh)
                 found = true
                 break
         if found: continue
         if Utils.isClass(mesh, "MeshInstance3D") or mesh.has_method("set_surface_override_material"):
+            #Log.log("override", mesh.name, mesh)
             mesh.set_surface_override_material(0, material)
         else:
             #Log.log("mesh not a MeshInstance3D", mesh.name, mesh)

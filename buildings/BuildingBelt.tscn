@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d28sw81e1dm1v"]
 
-[ext_resource type="Material" uid="uid://xnp2xrokwe1h" path="res://materials/Belt_W_E.tres" id="1_l44yn"]
+[ext_resource type="Material" uid="uid://xnp2xrokwe1h" path="res://materials/belt/Belt_W_E.tres" id="1_l44yn"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ckhb6"]
 

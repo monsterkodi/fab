@@ -17,7 +17,6 @@ func loadGame():
 
     var data = getSaveGame()
     if data:
-        #Log.log("loadGame", data)
         Post.loadGame.emit(data)
 
 func getSaveData(resource):
@@ -33,5 +32,4 @@ func saveSettings():
     
     var settings = SaveData.new()
     settings.data = Settings.settings
-    #Log.log("saveSettings", settings.data)
     ResourceSaver.save(settings, "user://settings.tres")

@@ -8,3 +8,5 @@ script = ExtResource("1_w3g87")
 [node name="Machines" type="Node" parent="." unique_id=139877367]
 
 [node name="BeltStates" type="Node" parent="." unique_id=944210268]
+
+[node name="Ghosts" type="Node" parent="." unique_id=1436560568]

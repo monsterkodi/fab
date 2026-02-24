@@ -4,10 +4,7 @@ extends Machine
 func _init():
     
     type  = Mach.Type.Storage
-    
-    slits = [
-        {"pos": Vector2i(0,0), "dir": Belt.W},
-    ]
+    slits = Mach.slitsForType(type)    
     
 func consumeItemAtSlit(item, slit): 
     

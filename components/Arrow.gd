@@ -9,8 +9,9 @@ extends Node3D
 @export_range(0.0, 1.0, 0.001) var thickness = 0.5:
     set(v): thickness = v; generate()
     
-@export var material : Material
-
+@export var material : Material:
+    set(v): material = v; generate()
+    
 func _ready():
     
     generate()

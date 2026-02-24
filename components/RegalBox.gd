@@ -13,10 +13,11 @@ extends Node3D
 @export_range(0.0, 1.0, 0.1) var chamfer = 0.4:
     set(v): chamfer = v; generate()
     
-@export var material : Material
+@export var material : Material:
+    set(v): material = v; generate()
 
 func _ready():
-    
+
     generate()
 
 func tri(st : SurfaceTool, p1 : Vector3, p2 : Vector3, p3 : Vector3):
@@ -114,4 +115,4 @@ func generate():
     if get_child_count():
         get_child(0).free()
     
-    self.add_child(mi)
+    add_child(mi)

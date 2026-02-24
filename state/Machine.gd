@@ -22,11 +22,15 @@ func _ready():
         fabState().machines[opos] = self
                 
     fabState().updateBelt()
+    
+    createBuilding()
 
+func createBuilding():
+    
     building = load("res://buildings/Building%s.tscn" % Mach.stringForType(type)).instantiate()
     Utils.level().add_child(building)
     building.global_position = Vector3(pos.x, 0, pos.y)
-    building.transform = building.transform.rotated_local(Vector3.UP, deg_to_rad(orientation * -90))
+    Utils.rotateForOrientation(building, orientation)
 
 func _exit_tree():
     
@@ -98,11 +102,7 @@ func getOccupied() -> Array[Vector2i]:
     return posl
         
 func createGhost(material):
-    
-    var ghost = load("res://buildings/%s.tscn" % Mach.buildingNameForType(type)).instantiate()
-    if material: Utils.setMaterial(ghost, material)
-    Utils.level().add_child(ghost)
-    Utils.rotateForOrientation(ghost, orientation)
-    ghost.global_position = Vector3(pos.x, 0, pos.y)
-    return ghost
+        
+    return Utils.fabState().newGhost(type, pos, orientation, material)
+
     

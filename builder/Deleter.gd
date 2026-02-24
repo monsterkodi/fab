@@ -21,6 +21,7 @@ func start():
 func pointerClick(pos):
     
     Utils.fabState().delObjectAtPos(pos)
+    if ghost: ghost.free()
     
 func pointerDrag(pos): pointerClick(pos)
         
@@ -28,6 +29,7 @@ func pointerHover(pos):
     
     if Utils.fabState().machines.has(pos):
         if ghost: ghost.free()
-        ghost = Utils.fabState().machines[pos].createGhost(GHOST_MATERIAL)
+        if Utils.fabState().machines[pos].pos != Vector2i.ZERO:
+            ghost = Utils.fabState().machines[pos].createGhost(GHOST_MATERIAL)
     elif ghost:
         ghost.free()

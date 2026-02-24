@@ -5,7 +5,7 @@ var startPos
 var endPos
 var corners
 
-var ghosts : Dictionary[Vector2i, Node3D]
+var ghosts : Dictionary[Vector2i, Ghost]
 const GHOST_MATERIAL = preload("uid://b0use4n8rmlgb")
 
 func _ready():
@@ -50,7 +50,6 @@ func pointerDrag(pos):
     
 func pointerRelease(pos):
     
-    #Log.log("rect select done", startPos, endPos)
     startPos = null
     corners.visible = false
 
@@ -67,7 +66,7 @@ func updateGhosts():
     var minx = min(startPos.x, endPos.x) 
     var miny = min(startPos.y, endPos.y)
     
-    var newGhosts : Dictionary[Vector2i, Node3D] = {}
+    var newGhosts : Dictionary[Vector2i, Ghost] = {}
     for x in range(minx, maxx+1):
         for y in range(miny, maxy+1):
             var pos = Vector2i(x, y)
@@ -77,6 +76,20 @@ func updateGhosts():
                     ghosts.erase(pos)
                 else:
                     newGhosts[pos] = Utils.fabState().machines[pos].createGhost(GHOST_MATERIAL)
-            
     clearGhosts()
     ghosts = newGhosts
+
+func cut():  
+
+    if not ghosts.is_empty():
+        Log.log("cut")
+        
+func paste(): 
+    
+    if not ghosts.is_empty():
+        Log.log("paste")
+
+func _unhandled_key_input(event: InputEvent):
+    
+    if Input.is_action_just_pressed("cut"):    cut();   return
+    if Input.is_action_just_pressed("paste"):  paste(); return
