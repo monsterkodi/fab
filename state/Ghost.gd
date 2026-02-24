@@ -4,6 +4,8 @@ extends Machine
 func _ready(): 
 
     assert(type)
+    slits = Mach.slitsForType(type)
+    slots = Mach.slotsForType(type)
     
     createBuilding()
     

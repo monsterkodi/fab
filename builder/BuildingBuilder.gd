@@ -29,9 +29,10 @@ func pointerClick(pos):
 func pointerDrag(pos):
     
     if ghost:
-        Log.log("ghost posl", ghost.getOccupied())
-        if false:
-            Utils.fabState().addMachineAtPosOfType(pos, ghost.type, ghost.orientation)
+        for gp in ghost.getOccupied():
+            if Utils.fabState().machines.has(gp):
+                return
+        Utils.fabState().addMachineAtPosOfType(pos, ghost.type, ghost.orientation)
 
 func pointerRotate():
     

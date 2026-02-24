@@ -1,5 +1,7 @@
 extends Control
 
+var lastPos : Vector2i
+
 func _process(delta: float):
     
     if Input.is_action_just_pressed("rotate"):
@@ -24,11 +26,12 @@ func _gui_input(event: InputEvent):
         ipos.y = round(intersect.z)
 
     if event is InputEventMouseMotion:
-        
+        if ipos != lastPos:
             if event.button_mask == 0:
                 Post.pointerHover.emit(ipos)
             elif event.button_mask == 1:
                 Post.pointerDrag.emit(ipos)
+            lastPos = ipos
                     
     elif event is InputEventMouseButton:
         #Log.log(event)
