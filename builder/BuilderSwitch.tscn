@@ -44,6 +44,7 @@ script = ExtResource("3_amlds")
 script = ExtResource("5_3r3yl")
 
 [node name="RectCorners" type="Node3D" parent="." unique_id=1495750243]
+visible = false
 
 [node name="CornerNE" type="Node3D" parent="RectCorners" unique_id=1580235594]
 

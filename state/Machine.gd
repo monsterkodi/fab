@@ -45,6 +45,8 @@ func _exit_tree():
     for opos in getOccupied():
         fabState().machines.erase(opos)
         
+func rotateCW(): setOrientation((orientation + 1) % 4)
+        
 func setOrientation(o):
     
     orientation = o
@@ -56,6 +58,9 @@ func setOrientation(o):
     for slit in slits:
         slit.pos = Belt.orientatePos(o, slit.pos)
         slit.dir = Belt.orientateDir(o, slit.dir)
+        
+    if building:
+        Utils.rotateForOrientation(building, orientation)
     
 func consume():
     
@@ -72,8 +77,9 @@ func advanceAtSlotIndex(i):
     
     var slot = slots[i]
     var bs = fabState().beltStateAtPos(pos + slot.pos)
-    var inDir = Belt.OPPOSITE[slot.dir]
-    return bs.inSpace(inDir)
+    if bs:
+        return bs.inSpace(Belt.OPPOSITE[slot.dir])
+    return -666
     
 func produce():
     
@@ -101,8 +107,5 @@ func getOccupied() -> Array[Vector2i]:
         posl.push_front(pos)    
     return posl
         
-func createGhost(material):
-        
-    return Utils.fabState().newGhost(type, pos, orientation, material)
 
     

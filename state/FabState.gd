@@ -177,17 +177,41 @@ func loadGame(data:Dictionary):
                 bs.restore(state)
         
         updateBelt()
-
-func newGhost(type, pos, orientation, material):
+        
+func occupiedByRoot(posl):
+    
+    for pos in posl:
+        if machines.has(pos):
+            if machines[pos].pos == Vector2i.ZERO:
+                return true
+    return false
+        
+func ghostForMachine(machine, material, skip=[]) -> Ghost:
     
     var ghost = Ghost.new()
     
-    ghost.pos         = pos
+    ghost.pos         = machine.pos
+    ghost.type        = machine.type
+    ghost.orientation = machine.orientation
+    ghost.proxy       = machine
+    
+    Utils.setOverrideMaterial(machine.building, material, skip)
+    
+    $Ghosts.add_child(ghost)
+    
+    return ghost
+
+
+func ghostForType(type, material, skip = []) -> Ghost:
+    
+    var ghost = Ghost.new()
+    
+    ghost.pos         = Vector2i.ZERO
     ghost.type        = type
-    ghost.orientation = orientation
+    ghost.orientation = 0
 
     $Ghosts.add_child(ghost)
     
-    if material: Utils.setMaterial(ghost.building, material)
+    Utils.setOverrideMaterial(ghost.building, material, skip)
     
     return ghost

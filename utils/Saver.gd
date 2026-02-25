@@ -9,8 +9,7 @@ func saveGame():
     
 func clearGame():
     
-    var savegame = SaveData.new()
-    ResourceSaver.save(savegame, "user://savegame.tres")
+    ResourceSaver.save(SaveData.new(), "user://savegame.tres")
     self.loadGame()
         
 func loadGame():

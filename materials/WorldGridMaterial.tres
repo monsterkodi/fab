@@ -5,4 +5,5 @@
 [resource]
 render_priority = -100
 shader = ExtResource("1_uf5ho")
+shader_parameter/color = Color(0.09225613, 0.09225613, 0.09225613, 1)
 shader_parameter/Subdivisions = 500

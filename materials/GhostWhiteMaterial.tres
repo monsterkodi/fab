@@ -5,7 +5,7 @@
 [resource]
 render_priority = 10
 shader = ExtResource("1_vljqd")
-shader_parameter/color1 = Color(1, 1, 1, 0.101960786)
-shader_parameter/color2 = Color(1, 1, 1, 0.4392157)
-shader_parameter/threshold = 0.10000000000582077
-shader_parameter/fresnel_sharpness = 5.0
+shader_parameter/color1 = Color(1, 1, 1, 0.039215688)
+shader_parameter/color2 = Color(1, 1, 1, 0.039215688)
+shader_parameter/threshold = 0.2
+shader_parameter/fresnel_sharpness = 4.0

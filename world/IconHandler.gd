@@ -24,9 +24,6 @@ func get_full_aabb(node: Node3D) -> AABB:
         
         if current is VisualInstance3D:
             var local_aabb = current.get_aabb()
-            # Transform the local AABB to the root node's local space
-            #var world_aabb = current.transform * instance_aabb
-            #var world_aabb = current.global_transform * local_aabb
             
             var reltrans = node.global_transform.affine_inverse() * current.global_transform
             var world_aabb = reltrans * local_aabb

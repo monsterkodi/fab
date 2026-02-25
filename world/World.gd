@@ -2,7 +2,8 @@ class_name World
 extends Node
 
 var currentLevel : Level
-          
+const LEVEL = preload("uid://b1g34431itmpg")
+                    
 func _ready():
     
     %MenuHandler.hideAllMenus()
@@ -45,14 +46,11 @@ func _unhandled_input(event: InputEvent):
                 
 func continueGame():
 
-    const LEVEL = preload("uid://b1g34431itmpg")
     loadLevel(LEVEL)
                 
 func newGame():
     
-    Saver.clearGame()
-    const LEVEL = preload("uid://b1g34431itmpg")
-    loadLevel(LEVEL)
+    loadLevel(LEVEL, false)
         
 func pauseMenu():
     
@@ -90,19 +88,20 @@ func settingsMenu(backMenu:Menu):
 func clearLevel():
 
     if currentLevel:
-        currentLevel.clear(Saver.savegame.data)
-        Saver.saveGame()
         currentLevel.free()
 
-func loadLevel(levelRes):
+func loadLevel(levelRes, load = true):
     
+    clearLevel()
+
     currentLevel = levelRes.instantiate()
     add_child(currentLevel)
     
     currentLevel.start()
     Post.startLevel.emit()
     
-    Saver.loadGame()
+    if load:
+        Saver.loadGame()
 
     Post.levelStart.emit()
     resumeGame()

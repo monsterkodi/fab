@@ -71,11 +71,13 @@ func updateGhosts():
         for y in range(miny, maxy+1):
             var pos = Vector2i(x, y)
             if Utils.fabState().machines.has(pos):
+                var machine = Utils.fabState().machines[pos]
                 if ghosts.has(pos):
                     newGhosts[pos] = ghosts[pos]
                     ghosts.erase(pos)
                 else:
-                    newGhosts[pos] = Utils.fabState().machines[pos].createGhost(GHOST_MATERIAL)
+                    newGhosts[pos] = Utils.fabState().ghostForMachine(machine, GHOST_MATERIAL, ["Arrow"])
+
     clearGhosts()
     ghosts = newGhosts
 

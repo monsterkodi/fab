@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://bxv2h0isvjwm5" path="res://builder/BuilderSwitch.tscn" id="14_ww6ps"]
 [ext_resource type="Script" uid="uid://srdtmvh7y33a" path="res://snd/MenuSound.gd" id="15_ortil"]
 [ext_resource type="Script" uid="uid://dbjdt42valv4b" path="res://snd/GameSound.gd" id="16_ppjuv"]
-[ext_resource type="Material" uid="uid://cw0p3qxalvp6y" path="res://materials/WorldGridMaterial.tres" id="16_tx47m"]
 [ext_resource type="PackedScene" uid="uid://oakjmrs1pqvw" path="res://world/IconHandler.tscn" id="18_ortil"]
 [ext_resource type="PackedScene" uid="uid://crdyanslu6b0r" path="res://ui/menu/MainMenu.tscn" id="23_vqsdb"]
 [ext_resource type="PackedScene" uid="uid://dlje6krlhyfml" path="res://ui/menu/CreditsMenu.tscn" id="24_ph6wr"]
@@ -22,8 +21,9 @@
 [sub_resource type="Environment" id="Environment_ig7tw"]
 background_color = Color(0.2522139, 0.2522139, 0.2522139, 1)
 background_energy_multiplier = 0.0
-ambient_light_source = 1
-ambient_light_color = Color(0.2484, 0.2484, 0.2484, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.2
 reflected_light_source = 1
 tonemap_mode = 2
 ssao_intensity = 16.0
@@ -40,10 +40,6 @@ fog_enabled = true
 fog_mode = 1
 fog_light_color = Color(0, 0, 0, 1)
 fog_density = 1.0
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_fy8qs"]
-size = Vector2(500, 500)
-center_offset = Vector3(0, 0.02, 0)
 
 [node name="World" type="Node3D" unique_id=556522314]
 process_mode = 3
@@ -154,11 +150,6 @@ script = ExtResource("41_spsmc")
 script = ExtResource("54_virqv")
 
 [node name="BuilderSwitch" parent="." unique_id=1482098403 instance=ExtResource("14_ww6ps")]
-
-[node name="Grid" type="MeshInstance3D" parent="." unique_id=289551185]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.341934e-05, -0.001149416, 0.0036256313)
-mesh = SubResource("PlaneMesh_fy8qs")
-surface_material_override/0 = ExtResource("16_tx47m")
 
 [node name="MouseHandler" parent="." unique_id=1746397472 groups=["game"] instance=ExtResource("6_p1v5b")]
 

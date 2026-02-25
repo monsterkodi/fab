@@ -98,6 +98,13 @@ func isClass(node:Node, className:String):
         ClassDB.is_parent_class(node.get_class(), className) or \
         isScriptClass(node.get_script(), className)
         
+func isAnyClass(node:Node, classNames):
+    
+    for className in classNames:
+        if isClass(node, className):
+            return true
+    return false
+        
 func firstParentWithClass(node:Node, className:String):
     
     var parent = node.get_parent()
@@ -197,28 +204,25 @@ func world(path : String = ""):
     if path.is_empty(): return worldNode
     return worldNode.get_node(path)
     
-func fabState(): return world().currentLevel.fabState
+func fabState() -> FabState: return world().currentLevel.fabState
 
-const materialClasses = ["HalfCapsuleRounded", "RegalBox", "Arrow"]
-
-func setMaterial(node, material):
+func setOverrideMaterial(node, material, skip=[]):
     
-    var meshes = node.find_children("*", "Node3D")
-    for mesh in meshes:
-        var found = false
-        for className in materialClasses:
-            if Utils.isClass(mesh, className):
-                mesh.material = material
-                #Log.log("class", mesh.name, mesh)
-                found = true
-                break
-        if found: continue
-        if Utils.isClass(mesh, "MeshInstance3D") or mesh.has_method("set_surface_override_material"):
-            #Log.log("override", mesh.name, mesh)
-            mesh.set_surface_override_material(0, material)
+    for child in node.get_children():
+        if isAnyClass(child, skip):
+            continue
+        if Utils.isClass(child, "GeometryInstance3D"):
+            child.material_override = material
         else:
-            #Log.log("mesh not a MeshInstance3D", mesh.name, mesh)
-            setMaterial(mesh, material)
+            setOverrideMaterial(child, material, skip)
+
+func clearOverrideMaterial(node):
+    
+    for child in node.get_children():
+        if Utils.isClass(child, "GeometryInstance3D"):
+            child.material_override = null
+        else:
+            clearOverrideMaterial(child)
 
 func rotateForOrientation(node, orientation):
     

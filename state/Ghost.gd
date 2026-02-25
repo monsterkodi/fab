@@ -1,18 +1,26 @@
 class_name Ghost
 extends Machine
 
-func _ready(): 
+var proxy : Machine
+
+func _ready():
 
     assert(type)
     slits = Mach.slitsForType(type)
     slots = Mach.slotsForType(type)
     
-    createBuilding()
+    if proxy:
+        building = proxy.building
+    else:
+        createBuilding()
     
 func _exit_tree():
     
-    if building:
-        building.queue_free()
+    if proxy:
+        Utils.clearOverrideMaterial(building)
+    else:
+        if building:
+            building.queue_free()
       
 func setPos(p):
     

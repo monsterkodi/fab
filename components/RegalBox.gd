@@ -40,6 +40,7 @@ func generate():
     var st = SurfaceTool.new()
     
     st.begin(Mesh.PRIMITIVE_TRIANGLES)
+    st.set_smooth_group(-1) # flat shading
     
     var w  = width/2
     var h  = height/2
@@ -50,8 +51,6 @@ func generate():
     var iw = w - thickness
     var ih = h - thickness
     var id = d - thickness
-    
-    st.set_smooth_group(-1) # flat shading
     
     if chamfer > 0:
         cw = w - thickness * chamfer
@@ -109,7 +108,7 @@ func generate():
     
     var mi = MeshInstance3D.new()
     mi.mesh = st.commit()
-    mi.material_override = material
+    mi.mesh.surface_set_material(0, material)
     mi.transform = Transform3D.IDENTITY
     
     if get_child_count():

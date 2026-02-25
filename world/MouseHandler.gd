@@ -1,3 +1,4 @@
+class_name MouseHandler
 extends Control
 
 var lastPos : Vector2i

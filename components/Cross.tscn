@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c4lfdu631bmye"]
+
+[ext_resource type="Script" uid="uid://ctd0wgl436u6m" path="res://components/Cross.gd" id="1_ss0uk"]
+
+[node name="Cross" type="Node3D" unique_id=1821907757]
+script = ExtResource("1_ss0uk")

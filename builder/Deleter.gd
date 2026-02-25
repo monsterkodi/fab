@@ -29,7 +29,8 @@ func pointerHover(pos):
     
     if Utils.fabState().machines.has(pos):
         if ghost: ghost.free()
-        if Utils.fabState().machines[pos].pos != Vector2i.ZERO:
-            ghost = Utils.fabState().machines[pos].createGhost(GHOST_MATERIAL)
+        var machine = Utils.fabState().machines[pos]
+        if machine.pos != Vector2i.ZERO:
+            ghost = Utils.fabState().ghostForMachine(machine, GHOST_MATERIAL)
     elif ghost:
         ghost.free()

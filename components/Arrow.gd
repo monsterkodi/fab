@@ -80,10 +80,10 @@ func generate():
     
     var mi = MeshInstance3D.new()
     mi.mesh = st.commit()
-    mi.material_override = material
+    mi.mesh.surface_set_material(0, material)
     mi.transform = Transform3D.IDENTITY
     
     if get_child_count():
         get_child(0).free()
     
-    self.add_child(mi)
+    add_child(mi)
