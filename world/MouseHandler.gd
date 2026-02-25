@@ -23,6 +23,7 @@ func _gui_input(event: InputEvent):
     var plane = Plane.PLANE_XZ
     
     var intersect = plane.intersects_ray(camera.project_ray_origin(mousePos), camera.project_ray_normal(mousePos))
+    #Log.log(get_window().get_visible_rect().has_point(mousePos), mousePos, Input.is_physical_key_pressed(KEY_SHIFT))
     if intersect:
         ipos.x = round(intersect.x)
         ipos.y = round(intersect.z)
@@ -37,7 +38,7 @@ func _gui_input(event: InputEvent):
             lastPos = ipos
                     
     elif event is InputEventMouseButton:
-        #Log.log(event)
+
         if event.button_index == 1:
             if event.pressed:
                 if event.shift_pressed:

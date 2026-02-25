@@ -62,7 +62,10 @@ func addBeltAtPos(pos, type):
     delBeltStateAtPos(pos)
     beltPieces[pos] = type
         
-func delBeltAtPos(pos):    
+func delBeltAtPos(pos): 
+    
+    if occupiedByRoot([pos]):
+        return
 
     delBeltStateAtPos(pos)
     beltPieces.erase(pos)
@@ -103,6 +106,10 @@ func _physics_process(delta: float):
         machine.produce()
     
     updateItems()
+    
+func clearTemp(): 
+    
+    tempPoints.clear()
 
 func updateTemp():
     

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c1x0fenyqj5g2"]
+
+[ext_resource type="Script" uid="uid://c0jnsahm0guxo" path="res://builder/BeltBuilder.gd" id="1_3d2ej"]
+
+[node name="BeltBuilder" type="Node3D" unique_id=592930944]
+script = ExtResource("1_3d2ej")

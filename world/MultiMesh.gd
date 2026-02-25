@@ -75,22 +75,34 @@ var beltPieces = {
 func _ready():
     
     Post.subscribe(self)
-    
+        
     for key in beltNames:
-        var material : ShaderMaterial
         var beltNode = get_node("Belt_"+key)
-        material = beltNode.multimesh.mesh.material
-        material.set_shader_parameter("RimColor", Color(0.15, 0.15, 0.15))
-        material.set_shader_parameter("SpokeColor", Color(0.75, 0.75, 3.0))
         
         var node = beltNode.duplicate()
         node.name = "Temp_"+key
         node.multimesh = node.multimesh.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
-        material = node.multimesh.mesh.material
-        material.set_shader_parameter("RimColor", Color(0.392, 0.392, 1.0, 1.0))
-        material.set_shader_parameter("SpokeColor", Color(0.238, 0.238, 0.61, 1.0))
-        material.render_priority = 10
+        node.multimesh.mesh.material.render_priority = 10
         add_child(node)
+    
+    setColors("Belt", Color(0.15, 0.15, 0.15), Color(0.75, 0.75, 3.0))
+    setBeltBuilderColors()
+    
+func setBeltBuilderColors():
+
+    setColors("Temp", Color(0.15, 0.15, 0.15), Color(0.238, 0.238, 0.61, 1.0))
+    
+func setRectSelectColors():
+    
+    setColors("Temp", Color(0.829, 0.829, 0.829, 1.0), Color(0.461, 0.461, 0.461, 1.0))
+        
+func setColors(beltSet, rimColor, spokeColor):
+    
+    for key in beltNames:
+        var beltNode = get_node(beltSet+"_"+key)
+        var material : ShaderMaterial = beltNode.multimesh.mesh.material
+        material.set_shader_parameter("RimColor", rimColor)
+        material.set_shader_parameter("SpokeColor", spokeColor)
         
 func gameSpeed(speed):
     

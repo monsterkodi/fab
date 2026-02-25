@@ -4,6 +4,7 @@ class_name BeltBuilder
 var beltPieces: Dictionary[Vector2i, int]
 var tempPoints: Dictionary[Vector2i, int]
 var lastTemp
+var orientation = 0
 var trail = []
 
 func _ready():
@@ -15,18 +16,41 @@ func start():
     beltPieces = fabState().beltPieces
     tempPoints = fabState().tempPoints
     
+    fabState().mm().setBeltBuilderColors()
+    
 func stop():
     
-    tempPoints.clear()
-    lastTemp = null
     trail = []
+    lastTemp = null
+    clearTemp()
     updateTemp()    
     
-func pointerClick(pos):
+func pointerHover(pos):
     
-    tempPoints.clear()
+    lastTemp = null
+    clearTemp()
     addTempPoint(pos)
     updateTemp()
+    
+func pointerRotate():
+    
+    if trail.is_empty() and lastTemp and not fabState().isOccupied(lastTemp):
+        var lt = tempPoints[lastTemp]
+        if Belt.isSimple(lt):
+            orientation = (orientation + 1) % 4
+            clearTemp()
+            tempPoints[lastTemp] = Belt.rotateType(lt)
+            updateTemp()
+    
+func pointerContext(pos):
+    
+    pointerRotate()
+        
+func pointerClick(pos):
+    
+    if tempPoints.is_empty():
+        addTempPoint(pos)
+        updateTemp()
     
 func addTempPoint(pos):
     
@@ -67,6 +91,7 @@ func neighborConnect(pos, type):
         
     if type == 0:
         type = Belt.I_W | Belt.O_E # 0b0001_0100
+        type = Belt.orientateType(type, orientation)
         
     #if Belt.isInvalidType(type):
         #Log.warn(Belt.stringForType(type))
@@ -137,11 +162,9 @@ func pointerRelease(p):
         
         fabState().addBeltAtPos(pos, tempPoints[pos])    
         
-    tempPoints.clear()
     lastTemp = null
     trail = []
+    clearTemp()
     updateTemp()
     updateBelt()
     
-func updateTemp(): fabState().updateTemp()
-func updateBelt(): fabState().updateBelt()

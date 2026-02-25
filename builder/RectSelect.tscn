@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://btam4sdbpctuw" path="res://components/Arrow.tscn" id="2_ebfaj"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_8aa6f"]
-size = Vector3(1, 0.26, 1)
+size = Vector3(1, 0.02, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r3bfq"]
 render_priority = 20
@@ -48,7 +48,7 @@ width = 0.7
 thickness = 0.5
 
 [node name="Center" type="MeshInstance3D" parent="Corners" unique_id=992220286]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
 transparency = 0.95
 cast_shadow = 0
 mesh = SubResource("BoxMesh_8aa6f")

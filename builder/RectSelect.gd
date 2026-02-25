@@ -16,6 +16,7 @@ func _ready():
 func start():
     
     Utils.setOverrideMaterial(corners, GHOST_MATERIAL)
+    fabState().mm().setRectSelectColors()
     corners.show()
 
 func stop():
@@ -30,19 +31,26 @@ func pointerHover(pos):
     updateCorners()
 
 func pointerClick(pos):
-    
-    clearGhosts()
+            
     Utils.clearOverrideMaterial(corners)
         
     endPos = pos
+    
+    clearGhosts()
     updateGhosts()
-    updateCorners()
+
+func pointerShiftClick(pos):
+
+    Utils.clearOverrideMaterial(corners)
+        
+    endPos = pos
+    
+    updateGhosts(true)
         
 func pointerDrag(pos): 
 
     endPos = pos
-    updateGhosts()
-    updateCorners()
+    updateGhosts(Input.is_physical_key_pressed(KEY_SHIFT))
     
 func pointerRelease(pos):
     
@@ -55,6 +63,59 @@ func pointerCancel(pos):
     endPos = pos
     clearGhosts()
     updateGhosts()
+
+func clearGhosts():
+    
+    for ghost in ghosts:
+        ghosts[ghost].queue_free()
+    ghosts.clear()
+    
+    clearTemp()
+    
+func updateGhosts(keepOld=false):
+
+    var maxx = max(startPos.x, endPos.x)  
+    var maxy = max(startPos.y, endPos.y)
+    var minx = min(startPos.x, endPos.x) 
+    var miny = min(startPos.y, endPos.y)
+    
+    #Log.log("minmax", keepOld, minx, miny, maxx, maxy)
+
+    var newGhosts : Dictionary[Vector2i, Ghost] = {}
+    var newTemps  : Dictionary[Vector2i, int] = {}
+    for x in range(minx, maxx+1):
+        for y in range(miny, maxy+1):
+            var pos = Vector2i(x, y)
+            if fabState().machines.has(pos):
+                var machine = fabState().machines[pos]
+                if ghosts.has(pos):
+                    newGhosts[pos] = ghosts[pos]
+                    ghosts.erase(pos)
+                else:
+                    newGhosts[pos] = fabState().ghostForMachine(machine, GHOST_MATERIAL, ["Arrow"])
+                    
+            if fabState().beltPieces.has(pos):
+                if fabState().tempPoints.has(pos):
+                    fabState().tempPoints.erase(pos)
+                newTemps[pos] = fabState().beltPieces[pos]
+
+    if keepOld:
+        for pos in ghosts:
+            if not newGhosts.has(pos):
+                newGhosts[pos] = ghosts[pos]
+        ghosts.clear()
+        
+        for pos in fabState().tempPoints:
+            if not newTemps.has(pos):
+                newTemps[pos] = fabState().tempPoints[pos]
+
+    clearGhosts()
+    ghosts = newGhosts
+    
+    clearTemp()
+    fabState().tempPoints = newTemps
+    updateTemp()
+    
     updateCorners()
 
 func updateCorners():
@@ -72,45 +133,26 @@ func updateCorners():
     corners.get_child(4).scale = Vector3(maxx-minx+1, 1, maxy-miny+1)
     corners.get_child(4).global_position = Vector3((minx+maxx)/2.0, corners.get_child(4).global_position.y, (miny+maxy)/2.0)
 
-func clearGhosts():
-    
-    for ghost in ghosts:
-        ghosts[ghost].queue_free()
-    ghosts.clear()
-    
-func updateGhosts():
-
-    var maxx = max(startPos.x, endPos.x)  
-    var maxy = max(startPos.y, endPos.y)
-    var minx = min(startPos.x, endPos.x) 
-    var miny = min(startPos.y, endPos.y)
-    
-    var newGhosts : Dictionary[Vector2i, Ghost] = {}
-    for x in range(minx, maxx+1):
-        for y in range(miny, maxy+1):
-            var pos = Vector2i(x, y)
-            if Utils.fabState().machines.has(pos):
-                var machine = Utils.fabState().machines[pos]
-                if ghosts.has(pos):
-                    newGhosts[pos] = ghosts[pos]
-                    ghosts.erase(pos)
-                else:
-                    newGhosts[pos] = Utils.fabState().ghostForMachine(machine, GHOST_MATERIAL, ["Arrow"])
-
-    clearGhosts()
-    ghosts = newGhosts
-
 func cut():  
 
     if not ghosts.is_empty():
-        Log.log("cut")
+        for pos in ghosts:
+            fabState().delMachineAtPos(ghosts[pos].pos)
+        
+    if not fabState().tempPoints.is_empty():
+        for pos in fabState().tempPoints:
+            fabState().delBeltAtPos(pos)
+            
+    clearGhosts()
+    clearTemp()
+    updateGhosts()
         
 func paste(): 
     
     if not ghosts.is_empty():
         Log.log("paste")
 
-func _unhandled_key_input(event: InputEvent):
-    
-    if Input.is_action_just_pressed("cut"):    cut();   return
-    if Input.is_action_just_pressed("paste"):  paste(); return
+func _shortcut_input(event: InputEvent):
+
+    if event.is_action("cut"):   cut();   get_viewport().set_input_as_handled(); return
+    if event.is_action("paste"): paste(); get_viewport().set_input_as_handled(); return

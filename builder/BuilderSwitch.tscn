@@ -6,22 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://eqqa2oheicj4" path="res://builder/RectSelect.tscn" id="5_1xi5u"]
 [ext_resource type="PackedScene" uid="uid://bnx5c4loj2dkn" path="res://builder/Deleter.tscn" id="6_kklv8"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_amlds"]
-size = Vector3(1, 0.3, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vvp0a"]
-shading_mode = 0
-
 [node name="BuilderSwitch" type="Node3D" unique_id=1482098403]
 script = ExtResource("1_vkwue")
-
-[node name="Dot" type="MeshInstance3D" parent="." unique_id=1953182413]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
-visible = false
-transparency = 0.95
-cast_shadow = 0
-mesh = SubResource("BoxMesh_amlds")
-surface_material_override/0 = SubResource("StandardMaterial3D_vvp0a")
 
 [node name="BeltBuilder" type="Node3D" parent="." unique_id=770052703]
 script = ExtResource("2_mhjh0")

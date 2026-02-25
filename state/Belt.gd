@@ -175,6 +175,22 @@ func isSinkType(type):
 func isSourceType(type):
     
     return type in SOURCE_TYPES
+    
+func rotateType(type):
+    
+    match type:
+        I_W | O_E: return I_N | O_S
+        I_N | O_S: return I_E | O_W
+        I_E | O_W: return I_S | O_N
+        I_S | O_N: return I_W | O_E
+        _: return type 
+        
+func orientateType(type, orientation):
+    
+    for i in range(orientation):
+        type = rotateType(type)
+    return type       
+    
 
 #func inputDirForType(type):
     #

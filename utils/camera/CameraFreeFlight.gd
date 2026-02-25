@@ -75,7 +75,10 @@ func strafe_delta(delta:float):
 
 func ascend_delta(delta:float):
     
-    transform.origin.y = clamp(transform.origin.y+delta*transform.origin.y, MIN_ALTI, MAX_ALTI)
+    if projection == PROJECTION_ORTHOGONAL:
+        size = clamp(size+delta*size, MIN_ALTI, MAX_ALTI)
+    else:
+        transform.origin.y = clamp(transform.origin.y+delta*transform.origin.y, MIN_ALTI, MAX_ALTI)
     
 func deadZoneAxis(axis):
     
@@ -89,7 +92,13 @@ func readInput():
     if Input.is_action_pressed("reset_view"):
         transform = resetTransform
         get_parent_node_3d().transform = resetParent
+        #set_orthogonal(transform.origin.y, -1000, 4000)
         return
+        
+    #if Input.is_action_pressed("perspective_view"):
+        #transform.origin.y = size
+        #set_perspective(75, 0.05, 4000)
+        #return
     
     if Input.is_key_pressed(KEY_META): return
     

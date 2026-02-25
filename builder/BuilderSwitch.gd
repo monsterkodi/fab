@@ -15,31 +15,18 @@ func activateBuilder(builderName):
     
     if builder: builder.stop()
     
-    var color = Color.TRANSPARENT
-    
     match builderName:
-        "Belt": builder = $BeltBuilder; color = Color.DODGER_BLUE
+        "Belt": builder = $BeltBuilder
         "Del":  builder = $Deleter
         "Rect": builder = $RectSelect
         _:      builder = $BuildingBuilder; builder.setBuilding(builderName)
     
     Utils.world("MouseHandler").mouse_default_cursor_shape = builder.cursorShape
     
-    if color == Color.TRANSPARENT:
-        $Dot.visible = false
-    else:
-        $Dot.visible = true
-        $Dot.get_surface_override_material(0).albedo_color = color
     builder.start()
-    pointerHover(Vector2i($Dot.global_position.x, $Dot.global_position.z))
+    pointerHover(Utils.world("MouseHandler").lastPos)
     
-func pointerHover(pos):
-    
-    if builder: builder.pointerHover(pos)
-    
-    $Dot.global_position.x = pos.x
-    $Dot.global_position.z = pos.y
-
+func pointerHover(pos):       builder.pointerHover(pos)
 func pointerClick(pos):       builder.pointerClick(pos)                
 func pointerShiftClick(pos):  builder.pointerShiftClick(pos)
 func pointerDrag(pos):        builder.pointerDrag(pos)
