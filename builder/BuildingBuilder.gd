@@ -4,7 +4,7 @@ class_name BuildingBuilder
 var ghost
 var delGhosts = []
 
-const GHOST_MATERIAL = preload("uid://bqhwhtt3kc30s")
+const GHOST_MATERIAL     = preload("uid://bqhwhtt3kc30s")
 const GHOST_RED_MATERIAL = preload("uid://b35kuqwv15nfr")
 
 func _ready():
@@ -31,7 +31,7 @@ func pointerHover(pos):
     clearDelGhosts()        
     if ghost and ghost.is_inside_tree():
         ghost.setPos(pos)
-        Utils.setOverrideMaterial(ghost.building, GHOST_MATERIAL)
+        Utils.setOverrideMaterial(ghost.building, GHOST_MATERIAL, ["Arrow"])
         for gp in ghost.getOccupied():
             if Utils.fabState().machines.has(gp):
                 var machine = Utils.fabState().machines[gp]
@@ -66,3 +66,7 @@ func pointerDrag(pos):
 func pointerRotate():
     
     ghost.rotateCW()
+    
+func pointerContext(pos):
+    
+    pointerRotate()

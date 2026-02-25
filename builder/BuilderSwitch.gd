@@ -19,7 +19,7 @@ func activateBuilder(builderName):
     
     match builderName:
         "Belt": builder = $BeltBuilder; color = Color.DODGER_BLUE
-        "Del":  builder = $Deleter;     color = Color.RED
+        "Del":  builder = $Deleter
         "Rect": builder = $RectSelect
         _:      builder = $BuildingBuilder; builder.setBuilding(builderName)
     
@@ -40,27 +40,10 @@ func pointerHover(pos):
     $Dot.global_position.x = pos.x
     $Dot.global_position.z = pos.y
 
-func pointerClick(pos):
-
-    builder.pointerClick(pos)                
-
-func pointerShiftClick(pos):
-    
-    builder.pointerShiftClick(pos)
-
-func pointerDrag(pos):
-    
-    pointerHover(pos)
-    builder.pointerDrag(pos)
-
-func pointerCancel(pos):
-    
-    builder.pointerCancel(pos)
-    
-func pointerRelease(pos):
-    
-    builder.pointerRelease(pos)
-    
-func pointerRotate():
-    
-    builder.pointerRotate()
+func pointerClick(pos):       builder.pointerClick(pos)                
+func pointerShiftClick(pos):  builder.pointerShiftClick(pos)
+func pointerDrag(pos):        builder.pointerDrag(pos)
+func pointerCancel(pos):      builder.pointerCancel(pos)
+func pointerContext(pos):     builder.pointerContext(pos)
+func pointerRelease(pos):     builder.pointerRelease(pos)
+func pointerRotate():         builder.pointerRotate()

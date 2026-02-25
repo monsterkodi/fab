@@ -13,6 +13,7 @@ signal pointerRelease
 signal pointerShiftClick
 signal pointerShiftRelease
 signal pointerCancel
+signal pointerContext
 signal pointerRotate
 
 signal gamePaused

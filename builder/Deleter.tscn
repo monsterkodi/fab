@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bnx5c4loj2dkn"]
+
+[ext_resource type="Script" uid="uid://bcsinm3sf6r4u" path="res://builder/Deleter.gd" id="1_55gr4"]
+[ext_resource type="Script" uid="uid://ctd0wgl436u6m" path="res://components/Cross.gd" id="2_yygiq"]
+[ext_resource type="Material" uid="uid://b35kuqwv15nfr" path="res://materials/GhostRedMaterial.tres" id="3_auhu6"]
+
+[node name="Deleter" type="Node3D" unique_id=243172542]
+script = ExtResource("1_55gr4")
+
+[node name="Cross" type="Node3D" parent="." unique_id=1205599285]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0, 0, 0)
+script = ExtResource("2_yygiq")
+material = ExtResource("3_auhu6")
+metadata/_custom_type_script = "uid://ctd0wgl436u6m"

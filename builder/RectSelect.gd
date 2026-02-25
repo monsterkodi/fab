@@ -1,34 +1,62 @@
 class_name RectSelect
 extends Builder
 
+@onready var corners: Node3D = $Corners
+
 var startPos
 var endPos
-var corners
 
 var ghosts : Dictionary[Vector2i, Ghost]
 const GHOST_MATERIAL = preload("uid://b0use4n8rmlgb")
 
 func _ready():
     
-    corners = get_parent().get_node("RectCorners")
     cursorShape = Control.CURSOR_CROSS
+    
+func start():
+    
+    Utils.setOverrideMaterial(corners, GHOST_MATERIAL)
+    corners.show()
 
 func stop():
     
+    corners.hide()
     clearGhosts()
+    
+func pointerHover(pos):
+    
+    startPos = pos
+    endPos = pos
+    updateCorners()
 
 func pointerClick(pos):
     
-    if not startPos:
-        clearGhosts()
-        startPos = pos
+    clearGhosts()
+    Utils.clearOverrideMaterial(corners)
         
-    if pos != endPos:
-        endPos = pos
-        updateGhosts()
-        updateCorners()
-        corners.visible = true
+    endPos = pos
+    updateGhosts()
+    updateCorners()
+        
+func pointerDrag(pos): 
+
+    endPos = pos
+    updateGhosts()
+    updateCorners()
     
+func pointerRelease(pos):
+    
+    pointerHover(pos)
+    Utils.setOverrideMaterial(corners, GHOST_MATERIAL)
+
+func pointerCancel(pos):
+    
+    startPos = pos
+    endPos = pos
+    clearGhosts()
+    updateGhosts()
+    updateCorners()
+
 func updateCorners():
     
     var maxx = max(startPos.x, endPos.x)  
@@ -43,15 +71,6 @@ func updateCorners():
     
     corners.get_child(4).scale = Vector3(maxx-minx+1, 1, maxy-miny+1)
     corners.get_child(4).global_position = Vector3((minx+maxx)/2.0, corners.get_child(4).global_position.y, (miny+maxy)/2.0)
-    
-func pointerDrag(pos): 
-
-    pointerClick(pos)
-    
-func pointerRelease(pos):
-    
-    startPos = null
-    corners.visible = false
 
 func clearGhosts():
     

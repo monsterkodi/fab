@@ -72,21 +72,21 @@ surface_material_override/0 = ExtResource("2_7r16o")
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0.00097191334, 0, 0)
 
 [node name="CubeBlack" type="MeshInstance3D" parent="." unique_id=870842802]
-transform = Transform3D(0, 0, 0.9999999, 0, 0.9999999, 0, -0.99999994, 0, 0, -0.0020391643, 1.3325473, 0)
+transform = Transform3D(0, 0, 0.9999999, 0, 0.9999999, 0, -0.99999994, 0, 0, 0.10896662, 1.3044847, 0)
 mesh = SubResource("BoxMesh_7r16o")
 surface_material_override/0 = SubResource("StandardMaterial3D_bv6hv")
 
 [node name="CubeRed" type="MeshInstance3D" parent="." unique_id=1395860824]
-transform = Transform3D(0.70710677, 0, 0.7071067, 0, 0.9999999, 0, -0.70710677, 0, 0.7071067, 1.0119143, 1.3055304, -1)
+transform = Transform3D(0.70710677, 0, 0.7071067, 0, 0.9999999, 0, -0.70710677, 0, 0.7071067, 1.0159196, 1.3036851, -1)
 mesh = SubResource("BoxMesh_m6kgh")
 surface_material_override/0 = SubResource("StandardMaterial3D_thl77")
 
 [node name="CubeGreen" type="MeshInstance3D" parent="." unique_id=1716103799]
-transform = Transform3D(0.70710677, 0, 0.7071067, 0, 0.9999999, 0, -0.70710677, 0, 0.7071067, 1.0154803, 1.302421, 0)
+transform = Transform3D(0.70710677, 0, 0.7071067, 0, 0.9999999, 0, -0.70710677, 0, 0.7071067, 1.0194856, 1.3005756, 0)
 mesh = SubResource("BoxMesh_m6kgh")
 surface_material_override/0 = SubResource("StandardMaterial3D_7r16o")
 
 [node name="CubeBlue" type="MeshInstance3D" parent="." unique_id=937437198]
-transform = Transform3D(0.70710677, 0, 0.7071067, 0, 0.9999999, 0, -0.70710677, 0, 0.7071067, 1.0161159, 1.3051721, 1)
+transform = Transform3D(0.70710677, 0, 0.7071067, 0, 0.9999999, 0, -0.70710677, 0, 0.7071067, 1.0201212, 1.3033267, 1)
 mesh = SubResource("BoxMesh_m6kgh")
 surface_material_override/0 = SubResource("StandardMaterial3D_7m7dl")

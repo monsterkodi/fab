@@ -3,21 +3,13 @@
 [ext_resource type="Script" uid="uid://bt568sten6aq4" path="res://builder/BuilderSwitch.gd" id="1_vkwue"]
 [ext_resource type="Script" uid="uid://c0jnsahm0guxo" path="res://builder/BeltBuilder.gd" id="2_mhjh0"]
 [ext_resource type="Script" uid="uid://b2qxj22lbsql8" path="res://builder/BuildingBuilder.gd" id="3_3r3yl"]
-[ext_resource type="Script" uid="uid://bcsinm3sf6r4u" path="res://builder/Deleter.gd" id="3_amlds"]
-[ext_resource type="Script" uid="uid://dglyvr2fipdt6" path="res://builder/RectSelect.gd" id="5_3r3yl"]
-[ext_resource type="PackedScene" uid="uid://btam4sdbpctuw" path="res://components/Arrow.tscn" id="6_vvp0a"]
+[ext_resource type="PackedScene" uid="uid://eqqa2oheicj4" path="res://builder/RectSelect.tscn" id="5_1xi5u"]
+[ext_resource type="PackedScene" uid="uid://bnx5c4loj2dkn" path="res://builder/Deleter.tscn" id="6_kklv8"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_amlds"]
 size = Vector3(1, 0.3, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vvp0a"]
-shading_mode = 0
-
-[sub_resource type="BoxMesh" id="BoxMesh_kklv8"]
-size = Vector3(1, 0.26, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kklv8"]
-render_priority = 20
 shading_mode = 0
 
 [node name="BuilderSwitch" type="Node3D" unique_id=1482098403]
@@ -31,57 +23,12 @@ cast_shadow = 0
 mesh = SubResource("BoxMesh_amlds")
 surface_material_override/0 = SubResource("StandardMaterial3D_vvp0a")
 
-[node name="BeltBuilder" type="Node" parent="." unique_id=1698741172]
+[node name="BeltBuilder" type="Node3D" parent="." unique_id=770052703]
 script = ExtResource("2_mhjh0")
 
-[node name="BuildingBuilder" type="Node" parent="." unique_id=845133518]
+[node name="BuildingBuilder" type="Node3D" parent="." unique_id=886064116]
 script = ExtResource("3_3r3yl")
 
-[node name="Deleter" type="Node" parent="." unique_id=120809101]
-script = ExtResource("3_amlds")
+[node name="Deleter" parent="." unique_id=243172542 instance=ExtResource("6_kklv8")]
 
-[node name="RectSelect" type="Node" parent="." unique_id=968464712]
-script = ExtResource("5_3r3yl")
-
-[node name="RectCorners" type="Node3D" parent="." unique_id=1495750243]
-visible = false
-
-[node name="CornerNE" type="Node3D" parent="RectCorners" unique_id=1580235594]
-
-[node name="Arrow" parent="RectCorners/CornerNE" unique_id=1755686305 instance=ExtResource("6_vvp0a")]
-transform = Transform3D(-0.70710665, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, -0.70710665, 0.5, 0.13, -0.5)
-height = 0.26
-width = 0.7
-thickness = 0.5
-
-[node name="CornerSE" type="Node3D" parent="RectCorners" unique_id=2022422299]
-
-[node name="Arrow" parent="RectCorners/CornerSE" unique_id=824319226 instance=ExtResource("6_vvp0a")]
-transform = Transform3D(0.7071068, 0, 0.7071066, 0, 1, 0, -0.7071066, 0, 0.7071068, 0.5, 0.13, 0.5)
-height = 0.26
-width = 0.7
-thickness = 0.5
-
-[node name="CornerSW" type="Node3D" parent="RectCorners" unique_id=1652951588]
-
-[node name="Arrow" parent="RectCorners/CornerSW" unique_id=1573350988 instance=ExtResource("6_vvp0a")]
-transform = Transform3D(0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, 0.7071067, -0.5, 0.13, 0.5)
-height = 0.26
-width = 0.7
-thickness = 0.5
-
-[node name="CornerNW" type="Node3D" parent="RectCorners" unique_id=1723302704]
-
-[node name="Arrow" parent="RectCorners/CornerNW" unique_id=349059678 instance=ExtResource("6_vvp0a")]
-transform = Transform3D(-0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, -0.7071067, -0.5, 0.13, -0.5)
-height = 0.26
-width = 0.7
-thickness = 0.5
-
-[node name="Center" type="MeshInstance3D" parent="RectCorners" unique_id=392540616]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13, 0)
-transparency = 0.95
-cast_shadow = 0
-mesh = SubResource("BoxMesh_kklv8")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_kklv8")
+[node name="RectSelect" parent="." unique_id=1830457415 instance=ExtResource("5_1xi5u")]

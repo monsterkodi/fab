@@ -2,6 +2,7 @@ class_name MouseHandler
 extends Control
 
 var lastPos : Vector2i
+var contextPos : Vector2
 
 func _process(delta: float):
     
@@ -27,6 +28,7 @@ func _gui_input(event: InputEvent):
         ipos.y = round(intersect.z)
 
     if event is InputEventMouseMotion:
+        
         if ipos != lastPos:
             if event.button_mask == 0:
                 Post.pointerHover.emit(ipos)
@@ -49,7 +51,12 @@ func _gui_input(event: InputEvent):
                     Post.pointerRelease.emit(ipos)
                 
         elif event.button_index == 2:
-            
             if event.pressed:
-                Post.pointerCancel.emit(ipos)
+                if event.button_mask == 3:
+                    Post.pointerCancel.emit(ipos)
+                else:
+                    contextPos = mousePos
+            else:
+                if (contextPos - mousePos).length() < 10:
+                    Post.pointerContext.emit(ipos)
                 

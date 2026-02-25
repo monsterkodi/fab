@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://eqqa2oheicj4"]
+
+[ext_resource type="Script" uid="uid://dglyvr2fipdt6" path="res://builder/RectSelect.gd" id="1_vpfin"]
+[ext_resource type="PackedScene" uid="uid://btam4sdbpctuw" path="res://components/Arrow.tscn" id="2_ebfaj"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_8aa6f"]
+size = Vector3(1, 0.26, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r3bfq"]
+render_priority = 20
+shading_mode = 0
+
+[node name="RectSelect" type="Node3D" unique_id=1830457415]
+script = ExtResource("1_vpfin")
+
+[node name="Corners" type="Node3D" parent="." unique_id=1672911126]
+
+[node name="CornerNE" type="Node3D" parent="Corners" unique_id=1590274864]
+
+[node name="Arrow" parent="Corners/CornerNE" unique_id=1573350988 instance=ExtResource("2_ebfaj")]
+transform = Transform3D(-0.70710665, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, -0.70710665, 0.5, 0.13, -0.5)
+height = 0.26
+width = 0.7
+thickness = 0.5
+
+[node name="CornerSE" type="Node3D" parent="Corners" unique_id=136345827]
+
+[node name="Arrow" parent="Corners/CornerSE" unique_id=551695498 instance=ExtResource("2_ebfaj")]
+transform = Transform3D(0.7071068, 0, 0.7071066, 0, 1, 0, -0.7071066, 0, 0.7071068, 0.5, 0.13, 0.5)
+height = 0.26
+width = 0.7
+thickness = 0.5
+
+[node name="CornerSW" type="Node3D" parent="Corners" unique_id=1443626095]
+
+[node name="Arrow" parent="Corners/CornerSW" unique_id=1594268281 instance=ExtResource("2_ebfaj")]
+transform = Transform3D(0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, 0.7071067, -0.5, 0.13, 0.5)
+height = 0.26
+width = 0.7
+thickness = 0.5
+
+[node name="CornerNW" type="Node3D" parent="Corners" unique_id=344313016]
+
+[node name="Arrow" parent="Corners/CornerNW" unique_id=948340220 instance=ExtResource("2_ebfaj")]
+transform = Transform3D(-0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, -0.7071067, -0.5, 0.13, -0.5)
+height = 0.26
+width = 0.7
+thickness = 0.5
+
+[node name="Center" type="MeshInstance3D" parent="Corners" unique_id=992220286]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13, 0)
+transparency = 0.95
+cast_shadow = 0
+mesh = SubResource("BoxMesh_8aa6f")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_r3bfq")
