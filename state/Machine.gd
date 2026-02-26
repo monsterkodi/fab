@@ -47,7 +47,7 @@ func _exit_tree():
         
 func rotateCW(): setOrientation((orientation + 1) % 4)
         
-func setOrientation(o):
+func setOrientation(o : int):
     
     orientation = o
 
@@ -94,7 +94,7 @@ func produce():
 func produceItemAtSlot(slot): return null
 func consumeItemAtSlit(item, slit): return false
 
-func fabState(): return Utils.fabState()
+func fabState() -> FabState: return Utils.fabState()
 
 func getOccupied() -> Array[Vector2i]:
 

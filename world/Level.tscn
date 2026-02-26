@@ -4,7 +4,7 @@
 [ext_resource type="PhysicsMaterial" uid="uid://dq1r6votcqh1x" path="res://materials/physics/FloorPhysics.tres" id="2_m3clv"]
 [ext_resource type="Material" uid="uid://du8bjg8b10yx2" path="res://materials/TurretBaseMaterial.tres" id="3_mxnmf"]
 [ext_resource type="Material" uid="uid://cw0p3qxalvp6y" path="res://materials/WorldGridMaterial.tres" id="4_lhci3"]
-[ext_resource type="PackedScene" uid="uid://c2avn203eitto" path="res://world/MultiMesh.tscn" id="6_lhci3"]
+[ext_resource type="PackedScene" uid="uid://c2avn203eitto" path="res://world/BeltMultiMesh.tscn" id="6_lhci3"]
 [ext_resource type="PackedScene" uid="uid://bhrehvjlydr2q" path="res://state/FabState.tscn" id="6_s30m6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w56at"]
@@ -38,6 +38,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.341934e-05, -0.001149416, 0
 mesh = SubResource("PlaneMesh_s30m6")
 surface_material_override/0 = ExtResource("4_lhci3")
 
-[node name="MultiMesh" parent="." unique_id=434139009 instance=ExtResource("6_lhci3")]
+[node name="BeltMultiMesh" parent="." unique_id=434139009 instance=ExtResource("6_lhci3")]
 
 [node name="FabState" parent="." unique_id=261405774 instance=ExtResource("6_s30m6")]

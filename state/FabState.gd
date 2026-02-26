@@ -12,7 +12,7 @@ func _ready():
     
     Post.subscribe(self)
         
-func beltStateAtPos(pos):
+func beltStateAtPos(pos : Vector2i):
     
     if beltStates.has(pos):
         return beltStates[pos]
@@ -20,7 +20,7 @@ func beltStateAtPos(pos):
         return addBeltStateAtPos(pos)
     return null
     
-func addBeltStateAtPos(pos):
+func addBeltStateAtPos(pos : Vector2i):
     
     var bs = BeltState.new()
     bs.pos = pos
@@ -29,7 +29,7 @@ func addBeltStateAtPos(pos):
     $BeltStates.add_child(bs)
     return bs    
     
-func addMachineAtPosOfType(pos, type, orientation = 0):
+func addMachineAtPosOfType(pos : Vector2i, type : int, orientation : int = 0):
         
     var machine = Mach.Class[type].new()
     
@@ -45,24 +45,24 @@ func addMachineAtPosOfType(pos, type, orientation = 0):
     
     return machine
     
-func delMachineAtPos(pos):
-    #Log.log("delMachineAtPos", pos, machines.has(pos))
+func delMachineAtPos(pos : Vector2i):
+
     if machines.has(pos):
         if machines[pos].pos != Vector2i(0,0):
             machines[pos].free()
 
-func delBeltStateAtPos(pos):
+func delBeltStateAtPos(pos : Vector2i):
     
     if beltStates.has(pos):
         beltStates[pos].queue_free()
         $BeltStates.remove_child(beltStates[pos])
 
-func addBeltAtPos(pos, type):
-    
+func addBeltAtPos(pos : Vector2i, type : int):
+
     delBeltStateAtPos(pos)
     beltPieces[pos] = type
         
-func delBeltAtPos(pos): 
+func delBeltAtPos(pos : Vector2i): 
     
     if occupiedByRoot([pos]):
         return
@@ -82,14 +82,14 @@ func delBeltAtPos(pos):
     updateBelt()
     updateItems()
     
-func delObjectAtPos(pos):
+func delObjectAtPos(pos : Vector2i):
     
     if machines.has(pos):
         delMachineAtPos(pos)
     elif beltPieces.has(pos):
         delBeltAtPos(pos)
         
-func isOccupied(pos):
+func isOccupied(pos : Vector2i):
     
     if machines.has(pos): return true
     return false
@@ -132,7 +132,7 @@ func updateItems():
             var item = bs.get_child(idx)
             mm().add("item", [bs.itemPositionAtIndex(idx), item.color, item.scale])
         
-func mm(): return get_tree().root.get_node("/root/World/Level/MultiMesh")
+func mm() -> BeltMultiMesh: return get_tree().root.get_node("/root/World/Level/BeltMultiMesh")
 
 func speedFaster(): 
     
@@ -148,7 +148,7 @@ func setGameSpeed(newSpeed):
         gameSpeed = newSpeed
         Post.gameSpeed.emit(gameSpeed)
     
-func saveGame(data:Dictionary):
+func saveGame(data : Dictionary):
     
     data.FabState = {}
     data.FabState.beltPieces = beltPieces
@@ -166,7 +166,7 @@ func saveGame(data:Dictionary):
     for bs in $BeltStates.get_children():
         data.FabState.beltStates.push_back(bs.store())
     
-func loadGame(data:Dictionary):
+func loadGame(data : Dictionary):
 
     if data.has("FabState"):
         
@@ -222,3 +222,17 @@ func ghostForType(type, material, skip = []) -> Ghost:
     Utils.setOverrideMaterial(ghost.building, material, skip)
     
     return ghost
+    
+func ghostAtPos(pos : Vector2i): 
+    
+    for ghost in ghosts():
+        if ghost.pos == pos:
+            return ghost
+    return null
+    
+func ghosts() -> Array[Node]: return $Ghosts.get_children()
+
+func clearGhosts():
+    
+    for ghost in $Ghosts.get_children():
+        ghost.queue_free()

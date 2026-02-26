@@ -1,3 +1,4 @@
+class_name BeltMultiMesh
 extends Node3D
 
 var dict = {"dot": [], "belt": [], "temp": [], "item": []}

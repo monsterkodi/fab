@@ -25,7 +25,8 @@ func pointerContext(pos):    pass
 func pointerRelease(pos):    pass
 func pointerRotate():        pass
 
-func fabState(): return Utils.fabState()
-func clearTemp():  fabState().clearTemp()
-func updateTemp(): fabState().updateTemp()
-func updateBelt(): fabState().updateBelt()
+func fabState() -> FabState: return Utils.fabState()
+func clearGhosts(): fabState().clearGhosts()
+func clearTemp():   fabState().clearTemp()
+func updateTemp():  fabState().updateTemp()
+func updateBelt():  fabState().updateBelt()

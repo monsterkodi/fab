@@ -4,7 +4,7 @@ func saveGame():
     
     var savegame = SaveData.new()
     Post.saveGame.emit(savegame.data)
-    Log.log("saveGame", savegame.data)
+    #Log.log("saveGame", savegame.data)
     ResourceSaver.save(savegame, "user://savegame.tres")
     
 func clearGame():

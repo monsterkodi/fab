@@ -37,20 +37,20 @@ glow_levels/3 = 0.7
 glow_levels/4 = 0.5
 glow_normalized = true
 fog_enabled = true
-fog_mode = 1
 fog_light_color = Color(0, 0, 0, 1)
-fog_density = 1.0
+fog_height = 1.0
+fog_height_density = 0.5
 
 [node name="World" type="Node3D" unique_id=556522314]
 process_mode = 3
 script = ExtResource("1_eu7l1")
 
+[node name="Environment" type="WorldEnvironment" parent="." unique_id=1540726424]
+environment = SubResource("Environment_ig7tw")
+
 [node name="Camera" parent="." unique_id=179159233 instance=ExtResource("4_bah7m")]
 unique_name_in_owner = true
 process_mode = 3
-
-[node name="Environment" type="WorldEnvironment" parent="." unique_id=1540726424]
-environment = SubResource("Environment_ig7tw")
 
 [node name="MenuSound" type="Node" parent="." unique_id=1001762966]
 script = ExtResource("15_ortil")
