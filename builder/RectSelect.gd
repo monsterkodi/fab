@@ -143,10 +143,10 @@ func updateCorners():
     var minx = min(startPos.x, endPos.x) 
     var miny = min(startPos.y, endPos.y)
      
-    corners.get_child(0).global_position = Vector3(maxx, 0, miny)
-    corners.get_child(1).global_position = Vector3(maxx, 0, maxy)
-    corners.get_child(2).global_position = Vector3(minx, 0, maxy)
-    corners.get_child(3).global_position = Vector3(minx, 0, miny)
+    corners.get_child(0).global_position = Vector3(maxx+0.5, 0, miny-0.5)
+    corners.get_child(1).global_position = Vector3(maxx+0.5, 0, maxy+0.5)
+    corners.get_child(2).global_position = Vector3(minx-0.5, 0, maxy+0.5)
+    corners.get_child(3).global_position = Vector3(minx-0.5, 0, miny-0.5)
     
     corners.get_child(4).scale = Vector3(maxx-minx+1, 1, maxy-miny+1)
     corners.get_child(4).global_position = Vector3((minx+maxx)/2.0, corners.get_child(4).global_position.y, (miny+maxy)/2.0)
