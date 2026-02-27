@@ -38,6 +38,7 @@ Utils="*res://utils/Utils.gd"
 Saver="*res://utils/Saver.gd"
 Belt="*uid://dmbnhwltgjekw"
 Mach="*uid://rgwebrx5h4o"
+fps_graph="*uid://bf5rvhlendjij"
 
 [debug]
 
@@ -71,7 +72,7 @@ cozy_cube/gizmo_presets={}
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/lines_and_trails_3d/plugin.cfg", "res://addons/log/plugin.cfg", "res://addons/script-name-on-top/plugin.cfg", "res://addons/script-tabs/plugin.cfg")
+enabled=PackedStringArray("res://addons/fps_graph/plugin.cfg", "res://addons/lines_and_trails_3d/plugin.cfg", "res://addons/log/plugin.cfg", "res://addons/script-name-on-top/plugin.cfg", "res://addons/script-tabs/plugin.cfg")
 
 [exec]
 

@@ -47,7 +47,17 @@ func _exit_tree():
         fab.machines.erase(opos)
         
 func rotateCW(): setOrientation((orientation + 1) % 4)
+
+func rotateAround(center: Vector2i):
+
+    setPos(Belt.rotatePosAround(pos, center))
+    rotateCW()
         
+func setPos(p):
+    
+    pos = p
+    building.global_position = Vector3(pos.x, 0, pos.y)
+
 func setOrientation(o : int):
     
     orientation = o

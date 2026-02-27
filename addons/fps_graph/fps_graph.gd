@@ -24,7 +24,6 @@ func _process(delta: float):
     while fps_history.size() >= HISTORY:
         fps_history.pop_front()
     fps_history.push_back(clampf((HEIGHT-(1.0/delta))/HEIGHT, 0.0, 1.0))
-    #fps_history.push_back(randf())
         
     if visible:
         %Graph.queue_redraw()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://bf5rvhlendjij"]
+[gd_scene format=3 uid="uid://bf5rvhlendjij"]
 
 [ext_resource type="Script" uid="uid://by4ir0omypaxx" path="res://addons/fps_graph/fps_graph.gd" id="1_65106"]
 
@@ -14,11 +14,11 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
-[node name="FpsGraph" type="CanvasLayer"]
+[node name="FpsGraph" type="CanvasLayer" unique_id=844743300]
 process_mode = 3
 script = ExtResource("1_65106")
 
-[node name="Graph" type="Panel" parent="."]
+[node name="Graph" type="Panel" parent="." unique_id=1124333595]
 unique_name_in_owner = true
 size_flags_horizontal = 8
 size_flags_vertical = 0

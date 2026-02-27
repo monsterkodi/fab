@@ -9,7 +9,8 @@ class Item:
     var color   = Color.RED
     var scale   = 0.0
     var mvd     = false
-    var blckd   = false
+    var blckd   = 0
+    var skip    = 0
     func dpos(): return Vector3i(pos.x, pos.y, dir)
 
 class ItemMap:
@@ -182,6 +183,9 @@ func advanceItems(delta):
             if item.mvd: 
                 item.mvd = false 
                 continue
+            if item.skip:
+                item.skip -= 1
+                continue
             var oadv = item.advance
             var type = fab.beltAtPos(item.pos)
             if item.advance < 0.5 and item.advance + advance >= 0.5:
@@ -216,10 +220,17 @@ func advanceItems(delta):
                 item.scale = 1.0
             if item.advance != oadv:
                 if item.blckd:
-                    item.blckd = false
+                    item.skip = 0
+                    item.blckd = 0
                     item.scale = 1.0
                 updateItemTrans(imap, idx, item)
-            elif not item.blckd:
-                item.blckd = true
-                item.scale = 1.2
-                updateItemTrans(imap, idx, item)
+            else:
+                if not item.blckd:
+                    item.skip = 0
+                    item.blckd = 1
+                    item.scale = 1.2
+                    updateItemTrans(imap, idx, item)
+                else:
+                    item.blckd += 1
+                    if item.blckd > 20:
+                        item.skip = mini(item.blckd / 10, 20)

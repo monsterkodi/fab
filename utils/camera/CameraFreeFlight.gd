@@ -7,7 +7,7 @@ var STRAFE_SPEED := 0.5
 var ASCEND_SPEED := 0.5
 
 var MIN_ALTI     := 0.5
-var MAX_ALTI     := 50.0
+var MAX_ALTI     := 100.0
 var MAX_SPEED    := 10.0
 var FCT_ALTITUDE := 10.0
 

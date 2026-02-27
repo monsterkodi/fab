@@ -266,3 +266,6 @@ func pointerRotate():
     
     if isPasting:
         fab.tmp.rotateAround(endPos)
+        for ghost in fab.ghosts():
+            ghost.rotateAround(endPos)
+        
