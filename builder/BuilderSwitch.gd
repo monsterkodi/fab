@@ -19,11 +19,15 @@ func activateBuilder(builderName):
         "Belt": builder = $BeltBuilder
         "Del":  builder = $Deleter
         "Rect": builder = $RectSelect
-        _:      builder = $BuildingBuilder; builder.setBuilding(builderName)
+        _:      builder = $BuildingBuilder 
     
     Utils.world("MouseHandler").mouse_default_cursor_shape = builder.cursorShape
+    
     builder.fab = Utils.fabState()
+    if builder is BuildingBuilder:
+        builder.setBuilding(builderName)
     builder.start()
+    
     pointerHover(Utils.world("MouseHandler").lastPos)
     
 func pointerHover(pos):       builder.pointerHover(pos)

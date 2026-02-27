@@ -13,6 +13,30 @@ var gameSpeed:     float = 1.0
 func _ready():
     
     Post.subscribe(self)
+    
+func consumableItemAtPos(pos : Vector2i):
+    
+    var bs = beltStateAtPos(pos)
+    if bs and bs.get_child_count():
+        var item = bs.get_child(0)
+        if item.advance >= 1:
+            return item
+    return null
+    
+func addItem(pos, dir, item):
+    
+    beltStateAtPos(pos).addItem(dir, item)
+    
+func delItem(item):
+    
+    item.queue_free()
+    
+func inSpace(pos : Vector2i, dir : int):
+    
+    var bs = beltStateAtPos(pos)
+    if bs:
+        return bs.inSpace(dir)
+    return -666
         
 func beltStateAtPos(pos : Vector2i):
     

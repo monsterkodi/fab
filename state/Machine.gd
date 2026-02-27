@@ -67,20 +67,15 @@ func consume():
     
     for i in range(slits.size()):
         var slit = slits[i]
-        var bs = fab.beltStateAtPos(pos + slit.pos)
-        if bs and bs.get_child_count():
-            var item = bs.get_child(0)
-            if item.advance >= 1:
-                if consumeItemAtSlit(item, slit):
-                    item.queue_free()
+        
+        var item = fab.consumableItemAtPos(pos + slit.pos)
+        if item:
+            if consumeItemAtSlit(item, slit):
+                fab.delItem(item)
     
 func advanceAtSlotIndex(i):
     
-    var slot = slots[i]
-    var bs = fab.beltStateAtPos(pos + slot.pos)
-    if bs:
-        return bs.inSpace(Belt.OPPOSITE[slot.dir])
-    return -666
+    return fab.inSpace(pos + slots[i].pos, Belt.OPPOSITE[slots[i].dir])
     
 func produce():
     
@@ -89,8 +84,7 @@ func produce():
         if adv >= 0:
             var item = produceItemAtSlot(slots[i])
             if item:
-                var bs = fab.beltStateAtPos(pos + slots[i].pos)
-                bs.addItem(Belt.OPPOSITE[slots[i].dir], item)
+                fab.addItem(pos + slots[i].pos, Belt.OPPOSITE[slots[i].dir], item)
         
 func produceItemAtSlot(slot): return null
 func consumeItemAtSlit(item, slit): return false
