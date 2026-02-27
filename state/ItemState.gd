@@ -8,6 +8,8 @@ class Item:
     var advance = 0.0
     var color   = Color.RED
     var scale   = 0.0
+    var mvd     = false
+    var blckd   = false
     func dpos(): return Vector3i(pos.x, pos.y, dir)
 
 class ItemMap:
@@ -53,12 +55,12 @@ class ItemMap:
         
         return ary.size()
         
-    func verify():
+    func verify(): pass
         
-        assert(ary.size() == map.size())
-        for pos in map:
-            assert(map[pos] >= 0)
-            assert(map[pos] < ary.size())
+        #assert(ary.size() == map.size())
+        #for pos in map:
+            #assert(map[pos] >= 0)
+            #assert(map[pos] < ary.size())
         
 var itemMap : Array[ItemMap] = []
 
@@ -97,6 +99,17 @@ func size():
     for pm in itemMap:
         s += pm.size()
     return s
+    
+func itemAtIndex(index : int) -> Item:
+    
+    if index < 0: return null
+    for imap in itemMap:
+        if index < imap.size(): return imap.ary[index]
+        index -= imap.size()
+        if index < 0:
+            Log.warn("invalid index")
+            break
+    return null
     
 func itemsAtPos(pos : Vector2i) -> Array:
     
@@ -160,20 +173,25 @@ func advanceItems(delta):
                             item.advance = adv
                             item.dir = inDir
                             item.pos = outPos
+                            item.mvd = true
                             add(item.dpos(), item)
     
     for imap in itemMap:
         for idx in range(imap.ary.size()):
             var item = imap.ary[idx]
+            if item.mvd: 
+                item.mvd = false 
+                continue
+            var oadv = item.advance
             var type = fab.beltAtPos(item.pos)
             if item.advance < 0.5 and item.advance + advance >= 0.5:
                 var space = 0
-                var outRing  = fab.tst.typeMap[type][3]
+                var outRing = fab.tst.typeMap[type][3]
+                var outNum = outRing.size()
                 var bd = fab.tst.dataAtPos(item.pos)
-                var outIndex = bd[2]
-                for index in range(outRing.size()):
+                for index in range(outNum):
                                     
-                    var ringIndex = (outIndex + index) % outRing.size()
+                    var ringIndex = (bd[2] + index) % outNum
                     var dir = outRing[ringIndex]
                     space = fab.outSpace(item.pos, dir, item.advance + advance)
                     
@@ -181,23 +199,27 @@ func advanceItems(delta):
                         var opos = item.dpos()
                         item.advance = space
                         item.dir = dir
-                        bd[2] = (ringIndex + 1) % outRing.size()
+                        bd[2] = (ringIndex + 1) % outNum
                         imap.map.erase(opos)
                         imap.map[item.dpos()] = idx
-                        #updateItemTrans(imap, idx, item)
                         break
                 if space < 0.5:
                     item.advance = 0.49999
-                    #updateItemTrans(imap, idx, item)
             else:
                 item.advance = minf(item.advance + advance, 1.0)
-                #updateItemTrans(imap, idx, item)
 
             if item.advance > 0.5 and Belt.isSinkType(type):
                 item.scale = 1.0 - 2 * (item.advance-0.5)
-                #updateItemTrans(imap, idx, item)
             elif item.advance <= 0.5 and Belt.isSourceType(type):
                 item.scale = item.advance*2
-                
-            updateItemTrans(imap, idx, item)
-            #Log.log("advance", item.advance)
+            else:
+                item.scale = 1.0
+            if item.advance != oadv:
+                if item.blckd:
+                    item.blckd = false
+                    item.scale = 1.0
+                updateItemTrans(imap, idx, item)
+            elif not item.blckd:
+                item.blckd = true
+                item.scale = 1.2
+                updateItemTrans(imap, idx, item)

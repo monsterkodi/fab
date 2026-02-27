@@ -249,6 +249,20 @@ func saveGame(data : Dictionary):
     for i in range(tst.size()):
         var bd = beltDataAtIndex(i)
         data.FabState.tracks.push_back([bd[0].x, bd[0].y, bd.slice(1)])
+        
+    data.FabState.items = []
+    for i in range(itm.size()):
+        var item = itm.itemAtIndex(i)
+        data.FabState.items.push_back([
+            item.pos.x, 
+            item.pos.y, 
+            item.dir, 
+            item.type, 
+            item.advance, 
+            item.color.r, 
+            item.color.g, 
+            item.color.b, 
+            item.scale])
     
 func loadGame(data : Dictionary):
 

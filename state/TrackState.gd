@@ -132,7 +132,8 @@ class PosMap:
             assert(map[pos] >= 0)
             assert(map[pos] < ary.size())
         
-var posMap : Array[PosMap] = []
+var posMap  : Array[PosMap] = []
+var metaMap : Dictionary[Vector2i, int] = {}
 
 func _ready():
     
@@ -174,32 +175,40 @@ func type2pmi(type:int):
 func add(pos : Vector2i, type : int, outIndex : int = 0, inQueue : Array = []):
     
     del(pos)
-    posMap[type2pmi(type)].add(pos, [pos, type, outIndex, inQueue])
+    var pmi = type2pmi(type)
+    posMap[pmi].add(pos, [pos, type, outIndex, inQueue])
+    metaMap[pos] = pmi
     
 func del(pos):
     
     for pm in posMap:
         pm.del(pos)
+    metaMap.erase(pos)
     
 func clear():
     
     for pm in posMap:
         pm.clear()
+    metaMap.clear()
         
 func size():
     
-    var s = 0
-    for pm in posMap:
-        s += pm.size()
-    return s
+    return metaMap.size()
+    #var s = 0
+    #for pm in posMap:
+        #s += pm.size()
+    #return s
     
 func dataAtPos(pos : Vector2i) -> Array:
     
-    for pm in posMap:
-        if pm.map.has(pos): 
-            assert(pm.map[pos] >= 0)
-            assert(pm.map[pos] < pm.ary.size())
-            return pm.ary[pm.map[pos]]   
+    if metaMap.has(pos):
+        var pm = posMap[metaMap[pos]]
+        return pm.ary[pm.map[pos]]
+    #for pm in posMap:
+        #if pm.map.has(pos): 
+            ##assert(pm.map[pos] >= 0)
+            ##assert(pm.map[pos] < pm.ary.size())
+            #return pm.ary[pm.map[pos]]   
     return []
     
 func dataAtIndex(index : int) -> Array:
