@@ -2,7 +2,7 @@ class_name Builder
 extends Node3D
 
 # Hatchery: Food + Time + Energy + Space = Produce
-# Trains: Railed like belts, one model can be chained
+# Trains: Railed like belts, one model can, be chained
 # Mixer: Green+Red = Yellow, Red+Green+Blue = White
 # Painter: Item + Color + Time + Energy = Colored Item
 # Coal Burner, Shit Burner: Fuel + Time = Energy
@@ -11,6 +11,7 @@ extends Node3D
 # Spliiter: TorusSphere = Torus + Sphere
 
 var cursorShape : Control.CursorShape = Control.CURSOR_ARROW
+var fab : FabState # set before start is called by BuilderSwitch
 
 func start(): pass
     
@@ -25,6 +26,5 @@ func pointerContext(pos):    pass
 func pointerRelease(pos):    pass
 func pointerRotate():        pass
 
-func fabState() -> FabState: return Utils.fabState()
-func clearGhosts(): fabState().clearGhosts()
-func clearTemp():   fabState().clearTemp()
+func clearGhosts(): fab.clearGhosts()
+func clearTemp():   fab.clearTemp()

@@ -12,14 +12,14 @@ const MAX_SIZE = 10000
 const GHOST_MATERIAL      = preload("uid://b0use4n8rmlgb")
 const GHOST_BLUE_MATERIAL = preload("uid://bqhwhtt3kc30s")
 
-func _ready():
+func _init():
     
     cursorShape = Control.CURSOR_CROSS
     
 func start():
     
     Utils.setOverrideMaterial(corners, GHOST_MATERIAL)
-    fabState().tmp.setRectSelectColors()
+    fab.tmp.setRectSelectColors()
     corners.show()
 
 func stop():
@@ -106,34 +106,34 @@ func updateGhosts(keepOld : bool = false):
     for x in range(minx, maxx+1):
         for y in range(miny, maxy+1):
             var pos = Vector2i(x, y)
-            if fabState().machines.has(pos):
-                var machine = fabState().machines[pos]
+            if fab.machines.has(pos):
+                var machine = fab.machines[pos]
                 if not newGhosts.has(machine.pos):
-                    var ghost = fabState().ghostAtPos(machine.pos)
+                    var ghost = fab.ghostAtPos(machine.pos)
                     if not ghost:
-                        ghost = fabState().ghostForMachine(machine, GHOST_MATERIAL, ["Arrow"])
+                        ghost = fab.ghostForMachine(machine, GHOST_MATERIAL, ["Arrow"])
                     newGhosts[machine.pos] = ghost
                     
-            if fabState().beltAtPos(pos):
-                if fabState().tempAtPos(pos):
-                    fabState().delTempAtPos(pos)
-                newTemps[pos] = fabState().beltAtPos(pos)
+            if fab.beltAtPos(pos):
+                if fab.tempAtPos(pos):
+                    fab.delTempAtPos(pos)
+                newTemps[pos] = fab.beltAtPos(pos)
 
     if keepOld:
         
-        for i in range(fabState().numTemp()):
-            var pos = fabState().tempPosAtIndex(i)
+        for i in range(fab.numTemp()):
+            var pos = fab.tempPosAtIndex(i)
             if not newTemps.has(pos):
-                newTemps[pos] = fabState().tempAtPos(pos)
+                newTemps[pos] = fab.tempAtPos(pos)
                 
     else:
-        for ghost in fabState().ghosts():
+        for ghost in fab.ghosts():
             if not newGhosts.has(ghost.pos):
                 ghost.queue_free()
 
     clearTemp()
     for pos in newTemps:
-        fabState().addTempAtPos(pos, newTemps[pos])
+        fab.addTempAtPos(pos, newTemps[pos])
     updateCorners()
 
 func updateCorners():
@@ -163,34 +163,34 @@ func posRelativeToPointer(pos : Vector2i) -> Vector2i:
     
 func moveGhosts(delta : Vector2i):
     
-    for ghost in fabState().ghosts():
+    for ghost in fab.ghosts():
         ghost.setPos(ghost.pos + delta)
         
     var newTemps  : Dictionary[Vector2i, int] = {}
-    if fabState().numTemp() > 0:
-        for i in range(fabState().numTemp()):
-            var pos = fabState().tempPosAtIndex(i)
-            newTemps[pos + delta] = fabState().tempAtPos(pos)
+    if fab.numTemp() > 0:
+        for i in range(fab.numTemp()):
+            var pos = fab.tempPosAtIndex(i)
+            newTemps[pos + delta] = fab.tempAtPos(pos)
         clearTemp()
         for pos in newTemps:
-            fabState().addTempAtPos(pos, newTemps[pos])
+            fab.addTempAtPos(pos, newTemps[pos])
     
 func pasteGhosts():    
     
-    for ghost in fabState().ghosts():
-        fabState().addMachineAtPosOfType(ghost.pos, ghost.type, ghost.orientation)
+    for ghost in fab.ghosts():
+        fab.addMachineAtPosOfType(ghost.pos, ghost.type, ghost.orientation)
         
-    if fabState().numTemp() > 0:
-        for i in range(fabState().numTemp()):
-            var pos = fabState().tempPosAtIndex(i)
-            fabState().addBeltAtPos(pos, fabState().tempAtPos(pos))
+    if fab.numTemp() > 0:
+        for i in range(fab.numTemp()):
+            var pos = fab.tempPosAtIndex(i)
+            fab.addBeltAtPos(pos, fab.tempAtPos(pos))
 
     stopPasting()
     
 func stopPasting():
     
     isPasting = false
-    fabState().tmp.setRectSelectColors()
+    fab.tmp.setRectSelectColors()
     clearGhosts()
     clearTemp()
     updateGhosts()
@@ -202,7 +202,7 @@ func copy():
     var minPos : Vector2i
     var maxPos : Vector2i
     
-    for ghost in fabState().ghosts():
+    for ghost in fab.ghosts():
         var machine = ghost.proxy
         var pos = machine.pos
         minPos.x = mini(minPos.x, pos.x)
@@ -211,14 +211,14 @@ func copy():
         maxPos.y = maxi(maxPos.y, pos.y)
         data.machines.push_back([pos.x, pos.y, machine.type, machine.orientation])
             
-    if fabState().numTemp() > 0:
-        for i in range(fabState().numTemp()):
-            var pos = fabState().tempPosAtIndex(i)
+    if fab.numTemp() > 0:
+        for i in range(fab.numTemp()):
+            var pos = fab.tempPosAtIndex(i)
             minPos.x = mini(minPos.x, pos.x)
             minPos.y = mini(minPos.y, pos.y)
             maxPos.x = maxi(maxPos.x, pos.x)
             maxPos.y = maxi(maxPos.y, pos.y)
-            data.belts.push_back([pos.x, pos.y, fabState().tempAtPos(pos)])
+            data.belts.push_back([pos.x, pos.y, fab.tempAtPos(pos)])
     
     data.rect["min"] = [minPos.x, minPos.y]
     data.rect["max"] = [maxPos.x, maxPos.y]
@@ -231,12 +231,12 @@ func cut():
 
     copy()
     
-    for ghost in fabState().ghosts():
-        fabState().delMachineAtPos(ghost.pos)
+    for ghost in fab.ghosts():
+        fab.delMachineAtPos(ghost.pos)
         
-    if fabState().numTemp() > 0:
-        for i in range(fabState().numTemp()):
-            fabState().delBeltAtPos(fabState().tempPosAtIndex(i))
+    if fab.numTemp() > 0:
+        for i in range(fab.numTemp()):
+            fab.delBeltAtPos(fab.tempPosAtIndex(i))
             
     clearGhosts()
     clearTemp()
@@ -258,16 +258,16 @@ func paste():
     
     for md in data.machines:
         var mp = Vector2i(md[0] + offsetX, md[1] + offsetY)
-        var ghost = fabState().ghostForType(md[2], GHOST_BLUE_MATERIAL, ["Arrow"])
+        var ghost = fab.ghostForType(md[2], GHOST_BLUE_MATERIAL, ["Arrow"])
         ghost.setOrientation(md[3])
         ghost.setPos(mp)
 
     for bd in data.belts:
         var bp = Vector2i(bd[0] + offsetX, bd[1] + offsetY)
-        fabState().addTempAtPos(bp, bd[2])
+        fab.addTempAtPos(bp, bd[2])
     
     updateGhosts(true) 
-    fabState().tmp.setBeltBuilderColors()
+    fab.tmp.setBeltBuilderColors()
     isPasting = true
             
 func _shortcut_input(event: InputEvent):

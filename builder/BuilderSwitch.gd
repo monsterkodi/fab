@@ -22,7 +22,7 @@ func activateBuilder(builderName):
         _:      builder = $BuildingBuilder; builder.setBuilding(builderName)
     
     Utils.world("MouseHandler").mouse_default_cursor_shape = builder.cursorShape
-    
+    builder.fab = Utils.fabState()
     builder.start()
     pointerHover(Utils.world("MouseHandler").lastPos)
     

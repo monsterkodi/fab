@@ -229,16 +229,16 @@ func loadGame(data : Dictionary):
             for machine in data.FabState.machines:
                 var pos = Vector2i(machine.pos.x, machine.pos.y)
                 addMachineAtPosOfType(pos, machine.type, machine.orientation)
+
+        if data.FabState.has("tracks"):
+            for track in data.FabState.tracks:
+                addBeltAtPos(Vector2i(track[0], track[1]), track[2])
         
         if data.FabState.has("beltStates"):
             for state in data.FabState.beltStates:
                 var bs = addBeltStateAtPos(Vector2i(state[0][0], state[0][1]))
                 bs.restore(state)
-                
-        if data.FabState.has("tracks"):
-            for track in data.FabState.tracks:
-                addBeltAtPos(Vector2i(track[0], track[1]), track[2])
-        
+                        
 func occupiedByRoot(posl):
     
     for pos in posl:

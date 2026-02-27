@@ -24,7 +24,7 @@ func clearDelGhosts():
 
 func setBuilding(string):
     
-    ghost = Utils.fabState().ghostForType(Mach.typeForString(string), GHOST_MATERIAL, ["Arrow"])
+    ghost = fab.ghostForType(Mach.typeForString(string), GHOST_MATERIAL, ["Arrow"])
     
 func pointerHover(pos):
     
@@ -33,12 +33,12 @@ func pointerHover(pos):
         ghost.setPos(pos)
         Utils.setOverrideMaterial(ghost.building, GHOST_MATERIAL, ["Arrow"])
         for gp in ghost.getOccupied():
-            if Utils.fabState().machines.has(gp):
-                var machine = Utils.fabState().machines[gp]
+            if fab.machines.has(gp):
+                var machine = fab.machines[gp]
                 if machine.pos == Vector2i.ZERO:
                     handleRootOverlap()
                 else:
-                    delGhosts.push_back(Utils.fabState().ghostForMachine(machine, GHOST_RED_MATERIAL))
+                    delGhosts.push_back(fab.ghostForMachine(machine, GHOST_RED_MATERIAL))
                     
 func handleRootOverlap():
     
@@ -47,10 +47,10 @@ func handleRootOverlap():
 
 func pointerClick(pos): 
     
-    if Utils.fabState().occupiedByRoot(ghost.getOccupied()):
+    if fab.occupiedByRoot(ghost.getOccupied()):
         return
         
-    Utils.fabState().addMachineAtPosOfType(pos, ghost.type, ghost.orientation)
+    fab.addMachineAtPosOfType(pos, ghost.type, ghost.orientation)
     clearDelGhosts()
     
 func pointerDrag(pos):
@@ -59,9 +59,9 @@ func pointerDrag(pos):
     
     if ghost:
         for gp in ghost.getOccupied():
-            if Utils.fabState().machines.has(gp):
+            if fab.machines.has(gp):
                 return
-        Utils.fabState().addMachineAtPosOfType(pos, ghost.type, ghost.orientation)
+        fab.addMachineAtPosOfType(pos, ghost.type, ghost.orientation)
 
 func pointerRotate():
     

@@ -5,10 +5,13 @@ var ghost
 
 const GHOST_MATERIAL = preload("uid://b35kuqwv15nfr")
 
+func _init():
+    
+    cursorShape = Control.CURSOR_FORBIDDEN
+    
 func _ready():
     
     $Cross.hide()
-    cursorShape = Control.CURSOR_FORBIDDEN
     
 func stop():
     
@@ -21,7 +24,7 @@ func start():
     
 func pointerClick(pos):
     
-    Utils.fabState().delObjectAtPos(pos)
+    fab.delObjectAtPos(pos)
     if ghost: ghost.free()
     
 func pointerDrag(pos): 
@@ -33,10 +36,10 @@ func pointerHover(pos):
     
     $Cross.global_position = Vector3(pos.x, 0, pos.y)
     
-    if Utils.fabState().machines.has(pos):
+    if fab.machines.has(pos):
         if ghost: ghost.free()
-        var machine = Utils.fabState().machines[pos]
+        var machine = fab.machines[pos]
         if machine.pos != Vector2i.ZERO:
-            ghost = Utils.fabState().ghostForMachine(machine, GHOST_MATERIAL)
+            ghost = fab.ghostForMachine(machine, GHOST_MATERIAL)
     elif ghost:
         ghost.free()    

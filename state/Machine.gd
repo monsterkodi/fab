@@ -7,19 +7,22 @@ var slots : Array
 var slits : Array
 var orientation = 0
 var building
+var fab : FabState
 
 func _ready():
     
     assert(type)
     
+    fab = Utils.fabState()
+    
     for slit in slits:
-        fabState().addBeltAtPos(pos + slit.pos, Belt.INPUT[slit.dir])
+        fab.addBeltAtPos(pos + slit.pos, Belt.INPUT[slit.dir])
 
     for slot in slots:
-        fabState().addBeltAtPos(pos + slot.pos, Belt.OUTPUT[slot.dir])
+        fab.addBeltAtPos(pos + slot.pos, Belt.OUTPUT[slot.dir])
         
     for opos in getOccupied():
-        fabState().machines[opos] = self
+        fab.machines[opos] = self
                 
     createBuilding()
 
@@ -36,12 +39,12 @@ func _exit_tree():
         building.queue_free()
     
     for slot in slots:
-        fabState().delBeltAtPos(pos + slot.pos)
+        fab.delBeltAtPos(pos + slot.pos)
     for slit in slits:
-        fabState().delBeltAtPos(pos + slit.pos)
+        fab.delBeltAtPos(pos + slit.pos)
         
     for opos in getOccupied():
-        fabState().machines.erase(opos)
+        fab.machines.erase(opos)
         
 func rotateCW(): setOrientation((orientation + 1) % 4)
         
@@ -64,7 +67,7 @@ func consume():
     
     for i in range(slits.size()):
         var slit = slits[i]
-        var bs = fabState().beltStateAtPos(pos + slit.pos)
+        var bs = fab.beltStateAtPos(pos + slit.pos)
         if bs and bs.get_child_count():
             var item = bs.get_child(0)
             if item.advance >= 1:
@@ -74,7 +77,7 @@ func consume():
 func advanceAtSlotIndex(i):
     
     var slot = slots[i]
-    var bs = fabState().beltStateAtPos(pos + slot.pos)
+    var bs = fab.beltStateAtPos(pos + slot.pos)
     if bs:
         return bs.inSpace(Belt.OPPOSITE[slot.dir])
     return -666
@@ -86,13 +89,11 @@ func produce():
         if adv >= 0:
             var item = produceItemAtSlot(slots[i])
             if item:
-                var bs = fabState().beltStateAtPos(pos + slots[i].pos)
+                var bs = fab.beltStateAtPos(pos + slots[i].pos)
                 bs.addItem(Belt.OPPOSITE[slots[i].dir], item)
         
 func produceItemAtSlot(slot): return null
 func consumeItemAtSlit(item, slit): return false
-
-func fabState() -> FabState: return Utils.fabState()
 
 func getOccupied() -> Array[Vector2i]:
 
