@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://crjdati3mqanw"]
+
+[ext_resource type="Script" uid="uid://c1rxm42jmmlw5" path="res://state/ItemState.gd" id="1_wmqta"]
+[ext_resource type="Material" uid="uid://bi5n2lthhnyix" path="res://materials/ItemCube.tres" id="2_i413n"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_f2do6"]
+size = Vector3(0.4, 0.4, 0.4)
+
+[sub_resource type="MultiMesh" id="MultiMesh_56hdc"]
+transform_format = 1
+use_colors = true
+mesh = SubResource("BoxMesh_f2do6")
+
+[node name="ItemState" type="Node3D" unique_id=774702764]
+script = ExtResource("1_wmqta")
+
+[node name="Cube" type="MultiMeshInstance3D" parent="." unique_id=588359375]
+material_override = ExtResource("2_i413n")
+multimesh = SubResource("MultiMesh_56hdc")

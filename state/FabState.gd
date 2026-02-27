@@ -2,13 +2,12 @@ class_name FabState
 extends Node
 
 var machines:      Dictionary[Vector2i, Machine]
-var beltStates:    Dictionary[Vector2i, BeltState]
 var buildings:     Dictionary[Vector2i, int]
 var gameSpeed:     float = 1.0
 
 @onready var tst: TrackState    = $"../TrackState"
 @onready var tmp: TrackState    = $"../TempState"
-@onready var imm: ItemMultiMesh = $"../ItemMultiMesh"
+@onready var itm: ItemState     = $"../ItemState"
 
 func _ready():
     
@@ -16,45 +15,76 @@ func _ready():
     
 func consumableItemAtPos(pos : Vector2i):
     
-    var bs = beltStateAtPos(pos)
-    if bs and bs.get_child_count():
-        var item = bs.get_child(0)
+    for item in itemsAtPos(pos):
         if item.advance >= 1:
             return item
     return null
     
 func addItem(pos, dir, item):
     
-    beltStateAtPos(pos).addItem(dir, item)
+    item.pos = pos
+    item.dir = dir
+    itm.add(Vector3i(pos.x, pos.y, dir), item)
     
 func delItem(item):
     
-    item.queue_free()
+    itm.del(item.dpos())
     
-func inSpace(pos : Vector2i, dir : int):
+func itemsAtPos(pos : Vector2i) -> Array:
     
-    var bs = beltStateAtPos(pos)
-    if bs:
-        return bs.inSpace(dir)
-    return -666
+    return itm.itemsAtPos(pos)
+    
+func delItemsAtPos(pos : Vector2i):
+    
+    for item in itemsAtPos(pos):
+        delItem(item)
         
-func beltStateAtPos(pos : Vector2i):
+func inSpace(pos : Vector2i, dir : int, advance : float = 0.0):
     
-    if beltStates.has(pos):
-        return beltStates[pos]
-    if beltAtPos(pos):
-        return addBeltStateAtPos(pos)
-    return null
+    var trackData = tst.dataAtPos(pos)
     
-func addBeltStateAtPos(pos : Vector2i):
+    if trackData.is_empty(): return -666
     
-    var bs = BeltState.new()
-    bs.pos = pos
-    bs.type = beltAtPos(pos)
-    beltStates[pos] = bs
-    $BeltStates.add_child(bs)
-    return bs    
+    var inQueue = trackData[3]
+    var inRing  = tst.typeMap[2]
     
+    var items = itemsAtPos(pos)
+    if items.size() == 0:
+        return advance
+    if items.size() >= 4:
+        return -2
+        
+    items.sort_custom(func(a,b): return a.advance > b.advance)
+        
+    if inQueue.size() == 0:
+        var tailSpace = items[-1].advance - Belt.HALFSIZE
+        if tailSpace >= Belt.HALFSIZE:
+            return minf(advance, tailSpace - Belt.HALFSIZE)
+        if inRing.size() > 1:
+            inQueue.push_back(dir)
+        return -3
+    if inQueue[0] == dir:
+        var tailSpace = items[-1].advance - Belt.HALFSIZE
+        if tailSpace >= Belt.HALFSIZE:
+            inQueue.pop_front()
+            return minf(advance, tailSpace - Belt.HALFSIZE)
+    else:
+        if not inQueue.has(dir):
+            inQueue.push_back(dir)
+            return -4 
+    return -5
+    
+func outSpace(pos : Vector2i, dir : int, advance: float = 0.5) -> float: 
+
+    for item in itemsAtPos(pos):
+        if item.dir == dir:
+            var space = item.advance - Belt.HALFSIZE
+            if space - Belt.HALFSIZE > 0.5:
+                return minf(advance, space - Belt.HALFSIZE)
+            else:
+                return space - Belt.HALFSIZE
+    return advance
+            
 func addMachineAtPosOfType(pos : Vector2i, type : int, orientation : int = 0):
         
     var machine = Mach.Class[type].new()
@@ -77,20 +107,13 @@ func delMachineAtPos(pos : Vector2i):
         if machines[pos].pos != Vector2i(0,0):
             machines[pos].free()
 
-func delBeltStateAtPos(pos : Vector2i):
-    
-    if beltStates.has(pos):
-        beltStates[pos].queue_free()
-        $BeltStates.remove_child(beltStates[pos])
-
 func addBeltAtPos(pos : Vector2i, type : int):
 
-    delBeltStateAtPos(pos)
+    delItemsAtPos(pos)
     tst.add(pos, type)
 
 func addBeltDataAtPos(pos : Vector2i, data : Array):
 
-    delBeltStateAtPos(pos)
     tst.add(pos, data[2][0], data[2][1], data[2][2])
     
 func addTempAtPos(pos : Vector2i, type : int):
@@ -164,7 +187,7 @@ func delBeltAtPos(pos : Vector2i):
     if occupiedByRoot([pos]):
         return
 
-    delBeltStateAtPos(pos)
+    delItemsAtPos(pos)
     tst.del(pos)
     
     for d in Belt.DIRS:
@@ -173,11 +196,9 @@ func delBeltAtPos(pos : Vector2i):
         if bt:
             var clean = Belt.connectNeighbors(np, beltNeighborsAtPos(np), 0)
             if Belt.isValidType(clean) and clean != bt and not Belt.noInOut(clean):
-                delBeltStateAtPos(np)
+                delItemsAtPos(np)
                 tst.add(np, clean)
                 
-    updateItems()
-    
 func delObjectAtPos(pos : Vector2i):
     
     if machines.has(pos):
@@ -195,34 +216,15 @@ func _physics_process(delta: float):
     for machine in $Machines.get_children():
         machine.consume()
         
-    for beltState in $BeltStates.get_children():
-        beltState.advanceItems(delta * gameSpeed)
+    itm.advanceItems(delta * gameSpeed)
     
     for machine in $Machines.get_children():
         machine.produce()
     
-    updateItems()
-    
-func clearTemp(): 
-    
-    tmp.clear()
-
-func updateItems():
-
-    imm.clear("item")
-    for pos in beltStates:
-        var bs = beltStates[pos]
-        for idx in range(bs.get_child_count()):
-            var item = bs.get_child(idx)
-            imm.add("item", [bs.itemPositionAtIndex(idx), item.color, item.scale])
+func clearTemp(): tmp.clear()
         
-func speedFaster(): 
-    
-    setGameSpeed(gameSpeed * 3/2)
-    
-func speedSlower(): 
-    
-    setGameSpeed(gameSpeed * 2/3)
+func speedFaster(): setGameSpeed(gameSpeed * 3/2)
+func speedSlower(): setGameSpeed(gameSpeed * 2/3)
     
 func setGameSpeed(newSpeed):
     
@@ -242,11 +244,7 @@ func saveGame(data : Dictionary):
             "type":        machine.type, 
             "orientation": machine.orientation}
         data.FabState.machines.push_back(machineData)
-        
-    data.FabState.beltStates = []
-    for bs in $BeltStates.get_children():
-        data.FabState.beltStates.push_back(bs.store())
-        
+                
     data.FabState.tracks = []
     for i in range(tst.size()):
         var bd = beltDataAtIndex(i)
@@ -267,10 +265,18 @@ func loadGame(data : Dictionary):
             for track in data.FabState.tracks:
                 addBeltDataAtPos(Vector2i(track[0], track[1]), track)
         
-        if data.FabState.has("beltStates"):
-            for state in data.FabState.beltStates:
-                var bs = addBeltStateAtPos(Vector2i(state[0][0], state[0][1]))
-                bs.restore(state)
+        if data.FabState.has("items"):
+            for d in data.FabState.items:
+                var pos = Vector2i(d[0], d[1])
+                var dir = d[2]
+                var item = ItemState.Item.new()
+                item.pos = pos
+                item.dir = dir
+                item.type    = d[3]
+                item.advance = d[4]
+                item.color   = Color(d[5], d[6], d[7])
+                item.scale   = d[8]
+                addItem(pos, dir, item)
                         
 func occupiedByRoot(posl):
     

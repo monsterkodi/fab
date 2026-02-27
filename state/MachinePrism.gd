@@ -24,16 +24,8 @@ func produceItemAtSlot(slot):
     
     if not canProduce: return null
     
-    var item = Item.new()
+    var item = ItemState.Item.new()
     item.color = slot.color
     if slot == slots[-1]: canProduce = false
     return item
         
-#func getOccupied() -> Array[Vector2i]:
-    
-    #var posl = super.getOccupied()
-    
-    #posl.append(pos + slots[0].pos + slits[0].pos)
-    #posl.append(pos + slots[2].pos + slits[0].pos)
-    
-    #return posl

@@ -8,6 +8,6 @@ func _init():
     
 func produceItemAtSlot(slot):
     
-    var item = Item.new()
+    var item = ItemState.Item.new()
     item.color = Color(0.01, 0.01, 0.01)
     return item

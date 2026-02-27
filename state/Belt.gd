@@ -141,7 +141,7 @@ func isSimple(type):
     
     return singleIn(type) and singleOut(type)
     
-func offsetForAdvanceAndDirection(type, advance, direction) -> Vector3:
+func offsetForAdvanceAndDir(type, advance, dir) -> Vector3:
     
     var offset = Vector3.ZERO
     var rad = advance * PI * 0.5
@@ -156,9 +156,9 @@ func offsetForAdvanceAndDirection(type, advance, direction) -> Vector3:
         Belt.O_N | Belt.I_W: return Vector3((-1.0 + sin(rad)) * 0.5, 0, (-1.0 + cos(rad)) * 0.5) # ccw
     
     if advance <= 0.5:
-        return NORM[direction] * (0.5 - advance)
+        return NORM[dir] * (0.5 - advance)
     else:
-        return NORM[direction] * (advance - 0.5)
+        return NORM[dir] * (advance - 0.5)
         
 func orientatePos(orientation, pos):
     
