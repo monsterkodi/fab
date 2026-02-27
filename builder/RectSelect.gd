@@ -76,7 +76,7 @@ func pointerDrag(pos):
 func pointerRelease(pos):
     
     pointerHover(pos)
-    Utils.setOverrideMaterial(corners, GHOST_MATERIAL)
+    Utils.setOverrideMaterial(corners, GHOST_MATERIAL)        
 
 func pointerContext(pos):
     
@@ -98,8 +98,6 @@ func updateGhosts(keepOld : bool = false):
     var minx = min(startPos.x, endPos.x) 
     var miny = min(startPos.y, endPos.y)
     
-    #Log.log("minmax", keepOld, minx, miny, maxx, maxy)
-
     var newGhosts : Dictionary[Vector2i, Ghost] = {}
     var newTemps  : Dictionary[Vector2i, int] = {}
     
@@ -166,7 +164,7 @@ func moveGhosts(delta : Vector2i):
     for ghost in fab.ghosts():
         ghost.setPos(ghost.pos + delta)
         
-    var newTemps  : Dictionary[Vector2i, int] = {}
+    var newTemps : Dictionary[Vector2i, int] = {}
     if fab.numTemp() > 0:
         for i in range(fab.numTemp()):
             var pos = fab.tempPosAtIndex(i)
@@ -197,7 +195,7 @@ func stopPasting():
     
 func copy():
     
-    var data = {"rect": {}, "machines": [], "belts": []}
+    var data = {"machines": [], "belts": []}
     
     var minPos : Vector2i
     var maxPos : Vector2i
@@ -205,26 +203,15 @@ func copy():
     for ghost in fab.ghosts():
         var machine = ghost.proxy
         var pos = machine.pos
-        minPos.x = mini(minPos.x, pos.x)
-        minPos.y = mini(minPos.y, pos.y)
-        maxPos.x = maxi(maxPos.x, pos.x)
-        maxPos.y = maxi(maxPos.y, pos.y)
-        data.machines.push_back([pos.x, pos.y, machine.type, machine.orientation])
+        data.machines.push_back([pos.x - endPos.x, pos.y - endPos.x, machine.type, machine.orientation])
             
     if fab.numTemp() > 0:
         for i in range(fab.numTemp()):
             var pos = fab.tempPosAtIndex(i)
-            minPos.x = mini(minPos.x, pos.x)
-            minPos.y = mini(minPos.y, pos.y)
-            maxPos.x = maxi(maxPos.x, pos.x)
-            maxPos.y = maxi(maxPos.y, pos.y)
-            data.belts.push_back([pos.x, pos.y, fab.tempAtPos(pos)])
-    
-    data.rect["min"] = [minPos.x, minPos.y]
-    data.rect["max"] = [maxPos.x, maxPos.y]
+            data.belts.push_back([pos.x - endPos.x, pos.y - endPos.y, fab.tempAtPos(pos)])
     
     var string = JSON.stringify(data) 
-    #Log.log("copy", string)
+
     DisplayServer.clipboard_set(string)    
 
 func cut():  
@@ -251,19 +238,16 @@ func paste():
     if string.is_empty(): return
     var data = JSON.parse_string(string)
     if not data is Dictionary: return
-    if not data.has("rect") or not data.has("belts") or not data.has("machines"): return
+    if not data.has("belts") or not data.has("machines"): return
 
-    var offsetX = endPos.x - int((data.rect.max[0] + data.rect.min[0]) / 2)
-    var offsetY = endPos.y - int((data.rect.max[1] + data.rect.min[1]) / 2)
-    
     for md in data.machines:
-        var mp = Vector2i(md[0] + offsetX, md[1] + offsetY)
+        var mp = Vector2i(md[0] + endPos.x, md[1] + endPos.y)
         var ghost = fab.ghostForType(md[2], GHOST_BLUE_MATERIAL, ["Arrow"])
         ghost.setOrientation(md[3])
         ghost.setPos(mp)
 
     for bd in data.belts:
-        var bp = Vector2i(bd[0] + offsetX, bd[1] + offsetY)
+        var bp = Vector2i(bd[0] + endPos.x, bd[1] + endPos.y)
         fab.addTempAtPos(bp, bd[2])
     
     updateGhosts(true) 
@@ -277,3 +261,8 @@ func _shortcut_input(event: InputEvent):
     if event.is_action("cut"):   cut();   get_viewport().set_input_as_handled(); return
     if event.is_action("copy"):  copy();  get_viewport().set_input_as_handled(); return
     if event.is_action("paste"): paste(); get_viewport().set_input_as_handled(); return
+    
+func pointerRotate():
+    
+    if isPasting:
+        fab.tmp.rotateAround(endPos)

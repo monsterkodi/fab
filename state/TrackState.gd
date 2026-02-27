@@ -97,7 +97,7 @@ class PosMap:
             map[pos] = ary.size()
             ary.push_back(data)
             hdl.aryPush(self, data)
-        verify()
+        #verify()
             
     func del(pos : Vector2i):
         
@@ -111,20 +111,20 @@ class PosMap:
             ary.pop_back()
             map.erase(pos)
             hdl.aryPop(self)
-        verify()
+        #verify()
             
     func clear():
         
         map = {}
         ary = []
         hdl.aryClear(self)
-        verify()
+        #verify()
         
     func size():
         
-        assert(ary.size() == map.size())
+        #assert(ary.size() == map.size())
         return ary.size()
-        
+                
     func verify():
         
         assert(ary.size() == map.size())
@@ -194,21 +194,12 @@ func clear():
 func size():
     
     return metaMap.size()
-    #var s = 0
-    #for pm in posMap:
-        #s += pm.size()
-    #return s
     
 func dataAtPos(pos : Vector2i) -> Array:
     
     if metaMap.has(pos):
         var pm = posMap[metaMap[pos]]
         return pm.ary[pm.map[pos]]
-    #for pm in posMap:
-        #if pm.map.has(pos): 
-            ##assert(pm.map[pos] >= 0)
-            ##assert(pm.map[pos] < pm.ary.size())
-            #return pm.ary[pm.map[pos]]   
     return []
     
 func dataAtIndex(index : int) -> Array:
@@ -270,3 +261,22 @@ func gameSpeed(speed):
     
     for child in get_children():
         child.multimesh.mesh.material.set_shader_parameter("Speed", speed)
+        
+func rotateAround(center : Vector2i):
+
+    var newBelts : Dictionary[int,Array] = {}
+    for pm in posMap:
+        
+        for bd in pm.ary: # [pos, type, outIndex, inQueue]
+            var relPos  = bd[0] - center
+            var rotPos  = Vector2i(-relPos.y, relPos.x) + center
+            var rotType = Belt.rotateType(bd[1])
+            if not newBelts.has(rotType):
+                newBelts[rotType] = []
+            newBelts[rotType].push_back(rotPos)
+    clear()
+    for type in newBelts:
+        for pos in newBelts[type]:
+            add(pos, type)
+        
+        

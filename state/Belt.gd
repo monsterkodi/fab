@@ -145,6 +145,7 @@ func offsetForAdvanceAndDir(type, advance, dir) -> Vector3:
     
     var offset = Vector3.ZERO
     var rad = advance * PI * 0.5
+
     match type:
         Belt.O_E | Belt.I_S: return Vector3(( 1.0 - cos(rad)) * 0.5, 0, ( 1.0 - sin(rad)) * 0.5) # cw
         Belt.O_S | Belt.I_W: return Vector3((-1.0 + sin(rad)) * 0.5, 0, ( 1.0 - cos(rad)) * 0.5) # cw
@@ -159,7 +160,7 @@ func offsetForAdvanceAndDir(type, advance, dir) -> Vector3:
         return NORM[dir] * (0.5 - advance)
     else:
         return NORM[dir] * (advance - 0.5)
-        
+                
 func orientatePos(orientation, pos):
     
     return Vector2i(Vector2(pos).rotated(deg_to_rad(90*orientation)).round())
@@ -184,15 +185,20 @@ func isSinkType(type):
 func isSourceType(type):
     
     return type in SOURCE_TYPES
-    
+            
 func rotateType(type):
-    
+
     match type:
         I_W | O_E: return I_N | O_S
         I_N | O_S: return I_E | O_W
         I_E | O_W: return I_S | O_N
         I_S | O_N: return I_W | O_E
-        _: return type 
+
+    var inputs  =  type & 0b0000_1111
+    var outputs = (type & 0b1111_0000) >> 4
+    
+    return ((inputs  << 1) | (inputs  >> 3)) & 0b1111 | \
+         ((((outputs << 1) | (outputs >> 3)) & 0b1111 ) << 4)
         
 func orientateType(type, orientation):
     
