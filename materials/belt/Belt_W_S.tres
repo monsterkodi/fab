@@ -1,10 +1,10 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://blxpc6e51qspd"]
 
-[ext_resource type="Shader" uid="uid://i84kyhulq01b" path="res://materials/visual/Belt_W_S.tres" id="1_0515k"]
+[ext_resource type="Shader" uid="uid://i84kyhulq01b" path="res://materials/visual/Belt_W_S.tres" id="1_ft844"]
 
 [resource]
 render_priority = 0
-shader = ExtResource("1_0515k")
+shader = ExtResource("1_ft844")
 shader_parameter/RimColor = Color(0.5, 0.5, 0.5, 1)
 shader_parameter/SpokeColor = Color(0.25, 0.25, 0.25, 1)
 shader_parameter/SpokeThickness = 0.2

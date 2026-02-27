@@ -47,30 +47,40 @@ func hasOverlap(type):  return (type & 0b1111) & ((type >> 4) & 0b1111)
 func isInvalidType(type):
     
     var s = ""
-    if hasNoInput(type):
-        s += "no input "
-    if hasNoOutput(type):
-        s += "no output "
+    if type <= 0:
+        s += "-zero" 
     if hasOverlap(type):
-        s+= "input/output overlap!"
+        s += "input/output overlap!"
     return s
     
 func isValidType(type): return not isInvalidType(type)
     
-func fixInOut(type):
+func noInOut(type): return hasNoInput(type) or hasNoOutput(type)
     
+func fixInOut(type):
+
     return fixOutput(fixInput(type))
     
 func fixOutput(type):
     
     if hasNoOutput(type):
-        return type | ((type & 0b0011) << 6) | ((type & 0b1100) << 2) 
+        for d in DIRS:
+            if type & INPUT[d] and not type & INPUT[OPPOSITE[d]]:
+                return type | OUTPUT[OPPOSITE[d]]
+        for d in DIRS:
+            if not type & INPUT[d]:
+                return type | OUTPUT[d]
     return type
     
 func fixInput(type):
     
     if hasNoInput(type):
-        return type | ((type & 0b0011_0000) >> 2) | ((type & 0b1100_0000) >> 6) 
+        for d in DIRS:
+            if type & OUTPUT[d] and not type & OUTPUT[OPPOSITE[d]]:
+                return type | INPUT[OPPOSITE[d]]            
+        for d in DIRS:
+            if not type & OUTPUT[d]:
+                return type | INPUT[d]
     return type
     
 func setOutput(type, dir):
@@ -110,11 +120,10 @@ func srcConnect(src, tgt, dir):
     
     return src
     
-func connectNeighbors(pos, pieces, type):
+func connectNeighbors(pos : Vector2i, neighbors : Array[int], type : int):
     
     for d in DIRS:
-        var np = pos + NEIGHBOR[d]
-        type = srcConnect(type, pieces.get(np, 0), d)
+        type = srcConnect(type, neighbors[d], d)
     return type
     
 func dirForPositions(src, tgt):
@@ -190,19 +199,3 @@ func orientateType(type, orientation):
     for i in range(orientation):
         type = rotateType(type)
     return type       
-    
-
-#func inputDirForType(type):
-    #
-    #if type & I_E: return E
-    #if type & I_S: return S
-    #if type & I_W: return W
-    #if type & I_N: return N
-    #
-#func outputDirForType(type):
-    #
-    #if type & O_E: return E
-    #if type & O_S: return S
-    #if type & O_W: return W
-    #if type & O_N: return N
-    

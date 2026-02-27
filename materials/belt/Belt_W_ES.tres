@@ -1,14 +1,12 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://b0loecgsyq682"]
 
-[ext_resource type="Shader" uid="uid://cdn12rn7oa2e7" path="res://materials/visual/Belt_W_ES.tres" id="1_jg7vf"]
+[ext_resource type="Shader" uid="uid://cdn12rn7oa2e7" path="res://materials/visual/Belt_W_ES.tres" id="1_d0k5q"]
 
 [resource]
 render_priority = 0
-shader = ExtResource("1_jg7vf")
+shader = ExtResource("1_d0k5q")
 shader_parameter/RimColor = Color(0.5, 0.5, 0.5, 1)
 shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
-shader_parameter/SpokeThickness2 = 0.3
-shader_parameter/SpokeCount2 = 2
+shader_parameter/SpokeThickness = 0.2
+shader_parameter/SpokeCount = 2
 shader_parameter/Speed = 1.0
-shader_parameter/SpokeThickness3 = 0.2
-shader_parameter/SpokeCount3 = 2

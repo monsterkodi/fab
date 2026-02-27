@@ -1,7 +1,6 @@
 class_name Deleter
 extends Builder
 
-var beltPieces: Dictionary[Vector2i, int]
 var ghost
 
 const GHOST_MATERIAL = preload("uid://b35kuqwv15nfr")
@@ -18,7 +17,6 @@ func stop():
 
 func start():
     
-    beltPieces = Utils.fabState().beltPieces
     $Cross.show()
     
 func pointerClick(pos):

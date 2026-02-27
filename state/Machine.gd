@@ -13,16 +13,14 @@ func _ready():
     assert(type)
     
     for slit in slits:
-        fabState().beltPieces[pos + slit.pos] = Belt.INPUT[slit.dir]
+        fabState().addBeltAtPos(pos + slit.pos, Belt.INPUT[slit.dir])
 
     for slot in slots:
-        fabState().beltPieces[pos + slot.pos] = Belt.OUTPUT[slot.dir]
+        fabState().addBeltAtPos(pos + slot.pos, Belt.OUTPUT[slot.dir])
         
     for opos in getOccupied():
         fabState().machines[opos] = self
                 
-    fabState().updateBelt()
-    
     createBuilding()
 
 func createBuilding():

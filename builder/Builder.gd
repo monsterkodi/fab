@@ -28,5 +28,3 @@ func pointerRotate():        pass
 func fabState() -> FabState: return Utils.fabState()
 func clearGhosts(): fabState().clearGhosts()
 func clearTemp():   fabState().clearTemp()
-func updateTemp():  fabState().updateTemp()
-func updateBelt():  fabState().updateBelt()

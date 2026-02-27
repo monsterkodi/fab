@@ -1,0 +1,304 @@
+[gd_scene format=3 uid="uid://b0tqyvht5fp52"]
+
+[ext_resource type="Script" uid="uid://boxdou4mqdcq0" path="res://state/TrackState.gd" id="1_87ce2"]
+[ext_resource type="Shader" uid="uid://bkgwr3v3pdfev" path="res://materials/visual/Belt_ES_W.tres" id="2_87ce2"]
+[ext_resource type="Shader" uid="uid://5xeiap1xxlyo" path="res://materials/visual/Belt_NES_W.tres" id="2_umefm"]
+[ext_resource type="Shader" uid="uid://cghwcjo46atge" path="res://materials/visual/Belt_NE_W.tres" id="3_umefm"]
+[ext_resource type="Shader" uid="uid://b4i56tbp33ut2" path="res://materials/visual/Belt_NS_W.tres" id="4_umefm"]
+[ext_resource type="Shader" uid="uid://tknsp4m1vnsb" path="res://materials/visual/Belt_SW_NE.tres" id="5_umefm"]
+[ext_resource type="Shader" uid="uid://bbneda25567sk" path="res://materials/visual/Belt_WE_NS.tres" id="6_umefm"]
+[ext_resource type="Shader" uid="uid://bex1ri14dhoqe" path="res://materials/visual/Belt_W_E.tres" id="7_87ce2"]
+[ext_resource type="Shader" uid="uid://cdngxdqu8ubrn" path="res://materials/visual/Belt_W_N.tres" id="8_q403o"]
+[ext_resource type="Shader" uid="uid://cdn12rn7oa2e7" path="res://materials/visual/Belt_W_ES.tres" id="9_omxbn"]
+[ext_resource type="Shader" uid="uid://6wdqhxh0bga3" path="res://materials/visual/Belt_W_NE.tres" id="9_umefm"]
+[ext_resource type="Shader" uid="uid://5pp8ti6ukgbo" path="res://materials/visual/Belt_W_NES.tres" id="10_q403o"]
+[ext_resource type="Shader" uid="uid://jfui6nx8np5a" path="res://materials/visual/Belt_W_NS.tres" id="11_q403o"]
+[ext_resource type="Shader" uid="uid://i84kyhulq01b" path="res://materials/visual/Belt_W_S.tres" id="14_a2x1b"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_poill"]
+render_priority = 10
+shader = ExtResource("2_87ce2")
+shader_parameter/RimColor = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
+shader_parameter/SpokeThickness = 0.2
+shader_parameter/SpokeCount = 2
+shader_parameter/Speed = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6isxd"]
+material = SubResource("ShaderMaterial_poill")
+size = Vector2(1, 1)
+
+[sub_resource type="MultiMesh" id="MultiMesh_th2om"]
+transform_format = 1
+mesh = SubResource("PlaneMesh_6isxd")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tdd7l"]
+render_priority = 10
+shader = ExtResource("2_umefm")
+shader_parameter/RimColor = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
+shader_parameter/SpokeThickness = 0.2
+shader_parameter/SpokeCount = 2
+shader_parameter/Speed = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_yyjq7"]
+material = SubResource("ShaderMaterial_tdd7l")
+size = Vector2(1, 1)
+
+[sub_resource type="MultiMesh" id="MultiMesh_624t1"]
+transform_format = 1
+mesh = SubResource("PlaneMesh_yyjq7")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_87ce2"]
+render_priority = 10
+shader = ExtResource("3_umefm")
+shader_parameter/RimColor = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
+shader_parameter/SpokeThickness = 0.2
+shader_parameter/SpokeCount = 2
+shader_parameter/Speed = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ggf11"]
+material = SubResource("ShaderMaterial_87ce2")
+size = Vector2(1, 1)
+
+[sub_resource type="MultiMesh" id="MultiMesh_bvy4i"]
+transform_format = 1
+mesh = SubResource("PlaneMesh_ggf11")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_omxbn"]
+render_priority = 10
+shader = ExtResource("4_umefm")
+shader_parameter/RimColor = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
+shader_parameter/SpokeThickness = 0.2
+shader_parameter/SpokeCount = 2
+shader_parameter/Speed = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_f2um7"]
+material = SubResource("ShaderMaterial_omxbn")
+size = Vector2(1, 1)
+
+[sub_resource type="MultiMesh" id="MultiMesh_tbo6g"]
+transform_format = 1
+mesh = SubResource("PlaneMesh_f2um7")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a2x1b"]
+render_priority = 10
+shader = ExtResource("5_umefm")
+shader_parameter/RimColor = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
+shader_parameter/SpokeThickness = 0.2
+shader_parameter/SpokeCount = 2
+shader_parameter/Speed = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_bupti"]
+material = SubResource("ShaderMaterial_a2x1b")
+size = Vector2(1, 1)
+
+[sub_resource type="MultiMesh" id="MultiMesh_np1pp"]
+transform_format = 1
+mesh = SubResource("PlaneMesh_bupti")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_brdqd"]
+render_priority = 10
+shader = ExtResource("6_umefm")
+shader_parameter/RimColor = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
+shader_parameter/SpokeThickness = 0.2
+shader_parameter/SpokeCount = 2
+shader_parameter/Speed = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_jmc6f"]
+material = SubResource("ShaderMaterial_brdqd")
+size = Vector2(1, 1)
+
+[sub_resource type="MultiMesh" id="MultiMesh_p8yjs"]
+transform_format = 1
+mesh = SubResource("PlaneMesh_jmc6f")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iprro"]
+render_priority = 10
+shader = ExtResource("7_87ce2")
+shader_parameter/SpokeColor = Color(0.25, 0.25, 0.25, 1)
+shader_parameter/SpokeThickness = 0.2
+shader_parameter/Speed = 1.0
+shader_parameter/SpokeCount = 2
+shader_parameter/RimColor = Color(0.5, 0.5, 0.5, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_tkysu"]
+material = SubResource("ShaderMaterial_iprro")
+size = Vector2(1, 1)
+
+[sub_resource type="MultiMesh" id="MultiMesh_hh63h"]
+transform_format = 1
+mesh = SubResource("PlaneMesh_tkysu")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q403o"]
+render_priority = 10
+shader = ExtResource("9_omxbn")
+shader_parameter/RimColor = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
+shader_parameter/SpokeThickness = 0.2
+shader_parameter/SpokeCount = 2
+shader_parameter/Speed = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_uajwm"]
+material = SubResource("ShaderMaterial_q403o")
+size = Vector2(1, 1)
+
+[sub_resource type="MultiMesh" id="MultiMesh_2oifj"]
+transform_format = 1
+mesh = SubResource("PlaneMesh_uajwm")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ywkaa"]
+render_priority = 10
+shader = ExtResource("8_q403o")
+shader_parameter/RimColor = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/SpokeColor = Color(0.25, 0.25, 0.25, 1)
+shader_parameter/SpokeThickness = 0.2
+shader_parameter/SpokeCount = 2
+shader_parameter/Speed = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_wrrn0"]
+material = SubResource("ShaderMaterial_ywkaa")
+size = Vector2(1, 1)
+
+[sub_resource type="MultiMesh" id="MultiMesh_88f05"]
+transform_format = 1
+mesh = SubResource("PlaneMesh_wrrn0")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2nwdr"]
+render_priority = 10
+shader = ExtResource("9_umefm")
+shader_parameter/RimColor = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
+shader_parameter/SpokeThickness = 0.2
+shader_parameter/SpokeCount = 2
+shader_parameter/Speed = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_q1h2k"]
+material = SubResource("ShaderMaterial_2nwdr")
+size = Vector2(1, 1)
+
+[sub_resource type="MultiMesh" id="MultiMesh_kpcpn"]
+transform_format = 1
+mesh = SubResource("PlaneMesh_q1h2k")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_umefm"]
+render_priority = 10
+shader = ExtResource("10_q403o")
+shader_parameter/RimColor = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
+shader_parameter/SpokeThickness2 = 0.2
+shader_parameter/SpokeCount = 2
+shader_parameter/Speed = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_bx4uy"]
+material = SubResource("ShaderMaterial_umefm")
+size = Vector2(1, 1)
+
+[sub_resource type="MultiMesh" id="MultiMesh_5b6dt"]
+transform_format = 1
+mesh = SubResource("PlaneMesh_bx4uy")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3ne6q"]
+render_priority = 10
+shader = ExtResource("11_q403o")
+shader_parameter/RimColor = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/SpokeColor = Color(0.25098, 0.25098, 0.25098, 1)
+shader_parameter/SpokeThickness = 0.2
+shader_parameter/SpokeCount = 2
+shader_parameter/Speed = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5wi7p"]
+material = SubResource("ShaderMaterial_3ne6q")
+size = Vector2(1, 1)
+
+[sub_resource type="MultiMesh" id="MultiMesh_levke"]
+transform_format = 1
+mesh = SubResource("PlaneMesh_5wi7p")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xbdxo"]
+render_priority = 10
+shader = ExtResource("14_a2x1b")
+shader_parameter/RimColor = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/SpokeColor = Color(0.25, 0.25, 0.25, 1)
+shader_parameter/SpokeThickness = 0.2
+shader_parameter/SpokeCount = 2
+shader_parameter/Speed = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_04djx"]
+material = SubResource("ShaderMaterial_xbdxo")
+size = Vector2(1, 1)
+
+[sub_resource type="MultiMesh" id="MultiMesh_c4jdg"]
+transform_format = 1
+mesh = SubResource("PlaneMesh_04djx")
+
+[node name="TempState" type="Node3D" unique_id=1847932858]
+script = ExtResource("1_87ce2")
+
+[node name="Belt_ES_W" type="MultiMeshInstance3D" parent="." unique_id=1437016587]
+cast_shadow = 0
+gi_mode = 0
+multimesh = SubResource("MultiMesh_th2om")
+
+[node name="Belt_NES_W" type="MultiMeshInstance3D" parent="." unique_id=1928840089]
+cast_shadow = 0
+gi_mode = 0
+multimesh = SubResource("MultiMesh_624t1")
+
+[node name="Belt_NE_W" type="MultiMeshInstance3D" parent="." unique_id=1590530820]
+cast_shadow = 0
+gi_mode = 0
+multimesh = SubResource("MultiMesh_bvy4i")
+
+[node name="Belt_NS_W" type="MultiMeshInstance3D" parent="." unique_id=233467878]
+cast_shadow = 0
+gi_mode = 0
+multimesh = SubResource("MultiMesh_tbo6g")
+
+[node name="Belt_SW_NE" type="MultiMeshInstance3D" parent="." unique_id=1378841993]
+cast_shadow = 0
+gi_mode = 0
+multimesh = SubResource("MultiMesh_np1pp")
+
+[node name="Belt_WE_NS" type="MultiMeshInstance3D" parent="." unique_id=1947058655]
+cast_shadow = 0
+gi_mode = 0
+multimesh = SubResource("MultiMesh_p8yjs")
+
+[node name="Belt_W_E" type="MultiMeshInstance3D" parent="." unique_id=852540142]
+gi_mode = 0
+multimesh = SubResource("MultiMesh_hh63h")
+
+[node name="Belt_W_ES" type="MultiMeshInstance3D" parent="." unique_id=544998806]
+cast_shadow = 0
+gi_mode = 0
+multimesh = SubResource("MultiMesh_2oifj")
+
+[node name="Belt_W_N" type="MultiMeshInstance3D" parent="." unique_id=2046943155]
+cast_shadow = 0
+gi_mode = 0
+multimesh = SubResource("MultiMesh_88f05")
+
+[node name="Belt_W_NE" type="MultiMeshInstance3D" parent="." unique_id=1513297791]
+cast_shadow = 0
+gi_mode = 0
+multimesh = SubResource("MultiMesh_kpcpn")
+
+[node name="Belt_W_NES" type="MultiMeshInstance3D" parent="." unique_id=1644482935]
+cast_shadow = 0
+gi_mode = 0
+multimesh = SubResource("MultiMesh_5b6dt")
+
+[node name="Belt_W_NS" type="MultiMeshInstance3D" parent="." unique_id=1816949245]
+cast_shadow = 0
+gi_mode = 0
+multimesh = SubResource("MultiMesh_levke")
+
+[node name="Belt_W_S" type="MultiMeshInstance3D" parent="." unique_id=2062028349]
+cast_shadow = 0
+gi_mode = 0
+multimesh = SubResource("MultiMesh_c4jdg")
