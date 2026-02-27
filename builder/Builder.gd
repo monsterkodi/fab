@@ -26,5 +26,5 @@ func pointerContext(pos):    pass
 func pointerRelease(pos):    pass
 func pointerRotate():        pass
 
-func clearGhosts(): fab.clearGhosts()
-func clearTemp():   fab.clearTemp()
+func clearGhosts(): if fab: fab.clearGhosts()
+func clearTemp():   if fab: fab.clearTemp()

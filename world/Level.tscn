@@ -47,3 +47,4 @@ surface_material_override/0 = ExtResource("4_lhci3")
 [node name="TempState" parent="." unique_id=1061249366 instance=ExtResource("8_kp7rj")]
 
 [node name="FabState" parent="." unique_id=261405774 instance=ExtResource("6_s30m6")]
+process_mode = 1

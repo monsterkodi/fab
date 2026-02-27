@@ -138,6 +138,8 @@ func _ready():
     
     Post.subscribe(self)
     
+    enhanceTypeMap()
+    
     setBeltColors()
     
     for child in get_children():
@@ -147,6 +149,21 @@ func _ready():
         pm.msh = child
         pm.hdl = self
         posMap.push_back(pm) 
+        
+func enhanceTypeMap():
+    
+    for type in typeMap:
+        var outRing = []
+        var inRing  = []
+        for dir in Belt.DIRS:
+            if type & Belt.OUTPUT[dir]:
+                outRing.push_back(dir)
+            if type & Belt.INPUT[dir]:
+                inRing.push_back(dir)
+        if outRing.is_empty():
+            outRing.push_back(Belt.dirForSinkType(type)) 
+        typeMap[type].push_back(inRing)
+        typeMap[type].push_back(outRing)
 
 func type2pmi(type:int): 
     if typeMap.has(type):
@@ -154,11 +171,10 @@ func type2pmi(type:int):
     Log.warn("invalid type", Belt.stringForType(type))
     return 0
 
-func add(pos : Vector2i, type : int):
+func add(pos : Vector2i, type : int, outIndex : int = 0, inQueue : Array = []):
     
     del(pos)
-    #                                            outindex
-    posMap[type2pmi(type)].add(pos, [pos, type, 0])
+    posMap[type2pmi(type)].add(pos, [pos, type, outIndex, inQueue])
     
 func del(pos):
     
@@ -234,6 +250,12 @@ func setColors(rimColor, spokeColor):
     for child in get_children():
         child.multimesh.mesh.material.set_shader_parameter("RimColor", rimColor)
         child.multimesh.mesh.material.set_shader_parameter("SpokeColor", spokeColor)
+        
+func gamePaused():
+    gameSpeed(0)
+    
+func gameResume():
+    gameSpeed(Utils.fabState().gameSpeed)
         
 func gameSpeed(speed):
     

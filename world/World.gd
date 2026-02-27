@@ -27,7 +27,7 @@ func _ready():
 func mainMenu():
     
     get_tree().paused = true
-    Saver.saveGame()
+    #Saver.saveGame() # done in pause menu for now
     %MenuHandler.appear(%MainMenu)
 
 func _process(delta: float):

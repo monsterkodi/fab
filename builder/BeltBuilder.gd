@@ -112,8 +112,6 @@ func pointerShiftClick(pos):
         
 func popTrail():
     
-    if trail.size() > 1 and fab.tempAtPos(trail[-1]):
-        fab.addTempAtPos(trail[-1], Belt.clearOutput(fab.tempAtPos(trail[-1]), Belt.dirForPositions(trail[-1], lastTemp)))
     fab.delTempAtPos(lastTemp)
     lastTemp = trail.pop_back()
     

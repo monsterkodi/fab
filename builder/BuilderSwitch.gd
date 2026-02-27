@@ -10,6 +10,11 @@ func _ready():
 func levelStart():
     
     activateBuilder("Belt")
+    
+func mainMenu():
+    
+    if builder: builder.stop()
+    builder = null
 
 func activateBuilder(builderName):
     

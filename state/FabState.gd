@@ -87,6 +87,11 @@ func addBeltAtPos(pos : Vector2i, type : int):
 
     delBeltStateAtPos(pos)
     tst.add(pos, type)
+
+func addBeltDataAtPos(pos : Vector2i, data : Array):
+
+    delBeltStateAtPos(pos)
+    tst.add(pos, data[2][0], data[2][1], data[2][2])
     
 func addTempAtPos(pos : Vector2i, type : int):
     
@@ -123,6 +128,10 @@ func beltAtPos(pos : Vector2i) -> int:
     var data = tst.dataAtPos(pos)
     if data.size(): return data[1]
     return 0
+
+func beltDataAtIndex(index : int) -> Array:
+    
+    return tst.dataAtIndex(index)
 
 func beltAtIndex(index : int) -> int:
     
@@ -240,8 +249,8 @@ func saveGame(data : Dictionary):
         
     data.FabState.tracks = []
     for i in range(tst.size()):
-        var pos = beltPosAtIndex(i)
-        data.FabState.tracks.push_back([pos.x, pos.y, beltAtIndex(i)])
+        var bd = beltDataAtIndex(i)
+        data.FabState.tracks.push_back([bd[0].x, bd[0].y, bd.slice(1)])
     
 func loadGame(data : Dictionary):
 
@@ -256,7 +265,7 @@ func loadGame(data : Dictionary):
 
         if data.FabState.has("tracks"):
             for track in data.FabState.tracks:
-                addBeltAtPos(Vector2i(track[0], track[1]), track[2])
+                addBeltDataAtPos(Vector2i(track[0], track[1]), track)
         
         if data.FabState.has("beltStates"):
             for state in data.FabState.beltStates:
