@@ -54,7 +54,6 @@ func steer_delta(delta:float):
 func tilt_delta(delta:float):
     
     if delta == 0: return
-    #Log.log("euler", delta, transform.basis.z.angle_to(Vector3(0,1,0)))
     var angle = transform.basis.z.angle_to(Vector3(0,1,0))
     if delta < 0:
         delta = -min(angle, -delta)
@@ -92,23 +91,21 @@ func readInput():
     if Input.is_action_pressed("reset_view"):
         transform = resetTransform
         get_parent_node_3d().transform = resetParent
-        #set_orthogonal(transform.origin.y, -1000, 4000)
         return
         
-    #if Input.is_action_pressed("perspective_view"):
-        #transform.origin.y = size
-        #set_perspective(75, 0.05, 4000)
-        #return
-    
     if Input.is_key_pressed(KEY_META): return
     
+    var shiftFactor = 1
+    if Input.is_key_pressed(KEY_SHIFT):
+        shiftFactor = 4
+    
     forward = -deadZoneAxis(JOY_AXIS_LEFT_Y)
-    if Input.is_action_pressed("forward"):      forward += 2
-    if Input.is_action_pressed("backward"):     forward -= 2
+    if Input.is_action_pressed("forward"):      forward += 2 * shiftFactor
+    if Input.is_action_pressed("backward"):     forward -= 2 * shiftFactor
     
     strafe = deadZoneAxis(JOY_AXIS_LEFT_X)
-    if Input.is_action_pressed("right"):        strafe += 2
-    if Input.is_action_pressed("left"):         strafe -= 2
+    if Input.is_action_pressed("right"):        strafe += 2 * shiftFactor
+    if Input.is_action_pressed("left"):         strafe -= 2 * shiftFactor
 
     steer = deadZoneAxis(JOY_AXIS_RIGHT_X)
     if Input.is_action_pressed("steer_right"):  steer += 1
@@ -171,7 +168,6 @@ func _input(e: InputEvent):
         ascend_delta((1.0 - e.factor))
         
     elif e is InputEventJoypadMotion:
-        #dbg(e.get_class(), {"axis": e.axis, "axis_value": e.axis_value})
         pass
     elif e is InputEventJoypadButton:
         dbg(e.get_class(), {"button_index": e.button_index, "pressed": e.pressed})

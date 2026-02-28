@@ -3,6 +3,7 @@ extends Control
 
 signal buttonPressed
 
+@export var buttonSize : float = 96
 @export var icons : Array[String]
 var buttonGroup : ButtonGroup
 
@@ -20,11 +21,10 @@ func addIcon(resPath):
     button.button_group = buttonGroup
     button.toggle_mode = true
     button.icon = load(resPath)
-    button.custom_minimum_size = Vector2(128, 128)
+    button.custom_minimum_size = Vector2(buttonSize, buttonSize)
     button.expand_icon = true
     %Grid.add_child(button)
 
 func onButtonPressed(button):
     
-    #Log.log("pressed", button.icon.resource_path.get_file().get_basename())
     buttonPressed.emit(button.icon.resource_path.get_file().get_basename())

@@ -197,13 +197,10 @@ func copy():
     
     var data = {"machines": [], "belts": []}
     
-    var minPos : Vector2i
-    var maxPos : Vector2i
-    
     for ghost in fab.ghosts():
         var machine = ghost.proxy
         var pos = machine.pos
-        data.machines.push_back([pos.x - endPos.x, pos.y - endPos.x, machine.type, machine.orientation])
+        data.machines.push_back([pos.x - endPos.x, pos.y - endPos.y, machine.type, machine.orientation])
             
     if fab.numTemp() > 0:
         for i in range(fab.numTemp()):
