@@ -1,41 +1,61 @@
 class_name HUD 
 extends Control
 
+var storage : ItemStorage
+
 func _ready():
     
     Post.subscribe(self)
     
+func _process(delta: float):
+    
+    if not storage: return
+    for itemType in storage.storage:
+        %ItemButtonGrid.setNumber(itemType, storage.storage[itemType])
+    
 func levelStart():
     
+    storage = Utils.fabState().storage
     activateButton(0)
-
+    
 func activateButton(index):    
     
-    var btns = %IconButtonGrid.buttonGroup.get_buttons()
+    var btns = %BuildButtonGrid.buttonGroup.get_buttons()
     if index >= 0 and index < btns.size():
         btns[index].button_pressed = true
     
 func slower():
-    Post.speedSlower.emit()
+    Post.gameSpeedSlower.emit()
 
 func faster():
-    Post.speedFaster.emit()
+    Post.gameSpeedFaster.emit()
+    
+func reset():
+    Post.gameSpeedReset.emit()
 
 func buttonPressed(buildingName : String):
    
     Post.activateBuilder.emit(buildingName.replace("Building", ""))
 
+func _shortcut_input(event: InputEvent):
+    
+    if not event.pressed: return
+    #Log.log("event", event)
+    if event.is_action("delete"):
+        var btn = %BuildButtonGrid.buttonGroup.get_buttons()[-1]
+        btn.button_pressed = true
+        get_viewport().set_input_as_handled()
+        return
+        
+    if event.is_action("rect_select"):
+        var btn = %BuildButtonGrid.buttonGroup.get_buttons()[0]
+        btn.button_pressed = true
+        get_viewport().set_input_as_handled()
+        return
+
 func _unhandled_key_input(event: InputEvent):
     
-    if Input.is_action_just_pressed("delete"):
-        var btn = %IconButtonGrid.buttonGroup.get_buttons()[-1]
-        btn.button_pressed = true
-
-    if Input.is_action_just_pressed("rect_select"):
-        var btn = %IconButtonGrid.buttonGroup.get_buttons()[0]
-        btn.button_pressed = true
-
     if event is InputEventKey:
-        if not event.is_echo():
+        if event.pressed and not event.is_echo():
             if event.keycode >= KEY_1 and event.keycode <= KEY_9:
                 activateButton(event.keycode-KEY_1+1)

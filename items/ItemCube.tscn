@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bctk13vfxeywo"]
+
+[ext_resource type="Script" uid="uid://cai28fnlmcpbh" path="res://items/ItemCube.gd" id="1_hy2yf"]
+[ext_resource type="Material" uid="uid://bi5n2lthhnyix" path="res://materials/ItemCube.tres" id="2_mjx6y"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_5lyug"]
+
+[node name="ItemCube" type="Node3D" unique_id=2093146499]
+script = ExtResource("1_hy2yf")
+
+[node name="Cube" type="MeshInstance3D" parent="." unique_id=1858053179]
+mesh = SubResource("BoxMesh_5lyug")
+surface_material_override/0 = ExtResource("2_mjx6y")

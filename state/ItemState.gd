@@ -1,26 +1,14 @@
 class_name ItemState
 extends Node3D
 
-class Item:
-    var pos : Vector2i
-    var dir = 0
-    var type    = 0
-    var advance = 0.0
-    var color   = Color.RED
-    var scale   = 0.0
-    var mvd     = false
-    var blckd   = 0
-    var skip    = 0
-    func dpos(): return Vector3i(pos.x, pos.y, dir)
-
 class ItemMap:
     
     var map : Dictionary[Vector3i, int] = {}
-    var ary : Array[Item] = []
+    var ary : Array[Item.Inst] = []
     var msh : MultiMeshInstance3D
     var hdl
     
-    func add(dpos : Vector3i, item : Item):
+    func add(dpos : Vector3i, item : Item.Inst):
 
         if map.has(dpos):
             ary[map[dpos]] = item
@@ -79,10 +67,10 @@ func _ready():
         pm.hdl = self
         itemMap.push_back(pm) 
         
-func add(dpos : Vector3i, item : Item):
+func add(dpos : Vector3i, item : Item.Inst):
     
     del(dpos)
-    itemMap[item.type].add(dpos, item)
+    itemMap[item.shape].add(dpos, item)
     
 func del(dpos : Vector3i):
     
@@ -101,7 +89,7 @@ func size():
         s += pm.size()
     return s
     
-func itemAtIndex(index : int) -> Item:
+func itemAtIndex(index : int) -> Item.Inst:
     
     if index < 0: return null
     for imap in itemMap:
@@ -122,7 +110,7 @@ func itemsAtPos(pos : Vector2i) -> Array:
                 items.push_back(pm.ary[pm.map[dpos]])
     return items
     
-func aryChange(pm : ItemMap, index : int, item : Item): 
+func aryChange(pm : ItemMap, index : int, item : Item.Inst): 
     
     if index < 0: 
         Log.warn("invalid index", index, item, pm.msh.multimesh.instance_count)
@@ -138,11 +126,11 @@ func itemTrans(item):
     trans.origin = Vector3(item.pos.x, Belt.GLOBAL_Y + Belt.HALFSIZE, item.pos.y) + offset
     return trans
     
-func updateItemTrans(pm : ItemMap, index : int, item : Item):
+func updateItemTrans(pm : ItemMap, index : int, item : Item.Inst):
     
     pm.msh.multimesh.set_instance_transform(index, itemTrans(item))    
 
-func aryPush(pm : ItemMap, item : Item):          
+func aryPush(pm : ItemMap, item : Item.Inst):          
 
     pm.msh.multimesh.visible_instance_count += 1
     aryChange(pm, pm.msh.multimesh.visible_instance_count-1, item)

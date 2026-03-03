@@ -98,7 +98,6 @@ func loadLevel(levelRes, load = true):
     add_child(currentLevel)
     
     currentLevel.start()
-    Post.startLevel.emit()
     
     if load:
         Saver.loadGame()

@@ -5,13 +5,21 @@ func _ready():
     
     if not is_visible_in_tree(): return
 
+    %Viewport.get_node("Camera").look_at(Vector3.ZERO)
+
     if not DirAccess.dir_exists_absolute("res://icons/buildings/"):
         DirAccess.make_dir_recursive_absolute("res://icons/buildings/")
-    
-    %Viewport.get_node("Camera").look_at(Vector3.ZERO)
-    
-    for res in Utils.resourcesInDir("res://buildings/"):    
-        generateIcon(res, "res://icons/buildings/")
+
+    if not DirAccess.dir_exists_absolute("res://icons/items/"):
+        DirAccess.make_dir_recursive_absolute("res://icons/items/")
+        
+    for res in Utils.resourcesInDir("res://buildings/"):   
+        if res is PackedScene: 
+            generateIcon(res, "res://icons/buildings/")
+
+    for res in Utils.resourcesInDir("res://items/"):    
+        if res is PackedScene:
+            generateIcon(res, "res://icons/items/")
         
 func get_full_aabb(node: Node3D) -> AABB:
     
@@ -43,11 +51,11 @@ func frame_camera_on_item(camera: Camera3D, item: Node3D):
     var aabb   = get_full_aabb(item)
     var center = aabb.get_center()
     var length = aabb.size.length()
-    length = maxf(aabb.size.z, maxf(aabb.size.x, aabb.size.y))
-    
+    #length = maxf(aabb.size.z, maxf(aabb.size.x, aabb.size.y))
+    #Log.log(length, aabb.size.length(), item.scene_file_path)
     var distance = (length / 2.0) / tan(deg_to_rad(camera.fov) / 2.0)
     
-    distance *= 1.4
+    distance *= 1.1
     
     camera.position = center + Vector3(-1, 1, 1).normalized() * distance
     camera.look_at(center)        
@@ -66,7 +74,7 @@ func generateIcon(itemRes : PackedScene, path: String):
     
     await RenderingServer.frame_post_draw # wait for the frame to render
     
-    var iconPath = path + item.name + ".png"
+    var iconPath = path + itemRes.resource_path.get_file().get_basename() + ".png"
     var error = viewport.get_texture().get_image().save_png(iconPath)
     if error != OK:
         push_error("Failed to save icon: ", error, iconPath)

@@ -28,3 +28,11 @@ func addIcon(resPath):
 func onButtonPressed(button):
     
     buttonPressed.emit(button.icon.resource_path.get_file().get_basename())
+    
+func setNumber(index: int, number : int):
+    
+    var button : Button = buttonGroup.get_buttons()[index]
+    button.vertical_icon_alignment = VERTICAL_ALIGNMENT_TOP
+    button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+    button.alignment = HORIZONTAL_ALIGNMENT_CENTER
+    button.text = String.num_int64(number)

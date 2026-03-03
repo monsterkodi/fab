@@ -8,5 +8,6 @@ func _init():
     
 func consumeItemAtSlit(item, slit): 
     
+    fab.storage.addItem(item.type)
     return true
     

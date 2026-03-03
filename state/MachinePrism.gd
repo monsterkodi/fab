@@ -24,8 +24,9 @@ func produceItemAtSlot(slot):
     
     if not canProduce: return null
     
-    var item = ItemState.Item.new()
+    var item = Item.Inst.new()
     item.color = slot.color
+    item.type  = Item.Type.CubeRed + slots.find(slot)
     if slot == slots[-1]: canProduce = false
     return item
         

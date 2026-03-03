@@ -18,26 +18,22 @@ signal pointerRotate
 
 signal gamePaused
 signal gameResume
-signal startLevel
-signal retryLevel
-signal clearLevel
+signal gameSpeed
+signal gameSpeedSlower
+signal gameSpeedFaster
+signal gameSpeedReset
+signal quitGame
+
 signal levelStart
-signal levelReset
-signal levelEnd
-signal levelLoaded
-signal levelSaved
+
 signal mainMenu
 signal menuVanish
 signal menuAppear
 signal menuDidAppear
+signal settingsMenu
+
 signal menuSound
 signal gameSound
-signal gameLoop
-signal settingsMenu
-signal quitGame
-signal speedSlower
-signal speedFaster
-signal gameSpeed
 
 signal activateBuilder
 

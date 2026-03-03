@@ -5,6 +5,8 @@ var machines:      Dictionary[Vector2i, Machine]
 var buildings:     Dictionary[Vector2i, int]
 var gameSpeed:     float = 1.0
 
+@onready var storage: ItemStorage = $ItemStorage
+
 @onready var tst: TrackState    = $"../TrackState"
 @onready var tmp: TrackState    = $"../TempState"
 @onready var itm: ItemState     = $"../ItemState"
@@ -12,6 +14,10 @@ var gameSpeed:     float = 1.0
 func _ready():
     
     Post.subscribe(self)
+    
+func newGame():
+    
+    storage.reset()
     
 func consumableItemAtPos(pos : Vector2i):
     
@@ -225,6 +231,7 @@ func clearTemp(): tmp.clear()
         
 func speedFaster(): setGameSpeed(gameSpeed * 3/2)
 func speedSlower(): setGameSpeed(gameSpeed * 2/3)
+func speedReset():  setGameSpeed(1)
     
 func setGameSpeed(newSpeed):
     
@@ -263,6 +270,8 @@ func saveGame(data : Dictionary):
             item.color.g, 
             item.color.b, 
             item.scale])
+            
+    data.FabState.storage = storage.storage
     
 func loadGame(data : Dictionary):
 
@@ -283,7 +292,7 @@ func loadGame(data : Dictionary):
             for d in data.FabState.items:
                 var pos = Vector2i(d[0], d[1])
                 var dir = d[2]
-                var item = ItemState.Item.new()
+                var item = Item.Inst.new()
                 item.pos = pos
                 item.dir = dir
                 item.type    = d[3]
@@ -291,6 +300,9 @@ func loadGame(data : Dictionary):
                 item.color   = Color(d[5], d[6], d[7])
                 item.scale   = d[8]
                 addItem(pos, dir, item)
+                
+        if data.FabState.has("storage"):
+            storage.storage = data.FabState.storage
                         
 func occupiedByRoot(posl):
     
