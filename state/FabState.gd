@@ -95,10 +95,14 @@ func outSpace(pos : Vector2i, dir : int, advance: float = 0.5) -> float:
             else:
                 return space - Belt.HALFSIZE
     return advance
-            
-func addMachineAtPosOfType(pos : Vector2i, type : int, orientation : int = 0):
+
+func buyMachineAtPosOfType(pos : Vector2i, type : int, orientation : int = 0):
         
     storage.buy(type)
+    
+    addMachineAtPosOfType(pos, type, orientation)
+            
+func addMachineAtPosOfType(pos : Vector2i, type : int, orientation : int = 0):
         
     var machine = Mach.Class[type].new()
     

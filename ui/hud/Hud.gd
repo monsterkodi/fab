@@ -10,12 +10,14 @@ func _ready():
 func _process(delta: float):
     
     if not storage: return
+    Log.log(storage.storage)
     for itemType in storage.storage:
         %ItemButtonGrid.setNumber(itemType, storage.storage[itemType])
     
 func levelStart():
     
     storage = Utils.fabState().storage
+    Log.log("hud.levelStart", storage.storage)
     activateButton(0)
     
 func activateButton(index):    

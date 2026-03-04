@@ -18,6 +18,8 @@ func reset():
 
     storage[Item.Type.CubeBlack] = 10
     
+    Log.log("reset", storage)
+    
 func canAfford(type):
 
     var cost = Mach.costForType(type)

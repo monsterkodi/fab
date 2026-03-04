@@ -176,7 +176,7 @@ func moveGhosts(delta : Vector2i):
 func pasteGhosts():    
     
     for ghost in fab.ghosts():
-        fab.addMachineAtPosOfType(ghost.pos, ghost.type, ghost.orientation)
+        fab.buyMachineAtPosOfType(ghost.pos, ghost.type, ghost.orientation)
         
     if fab.numTemp() > 0:
         for i in range(fab.numTemp()):

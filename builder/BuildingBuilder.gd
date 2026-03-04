@@ -3,6 +3,7 @@ class_name BuildingBuilder
 
 var ghost
 var delGhosts = []
+var unaffordable = false
 
 const GHOST_MATERIAL     = preload("uid://bqhwhtt3kc30s")
 const GHOST_RED_MATERIAL = preload("uid://b35kuqwv15nfr")
@@ -10,6 +11,13 @@ const GHOST_RED_MATERIAL = preload("uid://b35kuqwv15nfr")
 func _ready():
     
     cursorShape = Control.CURSOR_CAN_DROP
+    
+func _process(delta: float):
+    
+    if ghost and unaffordable:
+        if fab.storage.canAfford(ghost.type):
+            unaffordable = false
+            pointerHover(ghost.pos)
 
 func stop():
     
@@ -27,6 +35,7 @@ func ghostMaterial(type):
     if fab.storage.canAfford(type):
         return GHOST_MATERIAL
     else:
+        unaffordable = true
         return GHOST_RED_MATERIAL
 
 func setBuilding(string):
@@ -58,7 +67,7 @@ func pointerClick(pos):
     if fab.occupiedByRoot(ghost.getOccupied()): return
     if not fab.storage.canAfford(ghost.type): return
         
-    fab.addMachineAtPosOfType(pos, ghost.type, ghost.orientation)
+    fab.buyMachineAtPosOfType(pos, ghost.type, ghost.orientation)
     clearDelGhosts()
     
 func pointerDrag(pos):
@@ -70,7 +79,7 @@ func pointerDrag(pos):
         for gp in ghost.getOccupied():
             if fab.machines.has(gp):
                 return
-        fab.addMachineAtPosOfType(pos, ghost.type, ghost.orientation)
+        fab.buyMachineAtPosOfType(pos, ghost.type, ghost.orientation)
 
 func pointerRotate():
     

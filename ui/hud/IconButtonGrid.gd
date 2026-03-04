@@ -36,3 +36,4 @@ func setNumber(index: int, number : int):
     button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
     button.alignment = HORIZONTAL_ALIGNMENT_CENTER
     button.text = String.num_int64(number)
+    #Log.log(number, button.text)
