@@ -10,8 +10,16 @@ device = -1
 keycode = 45
 unicode = 45
 
-[sub_resource type="Shortcut" id="Shortcut_dqfrj"]
+[sub_resource type="Shortcut" id="Shortcut_ks410"]
 events = [SubResource("InputEventKey_gt2ij")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_by07e"]
+device = -1
+keycode = 48
+unicode = 48
+
+[sub_resource type="Shortcut" id="Shortcut_dqfrj"]
+events = [SubResource("InputEventKey_by07e")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_ks410"]
 device = -1
@@ -44,7 +52,7 @@ offset_top = 63.15
 offset_bottom = 63.15
 grow_horizontal = 2
 theme = ExtResource("4_gt2ij")
-icons = Array[String](["res://icons/items/ItemCube.png", "res://icons/items/ItemCubeRed.png", "res://icons/items/ItemCubeGreen.png", "res://icons/items/ItemCubeBlue.png"])
+icons = Array[String](["res://icons/items/ItemCubeBlack.png", "res://icons/items/ItemCubeRed.png", "res://icons/items/ItemCubeGreen.png", "res://icons/items/ItemCubeBlue.png", "res://icons/items/ItemCubeWhite.png"])
 
 [node name="BuildButtonGrid" parent="." unique_id=675774317 instance=ExtResource("4_by07e")]
 unique_name_in_owner = true
@@ -59,7 +67,7 @@ offset_bottom = -99.53
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("2_aaqae")
-icons = Array[String](["res://icons/buildings/BuildingRect.png", "res://icons/buildings/BuildingBelt.png", "res://icons/buildings/BuildingRoot.png", "res://icons/buildings/BuildingStorage.png", "res://icons/buildings/BuildingPrism.png", "res://icons/buildings/BuildingDel.png"])
+icons = Array[String](["res://icons/buildings/BuildingRect.png", "res://icons/buildings/BuildingBelt.png", "res://icons/buildings/BuildingRoot.png", "res://icons/buildings/BuildingStorage.png", "res://icons/buildings/BuildingPrism.png", "res://icons/buildings/BuildingMixer.png", "res://icons/buildings/BuildingDel.png"])
 
 [node name="Actions" type="PanelContainer" parent="." unique_id=705281221]
 layout_mode = 1
@@ -88,7 +96,7 @@ size_flags_vertical = 4
 mouse_behavior_recursive = 2
 mouse_default_cursor_shape = 2
 action_mode = 0
-shortcut = SubResource("Shortcut_dqfrj")
+shortcut = SubResource("Shortcut_ks410")
 text = "-"
 
 [node name="Reset" type="Button" parent="Actions/HBoxContainer" unique_id=1594571957]

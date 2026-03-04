@@ -1,13 +1,12 @@
-[gd_scene format=3 uid="uid://d4i4sjdrnt324"]
+[gd_scene format=3 uid="uid://bfvqy8tpa1n3s"]
 
-[ext_resource type="PackedScene" uid="uid://dep5xvthu3mc6" path="res://buildings/BuildingSlot.tscn" id="1_p7nmc"]
-[ext_resource type="PackedScene" uid="uid://dtjrgrqwsmi2r" path="res://buildings/BuildingSlit.tscn" id="2_xuvpp"]
+[ext_resource type="PackedScene" uid="uid://dep5xvthu3mc6" path="res://buildings/BuildingSlot.tscn" id="1_8w72w"]
+[ext_resource type="PackedScene" uid="uid://dtjrgrqwsmi2r" path="res://buildings/BuildingSlit.tscn" id="3_prjxm"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7r16o"]
 size = Vector3(0.4, 0.4, 0.4)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bv6hv"]
-albedo_color = Color(0.01, 0.01, 0.01, 1)
 metallic = 0.7
 metallic_specular = 1.0
 roughness = 0.6
@@ -33,36 +32,36 @@ metallic = 0.7
 metallic_specular = 1.0
 roughness = 0.6
 
-[node name="BuildingPrism" type="Node3D" unique_id=447020061]
+[node name="BuildingMixer" type="Node3D" unique_id=447020061]
 
-[node name="BuildingSlotE" parent="." unique_id=1429163775 instance=ExtResource("1_p7nmc")]
+[node name="BuildingSlotE" parent="." unique_id=1429163775 instance=ExtResource("1_8w72w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 
-[node name="BuildingSlotS" parent="." unique_id=389187059 instance=ExtResource("1_p7nmc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+[node name="BuildingSlitN" parent="." unique_id=1827591637 instance=ExtResource("3_prjxm")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0.00097191334, 0, -1)
 
-[node name="BuildingSlotN" parent="." unique_id=2063719671 instance=ExtResource("1_p7nmc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
-
-[node name="BuildingSlit" parent="." unique_id=1827591637 instance=ExtResource("2_xuvpp")]
+[node name="BuildingSlitW" parent="." unique_id=188350591 instance=ExtResource("3_prjxm")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0.00097191334, 0, 0)
 
-[node name="CubeBlack" type="MeshInstance3D" parent="." unique_id=870842802]
-transform = Transform3D(0, 0, 0.9999999, 0, 0.9999999, 0, -0.99999994, 0, 0, 0.10896662, 1.3044847, 0)
+[node name="BuildingSlitS" parent="." unique_id=795076955 instance=ExtResource("3_prjxm")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0.00097191334, 0, 1)
+
+[node name="CubeWhite" type="MeshInstance3D" parent="." unique_id=870842802]
+transform = Transform3D(0.7071067, 0, 0.7071067, 0, 0.9999999, 0, -0.7071067, 0, 0.7071067, 1.0086936, 1.3044847, 0)
 mesh = SubResource("BoxMesh_7r16o")
 surface_material_override/0 = SubResource("StandardMaterial3D_bv6hv")
 
 [node name="CubeRed" type="MeshInstance3D" parent="." unique_id=1395860824]
-transform = Transform3D(0.70710677, 0, 0.7071067, 0, 0.9999999, 0, -0.70710677, 0, 0.7071067, 1.0159196, 1.3036851, -1)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0.1063146, 1.3036851, -1)
 mesh = SubResource("BoxMesh_m6kgh")
 surface_material_override/0 = SubResource("StandardMaterial3D_thl77")
 
 [node name="CubeGreen" type="MeshInstance3D" parent="." unique_id=1716103799]
-transform = Transform3D(0.70710677, 0, 0.7071067, 0, 0.9999999, 0, -0.70710677, 0, 0.7071067, 1.0194856, 1.3005756, 0)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0.109880626, 1.3005756, 0)
 mesh = SubResource("BoxMesh_m6kgh")
 surface_material_override/0 = SubResource("StandardMaterial3D_7r16o")
 
 [node name="CubeBlue" type="MeshInstance3D" parent="." unique_id=937437198]
-transform = Transform3D(0.70710677, 0, 0.7071067, 0, 0.9999999, 0, -0.70710677, 0, 0.7071067, 1.0201212, 1.3033267, 1)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0.11051625, 1.3033267, 1)
 mesh = SubResource("BoxMesh_m6kgh")
 surface_material_override/0 = SubResource("StandardMaterial3D_7m7dl")

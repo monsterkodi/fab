@@ -6,6 +6,7 @@ enum Type {
     CubeRed,
     CubeGreen,
     CubeBlue,
+    CubeWhite,
 }
 
 enum Shape {

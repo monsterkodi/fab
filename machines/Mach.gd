@@ -4,23 +4,26 @@ extends Node
 enum Type {
     Belt,
     Root,
-    Prism,
     Storage,
+    Prism,
+    Mixer,
 }
 
 var Class = [
     null, 
     MachineRoot,
-    MachinePrism,
     MachineStorage,
+    MachinePrism,
+    MachineMixer,
 ]
 
 func costForType(type):
 
     match type:
             Type.Root:    return {Item.Type.CubeRed: 1000, Item.Type.CubeGreen: 1000, Item.Type.CubeBlue: 1000}
-            Type.Prism:   return {Item.Type.CubeBlack: 30}
             Type.Storage: return {Item.Type.CubeBlack: 10}
+            Type.Prism:   return {Item.Type.CubeBlack: 30}
+            Type.Mixer:   return {Item.Type.CubeRed:   30, Item.Type.CubeGreen: 30, Item.Type.CubeBlue: 30}
             _:            return {Item.Type.CubeBlack: 1}
     
 
@@ -28,16 +31,18 @@ func stringForType(type):
     
     match type:
             Type.Root:    return "Root"
-            Type.Prism:   return "Prism"
             Type.Storage: return "Storage"
+            Type.Prism:   return "Prism"
+            Type.Mixer:   return "Mixer"
             _:            return "Belt"
     
 func typeForString(string):
     
     match string:
         "Root":    return Type.Root
-        "Prism":   return Type.Prism
         "Storage": return Type.Storage
+        "Prism":   return Type.Prism
+        "Mixer":   return Type.Mixer
         _:         return Type.Belt
 
 func buildingNameForType(type): return "Building" + stringForType(type)
@@ -50,6 +55,10 @@ func slotsForType(type):
                 {"pos": Belt.NEIGHBOR[Belt.E]+Belt.NEIGHBOR[Belt.N], "dir": Belt.E, "color": Color.RED},
                 {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E, "color": Color.GREEN},
                 {"pos": Belt.NEIGHBOR[Belt.E]+Belt.NEIGHBOR[Belt.S], "dir": Belt.E, "color": Color.BLUE},
+                ]
+        Type.Mixer: 
+            return [
+                {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E, "color": Color.WHITE},
                 ]
         Type.Root:   
             return [
@@ -66,6 +75,12 @@ func slitsForType(type):
         Type.Prism: 
             return [
                 {"pos": Vector2i.ZERO, "dir": Belt.W},
+            ]
+        Type.Mixer: 
+            return [
+                {"pos": Belt.NEIGHBOR[Belt.N], "dir": Belt.W},
+                {"pos": Vector2i.ZERO,         "dir": Belt.W},
+                {"pos": Belt.NEIGHBOR[Belt.S], "dir": Belt.W},
             ]
         Type.Storage: 
             return [
