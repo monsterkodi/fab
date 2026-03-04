@@ -173,7 +173,7 @@ func moveGhosts(delta : Vector2i):
         for pos in newTemps:
             fab.addTempAtPos(pos, newTemps[pos])
     
-func pasteGhosts():    
+func pasteGhosts():
     
     for ghost in fab.ghosts():
         fab.buyMachineAtPosOfType(ghost.pos, ghost.type, ghost.orientation)

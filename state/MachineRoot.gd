@@ -1,10 +1,12 @@
 class_name MachineRoot
 extends Machine
 
-func _init():
+func _init(p, o):
     
     type  = Mach.Type.Root
     slots = Mach.slotsForType(type)
+    
+    super._init(p, o)
     
 func produceItemAtSlot(slot):
     

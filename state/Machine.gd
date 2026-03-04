@@ -9,6 +9,11 @@ var orientation = 0
 var building
 var fab : FabState
 
+func _init(p, o):
+    
+    pos = p
+    setOrientation(o)
+
 func _ready():
     
     assert(type)
@@ -73,12 +78,13 @@ func setOrientation(o : int):
     if building:
         Utils.rotateForOrientation(building, orientation)
     
-func consume():
+func consume(delta:float):
+    
+    var advance = delta * 0.5
     
     for i in range(slits.size()):
         var slit = slits[i]
-        
-        var item = fab.consumableItemAtPos(pos + slit.pos)
+        var item = fab.consumableItemAtPos(pos + slit.pos, advance)
         if item:
             if consumeItemAtSlit(item, slit):
                 fab.delItem(item)
@@ -87,13 +93,16 @@ func advanceAtSlotIndex(i):
     
     return fab.inSpace(pos + slots[i].pos, Belt.OPPOSITE[slots[i].dir])
     
-func produce():
+func produce(delta:float):
+    
+    var advance = delta * 0.5
     
     for i in range(slots.size()):
         var adv = advanceAtSlotIndex(i)
         if adv >= 0:
             var item = produceItemAtSlot(slots[i])
             if item:
+                item.advance = minf(advance, adv)
                 fab.addItem(pos + slots[i].pos, Belt.OPPOSITE[slots[i].dir], item)
         
 func produceItemAtSlot(slot): return null
@@ -109,6 +118,8 @@ func getOccupied() -> Array[Vector2i]:
     if not posl.has(pos):
         posl.push_front(pos)    
     return posl
+    
+func isRoot(): return pos.x == 0 and pos.y == 0
         
 
     

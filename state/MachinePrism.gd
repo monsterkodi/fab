@@ -3,11 +3,13 @@ extends Machine
 
 var canProduce = false
 
-func _init():
+func _init(p, o):
     
     type  = Mach.Type.Prism
     slots = Mach.slotsForType(type)
     slits = Mach.slitsForType(type)
+    
+    super._init(p, o)
     
 func consumeItemAtSlit(item, slit):
     
@@ -25,6 +27,7 @@ func produceItemAtSlot(slot):
     if not canProduce: return null
     
     var item = Item.Inst.new()
+    item.scale = 0.01
     item.color = slot.color
     item.type  = Item.Type.CubeRed + slots.find(slot)
     if slot == slots[-1]: canProduce = false

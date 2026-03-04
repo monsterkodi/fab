@@ -97,7 +97,6 @@ class PosMap:
             map[pos] = ary.size()
             ary.push_back(data)
             hdl.aryPush(self, data)
-        #verify()
             
     func del(pos : Vector2i):
         
@@ -111,27 +110,17 @@ class PosMap:
             ary.pop_back()
             map.erase(pos)
             hdl.aryPop(self)
-        #verify()
             
     func clear():
         
         map = {}
         ary = []
         hdl.aryClear(self)
-        #verify()
         
     func size():
         
-        #assert(ary.size() == map.size())
         return ary.size()
                 
-    func verify():
-        
-        assert(ary.size() == map.size())
-        for pos in map:
-            assert(map[pos] >= 0)
-            assert(map[pos] < ary.size())
-        
 var posMap  : Array[PosMap] = []
 var metaMap : Dictionary[Vector2i, int] = {}
 

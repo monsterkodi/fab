@@ -19,7 +19,7 @@ func costForType(type):
 
     match type:
             Type.Root:    return {Item.Type.CubeRed: 1000, Item.Type.CubeGreen: 1000, Item.Type.CubeBlue: 1000}
-            Type.Prism:   return {Item.Type.CubeBlack: 100}
+            Type.Prism:   return {Item.Type.CubeBlack: 30}
             Type.Storage: return {Item.Type.CubeBlack: 10}
             _:            return {Item.Type.CubeBlack: 1}
     
@@ -69,7 +69,7 @@ func slitsForType(type):
             ]
         Type.Storage: 
             return [
-                {"pos": Vector2i(0,0), "dir": Belt.W},
+                {"pos": Vector2i.ZERO, "dir": Belt.W},
             ]
             
     return []

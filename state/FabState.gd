@@ -23,10 +23,10 @@ func canAffordTemp():
     
     return storage.storage[Item.Type.CubeBlack] > tmp.size()
     
-func consumableItemAtPos(pos : Vector2i):
+func consumableItemAtPos(pos : Vector2i, advance : float):
     
     for item in itemsAtPos(pos):
-        if item.advance >= 1:
+        if item.advance + advance >= 1.0:
             return item
     return null
     
@@ -90,13 +90,18 @@ func outSpace(pos : Vector2i, dir : int, advance: float = 0.5) -> float:
     for item in itemsAtPos(pos):
         if item.dir == dir:
             var space = item.advance - Belt.HALFSIZE
-            if space - Belt.HALFSIZE > 0.5:
+            if space - Belt.HALFSIZE >= 0.5:
                 return minf(advance, space - Belt.HALFSIZE)
             else:
                 return space - Belt.HALFSIZE
     return advance
 
 func buyMachineAtPosOfType(pos : Vector2i, type : int, orientation : int = 0):
+    
+    var machine = Mach.Class[type].new(pos, orientation)
+
+    if occupiedByRoot(machine.getOccupied()):
+        return
         
     storage.buy(type)
     
@@ -104,10 +109,7 @@ func buyMachineAtPosOfType(pos : Vector2i, type : int, orientation : int = 0):
             
 func addMachineAtPosOfType(pos : Vector2i, type : int, orientation : int = 0):
         
-    var machine = Mach.Class[type].new()
-    
-    machine.setOrientation(orientation)
-    machine.pos = pos
+    var machine = Mach.Class[type].new(pos, orientation)
     
     for opos in machine.getOccupied():
         sellMachineAtPos(opos)
@@ -121,7 +123,7 @@ func addMachineAtPosOfType(pos : Vector2i, type : int, orientation : int = 0):
 func sellMachineAtPos(pos : Vector2i):
     
     if machines.has(pos):
-        if machines[pos].pos != Vector2i(0,0):
+        if not machines[pos].isRoot():
             storage.refund(machines[pos].type)
             machines[pos].free()
     
@@ -245,12 +247,12 @@ func isOccupied(pos : Vector2i):
 func _physics_process(delta: float):
 
     for machine in $Machines.get_children():
-        machine.consume()
+        machine.consume(delta * gameSpeed)
         
     itm.advanceItems(delta * gameSpeed)
     
     for machine in $Machines.get_children():
-        machine.produce()
+        machine.produce(delta * gameSpeed)
     
 func clearTemp(): tmp.clear()
         
@@ -333,18 +335,16 @@ func occupiedByRoot(posl):
     
     for pos in posl:
         if machines.has(pos):
-            if machines[pos].pos == Vector2i.ZERO:
+            if machines[pos].isRoot():
                 return true
     return false
         
 func ghostForMachine(machine, material, skip=[]) -> Ghost:
     
-    var ghost = Ghost.new()
+    var ghost = Ghost.new(machine.pos, machine.orientation)
     
-    ghost.pos         = machine.pos
-    ghost.type        = machine.type
-    ghost.orientation = machine.orientation
-    ghost.proxy       = machine
+    ghost.type  = machine.type
+    ghost.proxy = machine
     
     Utils.setOverrideMaterial(machine.building, material, skip)
     
@@ -355,11 +355,9 @@ func ghostForMachine(machine, material, skip=[]) -> Ghost:
 
 func ghostForType(type, material, skip = []) -> Ghost:
     
-    var ghost = Ghost.new()
+    var ghost = Ghost.new(Vector2i.ZERO, 0)
     
-    ghost.pos         = Vector2i.ZERO
-    ghost.type        = type
-    ghost.orientation = 0
+    ghost.type = type
 
     $Ghosts.add_child(ghost)
     

@@ -17,7 +17,6 @@ class ItemMap:
             map[dpos] = ary.size()
             ary.push_back(item)
             hdl.aryPush(self, item)
-        verify()
             
     func del(dpos : Vector3i):
         
@@ -31,25 +30,16 @@ class ItemMap:
             ary.pop_back()
             map.erase(dpos)
             hdl.aryPop(self)
-        verify()
             
     func clear():
         
         map = {}
         ary = []
         hdl.aryClear(self)
-        verify()
         
     func size():
         
         return ary.size()
-        
-    func verify(): pass
-        
-        #assert(ary.size() == map.size())
-        #for pos in map:
-            #assert(map[pos] >= 0)
-            #assert(map[pos] < ary.size())
         
 var itemMap : Array[ItemMap] = []
 
@@ -150,13 +140,13 @@ func advanceItems(delta):
     
     for imap in itemMap:
         for item in imap.ary:
-            if item.scale < 1: continue
-            if item.advance + advance >= 1:
+            if item.advance + advance >= 1:     # crossing grid border
+                if item.scale < 1: continue     # ignore when coming in or going out
                 var outPos = item.pos + Belt.NEIGHBOR[item.dir] 
                 var bt = fab.beltAtPos(outPos)
-                if bt:
+                if bt:                           # belt in new grid cell
                     var inDir = Belt.OPPOSITE[item.dir]
-                    if bt & Belt.INPUT[inDir]:
+                    if bt & Belt.INPUT[inDir]:   # move to new belt if input matches
                         var adv = fab.inSpace(outPos, inDir, (item.advance + advance) - 1)
                         if adv >= 0:
                             del(item.dpos())
@@ -207,6 +197,7 @@ func advanceItems(delta):
                 item.scale = item.advance*2
             else:
                 item.scale = 1.0
+                
             if item.advance != oadv:
                 if item.blckd:
                     item.skip = 0
@@ -217,9 +208,10 @@ func advanceItems(delta):
                 if not item.blckd:
                     item.skip = 0
                     item.blckd = 1
-                    item.scale = 1.2
-                    updateItemTrans(imap, idx, item)
                 else:
                     item.blckd += 1
+                    if item.blckd == 2:
+                        item.scale = 1.2
+                        updateItemTrans(imap, idx, item)
                     if item.blckd > 20:
                         item.skip = mini(item.blckd / 10, 20)
