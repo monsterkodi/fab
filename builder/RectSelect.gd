@@ -181,7 +181,7 @@ func pasteGhosts():
     if fab.numTemp() > 0:
         for i in range(fab.numTemp()):
             var pos = fab.tempPosAtIndex(i)
-            fab.addBeltAtPos(pos, fab.tempAtPos(pos))
+            fab.buyBeltAtPos(pos, fab.tempAtPos(pos))
 
     stopPasting()
     
@@ -216,11 +216,11 @@ func cut():
     copy()
     
     for ghost in fab.ghosts():
-        fab.delMachineAtPos(ghost.pos)
+        fab.sellMachineAtPos(ghost.pos)
         
     if fab.numTemp() > 0:
         for i in range(fab.numTemp()):
-            fab.delBeltAtPos(fab.tempPosAtIndex(i))
+            fab.sellBeltAtPos(fab.tempPosAtIndex(i))
             
     clearGhosts()
     clearTemp()

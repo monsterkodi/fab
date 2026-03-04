@@ -24,7 +24,7 @@ func start():
     
 func pointerClick(pos):
     
-    fab.delObjectAtPos(pos)
+    fab.sellObjectAtPos(pos)
     if ghost: ghost.free()
     
 func pointerDrag(pos): 

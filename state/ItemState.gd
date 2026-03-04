@@ -150,6 +150,7 @@ func advanceItems(delta):
     
     for imap in itemMap:
         for item in imap.ary:
+            if item.scale < 1: continue
             if item.advance + advance >= 1:
                 var outPos = item.pos + Belt.NEIGHBOR[item.dir] 
                 var bt = fab.beltAtPos(outPos)

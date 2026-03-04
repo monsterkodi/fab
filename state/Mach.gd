@@ -2,7 +2,7 @@ extends Node
 # singleton Mach
 
 enum Type {
-    Invalid,
+    Belt,
     Root,
     Prism,
     Storage,
@@ -15,13 +15,22 @@ var Class = [
     MachineStorage,
 ]
 
+func costForType(type):
+
+    match type:
+            Type.Root:    return {Item.Type.CubeRed: 1000, Item.Type.CubeGreen: 1000, Item.Type.CubeBlue: 1000}
+            Type.Prism:   return {Item.Type.CubeBlack: 100}
+            Type.Storage: return {Item.Type.CubeBlack: 10}
+            _:            return {Item.Type.CubeBlack: 1}
+    
+
 func stringForType(type):
     
     match type:
             Type.Root:    return "Root"
             Type.Prism:   return "Prism"
             Type.Storage: return "Storage"
-            _:            return "Invalid"
+            _:            return "Belt"
     
 func typeForString(string):
     
@@ -29,7 +38,7 @@ func typeForString(string):
         "Root":    return Type.Root
         "Prism":   return Type.Prism
         "Storage": return Type.Storage
-        _:         return Type.Invalid
+        _:         return Type.Belt
 
 func buildingNameForType(type): return "Building" + stringForType(type)
     

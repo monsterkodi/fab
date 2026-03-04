@@ -27,6 +27,7 @@ func stop():
 func pointerHover(pos):
     
     lastTemp = null
+    trail = []
     clearTemp()
     addTempPoint(pos)
     
@@ -51,6 +52,10 @@ func pointerClick(pos):
 func addTempPoint(pos):
     
     if fab.isOccupied(pos):
+        lastTemp = pos
+        return
+    
+    if not fab.canAffordTemp():
         lastTemp = pos
         return
     
@@ -151,10 +156,9 @@ func pointerCancel(pos):
     
     stop()
     
-func pointerRelease(p):
+func pointerRelease(pos):
     
-    if fab.numTemp() == 0:
-        return
+    if fab.numTemp() == 0: return
         
     for i in range(fab.numTemp()):
         var tmp = fab.tempAtIndex(i)
@@ -164,9 +168,11 @@ func pointerRelease(p):
             if Belt.isInvalidType(tmp):
                 Log.warn("RELEASE", Belt.stringForType(tmp))
         
-        fab.addBeltAtPos(fab.tempPosAtIndex(i), tmp)    
+        fab.buyBeltAtPos(fab.tempPosAtIndex(i), tmp)    
         
-    lastTemp = null
-    trail = []
-    clearTemp()
+    #lastTemp = null
+    #trail = []
+    #clearTemp()
+    
+    pointerHover(pos)
     

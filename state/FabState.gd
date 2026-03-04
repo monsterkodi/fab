@@ -19,6 +19,10 @@ func newGame():
     
     storage.reset()
     
+func canAffordTemp():
+    
+    return storage.storage[Item.Type.CubeBlack] > tmp.size()
+    
 func consumableItemAtPos(pos : Vector2i):
     
     for item in itemsAtPos(pos):
@@ -43,6 +47,7 @@ func itemsAtPos(pos : Vector2i) -> Array:
 func delItemsAtPos(pos : Vector2i):
     
     for item in itemsAtPos(pos):
+        storage.addItem(item.type)
         delItem(item)
         
 func inSpace(pos : Vector2i, dir : int, advance : float = 0.0):
@@ -93,25 +98,35 @@ func outSpace(pos : Vector2i, dir : int, advance: float = 0.5) -> float:
             
 func addMachineAtPosOfType(pos : Vector2i, type : int, orientation : int = 0):
         
+    storage.buy(type)
+        
     var machine = Mach.Class[type].new()
     
     machine.setOrientation(orientation)
     machine.pos = pos
     
     for opos in machine.getOccupied():
-        delMachineAtPos(opos)
-        delBeltAtPos(opos)
+        sellMachineAtPos(opos)
+        sellBeltAtPos(opos)
         machines[opos] = machine
         
     $Machines.add_child(machine)
     
     return machine
-    
-func delMachineAtPos(pos : Vector2i):
 
+func sellMachineAtPos(pos : Vector2i):
+    
     if machines.has(pos):
         if machines[pos].pos != Vector2i(0,0):
+            storage.refund(machines[pos].type)
             machines[pos].free()
+    
+func buyBeltAtPos(pos : Vector2i, type : int):
+    
+    if not beltAtPos(pos):
+        storage.buy(Mach.Type.Belt)
+        
+    addBeltAtPos(pos, type)
 
 func addBeltAtPos(pos : Vector2i, type : int):
 
@@ -188,11 +203,17 @@ func tempNeighborsAtPos(pos : Vector2i) -> Array[int]:
         n.push_back(tempAtPos(pos + Belt.NEIGHBOR[d]))
     return n
     
-func delBeltAtPos(pos : Vector2i): 
+func sellBeltAtPos(pos : Vector2i): 
     
-    if occupiedByRoot([pos]):
-        return
+    if occupiedByRoot([pos]): return
+    if not beltAtPos(pos): return
 
+    storage.refund(Mach.Type.Belt)
+
+    delBeltAtPos(pos)
+
+func delBeltAtPos(pos : Vector2i):
+    
     delItemsAtPos(pos)
     tst.del(pos)
     
@@ -205,12 +226,12 @@ func delBeltAtPos(pos : Vector2i):
                 delItemsAtPos(np)
                 tst.add(np, clean)
                 
-func delObjectAtPos(pos : Vector2i):
+func sellObjectAtPos(pos : Vector2i):
     
     if machines.has(pos):
-        delMachineAtPos(pos)
+        sellMachineAtPos(pos)
     elif beltAtPos(pos):
-        delBeltAtPos(pos)
+        sellBeltAtPos(pos)
         
 func isOccupied(pos : Vector2i):
     
@@ -229,9 +250,9 @@ func _physics_process(delta: float):
     
 func clearTemp(): tmp.clear()
         
-func speedFaster(): setGameSpeed(gameSpeed * 3/2)
-func speedSlower(): setGameSpeed(gameSpeed * 2/3)
-func speedReset():  setGameSpeed(1)
+func gameSpeedFaster(): setGameSpeed(gameSpeed * 3/2)
+func gameSpeedSlower(): setGameSpeed(gameSpeed * 2/3)
+func gameSpeedReset():  setGameSpeed(1)
     
 func setGameSpeed(newSpeed):
     
