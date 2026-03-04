@@ -121,5 +121,12 @@ func getOccupied() -> Array[Vector2i]:
     
 func isRoot(): return pos.x == 0 and pos.y == 0
         
+func slitAtPos(p : Vector2i):
+    
+    var relPos = p - pos
+    for slit in slits:
+        if slit.pos == relPos:
+            return slit
+    return null
 
     

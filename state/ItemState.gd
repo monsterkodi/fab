@@ -147,6 +147,10 @@ func advanceItems(delta):
                 if bt:                           # belt in new grid cell
                     var inDir = Belt.OPPOSITE[item.dir]
                     if bt & Belt.INPUT[inDir]:   # move to new belt if input matches
+                        if Belt.isSinkType(bt):
+                            if not fab.sinkAtPosCanTakeItem(outPos, item):
+                                Log.log("sink no match")
+                                continue
                         var adv = fab.inSpace(outPos, inDir, (item.advance + advance) - 1)
                         if adv >= 0:
                             del(item.dpos())

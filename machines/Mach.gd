@@ -74,13 +74,13 @@ func slitsForType(type):
     match type:
         Type.Prism: 
             return [
-                {"pos": Vector2i.ZERO, "dir": Belt.W},
+                {"pos": Vector2i.ZERO, "dir": Belt.W, "item": Item.Type.CubeBlack},
             ]
         Type.Mixer: 
             return [
-                {"pos": Belt.NEIGHBOR[Belt.N], "dir": Belt.W},
-                {"pos": Vector2i.ZERO,         "dir": Belt.W},
-                {"pos": Belt.NEIGHBOR[Belt.S], "dir": Belt.W},
+                {"pos": Belt.NEIGHBOR[Belt.N], "dir": Belt.W, "item": Item.Type.CubeRed},
+                {"pos": Vector2i.ZERO,         "dir": Belt.W, "item": Item.Type.CubeGreen},
+                {"pos": Belt.NEIGHBOR[Belt.S], "dir": Belt.W, "item": Item.Type.CubeBlue},
             ]
         Type.Storage: 
             return [

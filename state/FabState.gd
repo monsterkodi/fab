@@ -19,6 +19,17 @@ func newGame():
     
     storage.reset()
     
+func sinkAtPosCanTakeItem(pos: Vector2i, item : Item.Inst):
+    
+    assert(machines.has(pos))
+    var machine = machines[pos]
+    var slit = machine.slitAtPos(pos)
+    if slit:
+        if slit.has("item"): 
+            return slit.item == item.type
+        return true
+    return false
+    
 func canAffordTemp():
     
     return storage.storage[Item.Type.CubeBlack] > tmp.size()
