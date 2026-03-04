@@ -21,11 +21,6 @@ func consumeItemAtSlit(item, slit):
 func produceItemAtSlot(slot):
     
     if not consumed[0] or not consumed[1] or not consumed[2]: return false
-    
-    var item = Item.Inst.new()
-    item.scale = 0.01
-    item.color = slot.color
-    item.type  = Item.Type.CubeWhite
     consumed = [false, false, false]
-    return item
+    return Item.Inst.new(Item.Type.CubeWhite)
         

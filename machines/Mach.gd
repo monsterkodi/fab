@@ -7,6 +7,7 @@ enum Type {
     Storage,
     Prism,
     Mixer,
+    Burner,
 }
 
 var Class = [
@@ -15,6 +16,7 @@ var Class = [
     MachineStorage,
     MachinePrism,
     MachineMixer,
+    MachineBurner,
 ]
 
 func costForType(type):
@@ -24,6 +26,7 @@ func costForType(type):
             Type.Storage: return {Item.Type.CubeBlack: 10}
             Type.Prism:   return {Item.Type.CubeBlack: 30}
             Type.Mixer:   return {Item.Type.CubeRed:   30, Item.Type.CubeGreen: 30, Item.Type.CubeBlue: 30}
+            Type.Burner:  return {Item.Type.CubeBlack: 10} #{Item.Type.CubeRed:   10, Item.Type.CubeGreen: 10, Item.Type.CubeBlue: 10}
             _:            return {Item.Type.CubeBlack: 1}
     
 
@@ -34,6 +37,7 @@ func stringForType(type):
             Type.Storage: return "Storage"
             Type.Prism:   return "Prism"
             Type.Mixer:   return "Mixer"
+            Type.Burner:  return "Burner"
             _:            return "Belt"
     
 func typeForString(string):
@@ -43,6 +47,7 @@ func typeForString(string):
         "Storage": return Type.Storage
         "Prism":   return Type.Prism
         "Mixer":   return Type.Mixer
+        "Burner":  return Type.Burner
         _:         return Type.Belt
 
 func buildingNameForType(type): return "Building" + stringForType(type)
@@ -52,13 +57,17 @@ func slotsForType(type):
     match type:
         Type.Prism: 
             return [
-                {"pos": Belt.NEIGHBOR[Belt.E]+Belt.NEIGHBOR[Belt.N], "dir": Belt.E, "color": Color.RED},
-                {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E, "color": Color.GREEN},
-                {"pos": Belt.NEIGHBOR[Belt.E]+Belt.NEIGHBOR[Belt.S], "dir": Belt.E, "color": Color.BLUE},
+                {"pos": Belt.NEIGHBOR[Belt.E]+Belt.NEIGHBOR[Belt.N], "dir": Belt.E, "item": Item.Type.CubeRed},
+                {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E, "item": Item.Type.CubeGreen},
+                {"pos": Belt.NEIGHBOR[Belt.E]+Belt.NEIGHBOR[Belt.S], "dir": Belt.E, "item": Item.Type.CubeBlue},
+                ]
+        Type.Burner: 
+            return [
+                {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E, "item": Item.Type.TorusYellow},
                 ]
         Type.Mixer: 
             return [
-                {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E, "color": Color.WHITE},
+                {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E, "item": Item.Type.CubeWhite},
                 ]
         Type.Root:   
             return [
@@ -75,6 +84,10 @@ func slitsForType(type):
         Type.Prism: 
             return [
                 {"pos": Vector2i.ZERO, "dir": Belt.W, "item": Item.Type.CubeBlack},
+            ]
+        Type.Burner: 
+            return [
+                {"pos": Vector2i.ZERO, "dir": Belt.W},
             ]
         Type.Mixer: 
             return [

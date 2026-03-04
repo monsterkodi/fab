@@ -112,10 +112,11 @@ func buyMachineAtPosOfType(pos : Vector2i, type : int, orientation : int = 0):
     var machine = Mach.Class[type].new(pos, orientation)
 
     if occupiedByRoot(machine.getOccupied()):
+        machine.free()
         return
         
     storage.buy(type)
-    
+    machine.free()
     addMachineAtPosOfType(pos, type, orientation)
             
 func addMachineAtPosOfType(pos : Vector2i, type : int, orientation : int = 0):
@@ -304,9 +305,6 @@ func saveGame(data : Dictionary):
             item.dir, 
             item.type, 
             item.advance, 
-            item.color.r, 
-            item.color.g, 
-            item.color.b, 
             item.scale])
             
     data.FabState.storage = storage.storage
@@ -330,13 +328,11 @@ func loadGame(data : Dictionary):
             for d in data.FabState.items:
                 var pos = Vector2i(d[0], d[1])
                 var dir = d[2]
-                var item = Item.Inst.new()
+                var item = Item.Inst.new(d[3])
                 item.pos = pos
                 item.dir = dir
-                item.type    = d[3]
                 item.advance = d[4]
-                item.color   = Color(d[5], d[6], d[7])
-                item.scale   = d[8]
+                item.scale   = d[5]
                 addItem(pos, dir, item)
                 
         if data.FabState.has("storage"):

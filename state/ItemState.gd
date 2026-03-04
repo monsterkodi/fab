@@ -149,7 +149,6 @@ func advanceItems(delta):
                     if bt & Belt.INPUT[inDir]:   # move to new belt if input matches
                         if Belt.isSinkType(bt):
                             if not fab.sinkAtPosCanTakeItem(outPos, item):
-                                Log.log("sink no match")
                                 continue
                         var adv = fab.inSpace(outPos, inDir, (item.advance + advance) - 1)
                         if adv >= 0:
@@ -206,7 +205,8 @@ func advanceItems(delta):
                 if item.blckd:
                     item.skip = 0
                     item.blckd = 0
-                    item.scale = 1.0
+                    if item.scale > 1:
+                        item.scale = 1.0
                 updateItemTrans(imap, idx, item)
             else:
                 if not item.blckd:
@@ -214,7 +214,7 @@ func advanceItems(delta):
                     item.blckd = 1
                 else:
                     item.blckd += 1
-                    if item.blckd == 2:
+                    if item.blckd == 2 and item.scale == 1:
                         item.scale = 1.2
                         updateItemTrans(imap, idx, item)
                     if item.blckd > 20:

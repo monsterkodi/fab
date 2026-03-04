@@ -10,6 +10,4 @@ func _init(p, o):
     
 func produceItemAtSlot(slot):
     
-    var item = Item.Inst.new()
-    item.color = Color(0.01, 0.01, 0.01)
-    return item
+    return Item.Inst.new(Item.Type.CubeBlack)

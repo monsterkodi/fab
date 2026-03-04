@@ -7,14 +7,26 @@ enum Type {
     CubeGreen,
     CubeBlue,
     CubeWhite,
+    TorusYellow,
 }
 
 enum Shape {
-    Cube
+    Cube,
+    Torus,
+    Sphere,
 }
 
 var Types     : Array[Type]
 var TypeNames : Array[String]
+
+var TypeInfo = [
+    [Shape.Cube,  Color.BLACK,  0.1],
+    [Shape.Cube,  Color.RED,    0.05],
+    [Shape.Cube,  Color.GREEN,  0.05],
+    [Shape.Cube,  Color.BLUE,   0.05],
+    [Shape.Cube,  Color.WHITE,  0.5],
+    [Shape.Torus, Color.YELLOW, 1.0],
+]
 
 func _init():
     
@@ -23,7 +35,9 @@ func _init():
         TypeNames.push_back(key)
         Log.log(Type[key], key)
         
-    #Log.log("Item Types", Types, TypeNames)
+func shapeForType(type):  return TypeInfo[type][0]
+func colorForType(type):  return TypeInfo[type][1]
+func energyForType(type): return TypeInfo[type][2]
 
 class Inst:
     
@@ -37,4 +51,11 @@ class Inst:
     var mvd     = false
     var blckd   = 0
     var skip    = 0
+    
+    func _init(t):
+
+        type = t
+        color = Item.colorForType(type)
+        shape = Item.shapeForType(type)
+        
     func dpos(): return Vector3i(pos.x, pos.y, dir)

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bdeu1b2v47k50"]
 
-[ext_resource type="Script" uid="uid://cai28fnlmcpbh" path="res://items/ItemCube.gd" id="1_7f2rk"]
+[ext_resource type="Script" uid="uid://cai28fnlmcpbh" path="res://items/ItemColor.gd" id="1_7f2rk"]
 [ext_resource type="Material" uid="uid://bi5n2lthhnyix" path="res://materials/ItemCube.tres" id="2_i8kv0"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_5lyug"]
@@ -9,6 +9,6 @@
 script = ExtResource("1_7f2rk")
 color = Color(0, 0, 1, 1)
 
-[node name="Cube" type="MeshInstance3D" parent="." unique_id=1858053179]
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=1858053179]
 mesh = SubResource("BoxMesh_5lyug")
 surface_material_override/0 = ExtResource("2_i8kv0")

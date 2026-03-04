@@ -52,7 +52,7 @@ offset_top = 63.15
 offset_bottom = 63.15
 grow_horizontal = 2
 theme = ExtResource("4_gt2ij")
-icons = Array[String](["res://icons/items/ItemCubeBlack.png", "res://icons/items/ItemCubeRed.png", "res://icons/items/ItemCubeGreen.png", "res://icons/items/ItemCubeBlue.png", "res://icons/items/ItemCubeWhite.png"])
+icons = Array[String](["res://icons/items/ItemCubeBlack.png", "res://icons/items/ItemCubeRed.png", "res://icons/items/ItemCubeGreen.png", "res://icons/items/ItemCubeBlue.png", "res://icons/items/ItemCubeWhite.png", "res://icons/items/ItemTorusYellow.png"])
 
 [node name="BuildButtonGrid" parent="." unique_id=675774317 instance=ExtResource("4_by07e")]
 unique_name_in_owner = true
@@ -67,7 +67,7 @@ offset_bottom = -99.53
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("2_aaqae")
-icons = Array[String](["res://icons/buildings/BuildingRect.png", "res://icons/buildings/BuildingBelt.png", "res://icons/buildings/BuildingRoot.png", "res://icons/buildings/BuildingStorage.png", "res://icons/buildings/BuildingPrism.png", "res://icons/buildings/BuildingMixer.png", "res://icons/buildings/BuildingDel.png"])
+icons = Array[String](["res://icons/buildings/BuildingRect.png", "res://icons/buildings/BuildingBelt.png", "res://icons/buildings/BuildingRoot.png", "res://icons/buildings/BuildingStorage.png", "res://icons/buildings/BuildingPrism.png", "res://icons/buildings/BuildingMixer.png", "res://icons/buildings/BuildingBurner.png", "res://icons/buildings/BuildingDel.png"])
 
 [node name="Actions" type="PanelContainer" parent="." unique_id=705281221]
 layout_mode = 1

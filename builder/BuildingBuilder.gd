@@ -52,7 +52,7 @@ func pointerHover(pos):
         for gp in ghost.getOccupied():
             if fab.machines.has(gp):
                 var machine = fab.machines[gp]
-                if machine.pos == Vector2i.ZERO:
+                if machine.isRoot():
                     handleRootOverlap()
                 else:
                     delGhosts.push_back(fab.ghostForMachine(machine, GHOST_RED_MATERIAL))
