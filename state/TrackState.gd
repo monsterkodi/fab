@@ -188,7 +188,8 @@ func dataAtPos(pos : Vector2i) -> Array:
     
     if metaMap.has(pos):
         var pm = posMap[metaMap[pos]]
-        return pm.ary[pm.map[pos]]
+        if pm and pm.map.has(pos):
+            return pm.ary[pm.map[pos]]
     return []
     
 func dataAtIndex(index : int) -> Array:

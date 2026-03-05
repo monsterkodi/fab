@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dep5xvthu3mc6" path="res://buildings/BuildingSlot.tscn" id="1_2k87r"]
 [ext_resource type="PackedScene" uid="uid://dtjrgrqwsmi2r" path="res://buildings/BuildingSlit.tscn" id="2_b6tnr"]
+[ext_resource type="Material" uid="uid://pvpa8kleqwnh" path="res://materials/EnergyMaterial.tres" id="3_ap308"]
 [ext_resource type="Script" uid="uid://j8fhmkfl01wu" path="res://builder/Revolving.gd" id="3_b6tnr"]
 
 [sub_resource type="TorusMesh" id="TorusMesh_2k87r"]
@@ -9,11 +10,6 @@ inner_radius = 0.25
 outer_radius = 0.75
 rings = 32
 ring_segments = 16
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b6tnr"]
-albedo_color = Color(1, 1, 0, 1)
-metallic = 0.65
-roughness = 0.5
 
 [node name="BuildingBurner" type="Node3D" unique_id=447020061]
 
@@ -30,5 +26,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5368118, 1.8525243, 0)
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
 mesh = SubResource("TorusMesh_2k87r")
 skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_b6tnr")
+surface_material_override/0 = ExtResource("3_ap308")
 script = ExtResource("3_b6tnr")

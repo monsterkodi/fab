@@ -51,7 +51,20 @@ func _exit_tree():
     for opos in getOccupied():
         fab.machines.erase(opos)
         
-func rotateCW(): setOrientation((orientation + 1) % 4)
+func rotateCW():
+    
+    orientation = ((orientation + 1) % 4)
+
+    for slot in slots:
+        slot.pos = Belt.rotatePos(slot.pos)
+        slot.dir = Belt.rotateDir(slot.dir)
+        
+    for slit in slits:
+        slit.pos = Belt.rotatePos(slit.pos)
+        slit.dir = Belt.rotateDir(slit.dir)
+        
+    if building:
+        Utils.rotateCW(building)
 
 func rotateAround(center: Vector2i):
 

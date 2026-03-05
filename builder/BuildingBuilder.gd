@@ -49,6 +49,7 @@ func pointerHover(pos):
     if ghost and ghost.is_inside_tree():
         ghost.setPos(pos)
         Utils.setOverrideMaterial(ghost.building, ghostMaterial(ghost.type), ["Arrow"])
+        #Log.log(ghost.getOccupied())
         for gp in ghost.getOccupied():
             if fab.machines.has(gp):
                 var machine = fab.machines[gp]
@@ -84,6 +85,7 @@ func pointerDrag(pos):
 func pointerRotate():
     
     ghost.rotateCW()
+    pointerHover(ghost.pos)
     
 func pointerContext(pos):
     

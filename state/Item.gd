@@ -33,7 +33,7 @@ func _init():
     for key in Type:
         Types.push_back(Type[key])
         TypeNames.push_back(key)
-        Log.log(Type[key], key)
+        #Log.log(Type[key], key)
         
 func shapeForType(type):  return TypeInfo[type][0]
 func colorForType(type):  return TypeInfo[type][1]

@@ -227,3 +227,7 @@ func clearOverrideMaterial(node):
 func rotateForOrientation(node, orientation):
     
     node.transform.basis = Basis(Vector3.UP, deg_to_rad(-90*orientation))
+
+func rotateCW(node):
+    
+    node.transform.basis =  node.transform.basis.rotated(Vector3.UP, deg_to_rad(-90))

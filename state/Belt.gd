@@ -185,6 +185,14 @@ func isSinkType(type):
 func isSourceType(type):
     
     return type in SOURCE_TYPES
+
+func rotatePos(pos):
+    
+    return Vector2i(Vector2(pos).rotated(deg_to_rad(90)).round())
+
+func rotateDir(dir):
+    
+    return (dir + 1) % 4
             
 func rotateType(type):
 
