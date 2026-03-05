@@ -27,6 +27,8 @@ func sinkAtPosCanTakeItem(pos: Vector2i, item : Item.Inst):
     if slit:
         if slit.has("item"): 
             return slit.item == item.type
+        if slit.has("shape"):
+            return slit.shape == item.shape
         return true
     return false
     

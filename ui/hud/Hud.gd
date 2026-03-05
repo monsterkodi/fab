@@ -61,3 +61,9 @@ func _unhandled_key_input(event: InputEvent):
         if event.pressed and not event.is_echo():
             if event.keycode >= KEY_1 and event.keycode <= KEY_9:
                 activateButton(event.keycode-KEY_1+1)
+
+func itemButtonPressed(itemName : String):
+
+    for i in range(50):
+        Utils.fabState().storage.addItem(Item.typeForString(itemName.replace("Item", "")))
+    

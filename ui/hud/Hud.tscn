@@ -119,6 +119,7 @@ action_mode = 0
 shortcut = SubResource("Shortcut_epdrl")
 text = "+"
 
+[connection signal="buttonPressed" from="ItemButtonGrid" to="." method="itemButtonPressed"]
 [connection signal="buttonPressed" from="BuildButtonGrid" to="." method="buttonPressed"]
 [connection signal="pressed" from="Actions/HBoxContainer/Slower" to="." method="slower"]
 [connection signal="pressed" from="Actions/HBoxContainer/Reset" to="." method="reset"]

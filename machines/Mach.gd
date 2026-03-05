@@ -47,6 +47,35 @@ func stringForType(type):   return TypeNames[type]
 func typeForString(string): return TypeMap[string]
     
 func buildingNameForType(type): return "Building" + stringForType(type)
+
+func slitsForType(type):        
+    
+    match type:
+        Type.Prism: 
+            return [
+                {"pos": Vector2i.ZERO, "dir": Belt.W, "item": Item.Type.CubeBlack},
+            ]
+        Type.Burner: 
+            return [
+                {"pos": Vector2i.ZERO, "dir": Belt.W},
+            ]
+        Type.Mixer: 
+            return [
+                {"pos": Belt.NEIGHBOR[Belt.N], "dir": Belt.W, "item": Item.Type.CubeRed},
+                {"pos": Vector2i.ZERO,         "dir": Belt.W, "item": Item.Type.CubeGreen},
+                {"pos": Belt.NEIGHBOR[Belt.S], "dir": Belt.W, "item": Item.Type.CubeBlue},
+            ]
+        Type.Storage: 
+            return [
+                {"pos": Vector2i.ZERO, "dir": Belt.W},
+            ]
+        Type.Whitener: 
+            return [
+                {"pos": Vector2i.ZERO,         "dir": Belt.W, "shape": Item.Shape.Cube},
+                {"pos": Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "item":  Item.Type.TorusYellow},
+            ]
+            
+    return []
     
 func slotsForType(type):
     
@@ -76,33 +105,4 @@ func slotsForType(type):
             return [
                 {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E, "item": Item.Type.CubeWhite},
                 ]
-    return []
-
-func slitsForType(type):        
-    
-    match type:
-        Type.Prism: 
-            return [
-                {"pos": Vector2i.ZERO, "dir": Belt.W, "item": Item.Type.CubeBlack},
-            ]
-        Type.Burner: 
-            return [
-                {"pos": Vector2i.ZERO, "dir": Belt.W},
-            ]
-        Type.Mixer: 
-            return [
-                {"pos": Belt.NEIGHBOR[Belt.N], "dir": Belt.W, "item": Item.Type.CubeRed},
-                {"pos": Vector2i.ZERO,         "dir": Belt.W, "item": Item.Type.CubeGreen},
-                {"pos": Belt.NEIGHBOR[Belt.S], "dir": Belt.W, "item": Item.Type.CubeBlue},
-            ]
-        Type.Storage: 
-            return [
-                {"pos": Vector2i.ZERO, "dir": Belt.W},
-            ]
-        Type.Whitener: 
-            return [
-                {"pos": Vector2i.ZERO,         "dir": Belt.W, "shape": Item.Shape.Cube},
-                {"pos": Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "item":  Item.Type.TorusYellow},
-            ]
-            
     return []
