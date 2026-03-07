@@ -44,7 +44,6 @@ text = "monsterkodi"
 horizontal_alignment = 1
 
 [node name="Shaders" type="VBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1687386400]
-visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="PanelContainer/VBoxContainer/Shaders" unique_id=535035711]
@@ -52,11 +51,11 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.2627451, 0.2627451, 0.2627451, 1)
 theme_override_constants/line_spacing = -20
 theme_override_font_sizes/font_size = 32
-text = "Title"
+text = "Consultant"
 horizontal_alignment = 1
 
 [node name="shader3" type="Label" parent="PanelContainer/VBoxContainer/Shaders" unique_id=88104565]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.47843137, 0, 0, 1)
-text = "Name"
+text = "erikdoe"
 horizontal_alignment = 1
