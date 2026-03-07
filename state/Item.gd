@@ -46,11 +46,13 @@ class Inst:
     
     var pos     : Vector2i
     var dir     = 0
+    
     var type    = Type.CubeBlack
     var shape   = Shape.Cube
+    var color   = Color.RED
+    
     var advance = 0.0
     var scale   = 0.0
-    var color   = Color.RED
     var mvd     = false
     var blckd   = 0
     var skip    = 0

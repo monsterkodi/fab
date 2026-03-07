@@ -3,6 +3,7 @@ extends Node
 
 enum Type {
     Belt,
+    Tunnel,
     Root,
     Storage,
     Prism,
@@ -24,6 +25,7 @@ func _init():
 
 var Class = [
     null, 
+    MachineTunnel,
     MachineRoot,
     MachineStorage,
     MachinePrism,
@@ -35,6 +37,7 @@ var Class = [
 func costForType(type):
 
     match type:
+            Type.Tunnel:    return {Item.Type.CubeBlack: 10}
             Type.Root:      return {Item.Type.CubeRed: 1000, Item.Type.CubeGreen: 1000, Item.Type.CubeBlue: 1000}
             Type.Storage:   return {Item.Type.CubeBlack: 10}
             Type.Prism:     return {Item.Type.CubeBlack: 30}
@@ -51,6 +54,10 @@ func buildingNameForType(type): return "Building" + stringForType(type)
 func slitsForType(type):        
     
     match type:
+        Type.Tunnel: 
+            return [
+                {"pos": Vector2i.ZERO, "dir": Belt.W},
+            ]
         Type.Prism: 
             return [
                 {"pos": Vector2i.ZERO, "dir": Belt.W, "item": Item.Type.CubeBlack},
@@ -80,6 +87,10 @@ func slitsForType(type):
 func slotsForType(type):
     
     match type:
+        Type.Tunnel: 
+            return [
+                {"pos": Belt.NEIGHBOR[Belt.E]*2,                       "dir": Belt.E},
+            ]
         Type.Prism: 
             return [
                 {"pos": Belt.NEIGHBOR[Belt.E]+Belt.NEIGHBOR[Belt.N], "dir": Belt.E, "item": Item.Type.CubeRed},
