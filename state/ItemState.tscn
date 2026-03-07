@@ -4,7 +4,7 @@
 [ext_resource type="Material" uid="uid://bi5n2lthhnyix" path="res://materials/ItemCube.tres" id="2_i413n"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_f2do6"]
-size = Vector3(0.4, 0.4, 0.4)
+size = Vector3(0.3, 0.3, 0.3)
 
 [sub_resource type="MultiMesh" id="MultiMesh_56hdc"]
 transform_format = 1
@@ -12,8 +12,8 @@ use_colors = true
 mesh = SubResource("BoxMesh_f2do6")
 
 [sub_resource type="TorusMesh" id="TorusMesh_wmqta"]
-inner_radius = 0.1
-outer_radius = 0.25
+inner_radius = 0.06
+outer_radius = 0.165
 rings = 32
 ring_segments = 16
 

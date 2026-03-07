@@ -113,7 +113,7 @@ func itemTrans(item):
     var trans = Transform3D.IDENTITY
     trans = trans.scaled(Vector3(item.scale, item.scale, item.scale))
     var offset = Belt.offsetForAdvanceAndDir(fab.beltAtPos(item.pos), item.advance, item.dir)
-    trans.origin = Vector3(item.pos.x, Belt.GLOBAL_Y + Belt.HALFSIZE, item.pos.y) + offset
+    trans.origin = Vector3(item.pos.x, 0.5, item.pos.y) + offset
     return trans
     
 func updateItemTrans(pm : ItemMap, index : int, item : Item.Inst):
