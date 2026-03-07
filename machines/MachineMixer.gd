@@ -5,11 +5,7 @@ var consumed = [false, false, false]
 
 func _init(p, o):
     
-    type  = Mach.Type.Mixer
-    slots = Mach.slotsForType(type)
-    slits = Mach.slitsForType(type)
-    
-    super._init(p, o)
+    super._init(Mach.Type.Mixer, p, o)
     
 func consumeItemAtSlit(item, slit):
     

@@ -14,11 +14,7 @@ var whiteningEnergy = {
 
 func _init(p, o):
     
-    type  = Mach.Type.Whitener
-    slits = Mach.slitsForType(type)
-    slots = Mach.slotsForType(type)
-     
-    super._init(p, o) 
+    super._init(Mach.Type.Whitener, p, o) 
     
 func consumeItemAtSlit(item, slit): 
     

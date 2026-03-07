@@ -350,9 +350,8 @@ func occupiedByRoot(posl):
         
 func ghostForMachine(machine, material, skip=[]) -> Ghost:
     
-    var ghost = Ghost.new(machine.pos, machine.orientation)
+    var ghost = Ghost.new(machine.type, machine.pos, machine.orientation)
     
-    ghost.type  = machine.type
     ghost.proxy = machine
     
     Utils.setOverrideMaterial(machine.building, material, skip)
@@ -364,10 +363,8 @@ func ghostForMachine(machine, material, skip=[]) -> Ghost:
 
 func ghostForType(type, material, skip = []) -> Ghost:
     
-    var ghost = Ghost.new(Vector2i.ZERO, 0)
+    var ghost = Ghost.new(type, Vector2i.ZERO, 0)
     
-    ghost.type = type
-
     $Ghosts.add_child(ghost)
     
     Utils.setOverrideMaterial(ghost.building, material, skip)

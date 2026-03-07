@@ -5,11 +5,7 @@ var canProduce = false
 
 func _init(p, o):
     
-    type  = Mach.Type.Prism
-    slots = Mach.slotsForType(type)
-    slits = Mach.slitsForType(type)
-    
-    super._init(p, o)
+    super._init(Mach.Type.Prism, p, o)
     
 func consumeItemAtSlit(item, slit):
     

@@ -5,11 +5,7 @@ var consumedEnergy = 0
 
 func _init(p, o):
     
-    type  = Mach.Type.Burner
-    slits = Mach.slitsForType(type)
-    slots = Mach.slotsForType(type)
-     
-    super._init(p, o) 
+    super._init(Mach.Type.Burner, p, o) 
     
 func consumeItemAtSlit(item, slit): 
     

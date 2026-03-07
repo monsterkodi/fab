@@ -9,7 +9,11 @@ var orientation = 0
 var building
 var fab : FabState
 
-func _init(p, o):
+func _init(t, p, o):
+    
+    type  = t
+    slots = Mach.slotsForType(type)
+    slits = Mach.slitsForType(type)
     
     pos = p
     setOrientation(o)

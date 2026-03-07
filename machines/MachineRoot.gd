@@ -3,10 +3,7 @@ extends Machine
 
 func _init(p, o):
     
-    type  = Mach.Type.Root
-    slots = Mach.slotsForType(type)
-    
-    super._init(p, o)
+    super._init(Mach.Type.Root, p, o)
     
 func produceItemAtSlot(slot):
     
