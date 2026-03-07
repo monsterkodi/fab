@@ -12,6 +12,7 @@ func _ready():
     if proxy:
         building = proxy.building
     else:
+        fab = Utils.fabState()
         createBuilding()
     
 func _exit_tree():

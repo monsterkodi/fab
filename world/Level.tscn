@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dlfbgp57udspw" path="res://state/TrackState.tscn" id="7_35mqu"]
 [ext_resource type="PackedScene" uid="uid://crjdati3mqanw" path="res://state/ItemState.tscn" id="8_ioj0i"]
 [ext_resource type="PackedScene" uid="uid://b0tqyvht5fp52" path="res://state/TempState.tscn" id="8_kp7rj"]
+[ext_resource type="PackedScene" uid="uid://dq0uh1pt40co1" path="res://state/MachState.tscn" id="9_kp7rj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w56at"]
 size = Vector3(1000, 1, 1000)
@@ -48,3 +49,5 @@ process_mode = 1
 [node name="TempState" parent="." unique_id=1061249366 instance=ExtResource("8_kp7rj")]
 
 [node name="ItemState" parent="." unique_id=774702764 instance=ExtResource("8_ioj0i")]
+
+[node name="MachState" parent="." unique_id=2084936293 instance=ExtResource("9_kp7rj")]

@@ -7,6 +7,7 @@ var slots : Array
 var slits : Array
 var orientation = 0
 var building
+var bdg
 var fab : FabState
 
 func _init(t, p, o):
@@ -41,12 +42,18 @@ func createBuilding():
     Utils.level().add_child(building)
     building.global_position = Vector3(pos.x, 0, pos.y)
     Utils.rotateForOrientation(building, orientation)
+    
+    #bdg = MachState.Building.new(type, pos, Utils.basisForOrientation(orientation))
+    #fab.mst.add(bdg)
 
 func _exit_tree():
     
     if building:
         building.queue_free()
-    
+        
+    if bdg:
+        fab.mst.del(bdg)
+        
     for slot in slots:
         fab.delBeltAtPos(pos + slot.pos)
     for slit in slits:

@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dq0uh1pt40co1"]
+
+[ext_resource type="Script" uid="uid://ch0wd6uae584f" path="res://state/MachState.gd" id="1_ivwl2"]
+[ext_resource type="Material" uid="uid://bi5n2lthhnyix" path="res://materials/ItemCube.tres" id="2_itdi5"]
+
+[sub_resource type="MultiMesh" id="MultiMesh_56hdc"]
+transform_format = 1
+use_colors = true
+
+[sub_resource type="MultiMesh" id="MultiMesh_i413n"]
+transform_format = 1
+use_colors = true
+
+[node name="MachState" type="Node3D" unique_id=774702764]
+script = ExtResource("1_ivwl2")
+
+[node name="Box" type="MultiMeshInstance3D" parent="." unique_id=588359375]
+material_override = ExtResource("2_itdi5")
+multimesh = SubResource("MultiMesh_56hdc")
+
+[node name="Arrow" type="MultiMeshInstance3D" parent="." unique_id=1097694713]
+material_override = ExtResource("2_itdi5")
+multimesh = SubResource("MultiMesh_i413n")

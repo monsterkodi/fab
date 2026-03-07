@@ -2,7 +2,6 @@ class_name FabState
 extends Node
 
 var machines:      Dictionary[Vector2i, Machine]
-var buildings:     Dictionary[Vector2i, int]
 var gameSpeed:     float = 1.0
 
 @onready var storage: ItemStorage = $ItemStorage
@@ -10,6 +9,7 @@ var gameSpeed:     float = 1.0
 @onready var tst: TrackState    = $"../TrackState"
 @onready var tmp: TrackState    = $"../TempState"
 @onready var itm: ItemState     = $"../ItemState"
+@onready var mst: MachState     = $"../MachState"
 
 func _ready():
     

@@ -47,8 +47,6 @@ var itemMap : Array[ItemMap] = []
 
 func _ready():
     
-    Post.subscribe(self)
-    
     for child in get_children():
         child.multimesh.instance_count = 10000
         child.multimesh.visible_instance_count = 0
@@ -131,8 +129,9 @@ func aryPop(pm : ItemMap):
 
 func aryClear(pm : ItemMap):             
 
-    for child in get_children():
-        child.multimesh.visible_instance_count = 0
+    pm.msh.multimesh.visible_instance_count = 0
+    #for child in get_children():
+        #child.multimesh.visible_instance_count = 0
         
 func advanceItems(delta):
       
