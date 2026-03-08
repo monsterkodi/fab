@@ -2,6 +2,7 @@ class_name Ghost
 extends Machine
 
 var proxy : Machine
+var color : Color
 
 func _ready():
 
@@ -10,21 +11,33 @@ func _ready():
     slots = Mach.slotsForType(type)
     
     if proxy:
-        building = proxy.building
-        bdg = proxy.bdg
-    else:
-        fab = Utils.fabState()
-        createBuilding()
+        proxy.hide()
+
+    mst = Utils.fabState().gst
+    createBuilding()
+    
+func setColor(c : Color): 
+    
+    color = c
+    if bdg:
+        for module in bdg.modules:
+            if module.type != MachState.Module.Type.ARROW:
+                module.color = color
+        mst.add(bdg)
+    
+func createBuilding():
+    
+    bdg = MachState.Building.new(type, pos, Utils.basisForOrientation(orientation))
+    setColor(color)
+    mst.add(bdg)
     
 func _exit_tree():
     
     if proxy:
-        Utils.clearOverrideMaterial(building)
-    else:
-        if building:
-            building.queue_free()
-        if bdg:
-            Utils.fabState().mst.del(bdg)
-            bdg = null
+        proxy.show()
+
+    if bdg:
+        mst.del(bdg)
+        bdg = null
 
       

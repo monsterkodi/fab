@@ -10,6 +10,7 @@ var gameSpeed:     float = 1.0
 @onready var tmp: TrackState    = $"../TempState"
 @onready var itm: ItemState     = $"../ItemState"
 @onready var mst: MachState     = $"../MachState"
+@onready var gst: MachState     = $"../GhostState"
 
 func _ready():
     
@@ -348,26 +349,22 @@ func occupiedByRoot(posl):
                 return true
     return false
         
-func ghostForMachine(machine, material, skip=[]) -> Ghost:
+func ghostForMachine(machine, color) -> Ghost:
     
     var ghost = Ghost.new(machine.type, machine.pos, machine.orientation)
-    
+    ghost.setColor(color)
     ghost.proxy = machine
-    
-    Utils.setOverrideMaterial(machine.building, material, skip)
     
     $Ghosts.add_child(ghost)
     
     return ghost
 
-
-func ghostForType(type, material, skip = []) -> Ghost:
+func ghostForType(type, color) -> Ghost:
     
     var ghost = Ghost.new(type, Vector2i.ZERO, 0)
+    ghost.setColor(color)
     
     $Ghosts.add_child(ghost)
-    
-    Utils.setOverrideMaterial(ghost.building, material, skip)
     
     return ghost
     

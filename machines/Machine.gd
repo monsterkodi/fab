@@ -6,9 +6,9 @@ var type  : int
 var slots : Array
 var slits : Array
 var orientation = 0
-var building
 var bdg
 var fab : FabState
+var mst : MachState
 
 func _init(t, p, o):
     
@@ -24,6 +24,7 @@ func _ready():
     assert(type)
     
     fab = Utils.fabState()
+    mst = fab.mst
     
     for slit in slits:
         fab.addBeltAtPos(pos + slit.pos, Belt.INPUT[slit.dir])
@@ -38,20 +39,22 @@ func _ready():
 
 func createBuilding():
     
-    building = load("res://buildings/Building%s.tscn" % Mach.stringForType(type)).instantiate()
-    Utils.level().add_child(building)
-    building.global_position = Vector3(pos.x, 0, pos.y)
-    Utils.rotateForOrientation(building, orientation)
-    building.hide()
-    
     bdg = MachState.Building.new(type, pos, Utils.basisForOrientation(orientation))
-    fab.mst.add(bdg)
+    mst.add(bdg)
+    
+func hide():
+    
+    if bdg:
+        mst.del(bdg)
+        bdg = null
+        
+func show():
+    
+    if not bdg:
+        createBuilding()
 
 func _exit_tree():
     
-    if building:
-        building.queue_free()
-        
     if bdg:
         fab.mst.del(bdg)
         bdg = null
@@ -76,11 +79,7 @@ func rotateCW():
         slit.pos = Belt.rotatePos(slit.pos)
         slit.dir = Belt.rotateDir(slit.dir)
         
-    if building:
-        Utils.rotateCW(building)
-        
-    if bdg:
-        fab.mst.rotateBuilding(bdg)
+    if bdg: mst.rotateBuilding(bdg)
 
 func rotateAround(center: Vector2i):
 
@@ -90,9 +89,7 @@ func rotateAround(center: Vector2i):
 func setPos(p):
     
     pos = p
-    building.global_position = Vector3(pos.x, 0, pos.y)
-    
-    fab.mst.setBuildingPos(bdg, p)
+    if bdg: mst.setBuildingPos(bdg, p)
 
 func setOrientation(o : int):
     
@@ -106,12 +103,9 @@ func setOrientation(o : int):
         slit.pos = Belt.orientatePos(o, slit.pos)
         slit.dir = Belt.orientateDir(o, slit.dir)
         
-    if building:
-        Utils.rotateForOrientation(building, orientation)
-        
     if bdg:
         for i in range(o):
-            fab.mst.rotateBuilding(bdg)
+            mst.rotateBuilding(bdg)
     
 func consume(delta:float):
     

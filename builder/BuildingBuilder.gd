@@ -5,9 +5,6 @@ var ghost
 var delGhosts = []
 var unaffordable = false
 
-const GHOST_MATERIAL     = preload("uid://bqhwhtt3kc30s")
-const GHOST_RED_MATERIAL = preload("uid://b35kuqwv15nfr")
-
 func _ready():
     
     cursorShape = Control.CURSOR_CAN_DROP
@@ -30,39 +27,33 @@ func clearDelGhosts():
         dg.free()
     delGhosts.clear()
     
-func ghostMaterial(type):
+func ghostColor(type):
     
     if fab.storage.canAfford(type):
-        return GHOST_MATERIAL
+        return Color(0.15, 0.15, 1.0)
     else:
         unaffordable = true
-        return GHOST_RED_MATERIAL
+        return Color.RED
 
 func setBuilding(string):
     
     var type = Mach.typeForString(string)
-    ghost = fab.ghostForType(type, ghostMaterial(type), ["Arrow"])
+    ghost = fab.ghostForType(type, ghostColor(type))
     
 func pointerHover(pos):
     
     clearDelGhosts()        
     if ghost and ghost.is_inside_tree():
+        ghost.setColor(ghostColor(ghost.type))
         ghost.setPos(pos)
-        Utils.setOverrideMaterial(ghost.building, ghostMaterial(ghost.type), ["Arrow"])
-        #Log.log(ghost.getOccupied())
         for gp in ghost.getOccupied():
             if fab.machines.has(gp):
                 var machine = fab.machines[gp]
                 if machine.isRoot():
-                    handleRootOverlap()
-                else:
-                    delGhosts.push_back(fab.ghostForMachine(machine, GHOST_RED_MATERIAL))
+                    ghost.setColor(Color.RED)
+                elif not fab.ghostAtPos(machine.pos) or fab.ghostAtPos(machine.pos) == ghost:
+                    delGhosts.push_back(fab.ghostForMachine(machine, Color.RED))
                     
-func handleRootOverlap():
-    
-    clearDelGhosts()
-    Utils.setOverrideMaterial(ghost.building, GHOST_RED_MATERIAL)
-
 func pointerClick(pos): 
     
     if fab.occupiedByRoot(ghost.getOccupied()): return

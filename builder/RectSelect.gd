@@ -109,7 +109,7 @@ func updateGhosts(keepOld : bool = false):
                 if not newGhosts.has(machine.pos):
                     var ghost = fab.ghostAtPos(machine.pos)
                     if not ghost:
-                        ghost = fab.ghostForMachine(machine, GHOST_MATERIAL, ["Arrow"])
+                        ghost = fab.ghostForMachine(machine, Color.WHITE)
                     newGhosts[machine.pos] = ghost
                     
             if fab.beltAtPos(pos):
@@ -162,7 +162,10 @@ func posRelativeToPointer(pos : Vector2i) -> Vector2i:
 func moveGhosts(delta : Vector2i):
     
     for ghost in fab.ghosts():
+        ghost.hide()
+    for ghost in fab.ghosts():
         ghost.setPos(ghost.pos + delta)
+        ghost.show()
         
     var newTemps : Dictionary[Vector2i, int] = {}
     if fab.numTemp() > 0:
@@ -239,7 +242,7 @@ func paste():
 
     for md in data.machines:
         var mp = Vector2i(md[0] + endPos.x, md[1] + endPos.y)
-        var ghost = fab.ghostForType(md[2], GHOST_BLUE_MATERIAL, ["Arrow"])
+        var ghost = fab.ghostForType(md[2], Color(0.1, 0.1, 1.0))
         ghost.setOrientation(md[3])
         ghost.setPos(mp)
 
@@ -254,7 +257,7 @@ func paste():
 func _shortcut_input(event: InputEvent):
     
     if not event.pressed: return
-    #Log.log("event", event)
+
     if event.is_action("cut"):   cut();   get_viewport().set_input_as_handled(); return
     if event.is_action("copy"):  copy();  get_viewport().set_input_as_handled(); return
     if event.is_action("paste"): paste(); get_viewport().set_input_as_handled(); return
@@ -263,6 +266,8 @@ func pointerRotate():
     
     if isPasting:
         fab.tmp.rotateAround(endPos)
+        for ghost in fab.ghosts(): ghost.hide()
         for ghost in fab.ghosts():
             ghost.rotateAround(endPos)
+            ghost.show()
         

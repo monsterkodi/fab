@@ -9,6 +9,7 @@ class Module:
     var color : Color
     var type  : int
     var index : int = -1
+    var bpos  : Vector2i
     
 class Building:
     
@@ -27,24 +28,26 @@ class Building:
         
         for slit in Mach.slitsForType(type):
             module = Module.new()
+            module.bpos = pos
             module.color = Color.WHITE
             module.type  = Module.Type.BOX
             modules.push_back(module)
             
             module = Module.new()
-
+            module.bpos = pos
             module.color = Color(8.0, 0.0, 0.0)
             module.type  = Module.Type.ARROW
             modules.push_back(module)
             
         for slot in Mach.slotsForType(type):
             module = Module.new()
+            module.bpos = pos
             module.color = Color.WHITE
             module.type  = Module.Type.BOX
             modules.push_back(module)
 
             module = Module.new()
-
+            module.bpos = pos
             module.color = Color(0.485, 0.485, 1.825)
             module.type  = Module.Type.ARROW
             modules.push_back(module)
@@ -52,6 +55,7 @@ class Building:
         for deco in Mach.decosForType(type):
             if deco.has("type"):
                 module = Module.new()
+                module.bpos = pos
                 module.color = deco.color
                 module.type  = deco.type
                 if deco.has("basis"):
@@ -89,6 +93,8 @@ class Building:
         
         pos = p
         update()
+        for module in modules:
+            module.bpos = pos
                 
     func rotate():
         
@@ -97,38 +103,53 @@ class Building:
             
 class ModMap:
     
+    var map : Dictionary[Vector2i, Array] # building pos to module indices
     var ary : Array[Module] = []
     var msh : MultiMeshInstance3D
     var hdl
     
-    func add(module : Module):
+    func add(pos : Vector2i, module : Module):
 
-        if module.index >= 0:
-            hdl.aryChange(self, module)
-        else:
-            module.index = ary.size()
-            ary.push_back(module)
-            assert(msh.multimesh.visible_instance_count == module.index)
-            msh.multimesh.visible_instance_count += 1
-            hdl.aryChange(self, module)
+        if map.has(pos):
+            if module.index >= 0 and map[pos].find(module.index) >= 0:
+                ary[module.index] = module
+                assert(module.bpos == pos)
+                hdl.aryChange(self, module)
+                return
+
+        module.index = ary.size()
+        if not map.has(pos): map[pos] = []
+        map[pos].push_back(module.index)
+        ary.push_back(module)
+        assert(msh.multimesh.visible_instance_count == module.index)
+        msh.multimesh.visible_instance_count += 1
+        hdl.aryChange(self, module)
             
-    func del(module : Module):
-        
-        if module.index >= 0:
+    func del(pos : Vector2i):
+        if not map.has(pos): return
+        for i in range(map[pos].size()-1, -1, -1):
+            var index = map[pos][i]
+            var module = ary[index]
+            assert(module.index == index)
             if module.index < ary.size()-1: # swap with last
                 var lastModule = ary[-1]
                 module.trans = lastModule.trans
-                assert(module.type == lastModule.type)
+                module.color = lastModule.color
+                var li = map[lastModule.bpos].find(lastModule.index)
+                assert(li >= 0)
+                map[lastModule.bpos][li] = module.index
+                module.bpos  = lastModule.bpos
                 hdl.aryChange(self, module)
             ary.pop_back()
             msh.multimesh.visible_instance_count -= 1
+            assert(ary.size() == msh.multimesh.visible_instance_count)
+        map.erase(pos)
             
     func clear():
         
+        map = {}
         ary = []
         msh.multimesh.visible_instance_count = 0
-        
-    func size(): return ary.size()
         
 var modMap : Array[ModMap] = []
 
@@ -150,13 +171,13 @@ func _ready():
 func add(building : Building):
     
     for module in building.modules:
-        modMap[module.type].add(module)
+        modMap[module.type].add(building.pos, module)
     
 func del(building : Building):
     
     for module in building.modules:
-        modMap[module.type].del(module)
-    
+        modMap[module.type].del(building.pos)
+            
 func clear():
     
     for mm in modMap:
@@ -169,6 +190,7 @@ func aryChange(mm : ModMap, module : Module):
     
 func setBuildingPos(building, pos):
     
+    del(building)
     building.setPos(pos)
     add(building)
     
