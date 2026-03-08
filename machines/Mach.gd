@@ -117,3 +117,110 @@ func slotsForType(type):
                 {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E, "item": Item.Type.CubeWhite},
                 ]
     return []
+    
+func decosForType(type):
+    
+    match type:
+        
+        Type.Root:   
+            return [ 
+                {"pos": Vector3(0, 0.5, 0), "type": MachState.Module.Type.BOX,  "color": Color.MAGENTA },
+                {"pos": Vector3(0, 2.3, 0), "type": MachState.Module.Type.CUBE, "color": Color.BLACK, 
+                    "basis": Basis.from_euler(Vector3(deg_to_rad(35.5), 0, deg_to_rad(45))).scaled(Vector3(1.5,1.5,1.5)) },
+                ]
+                
+        Type.Storage: 
+            return [
+                {"pos": Vector3(0, 1.7, 0), "type": MachState.Module.Type.CYLINDER, "color": Color.BLACK,
+                    "basis": Basis.from_scale(Vector3(0.9, 0.6, 0.9))},
+                {"pos": Vector3(0, 1.2, 0), "type": MachState.Module.Type.CYLINDER, "color": Color.BLACK, 
+                    "basis": Basis.from_scale(Vector3(0.2, 0.4, 0.2))},
+                {"pos": Vector3(0, 2.045, 0), "type": MachState.Module.Type.CYLINDER_CHAMFER, "color": Color.BLACK, 
+                    "basis": Basis.from_scale(Vector3(0.9, 0.9, 0.9))},
+            ]
+            
+        Type.Prism: 
+            return [
+                {"pos": Vector3(0.1, 1, 0), "type": MachState.Module.Type.CUBE, "color": Color.BLACK, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(0.884, 1, -1), "type": MachState.Module.Type.CUBE, "color": Color.RED, 
+                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(45), 0)).scaled(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(0.884, 1,  0), "type": MachState.Module.Type.CUBE, "color": Color.GREEN, 
+                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(45), 0)).scaled(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(0.884, 1,  1), "type": MachState.Module.Type.CUBE, "color": Color.BLUE, 
+                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(45), 0)).scaled(Vector3(0.4,0.2,0.4)) },
+            ]            
+
+        Type.Mixer: 
+            return [
+                {"pos": Vector3(0.884, 1, 0), "type": MachState.Module.Type.CUBE, "color": Color.WHITE, 
+                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(45), 0)).scaled(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(0.1, 1, -1), "type": MachState.Module.Type.CUBE, "color": Color.RED, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(0.1, 1,  0), "type": MachState.Module.Type.CUBE, "color": Color.GREEN, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(0.1, 1,  1), "type": MachState.Module.Type.CUBE, "color": Color.BLUE, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+            ]            
+
+        Type.Burner: 
+            return [
+                {"pos": Vector3(0.5, 1, 0), "type": MachState.Module.Type.TORUS, "color": Color.YELLOW, 
+                    "basis": Basis.from_scale(Vector3(0.8,0.8,0.8)) },
+                ]
+
+        Type.Whitener: 
+            return [
+                {"pos": Vector3(0.1, 1, 0), "type": MachState.Module.Type.CUBE, "color": Color(0.075, 0.075, 0.075), 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(0.884, 1, 0), "type": MachState.Module.Type.CUBE, "color": Color.WHITE, 
+                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(45), 0)).scaled(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(0.0, 1.025, 0.85), "type": MachState.Module.Type.TORUS, "color": Color.YELLOW, 
+                    "basis": Basis.from_scale(Vector3(0.5,0.5,0.5)) },
+                ]
+            
+    return []
+    
+func boxTrans(slit, p : Vector3, basis : Basis) -> Transform3D:
+
+    var turns
+    match slit.dir:
+        Belt.S: turns = 0
+        Belt.W: turns = 1
+        Belt.N: turns = 2
+        Belt.E: turns = 3
+        
+    var b = basis.rotated(Vector3.UP, turns * deg_to_rad(-90))
+    return Transform3D(b, p)
+    
+func slitArrowTrans(slit, p : Vector3, basis : Basis) -> Transform3D:
+    
+    var turns
+    match slit.dir:
+        Belt.S: turns = 2
+        Belt.W: turns = 3
+        Belt.N: turns = 0
+        Belt.E: turns = 1
+        
+    var b = basis.rotated(Vector3.UP, turns * deg_to_rad(-90))
+    return Transform3D(b, p + b * slitArrowOffset())
+
+func slotArrowTrans(slot, p : Vector3, basis : Basis) -> Transform3D:
+    
+    var turns
+    match slot.dir:
+        Belt.S: turns = 0
+        Belt.W: turns = 1
+        Belt.N: turns = 2
+        Belt.E: turns = 3
+        
+    var b = basis.rotated(Vector3.UP, turns * deg_to_rad(-90))
+    return Transform3D(b, p + b * slotArrowOffset())
+    
+func slitArrowOffset() -> Vector3:
+    
+    return Vector3(0.0, 1.0, -0.1)
+
+func slotArrowOffset() -> Vector3:
+    
+    return Vector3(0.0, 1.0, 0.5)

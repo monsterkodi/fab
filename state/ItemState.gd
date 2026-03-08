@@ -130,8 +130,6 @@ func aryPop(pm : ItemMap):
 func aryClear(pm : ItemMap):             
 
     pm.msh.multimesh.visible_instance_count = 0
-    #for child in get_children():
-        #child.multimesh.visible_instance_count = 0
         
 func advanceItems(delta):
       

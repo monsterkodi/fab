@@ -11,6 +11,7 @@ func _ready():
     
     if proxy:
         building = proxy.building
+        bdg = proxy.bdg
     else:
         fab = Utils.fabState()
         createBuilding()
@@ -22,4 +23,8 @@ func _exit_tree():
     else:
         if building:
             building.queue_free()
+        if bdg:
+            Utils.fabState().mst.del(bdg)
+            bdg = null
+
       

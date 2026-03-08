@@ -42,9 +42,10 @@ func createBuilding():
     Utils.level().add_child(building)
     building.global_position = Vector3(pos.x, 0, pos.y)
     Utils.rotateForOrientation(building, orientation)
+    building.hide()
     
-    #bdg = MachState.Building.new(type, pos, Utils.basisForOrientation(orientation))
-    #fab.mst.add(bdg)
+    bdg = MachState.Building.new(type, pos, Utils.basisForOrientation(orientation))
+    fab.mst.add(bdg)
 
 func _exit_tree():
     
@@ -53,6 +54,7 @@ func _exit_tree():
         
     if bdg:
         fab.mst.del(bdg)
+        bdg = null
         
     for slot in slots:
         fab.delBeltAtPos(pos + slot.pos)
@@ -76,6 +78,9 @@ func rotateCW():
         
     if building:
         Utils.rotateCW(building)
+        
+    if bdg:
+        fab.mst.rotateBuilding(bdg)
 
 func rotateAround(center: Vector2i):
 
@@ -86,6 +91,8 @@ func setPos(p):
     
     pos = p
     building.global_position = Vector3(pos.x, 0, pos.y)
+    
+    fab.mst.setBuildingPos(bdg, p)
 
 func setOrientation(o : int):
     
@@ -101,6 +108,10 @@ func setOrientation(o : int):
         
     if building:
         Utils.rotateForOrientation(building, orientation)
+        
+    if bdg:
+        for i in range(o):
+            fab.mst.rotateBuilding(bdg)
     
 func consume(delta:float):
     
