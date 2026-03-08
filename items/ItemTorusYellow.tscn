@@ -9,7 +9,7 @@ ring_segments = 16
 
 [node name="ItemTorus" type="Node3D" unique_id=2093146499]
 script = ExtResource("1_vg8fp")
-color = Color(1, 1, 0, 1)
+color = Color(1, 0.69411767, 0, 1)
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=1858053179]
 mesh = SubResource("TorusMesh_vg8fp")

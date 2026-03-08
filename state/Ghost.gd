@@ -13,7 +13,8 @@ func _ready():
     if proxy:
         proxy.hide()
 
-    mst = Utils.fabState().gst
+    fab = get_parent().get_parent()
+    mst = fab.gst
     createBuilding()
     
 func setColor(c : Color): 

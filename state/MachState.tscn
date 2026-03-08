@@ -6,16 +6,19 @@
 [ext_resource type="Material" uid="uid://ci4cvsq2gbob7" path="res://materials/BuildingMaterial.tres" id="3_itdi5"]
 
 [sub_resource type="MultiMesh" id="MultiMesh_56hdc"]
+resource_local_to_scene = true
 transform_format = 1
 use_colors = true
 
 [sub_resource type="MultiMesh" id="MultiMesh_i413n"]
+resource_local_to_scene = true
 transform_format = 1
 use_colors = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_f2do6"]
 
 [sub_resource type="MultiMesh" id="MultiMesh_ivwl2"]
+resource_local_to_scene = true
 transform_format = 1
 use_colors = true
 mesh = SubResource("BoxMesh_f2do6")
@@ -27,6 +30,7 @@ rings = 32
 ring_segments = 16
 
 [sub_resource type="MultiMesh" id="MultiMesh_itdi5"]
+resource_local_to_scene = true
 transform_format = 1
 use_colors = true
 mesh = SubResource("TorusMesh_wmqta")
@@ -34,6 +38,7 @@ mesh = SubResource("TorusMesh_wmqta")
 [sub_resource type="SphereMesh" id="SphereMesh_56hdc"]
 
 [sub_resource type="MultiMesh" id="MultiMesh_1ydo3"]
+resource_local_to_scene = true
 transform_format = 1
 use_colors = true
 mesh = SubResource("SphereMesh_56hdc")
@@ -44,6 +49,7 @@ radial_segments = 24
 rings = 1
 
 [sub_resource type="MultiMesh" id="MultiMesh_1lep4"]
+resource_local_to_scene = true
 transform_format = 1
 use_colors = true
 mesh = SubResource("CylinderMesh_ivwl2")
@@ -55,6 +61,7 @@ radial_segments = 24
 rings = 1
 
 [sub_resource type="MultiMesh" id="MultiMesh_nanrv"]
+resource_local_to_scene = true
 transform_format = 1
 use_colors = true
 mesh = SubResource("CylinderMesh_1ydo3")

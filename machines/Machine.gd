@@ -23,13 +23,15 @@ func _ready():
     
     assert(type)
     
-    fab = Utils.fabState()
+    fab = get_parent().get_parent()
     mst = fab.mst
     
     for slit in slits:
+        slit.idle = 0
         fab.addBeltAtPos(pos + slit.pos, Belt.INPUT[slit.dir])
 
     for slot in slots:
+        slot.idle = 0
         fab.addBeltAtPos(pos + slot.pos, Belt.OUTPUT[slot.dir])
         
     for opos in getOccupied():
@@ -117,6 +119,16 @@ func consume(delta:float):
         if item:
             if consumeItemAtSlit(item, slit):
                 fab.delItem(item)
+                if slits[i].idle:
+                    slits[i].idle = 0
+                    if bdg:
+                        bdg.modules[2*i + 1].color = Color(0.025, 0.025, 0.025)
+                        mst.add(bdg)
+        else:
+            slits[i].idle += 1
+            if bdg and slits[i].idle == 120:
+                bdg.modules[2*i + 1].color = Color(2, 0, 0)
+                mst.add(bdg)
     
 func advanceAtSlotIndex(i):
     
@@ -133,6 +145,16 @@ func produce(delta:float):
             if item:
                 item.advance = minf(advance, adv)
                 fab.addItem(pos + slots[i].pos, Belt.OPPOSITE[slots[i].dir], item)
+                if slots[i].idle:
+                    slots[i].idle = 0
+                    if bdg:
+                        bdg.modules[slits.size() * 2 + 2*i + 1].color = Color(0.025, 0.025, 0.025)
+                        mst.add(bdg)
+        else:
+            slots[i].idle += 1
+            if bdg and slots[i].idle == 120:
+                bdg.modules[slits.size() * 2 + 2*i + 1].color = Color(0.2, 0.2, 2.825)
+                mst.add(bdg)
         
 func produceItemAtSlot(slot): return null
 func consumeItemAtSlit(item, slit): return false

@@ -10,6 +10,9 @@ func _ready():
     if not DirAccess.dir_exists_absolute("res://icons/buildings/"):
         DirAccess.make_dir_recursive_absolute("res://icons/buildings/")
 
+    if not DirAccess.dir_exists_absolute("res://icons/machines/"):
+        DirAccess.make_dir_recursive_absolute("res://icons/machines/")
+
     if not DirAccess.dir_exists_absolute("res://icons/items/"):
         DirAccess.make_dir_recursive_absolute("res://icons/items/")
         
@@ -20,6 +23,10 @@ func _ready():
     for res in Utils.resourcesInDir("res://items/"):    
         if res is PackedScene:
             generateIcon(res, "res://icons/items/")
+            
+    #for type in Mach.Types:
+        #if type == Mach.Type.Whitener:
+            #generateMachineIcon(type)
         
 func get_full_aabb(node: Node3D) -> AABB:
     
@@ -80,3 +87,28 @@ func generateIcon(itemRes : PackedScene, path: String):
         push_error("Failed to save icon: ", error, iconPath)
     else:
         print("icon: ", iconPath)
+
+func generateMachineIcon(type : Mach.Type):
+
+    var container = %Container.duplicate()
+    var viewport = container.get_node("Viewport")
+    var camera : Camera3D  = viewport.get_node("Camera")
+
+    %Grid.add_child(container)
+    
+    var fab : FabState = viewport.get_node("Level/FabState")
+    
+    fab.addMachineAtPosOfType(Vector2i.ZERO, type)
+
+    frame_camera_on_item(camera, fab.mst)
+    
+    await RenderingServer.frame_post_draw # wait for the frame to render
+    
+    var iconPath = "res://icons/machines/" + Mach.stringForType(type) + ".png"
+    var error = viewport.get_texture().get_image().save_png(iconPath)
+    if error != OK:
+        push_error("Failed to save icon: ", error, iconPath)
+    else:
+        print("icon: ", iconPath)
+
+    fab.delMachineAtPos(Vector2i.ZERO)

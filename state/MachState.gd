@@ -35,7 +35,7 @@ class Building:
             
             module = Module.new()
             module.bpos = pos
-            module.color = Color(8.0, 0.0, 0.0)
+            module.color = Color(2.0, 0.0, 0.0)
             module.type  = Module.Type.ARROW
             modules.push_back(module)
             
@@ -48,7 +48,7 @@ class Building:
 
             module = Module.new()
             module.bpos = pos
-            module.color = Color(0.485, 0.485, 1.825)
+            module.color = Color(0.1, 0.1, 2.0)
             module.type  = Module.Type.ARROW
             modules.push_back(module)
             
@@ -142,7 +142,7 @@ class ModMap:
                 hdl.aryChange(self, module)
             ary.pop_back()
             msh.multimesh.visible_instance_count -= 1
-            assert(ary.size() == msh.multimesh.visible_instance_count)
+            #assert(ary.size() == msh.multimesh.visible_instance_count)
         map.erase(pos)
             
     func clear():

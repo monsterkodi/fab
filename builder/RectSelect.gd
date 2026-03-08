@@ -10,7 +10,6 @@ var isPasting := false
 const MAX_SIZE = 10000
 
 const GHOST_MATERIAL      = preload("uid://b0use4n8rmlgb")
-const GHOST_BLUE_MATERIAL = preload("uid://bqhwhtt3kc30s")
 
 func _init():
     

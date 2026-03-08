@@ -21,12 +21,12 @@ var TypeNames : Array[String]
 var TypeMap   : Dictionary[String, Type]
 
 var TypeInfo = [
-    [Shape.Cube,  Color.BLACK,  0.1],
-    [Shape.Cube,  Color.RED,    0.05],
-    [Shape.Cube,  Color.GREEN,  0.05],
-    [Shape.Cube,  Color.BLUE,   0.05],
-    [Shape.Cube,  Color.WHITE,  0.5],
-    [Shape.Torus, Color.YELLOW, 1.0],
+    [Shape.Cube,  Color.BLACK,      0.1],
+    [Shape.Cube,  Color.RED,        0.05],
+    [Shape.Cube,  Color.GREEN,      0.05],
+    [Shape.Cube,  Color.BLUE,       0.05],
+    [Shape.Cube,  Color.WHITE,      0.5],
+    [Shape.Torus, Color.ORANGE_RED, 1.0],
 ]
 
 func _init():

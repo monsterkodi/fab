@@ -5,13 +5,16 @@ extends Node3D
 
 func _ready():
     
-    fabState.addMachineAtPosOfType(Vector2i(0,0), Mach.Type.Root)
+    Post.subscribe(fabState)
     
     set_process(false)
+    
+func newGame():
+    
+    fabState.addMachineAtPosOfType(Vector2i(0,0), Mach.Type.Root)
         
 func start():
     
-    add_to_group("game")
     set_process(true)
     Post.subscribe(self)
     

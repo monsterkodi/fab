@@ -18,6 +18,9 @@ func _ready():
     %MusicHandler.playMenuMusic()
     get_tree().paused = true
     
+    if $IconHandler.visible:
+        return
+    
     if Saver.getSaveGame(): # bypass main menu when savegame exists
         Post.continueGame.emit()
         return
@@ -62,7 +65,6 @@ func pauseGame():
     
     %MenuHandler.slideOutTop(%Hud)
     
-    get_tree().call_group("game", "gamePaused")
     get_tree().paused = true
     Post.gamePaused.emit()
            
@@ -73,7 +75,6 @@ func resumeGame():
     %MenuHandler.slideInTop(%Hud)
     
     get_tree().paused = false
-    get_tree().call_group("game", "gameResumed")
     Post.gameResume.emit()
         
 func quitGame():
