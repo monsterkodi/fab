@@ -18,12 +18,11 @@ func _ready():
     %MusicHandler.playMenuMusic()
     get_tree().paused = true
     
-    if $IconHandler.visible:
-        return
+    if not $IconHandler.visible:
     
-    if Saver.getSaveGame(): # bypass main menu when savegame exists
-        Post.continueGame.emit()
-        return
+        if Saver.getSaveGame(): # bypass main menu when savegame exists
+            Post.continueGame.emit()
+            return
         
     %MenuHandler.appear(%MainMenu)
     

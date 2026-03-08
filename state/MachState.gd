@@ -35,7 +35,8 @@ class Building:
             
             module = Module.new()
             module.bpos = pos
-            module.color = Color(2.0, 0.0, 0.0)
+            #module.color = Color(2.0, 0.0, 0.0)
+            module.color = Color(0.085, 0.085, 0.085)
             module.type  = Module.Type.ARROW
             modules.push_back(module)
             
@@ -48,7 +49,8 @@ class Building:
 
             module = Module.new()
             module.bpos = pos
-            module.color = Color(0.1, 0.1, 2.0)
+            #module.color = Color(0.1, 0.1, 2.0)
+            module.color = Color(0.085, 0.085, 0.085)
             module.type  = Module.Type.ARROW
             modules.push_back(module)
             

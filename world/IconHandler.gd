@@ -24,9 +24,15 @@ func _ready():
         if res is PackedScene:
             generateIcon(res, "res://icons/items/")
             
-    #for type in Mach.Types:
-        #if type == Mach.Type.Whitener:
-            #generateMachineIcon(type)
+    Post.subscribe(self)
+    
+func levelStart():
+            
+    for type in Mach.Types:
+        if type:
+            generateMachineIcon(type)
+            await RenderingServer.frame_post_draw
+            await RenderingServer.frame_post_draw
         
 func get_full_aabb(node: Node3D) -> AABB:
     
@@ -88,6 +94,24 @@ func generateIcon(itemRes : PackedScene, path: String):
     else:
         print("icon: ", iconPath)
 
+func frame_camera_on_machine(camera: Camera3D, item: Node3D, type : Mach.Type):
+    
+    var aabb   = get_full_aabb(item)
+    var center = aabb.get_center()
+    var length = aabb.size.length()
+    length = (maxf(aabb.size.z, maxf(aabb.size.x, aabb.size.y)) + length)/2
+    #Log.log(length, aabb.size.length(), item.scene_file_path)
+    var distance = (length / 2.0) / tan(deg_to_rad(camera.fov) / 2.0)
+    
+    distance *= 1.1
+    
+    camera.position = center + Vector3(0, 0.5, 0.2).normalized() * distance
+    
+    match type:
+        Mach.Type.Root : center.y -= 1
+    
+    camera.look_at(center)        
+
 func generateMachineIcon(type : Mach.Type):
 
     var container = %Container.duplicate()
@@ -95,12 +119,17 @@ func generateMachineIcon(type : Mach.Type):
     var camera : Camera3D  = viewport.get_node("Camera")
 
     %Grid.add_child(container)
+    var level = Utils.level()
+    var oldParent = level.get_parent()
+    oldParent.remove_child(level)
+    viewport.add_child(level)
+    level.get_node("Floor").hide()
     
-    var fab : FabState = viewport.get_node("Level/FabState")
+    var fab : FabState = level.get_node("FabState")
     
     fab.addMachineAtPosOfType(Vector2i.ZERO, type)
 
-    frame_camera_on_item(camera, fab.mst)
+    frame_camera_on_machine(camera, fab.mst, type)
     
     await RenderingServer.frame_post_draw # wait for the frame to render
     
@@ -112,3 +141,7 @@ func generateMachineIcon(type : Mach.Type):
         print("icon: ", iconPath)
 
     fab.delMachineAtPos(Vector2i.ZERO)
+    viewport.remove_child(level)
+    oldParent.add_child(level)
+    level.get_node("Floor").show()
+    
