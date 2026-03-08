@@ -141,42 +141,42 @@ func decosForType(type):
             
         Type.Prism: 
             return [
-                {"pos": Vector3(0.1, 1, 0), "type": MachState.Module.Type.CUBE, "color": Color.BLACK, 
+                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.CUBE, "color": Color.BLACK, 
                     "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
-                {"pos": Vector3(0.884, 1, -1), "type": MachState.Module.Type.CUBE, "color": Color.RED, 
-                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(45), 0)).scaled(Vector3(0.4,0.2,0.4)) },
-                {"pos": Vector3(0.884, 1,  0), "type": MachState.Module.Type.CUBE, "color": Color.GREEN, 
-                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(45), 0)).scaled(Vector3(0.4,0.2,0.4)) },
-                {"pos": Vector3(0.884, 1,  1), "type": MachState.Module.Type.CUBE, "color": Color.BLUE, 
-                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(45), 0)).scaled(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(1, 1, -1), "type": MachState.Module.Type.CUBE, "color": Color.RED, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(1, 1,  0), "type": MachState.Module.Type.CUBE, "color": Color.GREEN, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(1, 1,  1), "type": MachState.Module.Type.CUBE, "color": Color.BLUE, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
             ]            
 
         Type.Mixer: 
             return [
-                {"pos": Vector3(0.884, 1, 0), "type": MachState.Module.Type.CUBE, "color": Color.WHITE, 
-                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(45), 0)).scaled(Vector3(0.4,0.2,0.4)) },
-                {"pos": Vector3(0.1, 1, -1), "type": MachState.Module.Type.CUBE, "color": Color.RED, 
+                {"pos": Vector3(1, 1, 0), "type": MachState.Module.Type.CUBE, "color": Color.WHITE, 
                     "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
-                {"pos": Vector3(0.1, 1,  0), "type": MachState.Module.Type.CUBE, "color": Color.GREEN, 
+                {"pos": Vector3(0, 1, -1), "type": MachState.Module.Type.CUBE, "color": Color.RED, 
                     "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
-                {"pos": Vector3(0.1, 1,  1), "type": MachState.Module.Type.CUBE, "color": Color.BLUE, 
+                {"pos": Vector3(0, 1,  0), "type": MachState.Module.Type.CUBE, "color": Color.GREEN, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(0, 1,  1), "type": MachState.Module.Type.CUBE, "color": Color.BLUE, 
                     "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
             ]            
 
         Type.Burner: 
             return [
-                {"pos": Vector3(0.5, 1, 0), "type": MachState.Module.Type.TORUS, "color": Color.ORANGE_RED, 
+                {"pos": Vector3(1, 1, 0), "type": MachState.Module.Type.TORUS, "color": Color.ORANGE_RED, 
                     "basis": Basis.from_scale(Vector3(0.8,0.8,0.8)) },
                 ]
 
         Type.Whitener: 
             return [
-                {"pos": Vector3(0.1, 1, 0), "type": MachState.Module.Type.CUBE, "color": Color(0.075, 0.075, 0.075), 
+                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.CUBE, "color": Color(0.075, 0.075, 0.075), 
                     "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
-                {"pos": Vector3(0.884, 1, 0), "type": MachState.Module.Type.CUBE, "color": Color.WHITE, 
-                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(45), 0)).scaled(Vector3(0.4,0.2,0.4)) },
-                {"pos": Vector3(0.0, 1.025, 0.85), "type": MachState.Module.Type.TORUS, "color": Color.ORANGE_RED, 
-                    "basis": Basis.from_scale(Vector3(0.5,0.5,0.5)) },
+                {"pos": Vector3(1, 1, 0), "type": MachState.Module.Type.CUBE, "color": Color.WHITE, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(0, 1.025, 1), "type": MachState.Module.Type.TORUS, "color": Color.ORANGE_RED, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.4,0.4)) },
                 ]
             
     return []
@@ -219,8 +219,8 @@ func slotArrowTrans(slot, p : Vector3, basis : Basis) -> Transform3D:
     
 func slitArrowOffset() -> Vector3:
     
-    return Vector3(0.0, 1.0, -0.1)
+    return Vector3(0.0, 0.901, -0.2)
 
 func slotArrowOffset() -> Vector3:
     
-    return Vector3(0.0, 1.0, 0.5)
+    return Vector3(0.0, 0.901, 0.5)

@@ -122,12 +122,14 @@ func consume(delta:float):
                 if slits[i].idle:
                     slits[i].idle = 0
                     if bdg:
-                        bdg.modules[2*i + 1].color = Color(0.025, 0.025, 0.025)
+                        bdg.modules[2*i + 1].color = Color(0.085, 0.085, 0.085)
+                        bdg.modules[2*i + 1].trans.origin.y = 0.9
                         mst.add(bdg)
         else:
             slits[i].idle += 1
             if bdg and slits[i].idle == 120:
                 bdg.modules[2*i + 1].color = Color(2, 0, 0)
+                bdg.modules[2*i + 1].trans.origin.y = 0.901
                 mst.add(bdg)
     
 func advanceAtSlotIndex(i):
@@ -148,12 +150,18 @@ func produce(delta:float):
                 if slots[i].idle:
                     slots[i].idle = 0
                     if bdg:
-                        bdg.modules[slits.size() * 2 + 2*i + 1].color = Color(0.025, 0.025, 0.025)
+                        bdg.modules[slits.size() * 2 + 2*i + 1].color = Color(0.085, 0.085, 0.085)
+                        bdg.modules[slits.size() * 2 + 2*i + 1].trans.origin.y = 0.9
                         mst.add(bdg)
         else:
             slots[i].idle += 1
             if bdg and slots[i].idle == 120:
-                bdg.modules[slits.size() * 2 + 2*i + 1].color = Color(0.2, 0.2, 2.825)
+                bdg.modules[slits.size() * 2 + 2*i + 1].color = Color(0.3, 0.3, 4)
+                bdg.modules[slits.size() * 2 + 2*i + 1].trans.origin.y = 0.901
+                mst.add(bdg)
+            elif bdg and slots[i].idle == 240:
+                slots[i].idle = 100
+                bdg.modules[slits.size() * 2 + 2*i + 1].color = Color(0.085, 0.085, 0.085)
                 mst.add(bdg)
         
 func produceItemAtSlot(slot): return null

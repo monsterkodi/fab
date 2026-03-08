@@ -9,14 +9,14 @@ func _ready():
     
     set_process(false)
     
-func newGame():
+func initGame():
     
     fabState.addMachineAtPosOfType(Vector2i(0,0), Mach.Type.Root)
         
 func start():
     
-    set_process(true)
     Post.subscribe(self)
+    set_process(true)
     
 func gamePaused():
     

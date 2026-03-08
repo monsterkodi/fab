@@ -142,7 +142,7 @@ class ModMap:
                 hdl.aryChange(self, module)
             ary.pop_back()
             msh.multimesh.visible_instance_count -= 1
-            #assert(ary.size() == msh.multimesh.visible_instance_count)
+            assert(ary.size() == msh.multimesh.visible_instance_count)
         map.erase(pos)
             
     func clear():
@@ -158,7 +158,7 @@ var modMap : Array[ModMap] = []
 func _ready():
     
     get_child(0).multimesh.mesh = MachMeshes.regal(1.0, 1.0, 1.0, 0.2, 0.5)
-    get_child(1).multimesh.mesh = MachMeshes.arrow(0.6, 0.2, 0.33)
+    get_child(1).multimesh.mesh = MachMeshes.arrow(0.4, 0.2, 0.5)
     
     for child in get_children():
         child.multimesh.instance_count = 1000

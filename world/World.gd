@@ -102,6 +102,8 @@ func loadLevel(levelRes, load = true):
     
     if load:
         Saver.loadGame()
+    else:
+        currentLevel.initGame()
 
     Post.levelStart.emit()
     resumeGame()

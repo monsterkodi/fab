@@ -12,14 +12,6 @@ var gameSpeed:     float = 1.0
 @onready var mst: MachState     = $"../MachState"
 @onready var gst: MachState     = $"../GhostState"
 
-#func _ready():
-    #
-    #Post.subscribe(self)
-    #
-#func newGame():
-    #
-    #storage.reset()
-    
 func sinkAtPosCanTakeItem(pos: Vector2i, item : Item.Inst):
     
     assert(machines.has(pos))
