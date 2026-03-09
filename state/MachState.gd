@@ -4,12 +4,14 @@ extends Node3D
 class Module:
     
     enum Type { BOX, ARROW, CUBE, TORUS, SPHERE, CYLINDER, CYLINDER_CHAMFER }
+    enum Kind { NONE, SLIT, SLOT }
     
     var trans : Transform3D
     var color : Color
     var type  : int
     var index : int = -1
     var bpos  : Vector2i
+    var kind  : int = Module.Kind.NONE
     
 class Building:
     
@@ -38,6 +40,7 @@ class Building:
             #module.color = Color(2.0, 0.0, 0.0)
             module.color = Color(0.085, 0.085, 0.085)
             module.type  = Module.Type.ARROW
+            module.kind  = Module.Kind.SLIT
             modules.push_back(module)
             
         for slot in Mach.slotsForType(type):
@@ -52,6 +55,7 @@ class Building:
             #module.color = Color(0.1, 0.1, 2.0)
             module.color = Color(0.085, 0.085, 0.085)
             module.type  = Module.Type.ARROW
+            module.kind  = Module.Kind.SLOT
             modules.push_back(module)
             
         for deco in Mach.decosForType(type):

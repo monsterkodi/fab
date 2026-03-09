@@ -32,22 +32,22 @@ var TypeNames : Array[String]
 var TypeMap   : Dictionary[String, Type]
 
 var TypeInfo = [                        # energy
-    [Shape.Cube,      Color.BLACK,      0.1],
-    [Shape.Cube,      Color.RED,        0.05],
-    [Shape.Cube,      Color.GREEN,      0.05],
-    [Shape.Cube,      Color.BLUE,       0.05],
-    [Shape.Cube,      Color.WHITE,      0.5],
-    [Shape.Cylinder,  Color.BLACK,      0.2],
-    [Shape.Cylinder,  Color.RED,        0.5],
-    [Shape.Cylinder,  Color.GREEN,      0.5],
-    [Shape.Cylinder,  Color.BLUE,       0.5],
-    [Shape.Cylinder,  Color.WHITE,      2.0],
-    [Shape.Sphere,    Color.BLACK,      0.3],
-    [Shape.Sphere,    Color.RED,        0.5],
-    [Shape.Sphere,    Color.GREEN,      0.5],
-    [Shape.Sphere,    Color.BLUE,       0.5],
-    [Shape.Sphere,    Color.WHITE,      3.0],
-    [Shape.Torus,     Color.ORANGE_RED, 1.0],
+    [Shape.Cube,      COLOR.ITEM_BLACK,      0.1],
+    [Shape.Cube,      COLOR.ITEM_RED,        0.05],
+    [Shape.Cube,      COLOR.ITEM_GREEN,      0.05],
+    [Shape.Cube,      COLOR.ITEM_BLUE,       0.05],
+    [Shape.Cube,      COLOR.ITEM_WHITE,      0.5],
+    [Shape.Cylinder,  COLOR.ITEM_BLACK,      0.2],
+    [Shape.Cylinder,  COLOR.ITEM_RED,        0.5],
+    [Shape.Cylinder,  COLOR.ITEM_GREEN,      0.5],
+    [Shape.Cylinder,  COLOR.ITEM_BLUE,       0.5],
+    [Shape.Cylinder,  COLOR.ITEM_WHITE,      2.0],
+    [Shape.Sphere,    COLOR.ITEM_BLACK,      0.3],
+    [Shape.Sphere,    COLOR.ITEM_RED,        0.5],
+    [Shape.Sphere,    COLOR.ITEM_GREEN,      0.5],
+    [Shape.Sphere,    COLOR.ITEM_BLUE,       0.5],
+    [Shape.Sphere,    COLOR.ITEM_WHITE,      3.0],
+    [Shape.Torus,     COLOR.ENERGY,          1.0],
 ]
 
 func _init():

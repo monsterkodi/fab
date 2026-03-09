@@ -22,7 +22,12 @@ func setColor(c : Color):
     color = c
     if bdg:
         for module in bdg.modules:
-            if module.type != MachState.Module.Type.ARROW:
+            if module.type == MachState.Module.Type.ARROW:
+                if module.kind == MachState.Module.Kind.SLIT:
+                    module.color = Color(4,0,0)
+                elif module.kind == MachState.Module.Kind.SLOT:
+                    module.color = Color(0.3,0.3,4)
+            else:
                 module.color = color
         mst.add(bdg)
     

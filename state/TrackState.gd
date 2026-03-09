@@ -231,10 +231,6 @@ func aryClear(pm : PosMap):
     for child in get_children():
         child.multimesh.visible_instance_count = 0
         
-#func setBeltColors():        setColors(Color(0.15, 0.15, 0.15), Color(0.75, 0.75, 3.0))
-#func setBeltBuilderColors(): setColors(Color(0.368, 0.38, 1.0, 1.0), Color(0.238, 0.238, 0.61, 1.0))
-#func setRectSelectColors():  setColors(Color(0.829, 0.829, 0.829, 1.0), Color(0.461, 0.461, 0.461, 1.0))
-#
 func setBeltColors():        setColors(Color(0.15, 0.15, 0.15), Color(0.1,0.1,0.1))
 func setBeltBuilderColors(): setColors(Color(0.368, 0.38, 1.0), Color(0.75, 0.75, 3.0))
 func setRectSelectColors():  setColors(Color(0.829, 0.829, 0.829), Color(0.2, 0.2, 0.2))
