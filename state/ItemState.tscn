@@ -11,23 +11,39 @@ transform_format = 1
 use_colors = true
 mesh = SubResource("BoxMesh_f2do6")
 
-[sub_resource type="TorusMesh" id="TorusMesh_wmqta"]
-inner_radius = 0.06
-outer_radius = 0.165
-rings = 32
-ring_segments = 16
+[sub_resource type="CylinderMesh" id="CylinderMesh_wmqta"]
+top_radius = 0.18
+bottom_radius = 0.18
+height = 0.3
+radial_segments = 16
+rings = 1
 
-[sub_resource type="MultiMesh" id="MultiMesh_i413n"]
+[sub_resource type="MultiMesh" id="MultiMesh_jada8"]
 transform_format = 1
 use_colors = true
-mesh = SubResource("TorusMesh_wmqta")
+mesh = SubResource("CylinderMesh_wmqta")
 
 [sub_resource type="SphereMesh" id="SphereMesh_56hdc"]
+radius = 0.2
+height = 0.4
+radial_segments = 24
+rings = 12
 
 [sub_resource type="MultiMesh" id="MultiMesh_laaeo"]
 transform_format = 1
 use_colors = true
 mesh = SubResource("SphereMesh_56hdc")
+
+[sub_resource type="TorusMesh" id="TorusMesh_wmqta"]
+inner_radius = 0.055
+outer_radius = 0.17
+rings = 24
+ring_segments = 8
+
+[sub_resource type="MultiMesh" id="MultiMesh_i413n"]
+transform_format = 1
+use_colors = true
+mesh = SubResource("TorusMesh_wmqta")
 
 [node name="ItemState" type="Node3D" unique_id=774702764]
 script = ExtResource("1_wmqta")
@@ -36,10 +52,14 @@ script = ExtResource("1_wmqta")
 material_override = ExtResource("2_i413n")
 multimesh = SubResource("MultiMesh_56hdc")
 
-[node name="Torus" type="MultiMeshInstance3D" parent="." unique_id=1097694713]
+[node name="Cylinder" type="MultiMeshInstance3D" parent="." unique_id=1511235029]
 material_override = ExtResource("2_i413n")
-multimesh = SubResource("MultiMesh_i413n")
+multimesh = SubResource("MultiMesh_jada8")
 
 [node name="Sphere" type="MultiMeshInstance3D" parent="." unique_id=239357612]
 material_override = ExtResource("2_i413n")
 multimesh = SubResource("MultiMesh_laaeo")
+
+[node name="Torus" type="MultiMeshInstance3D" parent="." unique_id=1097694713]
+material_override = ExtResource("2_i413n")
+multimesh = SubResource("MultiMesh_i413n")

@@ -20,9 +20,9 @@ func _ready():
         if res is PackedScene: 
             generateIcon(res, "res://icons/buildings/")
 
-    for res in Utils.resourcesInDir("res://items/"):    
-        if res is PackedScene:
-            generateIcon(res, "res://icons/items/")
+    #for res in Utils.resourcesInDir("res://items/"):    
+        #if res is PackedScene:
+            #generateIcon(res, "res://icons/items/")
             
     Post.subscribe(self)
     
@@ -33,6 +33,11 @@ func levelStart():
             generateMachineIcon(type)
             await RenderingServer.frame_post_draw
             await RenderingServer.frame_post_draw
+            
+    for type in Item.Types:
+        generateItemIcon(type)
+        await RenderingServer.frame_post_draw
+        await RenderingServer.frame_post_draw
         
 func get_full_aabb(node: Node3D) -> AABB:
     
@@ -59,7 +64,7 @@ func get_full_aabb(node: Node3D) -> AABB:
         
     return total_aabb    
     
-func frame_camera_on_item(camera: Camera3D, item: Node3D):
+func frame_camera(camera: Camera3D, item: Node3D):
     
     var aabb   = get_full_aabb(item)
     var center = aabb.get_center()
@@ -83,7 +88,7 @@ func generateIcon(itemRes : PackedScene, path: String):
     viewport.add_child(item)
     %Grid.add_child(container)
 
-    frame_camera_on_item(camera, item)
+    frame_camera(camera, item)
     
     await RenderingServer.frame_post_draw # wait for the frame to render
     
@@ -145,3 +150,45 @@ func generateMachineIcon(type : Mach.Type):
     oldParent.add_child(level)
     level.get_node("Floor").show()
     
+func frame_camera_on_item(camera: Camera3D, type : Item.Type):
+    
+    var center = Vector3(-0.5, 0.5, 0)
+    camera.position = center + Vector3(1, 1, 1).normalized() * 1.5
+    camera.look_at(center)        
+    
+func generateItemIcon(type : Item.Type):
+
+    var container = %Container.duplicate()
+    var viewport = container.get_node("Viewport")
+    var camera : Camera3D  = viewport.get_node("Camera")
+
+    %Grid.add_child(container)
+    var level = Utils.level()
+    var oldParent = level.get_parent()
+    oldParent.remove_child(level)
+    viewport.add_child(level)
+    level.get_node("Floor").hide()
+    level.get_node("TrackState").hide()
+    var fab : FabState = level.get_node("FabState")
+    
+    fab.addBeltAtPos(Vector2.ZERO, Belt.I_W | Belt.O_E)
+    var item = Item.Inst.new(type)
+    fab.addItem(Vector2.ZERO, Belt.W, item)
+
+    frame_camera_on_item(camera, type)
+    
+    await RenderingServer.frame_post_draw # wait for the frame to render
+    await RenderingServer.frame_post_draw # wait for the frame to render
+    
+    var iconPath = "res://icons/items/" + Item.stringForType(type) + ".png"
+    var error = viewport.get_texture().get_image().save_png(iconPath)
+    if error != OK:
+        push_error("Failed to save icon: ", error, iconPath)
+    else:
+        print("icon: ", iconPath)
+
+    fab.delBeltAtPos(Vector2i.ZERO)
+    viewport.remove_child(level)
+    oldParent.add_child(level)
+    level.get_node("Floor").show()
+    level.get_node("TrackState").show()

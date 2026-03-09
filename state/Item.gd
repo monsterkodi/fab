@@ -7,26 +7,47 @@ enum Type {
     CubeGreen,
     CubeBlue,
     CubeWhite,
+    CylinderBlack,
+    CylinderRed,
+    CylinderGreen,
+    CylinderBlue,
+    CylinderWhite,
+    SphereBlack,
+    SphereRed,
+    SphereGreen,
+    SphereBlue,
+    SphereWhite,
     TorusYellow,
 }
 
 enum Shape {
     Cube,
-    Torus,
+    Cylinder,
     Sphere,
+    Torus,
 }
 
 var Types     : Array[Type]
 var TypeNames : Array[String]
 var TypeMap   : Dictionary[String, Type]
 
-var TypeInfo = [
-    [Shape.Cube,  Color.BLACK,      0.1],
-    [Shape.Cube,  Color.RED,        0.05],
-    [Shape.Cube,  Color.GREEN,      0.05],
-    [Shape.Cube,  Color.BLUE,       0.05],
-    [Shape.Cube,  Color.WHITE,      0.5],
-    [Shape.Torus, Color.ORANGE_RED, 1.0],
+var TypeInfo = [                        # energy
+    [Shape.Cube,      Color.BLACK,      0.1],
+    [Shape.Cube,      Color.RED,        0.05],
+    [Shape.Cube,      Color.GREEN,      0.05],
+    [Shape.Cube,      Color.BLUE,       0.05],
+    [Shape.Cube,      Color.WHITE,      0.5],
+    [Shape.Cylinder,  Color.BLACK,      0.2],
+    [Shape.Cylinder,  Color.RED,        0.5],
+    [Shape.Cylinder,  Color.GREEN,      0.5],
+    [Shape.Cylinder,  Color.BLUE,       0.5],
+    [Shape.Cylinder,  Color.WHITE,      2.0],
+    [Shape.Sphere,    Color.BLACK,      0.3],
+    [Shape.Sphere,    Color.RED,        0.5],
+    [Shape.Sphere,    Color.GREEN,      0.5],
+    [Shape.Sphere,    Color.BLUE,       0.5],
+    [Shape.Sphere,    Color.WHITE,      3.0],
+    [Shape.Torus,     Color.ORANGE_RED, 1.0],
 ]
 
 func _init():

@@ -10,6 +10,8 @@ enum Type {
     Mixer,
     Burner,
     Whitener,
+    Rounder,
+    Sphere,
 }
 
 var Types     : Array[Type]
@@ -32,6 +34,8 @@ var Class = [
     MachineMixer,
     MachineBurner,
     MachineWhitener,
+    MachineRounder,
+    MachineSphere,
 ]
 
 func costForType(type):
@@ -44,6 +48,8 @@ func costForType(type):
             Type.Burner:    return {Item.Type.CubeRed:   10, Item.Type.CubeGreen: 10, Item.Type.CubeBlue: 10}
             Type.Mixer:     return {Item.Type.CubeRed:   20, Item.Type.CubeGreen: 20, Item.Type.CubeBlue: 20}
             Type.Whitener:  return {Item.Type.CubeWhite: 10}
+            Type.Rounder:   return {Item.Type.CubeBlack: 20}
+            Type.Sphere:    return {Item.Type.CubeBlack: 20}
             _:              return {Item.Type.CubeBlack: 1}
 
 func stringForType(type):   return TypeNames[type]
@@ -81,7 +87,16 @@ func slitsForType(type):
                 {"pos": Vector2i.ZERO,         "dir": Belt.W, "shape": Item.Shape.Cube},
                 {"pos": Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "item":  Item.Type.TorusYellow},
             ]
-            
+        Type.Rounder: 
+            return [
+                {"pos": Vector2i.ZERO,         "dir": Belt.W, "shape": Item.Shape.Cube},
+                {"pos": Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "item":  Item.Type.TorusYellow},
+            ]
+        Type.Sphere: 
+            return [
+                {"pos": Vector2i.ZERO,         "dir": Belt.W, "shape": Item.Shape.Cylinder},
+                {"pos": Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "item":  Item.Type.TorusYellow},
+            ]
     return []
     
 func slotsForType(type):
@@ -89,7 +104,7 @@ func slotsForType(type):
     match type:
         Type.Tunnel: 
             return [
-                {"pos": Belt.NEIGHBOR[Belt.E]*2,                       "dir": Belt.E},
+                {"pos": Belt.NEIGHBOR[Belt.E]*2,                     "dir": Belt.E},
             ]
         Type.Prism: 
             return [
@@ -116,6 +131,14 @@ func slotsForType(type):
             return [
                 {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E, "item": Item.Type.CubeWhite},
                 ]
+        Type.Rounder: 
+            return [
+                {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E},
+                ]
+        Type.Sphere: 
+            return [
+                {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E},
+                ]
     return []
     
 func decosForType(type):
@@ -128,7 +151,6 @@ func decosForType(type):
                 {"pos": Vector3(0, 2.3, 0), "type": MachState.Module.Type.CUBE, "color": Color.BLACK, 
                     "basis": Basis.from_euler(Vector3(deg_to_rad(35.5), 0, deg_to_rad(45))).scaled(Vector3(1.5,1.5,1.5)) },
                 ]
-                
         Type.Storage: 
             return [
                 {"pos": Vector3(0, 1.7, 0), "type": MachState.Module.Type.CYLINDER, "color": Color.BLACK,
@@ -138,7 +160,6 @@ func decosForType(type):
                 {"pos": Vector3(0, 2.045, 0), "type": MachState.Module.Type.CYLINDER_CHAMFER, "color": Color.BLACK, 
                     "basis": Basis.from_scale(Vector3(0.9, 0.9, 0.9))},
             ]
-            
         Type.Prism: 
             return [
                 {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.CUBE, "color": Color.BLACK, 
@@ -150,7 +171,6 @@ func decosForType(type):
                 {"pos": Vector3(1, 1,  1), "type": MachState.Module.Type.CUBE, "color": Color.BLUE, 
                     "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
             ]            
-
         Type.Mixer: 
             return [
                 {"pos": Vector3(1, 1, 0), "type": MachState.Module.Type.CUBE, "color": Color.WHITE, 
@@ -162,23 +182,38 @@ func decosForType(type):
                 {"pos": Vector3(0, 1,  1), "type": MachState.Module.Type.CUBE, "color": Color.BLUE, 
                     "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
             ]            
-
         Type.Burner: 
             return [
                 {"pos": Vector3(1, 1, 0), "type": MachState.Module.Type.TORUS, "color": Color.ORANGE_RED, 
                     "basis": Basis.from_scale(Vector3(0.8,0.8,0.8)) },
                 ]
-
         Type.Whitener: 
             return [
-                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.CUBE, "color": Color(0.075, 0.075, 0.075), 
+                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.CUBE, "color": Color(0.1, 0.1, 0.1), 
                     "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
                 {"pos": Vector3(1, 1, 0), "type": MachState.Module.Type.CUBE, "color": Color.WHITE, 
                     "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
                 {"pos": Vector3(0, 1.025, 1), "type": MachState.Module.Type.TORUS, "color": Color.ORANGE_RED, 
                     "basis": Basis.from_scale(Vector3(0.4,0.4,0.4)) },
                 ]
-            
+        Type.Rounder: 
+            return [
+                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.CUBE, "color": Color(0.1, 0.1, 0.1), 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(1, 1, 0), "type": MachState.Module.Type.CYLINDER, "color": Color(0.1, 0.1, 0.1), 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(0, 1.025, 1), "type": MachState.Module.Type.TORUS, "color": Color.ORANGE_RED, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.4,0.4)) },
+                ]
+        Type.Sphere: 
+            return [
+                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.CYLINDER, "color": Color(0.1, 0.1, 0.1), 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(1, 1, 0), "type": MachState.Module.Type.SPHERE, "color": Color(0.1, 0.1, 0.1), 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(0, 1.025, 1), "type": MachState.Module.Type.TORUS, "color": Color.ORANGE_RED, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.4,0.4)) },
+                ]
     return []
     
 func boxTrans(slit, p : Vector3, basis : Basis) -> Transform3D:
