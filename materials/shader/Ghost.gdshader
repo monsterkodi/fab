@@ -1,5 +1,3 @@
-shader_type spatial;
-
 render_mode unshaded, cull_disabled, depth_prepass_alpha, depth_test_default;
 
 varying vec3 color;

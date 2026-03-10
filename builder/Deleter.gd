@@ -3,8 +3,6 @@ extends Builder
 
 var ghost
 
-const GHOST_MATERIAL = preload("uid://b35kuqwv15nfr")
-
 func _init():
     
     cursorShape = Control.CURSOR_FORBIDDEN

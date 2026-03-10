@@ -1,9 +1,7 @@
-[gd_resource type="ShaderMaterial" format=3 uid="uid://bgca8y7e5dc4x"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cqpqvcb8usfl0"]
 
-[ext_resource type="Shader" uid="uid://c5kbxfttinul1" path="res://materials/shader/Ghost.gdshader" id="1_gy2fk"]
+[ext_resource type="Shader" uid="uid://ble2lqfhsxlaq" path="res://materials/visual/GhostMatVis.tres" id="1_hvlaf"]
 
 [resource]
 render_priority = 100
-shader = ExtResource("1_gy2fk")
-shader_parameter/threshold = 0.2
-shader_parameter/fresnel_sharpness = 4.0
+shader = ExtResource("1_hvlaf")

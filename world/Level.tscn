@@ -54,3 +54,4 @@ process_mode = 1
 [node name="MachState" parent="." unique_id=2084936293 instance=ExtResource("9_kp7rj")]
 
 [node name="GhostState" parent="." unique_id=2004242388 instance=ExtResource("10_ioj0i")]
+isGhost = true

@@ -1,6 +1,8 @@
 class_name MachState
 extends Node3D
 
+@export var isGhost : bool = false
+
 class Module:
     
     enum Type { BOX, ARROW, CUBE, TORUS, SPHERE, CYLINDER, CYLINDER_CHAMFER, GEAR, FRAME }
@@ -161,10 +163,38 @@ var modMap : Array[ModMap] = []
 
 func _ready():
     
-    get_child(Module.Type.BOX).multimesh.mesh    = MachMeshes.regal(1.0, 1.0, 1.0, 0.2, 0.5)
-    get_child(Module.Type.ARROW).multimesh.mesh  = MachMeshes.arrow(0.4, 0.2, 0.5)
-    get_child(Module.Type.GEAR).multimesh.mesh   = MachMeshes.gear(0.4, 0.1, 0.2, 8, 0.5, 0.5, false)
-    get_child(Module.Type.FRAME).multimesh.mesh  = MachMeshes.frame(1.0, 1.0, 1.0, 0.2, 0.5)
+    for type in Module.Type:
+
+        var mm = MultiMeshInstance3D.new()
+        mm.multimesh = MultiMesh.new()
+        var msh
+        match Module.Type[type]:
+            Module.Type.BOX:                msh = MachMeshes.regal(1.0, 1.0, 1.0, 0.2, 0.5)
+            Module.Type.ARROW:              msh = MachMeshes.arrow(0.4, 0.2, 0.5)
+            Module.Type.CUBE:               msh = BoxMesh.new()
+            Module.Type.TORUS:              msh = TorusMesh.new(); msh.outer_radius = 0.5; msh.inner_radius = 0.2; msh.ring_segments = 12; msh.rings = 24
+            Module.Type.SPHERE:             msh = SphereMesh.new()
+            Module.Type.CYLINDER:           msh = CylinderMesh.new()
+            Module.Type.CYLINDER_CHAMFER:   msh = CylinderMesh.new()
+            Module.Type.GEAR:               msh = MachMeshes.gear(0.4, 0.1, 0.2, 8, 0.5, 0.5, false)
+            Module.Type.FRAME:              msh = MachMeshes.frame(1.0, 1.0, 1.0, 0.2, 0.5)
+        mm.multimesh.mesh = msh
+        assert(mm.multimesh.mesh)
+        
+        if isGhost:
+            mm.material_override = preload("uid://cqpqvcb8usfl0")
+        else:
+            match Module.Type[type]:
+                Module.Type.CYLINDER, \
+                Module.Type.CYLINDER_CHAMFER, \
+                Module.Type.FRAME, \
+                Module.Type.BOX:                mm.material_override =  preload("uid://ci4cvsq2gbob7")       
+                Module.Type.ARROW:              mm.material_override =  preload("uid://dc38ipveu0heb")
+                _:                              mm.material_override =  preload("uid://bi5n2lthhnyix")
+            
+        mm.multimesh.transform_format = MultiMesh.TRANSFORM_3D
+        mm.multimesh.use_colors = true
+        add_child(mm)
     
     for child in get_children():
         child.multimesh.instance_count = 1000
