@@ -7,6 +7,19 @@ func _ready():
     
     Post.subscribe(self)
     
+    for type in Item.Types:
+        $ItemButtonGrid.addIcon("res://icons/items/" + Item.stringForType(type) + ".png")
+    
+    $BuildButtonGrid.addIcon("res://icons/buildings/BuildingRect.png")
+    
+    for type in Mach.Types:
+        if type == Mach.Type.Belt:
+            $BuildButtonGrid.addIcon("res://icons/buildings/BuildingBelt.png")
+        else:
+            $BuildButtonGrid.addIcon("res://icons/machines/" + Mach.stringForType(type) + ".png")
+        
+    $BuildButtonGrid.addIcon("res://icons/buildings/BuildingDel.png")
+    
 func _process(delta: float):
     
     if not storage: return

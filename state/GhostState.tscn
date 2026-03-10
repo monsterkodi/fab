@@ -57,6 +57,12 @@ transform_format = 1
 use_colors = true
 mesh = SubResource("CylinderMesh_1ydo3")
 
+[sub_resource type="MultiMesh" id="MultiMesh_w5whj"]
+transform_format = 1
+use_colors = true
+
+[sub_resource type="MultiMesh" id="MultiMesh_1sxbb"]
+
 [node name="GhostState" type="Node3D" unique_id=774702764]
 script = ExtResource("1_6pm0w")
 
@@ -87,3 +93,11 @@ multimesh = SubResource("MultiMesh_1lep4")
 [node name="CylinderChamfer" type="MultiMeshInstance3D" parent="." unique_id=1733096715]
 material_override = ExtResource("2_6pm0w")
 multimesh = SubResource("MultiMesh_nanrv")
+
+[node name="Gear" type="MultiMeshInstance3D" parent="." unique_id=965823113]
+material_override = ExtResource("2_6pm0w")
+multimesh = SubResource("MultiMesh_w5whj")
+
+[node name="Frame" type="MultiMeshInstance3D" parent="." unique_id=799059246]
+material_override = ExtResource("2_6pm0w")
+multimesh = SubResource("MultiMesh_1sxbb")

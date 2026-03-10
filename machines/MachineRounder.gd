@@ -5,11 +5,11 @@ var consumedEnergy = 0
 var consumedItem = -1
 
 var roundeningEnergy = {
-    Item.Type.CubeBlack: 1.0,
-    Item.Type.CubeRed:   2.0,
-    Item.Type.CubeGreen: 2.0,
-    Item.Type.CubeBlue:  2.0,
-    Item.Type.CubeWhite: 4.0,
+    Item.Type.CubeBlack: Item.cylinderCost(Item.Type.CubeBlack ),
+    Item.Type.CubeRed:   Item.cylinderCost(Item.Type.CubeRed   ),
+    Item.Type.CubeGreen: Item.cylinderCost(Item.Type.CubeGreen ),
+    Item.Type.CubeBlue:  Item.cylinderCost(Item.Type.CubeBlue  ),
+    Item.Type.CubeWhite: Item.cylinderCost(Item.Type.CubeWhite ),
 }
 
 func _init(p, o):

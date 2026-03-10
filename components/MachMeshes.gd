@@ -1,3 +1,4 @@
+@tool
 extends Node
 # singleton MachMeshes
 
@@ -133,6 +134,201 @@ func regal(width, height, depth, thickness, chamfer):
     quad3(st, Vector3(-iw,  ih, -id),  Vector3(-iw, -ih, -id), Vector3(-iw, -ih,   d)) # left
     quad3(st, Vector3(-iw, -ih,   d),  Vector3(-iw, -ih, -id), Vector3( iw, -ih, -id)) # bottom  
         
+    st.index()
+    st.generate_normals()
+    
+    return st.commit()    
+    
+func frame(width, height, depth, thickness, chamfer):
+
+    var st = SurfaceTool.new()
+    
+    st.begin(Mesh.PRIMITIVE_TRIANGLES)
+    st.set_smooth_group(-1) # flat shading
+    
+    var w  = width/2
+    var h  = height/2
+    var d  = depth/2
+    var cw = w
+    var ch = h
+    var cd = d
+    var iw = w - thickness
+    var ih = h - thickness
+    var id = d - thickness
+    
+    if chamfer > 0:
+        cw = w - thickness * chamfer
+        ch = h - thickness * chamfer
+        cd = d - thickness * chamfer
+
+        quad3(st, Vector3( cw,  h, -cd), Vector3(-cw,  h, -cd), Vector3(-cw,  ch, -d)) # rear top
+        quad3(st, Vector3( cw, -ch, -d), Vector3( w, -ch, -cd), Vector3( w,  ch, -cd)) # rear right
+        quad3(st, Vector3(-cw,  ch, -d), Vector3(-w,  ch, -cd), Vector3(-w, -ch, -cd)) # rear left
+        quad3(st, Vector3(-cw, -h, -cd), Vector3( cw, -h, -cd), Vector3( cw, -ch, -d)) # rear bottom
+
+        quad3(st, Vector3(-cw,  ch,  d), Vector3(-cw,  h,  cd), Vector3( cw,  h,  cd)) # front top
+        quad3(st, Vector3( w,  ch,  cd), Vector3( w, -ch,  cd), Vector3( cw, -ch,  d)) # front right
+        quad3(st, Vector3(-w, -ch,  cd), Vector3(-w,  ch,  cd), Vector3(-cw,  ch,  d)) # front left
+        quad3(st, Vector3( cw, -ch,  d), Vector3( cw, -h,  cd), Vector3(-cw, -h,  cd)) # front bottom
+        
+        quad3(st, Vector3(-cw,  h,  cd), Vector3(-w,  ch, cd), Vector3( -w,  ch, -cd)) # top left
+        quad3(st, Vector3( w,  ch, -cd), Vector3( w,  ch, cd), Vector3( cw,   h,  cd)) # top right
+        quad3(st, Vector3(-w, -ch, -cd), Vector3(-w, -ch, cd), Vector3(-cw,  -h,  cd)) # bottom left
+        quad3(st, Vector3( cw, -h,  cd), Vector3( w, -ch, cd), Vector3(  w, -ch, -cd)) # bottom right
+        
+        tri(st, Vector3(-cw,  ch,  d), Vector3(-w,  ch,  cd), Vector3(-cw,  h,  cd)) # top left front
+        tri(st, Vector3( cw,  ch,  d), Vector3(cw,   h,  cd), Vector3( w,  ch,  cd)) # top right front
+        tri(st, Vector3(-cw,  h, -cd), Vector3(-w,  ch, -cd), Vector3(-cw,  ch, -d)) # top left  rear
+        tri(st, Vector3( w,  ch, -cd), Vector3(cw,   h, -cd), Vector3( cw,  ch, -d)) # top right rear
+
+        tri(st, Vector3(-cw,  -h, cd), Vector3(-w, -ch,  cd), Vector3(-cw, -ch,  d)) # bottom left front
+        tri(st, Vector3( w,  -ch, cd), Vector3(cw,  -h,  cd), Vector3( cw, -ch,  d)) # bottom right front
+        tri(st, Vector3(-cw, -ch, -d), Vector3(-w, -ch, -cd), Vector3(-cw,  -h,-cd)) # bottom left  rear
+        tri(st, Vector3( cw, -ch, -d), Vector3(cw,  -h, -cd), Vector3( w,  -ch,-cd)) # bottom right rear
+    
+    # outer box
+    quad3(st, Vector3(-cw,  h,  cd),  Vector3(-cw,  h, -cd), Vector3( cw,  h, -cd)) # top 
+    quad3(st, Vector3( cw, -h, -cd),  Vector3(-cw, -h, -cd), Vector3(-cw, -h,  cd)) # bottom  
+
+    # outer front frame
+    quad(st, Vector3(-cw, ch, d), Vector3( cw,  ch, d), Vector3( iw,  ih, d), Vector3(-iw,  ih, d)) # top
+    quad(st, Vector3(-cw, ch, d), Vector3(-iw,  ih, d), Vector3(-iw, -ih, d), Vector3(-cw, -ch, d)) # left
+    quad(st, Vector3( cw, ch, d), Vector3( cw, -ch, d), Vector3( iw, -ih, d), Vector3( iw,  ih, d)) # right
+    quad(st, Vector3(-cw,-ch, d), Vector3(-iw, -ih, d), Vector3( iw, -ih, d), Vector3( cw, -ch, d)) # bottom
+
+    # outer rear frame
+    quad(st, Vector3(-cw, ch, -d), Vector3(-iw,  ih, -d), Vector3( iw,  ih, -d), Vector3( cw,  ch, -d)) # top
+    quad(st, Vector3(-cw, ch, -d), Vector3(-cw, -ch, -d), Vector3(-iw, -ih, -d), Vector3(-iw,  ih, -d)) # left
+    quad(st, Vector3( cw, ch, -d), Vector3( iw,  ih, -d), Vector3( iw, -ih, -d), Vector3( cw, -ch, -d)) # right
+    quad(st, Vector3(-cw,-ch, -d), Vector3( cw, -ch, -d), Vector3( iw, -ih, -d), Vector3(-iw, -ih, -d)) # bottom
+
+    # outer left frame
+    quad(st, Vector3(-w,  ch, -cd), Vector3(-w, ch, cd), Vector3(-w,  ih, id), Vector3(-w,  ih, -id)) # top
+    quad(st, Vector3(-w, -ih, id), Vector3(-w, ih, id), Vector3(-w, ch, cd), Vector3(-w,  -ch, cd)) # front
+    quad(st, Vector3(-w, -ih, -id), Vector3(-w,  -ch, -cd), Vector3(-w, ch, -cd), Vector3(-w, ih, -id)) # back
+    quad(st, Vector3(-w, -ch, cd), Vector3(-w, -ch, -cd), Vector3(-w, -ih, -id), Vector3(-w, -ih, id)) # bottom
+
+    # outer right frame
+    quad(st, Vector3(w,  ch, -cd), Vector3(w,  ih, -id), Vector3(w,  ih, id),  Vector3(w, ch, cd)) 
+    quad(st, Vector3(w, -ih, id),  Vector3(w,  -ch, cd), Vector3(w, ch, cd),   Vector3(w, ih, id)) 
+    quad(st, Vector3(w, -ih, -id), Vector3(w, ih, -id),  Vector3(w, ch, -cd),  Vector3(w,-ch,-cd)) 
+    quad(st, Vector3(w, -ch, cd),  Vector3(w, -ih, id),  Vector3(w, -ih, -id), Vector3(w,-ch,-cd)) 
+
+    # inner vertical sides
+    
+    quad3(st, Vector3( -iw, -ih, id),  Vector3(-iw, -ih, d),  Vector3(-iw, ih, d))   # front left
+    quad3(st, Vector3(  iw, -ih, id),  Vector3( iw, ih, id),  Vector3( iw, ih, d))   # front right
+    quad3(st, Vector3( -iw, -ih, -id), Vector3(-iw, ih, -id), Vector3(-iw, ih, -d))  # back left    
+    quad3(st, Vector3(  iw, -ih, -id), Vector3( iw, -ih, -d), Vector3( iw, ih, -d))  # back right
+    
+    quad3(st, Vector3( -w, -ih, id),  Vector3(-iw, -ih, id),  Vector3(-iw, ih, id)) # left front 
+    quad3(st, Vector3( -w, -ih, -id),  Vector3(-w, ih, -id),  Vector3(-iw, ih, -id)) # left back
+
+    quad3(st, Vector3( iw, -ih, id),  Vector3(  w, -ih, id),  Vector3(  w, ih, id)) # right front 
+    quad3(st, Vector3( iw, -ih, -id),  Vector3(iw, ih, -id),  Vector3( w, ih, -id)) # right back
+    
+    # inner bottom
+    
+    quad3(st, Vector3(w, -ih, id), Vector3(-w, -ih, id), Vector3(-w, -ih, -id))
+    quad3(st, Vector3(iw, -ih, d), Vector3(-iw, -ih, d), Vector3(-iw, -ih, -d))
+        
+    # inner top
+    
+    quad3(st, Vector3(w,  ih, id), Vector3(w,  ih, -id), Vector3(-w, ih, -id))
+    quad3(st, Vector3(iw, ih, d), Vector3(iw,  ih, -d), Vector3(-iw, ih, -d))
+
+    st.index()
+    st.generate_normals()
+    
+    return st.commit()    
+    
+func cross(width : float, height : float, thickness : float):
+    
+    var st = SurfaceTool.new()
+    st.begin(Mesh.PRIMITIVE_TRIANGLES)
+    st.set_smooth_group(-1) # flat shading
+    
+    var w  = width/2
+    var h  = height/2
+    var d  = w * thickness
+    
+    quad3(st, Vector3(-w,  h, -d),  Vector3(-w, -h, -d), Vector3( w, -h, -d)) # rear 
+    quad3(st, Vector3(-w,  h,  d),  Vector3(-w,  h, -d), Vector3( w,  h, -d)) # top 
+    quad3(st, Vector3( w,  h, -d),  Vector3( w, -h, -d), Vector3( w, -h,  d)) # right 
+    quad3(st, Vector3(-w, -h,  d),  Vector3(-w, -h, -d), Vector3(-w,  h, -d)) # left
+    quad3(st, Vector3( w, -h, -d),  Vector3(-w, -h, -d), Vector3(-w, -h,  d)) # bottom  
+    quad3(st, Vector3(-w,  h,  d),  Vector3( w,  h,  d), Vector3( w, -h,  d)) # front
+
+    w  = w * thickness
+    h  = height/2
+    d  = width/2
+
+    quad3(st, Vector3(-w,  h, -d),  Vector3(-w, -h, -d), Vector3( w, -h, -d)) # rear 
+    quad3(st, Vector3(-w,  h,  d),  Vector3(-w,  h, -d), Vector3( w,  h, -d)) # top 
+    quad3(st, Vector3( w,  h, -d),  Vector3( w, -h, -d), Vector3( w, -h,  d)) # right 
+    quad3(st, Vector3(-w, -h,  d),  Vector3(-w, -h, -d), Vector3(-w,  h, -d)) # left
+    quad3(st, Vector3( w, -h, -d),  Vector3(-w, -h, -d), Vector3(-w, -h,  d)) # bottom  
+    quad3(st, Vector3(-w,  h,  d),  Vector3( w,  h,  d), Vector3( w, -h,  d)) # front
+
+    st.index()
+    st.generate_normals()
+    
+    return st.commit()    
+    
+func gear(outerRadius, innerRadius, height, spokeCount, spokeWidthFactor, spokeLengthFactor, bottom):
+
+    var st = SurfaceTool.new()
+    
+    st.begin(Mesh.PRIMITIVE_TRIANGLES)
+    st.set_smooth_group(-1) # flat shading
+
+    var h = height/2
+    var spokeGapAngle = -deg_to_rad(360.0 / spokeCount)
+    var spokeAngle    = spokeGapAngle * spokeWidthFactor
+    var gapAngle      = spokeGapAngle * (1-spokeWidthFactor)
+    var gapRadius     = innerRadius  + (outerRadius - innerRadius) * spokeLengthFactor
+    
+    for index in range(spokeCount):
+        
+        var startAngle = -deg_to_rad(index * 360.0 / spokeCount)
+    
+        var spokeInnerTopLeft  = Vector3(0, h, -innerRadius).rotated(Vector3.UP, startAngle)
+        var spokeInnerTopRight = spokeInnerTopLeft.rotated(Vector3.UP, spokeAngle)
+
+        var spokeOuterTopLeft  = Vector3(0, h, -outerRadius).rotated(Vector3.UP, startAngle)
+        var spokeOuterTopRight = spokeOuterTopLeft.rotated(Vector3.UP, spokeAngle)
+
+        var gapInnerTopLeft  = spokeInnerTopRight
+        var gapInnerTopRight = gapInnerTopLeft.rotated(Vector3.UP, gapAngle)
+
+        var gapOuterTopLeft  = Vector3(0, h, -gapRadius).rotated(Vector3.UP, spokeAngle + startAngle)
+        var gapOuterTopRight = gapOuterTopLeft.rotated(Vector3.UP, gapAngle)
+        
+        quad(st, spokeOuterTopLeft, spokeOuterTopRight, spokeInnerTopRight, spokeInnerTopLeft)
+        quad(st, gapOuterTopLeft, gapOuterTopRight, gapInnerTopRight, gapInnerTopLeft)
+        
+        var bot = Vector3(0,height,0)
+        var spokeOuterBotLeft  = spokeOuterTopLeft  - bot
+        var spokeOuterBotRight = spokeOuterTopRight - bot
+        var spokeInnerBotRight = spokeInnerTopRight - bot
+        var spokeInnerBotLeft  = spokeInnerTopLeft  - bot
+        var gapOuterBotLeft    = gapOuterTopLeft    - bot
+        var gapOuterBotRight   = gapOuterTopRight   - bot
+        var gapInnerBotRight   = gapInnerTopRight   - bot
+        var gapInnerBotLeft    = gapInnerTopLeft   - bot
+
+        if bottom:        
+            quad(st, spokeOuterBotLeft, spokeInnerBotLeft, spokeInnerBotRight, spokeOuterBotRight)
+            quad(st, gapOuterBotLeft, gapInnerBotLeft, gapInnerBotRight, gapOuterBotRight)
+        
+        quad3(st, spokeOuterTopRight, spokeOuterTopLeft, spokeOuterBotLeft)
+        quad3(st, spokeInnerTopLeft, spokeInnerTopRight, spokeInnerBotRight)
+        quad3(st, gapOuterTopRight, gapOuterTopLeft, gapOuterBotLeft)
+        quad3(st, gapInnerTopLeft, gapInnerTopRight, gapInnerBotRight)
+        
+        quad3(st, gapOuterTopLeft, spokeOuterTopRight, spokeOuterBotRight)
+        quad3(st, gapOuterTopRight, gapOuterBotRight, spokeOuterBotLeft.rotated(Vector3.UP, spokeGapAngle))
+    
     st.index()
     st.generate_normals()
     

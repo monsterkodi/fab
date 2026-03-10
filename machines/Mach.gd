@@ -12,6 +12,7 @@ enum Type {
     Whitener,
     Rounder,
     Sphere,
+    Counter,
 }
 
 var Types     : Array[Type]
@@ -36,6 +37,7 @@ var Class = [
     MachineWhitener,
     MachineRounder,
     MachineSphere,
+    MachineCounter,
 ]
 
 func costForType(type):
@@ -50,12 +52,23 @@ func costForType(type):
             Type.Whitener:  return {Item.Type.CubeWhite: 10}
             Type.Rounder:   return {Item.Type.CubeBlack: 20}
             Type.Sphere:    return {Item.Type.CubeBlack: 20}
+            Type.Counter:   return {Item.Type.CubeBlack: 10}
             _:              return {Item.Type.CubeBlack: 1}
 
 func stringForType(type):   return TypeNames[type]
 func typeForString(string): return TypeMap[string]
     
 func buildingNameForType(type): return "Building" + stringForType(type)
+
+func beltsForType(type):        
+    
+    match type:
+        
+        Type.Counter:
+            return [
+                {"pos": Vector2i.ZERO, "type": Belt.I_W | Belt.O_E}
+            ]
+    return []
 
 func slitsForType(type):        
     
@@ -186,6 +199,7 @@ func decosForType(type):
             return [
                 {"pos": Vector3(1, 1, 0), "type": MachState.Module.Type.TORUS, "color": COLOR.ENERGY, 
                     "basis": Basis.from_scale(Vector3(0.8,0.8,0.8)) },
+                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.GEAR, "color": COLOR.ENERGY},
                 ]
         Type.Whitener: 
             return [
@@ -213,6 +227,12 @@ func decosForType(type):
                     "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
                 {"pos": Vector3(0, 1.025, 1), "type": MachState.Module.Type.TORUS, "color": COLOR.ENERGY, 
                     "basis": Basis.from_scale(Vector3(0.4,0.4,0.4)) },
+                ]
+        Type.Counter:
+            return [
+                #{"pos": Vector3(0, 0.5, 0), "type": MachState.Module.Type.BOX, "color": COLOR.BUILDING},
+                {"pos": Vector3(0, 1.5, 0), "type": MachState.Module.Type.CUBE, "color": COLOR.BUILDING,
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
                 ]
     return []
     

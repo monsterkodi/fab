@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dspiqdhbik7se"]
+
+[ext_resource type="Script" uid="uid://bl26b8womduct" path="res://components/RegalFrame.gd" id="1_cqsje"]
+
+[node name="RegalFrame" type="Node3D" unique_id=1821907757]
+script = ExtResource("1_cqsje")

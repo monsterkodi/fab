@@ -5,11 +5,11 @@ var consumedEnergy = 0
 var consumedItem = -1
 
 var whiteningEnergy = {
-    Item.Type.CubeBlack: 0.4,
-    Item.Type.CubeRed:   0.2,
-    Item.Type.CubeGreen: 0.2,
-    Item.Type.CubeBlue:  0.2,
-    Item.Type.CubeWhite: 0.0,
+    Item.Type.CubeBlack: Item.whiteningCost(Item.Type.CubeBlack ),
+    Item.Type.CubeRed:   Item.whiteningCost(Item.Type.CubeRed   ),
+    Item.Type.CubeGreen: Item.whiteningCost(Item.Type.CubeGreen ),
+    Item.Type.CubeBlue:  Item.whiteningCost(Item.Type.CubeBlue  ),
+    Item.Type.CubeWhite: Item.whiteningCost(Item.Type.CubeWhite ),
 }
 
 func _init(p, o):

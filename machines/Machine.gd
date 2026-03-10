@@ -3,6 +3,7 @@ extends Node
 
 var pos   : Vector2i
 var type  : int
+var belts : Array
 var slots : Array
 var slits : Array
 var orientation = 0
@@ -13,6 +14,8 @@ var mst : MachState
 func _init(t, p, o):
     
     type  = t
+    belts = Mach.beltsForType(type)
+    if belts: Log.log(belts)
     slots = Mach.slotsForType(type)
     slits = Mach.slitsForType(type)
     
@@ -25,6 +28,9 @@ func _ready():
     
     fab = get_parent().get_parent()
     mst = fab.mst
+    
+    for belt in belts:
+        fab.addBeltAtPos(pos + belt.pos, belt.type)
     
     for slit in slits:
         slit.idle = 0
@@ -61,6 +67,8 @@ func _exit_tree():
         fab.mst.del(bdg)
         bdg = null
         
+    for belt in belts:
+        fab.delBeltAtPos(pos + belt.pos)
     for slot in slots:
         fab.delBeltAtPos(pos + slot.pos)
     for slit in slits:
@@ -72,6 +80,10 @@ func _exit_tree():
 func rotateCW():
     
     orientation = ((orientation + 1) % 4)
+
+    for belt in belts:
+        belt.pos  = Belt.rotatePos(belt.pos)
+        belt.type = Belt.rotateType(belt.type)
 
     for slot in slots:
         slot.pos = Belt.rotatePos(slot.pos)
@@ -96,6 +108,11 @@ func setPos(p):
 func setOrientation(o : int):
     
     orientation = o
+    
+    for belt in belts:
+        Log.log("belt", Belt.stringForType(belt.type), o, Belt.orientateType(o, belt.type))
+        belt.pos  = Belt.orientatePos(o, belt.pos)
+        belt.type = Belt.orientateType(o, belt.type)
 
     for slot in slots:
         slot.pos = Belt.orientatePos(o, slot.pos)

@@ -3,7 +3,7 @@ extends Node3D
 
 class Module:
     
-    enum Type { BOX, ARROW, CUBE, TORUS, SPHERE, CYLINDER, CYLINDER_CHAMFER }
+    enum Type { BOX, ARROW, CUBE, TORUS, SPHERE, CYLINDER, CYLINDER_CHAMFER, GEAR, FRAME }
     enum Kind { NONE, SLIT, SLOT }
     
     var trans : Transform3D
@@ -37,7 +37,6 @@ class Building:
             
             module = Module.new()
             module.bpos = pos
-            #module.color = Color(2.0, 0.0, 0.0)
             module.color = Color(0.085, 0.085, 0.085)
             module.type  = Module.Type.ARROW
             module.kind  = Module.Kind.SLIT
@@ -52,7 +51,6 @@ class Building:
 
             module = Module.new()
             module.bpos = pos
-            #module.color = Color(0.1, 0.1, 2.0)
             module.color = Color(0.085, 0.085, 0.085)
             module.type  = Module.Type.ARROW
             module.kind  = Module.Kind.SLOT
@@ -163,8 +161,10 @@ var modMap : Array[ModMap] = []
 
 func _ready():
     
-    get_child(0).multimesh.mesh = MachMeshes.regal(1.0, 1.0, 1.0, 0.2, 0.5)
-    get_child(1).multimesh.mesh = MachMeshes.arrow(0.4, 0.2, 0.5)
+    get_child(Module.Type.BOX).multimesh.mesh    = MachMeshes.regal(1.0, 1.0, 1.0, 0.2, 0.5)
+    get_child(Module.Type.ARROW).multimesh.mesh  = MachMeshes.arrow(0.4, 0.2, 0.5)
+    get_child(Module.Type.GEAR).multimesh.mesh   = MachMeshes.gear(0.4, 0.1, 0.2, 8, 0.5, 0.5, false)
+    get_child(Module.Type.FRAME).multimesh.mesh  = MachMeshes.frame(1.0, 1.0, 1.0, 0.2, 0.5)
     
     for child in get_children():
         child.multimesh.instance_count = 1000

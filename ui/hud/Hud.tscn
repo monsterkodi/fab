@@ -52,7 +52,6 @@ offset_top = 63.15
 offset_bottom = 63.15
 grow_horizontal = 2
 theme = ExtResource("4_gt2ij")
-icons = Array[String](["res://icons/items/CubeBlack.png", "res://icons/items/CubeRed.png", "res://icons/items/CubeGreen.png", "res://icons/items/CubeBlue.png", "res://icons/items/CubeWhite.png", "res://icons/items/CylinderBlack.png", "res://icons/items/CylinderRed.png", "res://icons/items/CylinderGreen.png", "res://icons/items/CylinderBlue.png", "res://icons/items/CylinderWhite.png", "res://icons/items/SphereBlack.png", "res://icons/items/SphereRed.png", "res://icons/items/SphereGreen.png", "res://icons/items/SphereBlue.png", "res://icons/items/SphereWhite.png", "res://icons/items/TorusYellow.png"])
 
 [node name="BuildButtonGrid" parent="." unique_id=675774317 instance=ExtResource("4_by07e")]
 unique_name_in_owner = true
@@ -67,7 +66,6 @@ offset_bottom = -99.53
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("2_aaqae")
-icons = Array[String](["res://icons/buildings/BuildingRect.png", "res://icons/buildings/BuildingBelt.png", "res://icons/machines/Tunnel.png", "res://icons/machines/Storage.png", "res://icons/machines/Prism.png", "res://icons/machines/Mixer.png", "res://icons/machines/Burner.png", "res://icons/machines/Whitener.png", "res://icons/machines/Rounder.png", "res://icons/machines/Sphere.png", "res://icons/machines/Root.png", "res://icons/buildings/BuildingDel.png"])
 
 [node name="Actions" type="PanelContainer" parent="." unique_id=705281221]
 layout_mode = 1

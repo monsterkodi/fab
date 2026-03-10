@@ -208,9 +208,9 @@ func rotateType(type):
     return ((inputs  << 1) | (inputs  >> 3)) & 0b1111 | \
          ((((outputs << 1) | (outputs >> 3)) & 0b1111 ) << 4)
         
-func orientateType(type, orientation):
-    
+func orientateType(orientation, type):
     for i in range(orientation):
+        Log.log(orientation, i, type, rotateType(type))
         type = rotateType(type)
     return type       
 

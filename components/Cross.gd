@@ -38,33 +38,9 @@ func generate():
     st.begin(Mesh.PRIMITIVE_TRIANGLES)
     st.set_smooth_group(-1) # flat shading
     
-    var w  = width/2
-    var h  = height/2
-    var d  = w * thickness
-    
-    quad3(st, Vector3(-w,  h, -d),  Vector3(-w, -h, -d), Vector3( w, -h, -d)) # rear 
-    quad3(st, Vector3(-w,  h,  d),  Vector3(-w,  h, -d), Vector3( w,  h, -d)) # top 
-    quad3(st, Vector3( w,  h, -d),  Vector3( w, -h, -d), Vector3( w, -h,  d)) # right 
-    quad3(st, Vector3(-w, -h,  d),  Vector3(-w, -h, -d), Vector3(-w,  h, -d)) # left
-    quad3(st, Vector3( w, -h, -d),  Vector3(-w, -h, -d), Vector3(-w, -h,  d)) # bottom  
-    quad3(st, Vector3(-w,  h,  d),  Vector3( w,  h,  d), Vector3( w, -h,  d)) # front
-
-    w  = w * thickness
-    h  = height/2
-    d  = width/2
-
-    quad3(st, Vector3(-w,  h, -d),  Vector3(-w, -h, -d), Vector3( w, -h, -d)) # rear 
-    quad3(st, Vector3(-w,  h,  d),  Vector3(-w,  h, -d), Vector3( w,  h, -d)) # top 
-    quad3(st, Vector3( w,  h, -d),  Vector3( w, -h, -d), Vector3( w, -h,  d)) # right 
-    quad3(st, Vector3(-w, -h,  d),  Vector3(-w, -h, -d), Vector3(-w,  h, -d)) # left
-    quad3(st, Vector3( w, -h, -d),  Vector3(-w, -h, -d), Vector3(-w, -h,  d)) # bottom  
-    quad3(st, Vector3(-w,  h,  d),  Vector3( w,  h,  d), Vector3( w, -h,  d)) # front
-
-    st.index()
-    st.generate_normals()
-    
     var mi = MeshInstance3D.new()
     mi.mesh = st.commit()
+    mi.mesh = MachMeshes.cross(width, height, thickness)
     mi.mesh.surface_set_material(0, material)
     mi.transform = Transform3D.IDENTITY
     

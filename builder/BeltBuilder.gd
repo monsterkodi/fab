@@ -98,7 +98,7 @@ func neighborConnect(pos, type):
         
     if type == 0:
         type = Belt.I_W | Belt.O_E # 0b0001_0100
-        type = Belt.orientateType(type, orientation)
+        type = Belt.orientateType(orientation, type)
         
     if Belt.noInOut(type):
         type = Belt.fixInOut(type)

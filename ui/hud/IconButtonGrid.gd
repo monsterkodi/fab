@@ -11,6 +11,13 @@ func _ready():
     
     buttonGroup = ButtonGroup.new()
     buttonGroup.pressed.connect(onButtonPressed)
+    
+    if icons.size():
+        setIcons(icons)
+        
+func setIcons(icns):
+    
+    icons = icns
     for resPath in icons:
         if not resPath.is_empty():
             addIcon(resPath)
@@ -21,13 +28,18 @@ func addIcon(resPath):
     button.button_group = buttonGroup
     button.toggle_mode = true
     button.icon = load(resPath)
+    if not button.icon:
+        button.text = resPath.get_file().get_basename()
     button.custom_minimum_size = Vector2(buttonSize, buttonSize)
     button.expand_icon = true
     %Grid.add_child(button)
 
 func onButtonPressed(button):
     
-    buttonPressed.emit(button.icon.resource_path.get_file().get_basename())
+    if button.icon:
+        buttonPressed.emit(button.icon.resource_path.get_file().get_basename())
+    else:
+        buttonPressed.emit(button.text)
     
 func setNumber(index: int, number : int):
     
