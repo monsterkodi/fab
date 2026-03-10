@@ -230,7 +230,8 @@ func frame(width, height, depth, thickness, chamfer):
     # inner bottom
     
     quad3(st, Vector3(w, -ih, id), Vector3(-w, -ih, id), Vector3(-w, -ih, -id))
-    quad3(st, Vector3(iw, -ih, d), Vector3(-iw, -ih, d), Vector3(-iw, -ih, -d))
+    quad3(st, Vector3(iw, -ih, d), Vector3(-iw, -ih, d), Vector3(-iw, -ih, id))
+    quad3(st, Vector3(iw, -ih, -id), Vector3(-iw, -ih, -id), Vector3(-iw, -ih, -d))
         
     # inner top
     

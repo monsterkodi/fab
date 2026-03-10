@@ -1,6 +1,8 @@
 class_name Deleter
 extends Builder
 
+const DELETE_CROSS = preload("uid://cq7q15jn2f7q5")
+
 var ghost
 
 func _init():
@@ -18,6 +20,7 @@ func stop():
 
 func start():
     
+    Utils.setOverrideMaterial($Cross, DELETE_CROSS)
     $Cross.show()
     
 func pointerClick(pos):
@@ -27,12 +30,12 @@ func pointerClick(pos):
     
 func pointerDrag(pos): 
     
-    $Cross.global_position = Vector3(pos.x, 0, pos.y)
+    $Cross.global_position = Vector3(pos.x, 0.16, pos.y)
     pointerClick(pos)
         
 func pointerHover(pos):
     
-    $Cross.global_position = Vector3(pos.x, 0, pos.y)
+    $Cross.global_position = Vector3(pos.x, 0.16, pos.y)
     
     if fab.machines.has(pos):
         if ghost: ghost.free()

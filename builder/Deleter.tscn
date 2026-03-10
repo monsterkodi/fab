@@ -9,4 +9,5 @@ script = ExtResource("1_55gr4")
 [node name="Cross" type="Node3D" parent="." unique_id=1205599285]
 transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0, 0, 0)
 script = ExtResource("2_yygiq")
+height = 0.2
 metadata/_custom_type_script = "uid://ctd0wgl436u6m"

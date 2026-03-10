@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cq7q15jn2f7q5"]
+
+[ext_resource type="Shader" uid="uid://c5kbxfttinul1" path="res://materials/shader/Ghost.gdshader" id="1_2cj6d"]
+
+[resource]
+render_priority = 127
+shader = ExtResource("1_2cj6d")
+shader_parameter/threshold = 0.1
+shader_parameter/fresnel_sharpness = 3.0
+shader_parameter/color = Color(1, 0, 0, 1)

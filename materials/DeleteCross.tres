@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bwhwn03tmsexb"]
+
+[resource]
+render_priority = 127
+transparency = 1
+disable_ambient_light = true
+disable_fog = true
+disable_specular_occlusion = true
+albedo_color = Color(1, 0, 0, 0.43)
+metallic = 0.49
+roughness = 0.3
+emission = Color(0.2525773, 0, 1, 1)
+emission_energy_multiplier = 2.6

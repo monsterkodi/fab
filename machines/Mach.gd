@@ -230,7 +230,9 @@ func decosForType(type):
                 ]
         Type.Counter:
             return [
-                #{"pos": Vector3(0, 0.5, 0), "type": MachState.Module.Type.BOX, "color": COLOR.BUILDING},
+                {"pos": Vector3(0, 0.5, 0), "type": MachState.Module.Type.FRAME, "color": COLOR.BUILDING},
+                {"pos": Vector3(0.5, 0.9, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.ARROW,
+                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
                 {"pos": Vector3(0, 1.5, 0), "type": MachState.Module.Type.CUBE, "color": COLOR.BUILDING,
                     "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
                 ]
