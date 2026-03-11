@@ -17,7 +17,9 @@ enum Type {
     SphereGreen,
     SphereBlue,
     SphereWhite,
-    TorusYellow,
+    Energy,
+    CubeCross,
+    CylinderCross,
 }
 
 enum Shape {
@@ -25,6 +27,8 @@ enum Shape {
     Cylinder,
     Sphere,
     Torus,
+    CubeCross,
+    CylinderCross,
 }
 
 var Types     : Array[Type]
@@ -48,6 +52,8 @@ var TypeInfo = [                        # energy     # white  # round # sphere
     [Shape.Sphere,    COLOR.ITEM_BLUE,       0.15,        0,      0,   0 ],
     [Shape.Sphere,    COLOR.ITEM_WHITE,      0.644,       0,      0,   0 ],
     [Shape.Torus,     COLOR.ENERGY,          1.0 ,        0,      0,   0 ],
+    [Shape.CubeCross, COLOR.ITEM_BLACK,      0.2 ,        0,      0,   0 ],
+    [Shape.CylinderCross, COLOR.ITEM_BLACK,  0.3 ,        0,      0,   0 ],
 ]
 
 func _init():

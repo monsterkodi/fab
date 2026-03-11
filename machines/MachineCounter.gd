@@ -32,6 +32,12 @@ func _exit_tree():
     gauge.free()
     super._exit_tree()
     
+func setFactor(f):
+    
+    factor = clampf(f, 0.0, 1.0)
+    gauge.material_override.set_shader_parameter("StartAngle", 90-360.0*factor*0.5)
+    gauge.material_override.set_shader_parameter("EndAngle", 90+360.0*factor*0.5)
+    
 func consume(delta):
     
     deltaSum += delta
@@ -47,11 +53,7 @@ func consume(delta):
             for h in history:
                 itemSum += h
                 
-            factor = 1.05 * itemSum / history.size()
-            factor = clampf(factor, 0.0, 1.0)
-            
-            gauge.material_override.set_shader_parameter("StartAngle", 90-360.0*factor*0.5)
-            gauge.material_override.set_shader_parameter("EndAngle", 90+360.0*factor*0.5)
+            setFactor(1.05 * itemSum / history.size())
             
         #deltaSum -= 1
         deltaSum  = 0

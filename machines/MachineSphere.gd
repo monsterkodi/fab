@@ -25,7 +25,7 @@ func consumeItemAtSlit(item, slit):
         return true
     else:
         if consumedEnergy >= 4.0: return false
-        if item.type != Item.Type.TorusYellow: return false
+        if item.type != Item.Type.Energy: return false
         consumedEnergy += 1
         return true
     

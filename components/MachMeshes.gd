@@ -17,6 +17,15 @@ func quad3(st : SurfaceTool, p1 : Vector3, p2 : Vector3, p3 : Vector3):
     
     quad(st, p1, p2, p3, p3 + (p1-p2))
 
+func box(st : SurfaceTool, w : float, h: float, d: float):
+    
+    quad3(st, Vector3(-w,  h, -d),  Vector3(-w, -h, -d), Vector3( w, -h, -d)) # rear 
+    quad3(st, Vector3(-w,  h,  d),  Vector3(-w,  h, -d), Vector3( w,  h, -d)) # top 
+    quad3(st, Vector3( w,  h, -d),  Vector3( w, -h, -d), Vector3( w, -h,  d)) # right 
+    quad3(st, Vector3(-w, -h,  d),  Vector3(-w, -h, -d), Vector3(-w,  h, -d)) # left
+    quad3(st, Vector3( w, -h, -d),  Vector3(-w, -h, -d), Vector3(-w, -h,  d)) # bottom  
+    quad3(st, Vector3(-w,  h,  d),  Vector3( w,  h,  d), Vector3( w, -h,  d)) # front
+
 func arrow(width, height, thickness):
 
     var st = SurfaceTool.new()
@@ -270,6 +279,38 @@ func cross(width : float, height : float, thickness : float):
     quad3(st, Vector3(-w, -h,  d),  Vector3(-w, -h, -d), Vector3(-w,  h, -d)) # left
     quad3(st, Vector3( w, -h, -d),  Vector3(-w, -h, -d), Vector3(-w, -h,  d)) # bottom  
     quad3(st, Vector3(-w,  h,  d),  Vector3( w,  h,  d), Vector3( w, -h,  d)) # front
+
+    st.index()
+    st.generate_normals()
+    
+    return st.commit()    
+    
+func cubeCross(width : float, colors : Array):
+
+    var st = SurfaceTool.new()
+    st.begin(Mesh.PRIMITIVE_TRIANGLES)
+    st.set_smooth_group(-1) # flat shading
+    
+    var w  = width/2
+    var h  = width/6
+    var d  = width/6
+    
+    st.set_color(colors[0])
+    box(st, w, h, d)
+
+    w  = width/6
+    h  = width/2
+    d  = width/6
+
+    st.set_color(colors[1])
+    box(st, w, h, d)
+
+    w  = width/6
+    h  = width/6
+    d  = width/2
+
+    st.set_color(colors[2])
+    box(st, w, h, d)
 
     st.index()
     st.generate_normals()

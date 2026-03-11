@@ -1,4 +1,4 @@
-class_name MachineRounder
+class_name MachineCylinder
 extends Machine
 
 var consumedEnergy = 0
@@ -14,7 +14,7 @@ var roundeningEnergy = {
 
 func _init(p, o):
     
-    super._init(Mach.Type.Rounder, p, o)
+    super._init(Mach.Type.Cylinder, p, o)
     
 func consumeItemAtSlit(item, slit): 
     
@@ -25,7 +25,7 @@ func consumeItemAtSlit(item, slit):
         return true
     else:
         if consumedEnergy >= 4.0: return false
-        if item.type != Item.Type.TorusYellow: return false
+        if item.type != Item.Type.Energy: return false
         consumedEnergy += 1
         return true
     

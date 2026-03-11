@@ -47,6 +47,8 @@ var itemMap : Array[ItemMap] = []
 
 func _ready():
     
+    $CubeCross.multimesh.mesh = MachMeshes.cubeCross(0.4, [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
+    
     for child in get_children():
         child.multimesh.instance_count = 10000
         child.multimesh.visible_instance_count = 0
@@ -103,7 +105,8 @@ func aryChange(pm : ItemMap, index : int, item : Item.Inst):
     if index < 0: 
         Log.warn("invalid index", index, item, pm.msh.multimesh.instance_count)
 
-    pm.msh.multimesh.set_instance_color(index, item.color)
+    if pm.msh.multimesh.use_colors:
+        pm.msh.multimesh.set_instance_color(index, item.color)
     pm.msh.multimesh.set_instance_transform(index, itemTrans(item))
     
 func itemTrans(item):

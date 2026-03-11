@@ -39,7 +39,7 @@ class Building:
             
             module = Module.new()
             module.bpos = pos
-            module.color = Color(0.085, 0.085, 0.085)
+            module.color = COLOR.ARROW
             module.type  = Module.Type.ARROW
             module.kind  = Module.Kind.SLIT
             modules.push_back(module)
@@ -53,7 +53,7 @@ class Building:
 
             module = Module.new()
             module.bpos = pos
-            module.color = Color(0.085, 0.085, 0.085)
+            module.color = COLOR.ARROW
             module.type  = Module.Type.ARROW
             module.kind  = Module.Kind.SLOT
             modules.push_back(module)
