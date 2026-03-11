@@ -15,7 +15,6 @@ func _init(t, p, o):
     
     type  = t
     belts = Mach.beltsForType(type)
-    if belts: Log.log(belts)
     slots = Mach.slotsForType(type)
     slits = Mach.slitsForType(type)
     
@@ -110,7 +109,6 @@ func setOrientation(o : int):
     orientation = o
     
     for belt in belts:
-        Log.log("belt", Belt.stringForType(belt.type), o, Belt.orientateType(o, belt.type))
         belt.pos  = Belt.orientatePos(o, belt.pos)
         belt.type = Belt.orientateType(o, belt.type)
 
@@ -143,8 +141,8 @@ func consume(delta:float):
                         bdg.modules[2*i + 1].trans.origin.y = 0.9
                         mst.add(bdg)
         else:
-            slits[i].idle += 1
-            if bdg and slits[i].idle == 120:
+            slits[i].idle += delta
+            if bdg and slits[i].idle >= 2.0 and slits[i].idle-delta < 2.0:
                 bdg.modules[2*i + 1].color = COLOR.SLIT
                 bdg.modules[2*i + 1].trans.origin.y = 0.901
                 mst.add(bdg)
@@ -171,13 +169,13 @@ func produce(delta:float):
                         bdg.modules[slits.size() * 2 + 2*i + 1].trans.origin.y = 0.9
                         mst.add(bdg)
         else:
-            slots[i].idle += 1
-            if bdg and slots[i].idle == 120:
+            slots[i].idle += delta
+            if bdg and slots[i].idle >= 2.0 and slots[i].idle-delta < 2.0:
                 bdg.modules[slits.size() * 2 + 2*i + 1].color = COLOR.SLOT
                 bdg.modules[slits.size() * 2 + 2*i + 1].trans.origin.y = 0.901
                 mst.add(bdg)
-            elif bdg and slots[i].idle == 240:
-                slots[i].idle = 100
+            elif bdg and slots[i].idle >= 4.0:
+                slots[i].idle = 1.6
                 bdg.modules[slits.size() * 2 + 2*i + 1].color = COLOR.ARROW
                 mst.add(bdg)
         

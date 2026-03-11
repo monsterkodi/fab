@@ -210,7 +210,6 @@ func rotateType(type):
         
 func orientateType(orientation, type):
     for i in range(orientation):
-        Log.log(orientation, i, type, rotateType(type))
         type = rotateType(type)
     return type       
 

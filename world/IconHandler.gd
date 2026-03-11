@@ -28,17 +28,17 @@ func _ready():
     
 func levelStart():
             
-    for type in Mach.Types:
-        if type:
-            generateMachineIcon(type)
-            await RenderingServer.frame_post_draw
-            await RenderingServer.frame_post_draw
-            
     for type in Item.Types:
         generateItemIcon(type)
         await RenderingServer.frame_post_draw
         await RenderingServer.frame_post_draw
-        
+            
+    #for type in Mach.Types:
+        #if type:
+            #generateMachineIcon(type)
+            #await RenderingServer.frame_post_draw
+            #await RenderingServer.frame_post_draw
+                    
 func get_full_aabb(node: Node3D) -> AABB:
     
     var total_aabb: AABB = AABB()
@@ -153,7 +153,7 @@ func generateMachineIcon(type : Mach.Type):
 func frame_camera_on_item(camera: Camera3D, type : Item.Type):
     
     var center = Vector3(-0.5, 0.5, 0)
-    camera.position = center + Vector3(1, 1, 1).normalized() * 1.5
+    camera.position = center + Vector3(1, 1, 1).normalized() * 1.75
     camera.look_at(center)        
     
 func generateItemIcon(type : Item.Type):

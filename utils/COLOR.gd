@@ -2,6 +2,7 @@ extends Node
 # singleton COLOR
 
 const ENERGY   := Color(0.3, 0.3, 4)
+const GAUGE    := Color(0.5, 0.5, 2)
 const BUILDING := Color(0.1, 0.1, 0.1)
 
 const SLIT     := Color(2, 0, 0)

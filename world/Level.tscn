@@ -33,12 +33,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.51, 0)
 shape = SubResource("BoxShape3D_w56at")
 
 [node name="Plane" type="MeshInstance3D" parent="Floor" unique_id=779191757]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02, 0)
 mesh = SubResource("PlaneMesh_lieq4")
 surface_material_override/0 = ExtResource("3_mxnmf")
 
 [node name="Grid" type="MeshInstance3D" parent="Floor" unique_id=697456105]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.341934e-05, -0.001149416, 0.0036256313)
 mesh = SubResource("PlaneMesh_s30m6")
 surface_material_override/0 = ExtResource("4_lhci3")
 
@@ -54,4 +52,3 @@ process_mode = 1
 [node name="MachState" parent="." unique_id=2084936293 instance=ExtResource("9_kp7rj")]
 
 [node name="GhostState" parent="." unique_id=2004242388 instance=ExtResource("10_ioj0i")]
-isGhost = true

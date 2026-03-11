@@ -274,8 +274,9 @@ func gameSpeedReset():  setGameSpeed(1)
     
 func setGameSpeed(newSpeed):
     
-    if newSpeed < 24 and newSpeed > 0.1:
+    if newSpeed < 16 and newSpeed > 0.1:
         gameSpeed = newSpeed
+        Log.log(gameSpeed)
         Post.gameSpeed.emit(gameSpeed)
     
 func saveGame(data : Dictionary):
