@@ -19,7 +19,7 @@ static func applySetting(key, value):
     
     match key:
         
-        "brightness":    Utils.world("Camera/Light").light_energy = value
+        "brightness":    Utils.world("Camera/Light").light_energy = value; Utils.world("Environment").environment.ambient_light_energy = 0.1*value
         "hires":         setHires(value)
         "volumeMaster":  AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(value))
         "volumeGame":    AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Game"),   linear_to_db(value))

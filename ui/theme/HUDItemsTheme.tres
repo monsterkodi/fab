@@ -11,9 +11,11 @@ bg_color = Color(0.2, 0.2, 0.2, 1)
 draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kc1wr"]
-draw_center = false
+bg_color = Color(0.05, 0.05, 0.05, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [resource]
 default_font = ExtResource("1_8ow1n")

@@ -268,15 +268,16 @@ func _physics_process(delta: float):
     
 func clearTemp(): tmp.clear()
         
-func gameSpeedFaster(): setGameSpeed(gameSpeed * 3/2)
-func gameSpeedSlower(): setGameSpeed(gameSpeed * 2/3)
+func gameSpeedFaster(): setGameSpeed(gameSpeed + 1)
+func gameSpeedSlower(): setGameSpeed(gameSpeed - 1)
+
 func gameSpeedReset():  setGameSpeed(1)
     
+func gameSpeedSet(newSpeed): setGameSpeed(newSpeed) # hud throttle
 func setGameSpeed(newSpeed):
     
     if newSpeed < 16 and newSpeed > 0.1:
         gameSpeed = newSpeed
-        Log.log(gameSpeed)
         Post.gameSpeed.emit(gameSpeed)
     
 func saveGame(data : Dictionary):
@@ -314,7 +315,7 @@ func loadGame(data : Dictionary):
 
     if data.has("FabState"):
         
-        gameSpeed  = data.FabState.gameSpeed
+        Post.gameSpeedSet.emit(data.FabState.gameSpeed)
         
         if data.FabState.has("machines"):
             for machine in data.FabState.machines:

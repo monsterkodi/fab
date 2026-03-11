@@ -125,7 +125,7 @@ size_flags_vertical = 4
 script = ExtResource("3_emk4v")
 text = "Brightness"
 value = 1.0
-valueMax = 2.0
+valueMax = 4.0
 valueStep = 0.1
 metadata/_custom_type_script = "uid://dxpjww7lq0w6w"
 

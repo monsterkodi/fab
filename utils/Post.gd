@@ -19,6 +19,7 @@ signal pointerRotate
 signal gamePaused
 signal gameResume
 signal gameSpeed
+signal gameSpeedSet
 signal gameSpeedSlower
 signal gameSpeedFaster
 signal gameSpeedReset

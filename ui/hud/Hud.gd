@@ -39,15 +39,6 @@ func activateButton(index):
     if index >= 0 and index < btns.size():
         btns[index].button_pressed = true
     
-func slower():
-    Post.gameSpeedSlower.emit()
-
-func faster():
-    Post.gameSpeedFaster.emit()
-    
-func reset():
-    Post.gameSpeedReset.emit()
-
 func buttonPressed(buildingName : String):
    
     Post.activateBuilder.emit(buildingName.replace("Building", ""))
@@ -67,6 +58,21 @@ func _shortcut_input(event: InputEvent):
         btn.button_pressed = true
         get_viewport().set_input_as_handled()
         return
+        
+    if event.is_action("gameSpeedFaster"): 
+        Post.gameSpeedFaster.emit()
+        get_viewport().set_input_as_handled()
+        return
+
+    if event.is_action("gameSpeedSlower"): 
+        Post.gameSpeedSlower.emit()
+        get_viewport().set_input_as_handled()
+        return
+
+    if event.is_action("gameSpeedReset"): 
+        Post.gameSpeedReset.emit()
+        get_viewport().set_input_as_handled()
+        return
 
 func _unhandled_key_input(event: InputEvent):
     
@@ -80,3 +86,11 @@ func itemButtonPressed(itemName : String):
     for i in range(50):
         Utils.fabState().storage.addItem(Item.typeForString(itemName.replace("Item", "")))
     
+
+func throttleValue(value: float):
+    
+    Post.gameSpeedSet.emit(1.0 + value * 10)
+    
+func gameSpeed(value):
+    
+    %Throttle.set_value_no_signal((value-1.0)/10.0)
