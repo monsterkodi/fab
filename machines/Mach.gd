@@ -13,7 +13,8 @@ enum Type {
     Cylinder,
     Sphere,
     Counter,
-    Assembler,
+    CubeCross,
+    CylinderCross,
 }
 
 var Types     : Array[Type]
@@ -39,24 +40,26 @@ var Class = [
     MachineCylinder,
     MachineSphere,
     MachineCounter,
-    MachineAssembler,
+    MachineCubeCross,
+    MachineCylinderCross,
 ]
 
 func costForType(type):
 
     match type:
-            Type.Tunnel:    return {Item.Type.CubeBlack: 10}
-            Type.Root:      return {Item.Type.CubeRed: 1000, Item.Type.CubeGreen: 1000, Item.Type.CubeBlue: 1000}
-            Type.Storage:   return {Item.Type.CubeBlack: 10}
-            Type.Prism:     return {Item.Type.CubeBlack: 30}
-            Type.Burner:    return {Item.Type.CubeRed:   10, Item.Type.CubeGreen: 10, Item.Type.CubeBlue: 10}
-            Type.Mixer:     return {Item.Type.CubeRed:   20, Item.Type.CubeGreen: 20, Item.Type.CubeBlue: 20}
-            Type.Whitener:  return {Item.Type.CubeWhite: 10}
-            Type.Cylinder:  return {Item.Type.CubeBlack: 20}
-            Type.Sphere:    return {Item.Type.CubeBlack: 20}
-            Type.Counter:   return {Item.Type.CubeBlack: 10}
-            Type.Assembler: return {Item.Type.CubeBlack: 10}
-            _:              return {Item.Type.CubeBlack: 1}
+            Type.Tunnel:        return {Item.Type.CubeBlack: 10}
+            Type.Root:          return {Item.Type.CubeRed: 1000, Item.Type.CubeGreen: 1000, Item.Type.CubeBlue: 1000}
+            Type.Storage:       return {Item.Type.CubeBlack: 10}
+            Type.Prism:         return {Item.Type.CubeBlack: 30}
+            Type.Burner:        return {Item.Type.CubeRed:   10, Item.Type.CubeGreen: 10, Item.Type.CubeBlue: 10}
+            Type.Mixer:         return {Item.Type.CubeRed:   20, Item.Type.CubeGreen: 20, Item.Type.CubeBlue: 20}
+            Type.Whitener:      return {Item.Type.CubeWhite: 10}
+            Type.Cylinder:      return {Item.Type.CubeBlack: 20}
+            Type.Sphere:        return {Item.Type.CubeBlack: 20}
+            Type.Counter:       return {Item.Type.CubeBlack: 10}
+            Type.CubeCross:     return {Item.Type.CubeBlack: 10}
+            Type.CylinderCross: return {Item.Type.CubeBlack: 10}
+            _:                  return {Item.Type.CubeBlack: 1}
 
 func stringForType(type):   return TypeNames[type]
 func typeForString(string): return TypeMap[string]
@@ -113,7 +116,7 @@ func slitsForType(type):
                 {"pos": Vector2i.ZERO,         "dir": Belt.W, "shape": Item.Shape.Cylinder},
                 {"pos": Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "item":  Item.Type.Energy},
             ]
-        Type.Assembler: 
+        Type.CubeCross, Type.CylinderCross: 
             return [
                 {"pos": Belt.NEIGHBOR[Belt.W], "dir": Belt.W},
                 {"pos": Belt.NEIGHBOR[Belt.W] + Belt.NEIGHBOR[Belt.S], "dir": Belt.W},
@@ -161,7 +164,7 @@ func slotsForType(type):
             return [
                 {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E},
                 ]
-        Type.Assembler: 
+        Type.CubeCross, Type.CylinderCross: 
             return [
                 {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E},
                 ]
@@ -247,7 +250,7 @@ func decosForType(type):
                 {"pos": Vector3(0.5, 0.9, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.ARROW,
                     "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
                 ]
-        Type.Assembler:
+        Type.CubeCross, Type.CylinderCross:
             return [
                 {"pos": Vector3(0, 0.5, 0), "type": MachState.Module.Type.BOX, "color": COLOR.BUILDING,
                     "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },

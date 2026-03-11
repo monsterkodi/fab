@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dd1g0k46op5ng"]
+
+[ext_resource type="Script" uid="uid://31cg8tebt2ql" path="res://components/TubeCross.gd" id="1_sttgh"]
+
+[node name="TubeCross" type="Node3D" unique_id=1573350988]
+script = ExtResource("1_sttgh")
+width = 10.0
+radius = 0.1
+segments = 36

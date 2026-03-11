@@ -47,7 +47,8 @@ var itemMap : Array[ItemMap] = []
 
 func _ready():
     
-    $CubeCross.multimesh.mesh = MachMeshes.cubeCross(0.4, [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
+    $CubeCross.multimesh.mesh     = MachMeshes.cubeCross(0.4, [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
+    $CylinderCross.multimesh.mesh = MachMeshes.cylinderCross(0.4, 0.1, [COLOR.ITEM_GREEN, COLOR.ITEM_BLUE, COLOR.ITEM_RED])
     
     for child in get_children():
         child.multimesh.instance_count = 10000

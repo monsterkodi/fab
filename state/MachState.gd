@@ -5,7 +5,7 @@ extends Node3D
 
 class Module:
     
-    enum Type { BOX, ARROW, CUBE, TORUS, SPHERE, CYLINDER, CYLINDER_CHAMFER, GEAR, FRAME }
+    enum Type { BOX, ARROW, CUBE, TORUS, SPHERE, CYLINDER, CYLINDER_CHAMFER, GEAR, FRAME, CUBE_CROSS, CYLINDER_CROSS }
     enum Kind { NONE, SLIT, SLOT }
     
     var trans : Transform3D
@@ -178,6 +178,8 @@ func _ready():
             Module.Type.CYLINDER_CHAMFER:   msh = CylinderMesh.new(); msh.height = 0.1; msh.top_radius = 0.4; msh.cap_bottom = false; msh.rings = 1; msh.radial_segments = 24
             Module.Type.GEAR:               msh = MachMeshes.gear(0.4, 0.1, 0.2, 8, 0.5, 0.5, false)
             Module.Type.FRAME:              msh = MachMeshes.frame(1.0, 1.0, 1.0, 0.2, 0.5)
+            Module.Type.CUBE_CROSS:         msh = MachMeshes.cubeCross(0.4, [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
+            Module.Type.CYLINDER_CROSS:     msh = MachMeshes.cylinderCross(0.4, 0.1, [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
         mm.multimesh.mesh = msh
         assert(mm.multimesh.mesh)
         

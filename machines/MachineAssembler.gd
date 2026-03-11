@@ -1,18 +1,18 @@
 class_name MachineAssembler
 extends Machine
 
-var recipe = {"in": [[Item.Type.CubeRed, 2], [Item.Type.CubeGreen, 2], [Item.Type.CubeBlue, 2]], "out": Item.Type.CubeCross, "time": 6.0}
+var recipe
 var consumed = [0, 0, 0]
 var producing = false
+var canProduce = false
 var elapsed = 0
 
-func _init(p, o):
+func _init(t, p, o):
     
-    super._init(Mach.Type.Assembler, p, o) 
+    super._init(t, p, o) 
     
 func consumeItemAtSlit(item, slit):
     
-    if producing: return false
     for index in range(recipe.in.size()):
         if item.type == recipe.in[index][0] and consumed[index] < recipe.in[index][1]:
             consumed[index] += 1
@@ -24,12 +24,16 @@ func checkProducing():
     
     for index in range(recipe.in.size()):
         if consumed[index] < recipe.in[index][1]:
-            producing = false
+            canProduce = false
             return
-    producing = true
+    canProduce = true
     
 func produce(delta:float):
     
+    if not producing and canProduce:
+        producing = true
+        canProduce = false
+        consumed  = [0, 0, 0]
     if producing:
         elapsed += delta
         if elapsed < recipe.time:
@@ -41,7 +45,6 @@ func produceItemAtSlot(slot):
     if not producing: return false
     if elapsed < recipe.time: return false
     elapsed   = 0.0
-    consumed  = [0, 0, 0]
     producing = false
     return Item.Inst.new(recipe.out)
 

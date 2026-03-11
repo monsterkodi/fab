@@ -317,6 +317,69 @@ func cubeCross(width : float, colors : Array):
     
     return st.commit()    
     
+func perp(vec : Vector3) -> Vector3:
+    
+    var ax = absf(vec.x)
+    var ay = absf(vec.y)
+    var az = absf(vec.z)
+    if  ax <= ay and ax <= az:
+        return Vector3(0, -vec.z, vec.y)
+    if ay <= ax and ay <= az:
+        return Vector3(-vec.z, 0, vec.x)
+    return Vector3(-vec.y, vec.x, 0)
+    
+func circle(st : SurfaceTool, center : Vector3, radius : float, normal : Vector3, segments : int = 18):
+    
+    var right = perp(normal).normalized() * radius
+    for step in range(segments):
+        var rotr = right.rotated(normal, TAU / segments)
+        tri(st, center, center + right, center + rotr)
+        right = rotr
+        
+func tube(st : SurfaceTool, bot : Vector3, top: Vector3, botRadius : float, topRadius : float, segments : int = 18):
+
+    var normal   = (top - bot).normalized()
+    var right    = perp(top - bot).normalized()
+    var botRight = right * botRadius
+    var topRight = right * topRadius
+    for step in range(segments):
+        var botRot = botRight.rotated(normal, TAU / segments)
+        var topRot = topRight.rotated(normal, TAU / segments)
+        quad(st, bot + botRight, top + topRight, top + topRot, bot + botRot)
+        botRight = botRot
+        topRight = topRot
+    
+func cylinder(st : SurfaceTool, botCenter : Vector3, topCenter : Vector3, botRadius : float, topRadius : float, segments : int = 18):
+    
+    st.set_smooth_group(-1) # flat shading
+    var normal = (topCenter - botCenter).normalized()
+    circle(st, botCenter, botRadius, normal,        segments)
+    circle(st, topCenter, topRadius, normal * -1.0, segments)
+    
+    st.set_smooth_group(0) # smooth shading
+    tube(st, botCenter, topCenter, botRadius, topRadius, segments)
+    
+func cylinderCross(width : float, radius : float, colors : Array, segments : int = 18):
+
+    var st = SurfaceTool.new()
+    st.begin(Mesh.PRIMITIVE_TRIANGLES)
+    
+    var w  = width/2
+    
+    st.set_color(colors[0])
+    cylinder(st, Vector3(-w, 0, 0), Vector3( w, 0, 0), radius, radius, segments)
+
+    st.set_color(colors[1])
+    cylinder(st, Vector3(0, -w, 0), Vector3( 0, w, 0), radius, radius, segments)
+
+    st.set_color(colors[2])
+    cylinder(st, Vector3(0, 0, -w), Vector3( 0, 0, w), radius, radius, segments)
+
+    st.index()
+    st.generate_normals()
+    
+    return st.commit()        
+    
 func gear(outerRadius, innerRadius, height, spokeCount, spokeWidthFactor, spokeLengthFactor, bottom):
 
     var st = SurfaceTool.new()

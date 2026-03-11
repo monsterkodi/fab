@@ -20,18 +20,14 @@ func _ready():
         if res is PackedScene: 
             generateIcon(res, "res://icons/buildings/")
 
-    #for res in Utils.resourcesInDir("res://items/"):    
-        #if res is PackedScene:
-            #generateIcon(res, "res://icons/items/")
-            
     Post.subscribe(self)
     
 func levelStart():
             
-    #for type in Item.Types:
-        #generateItemIcon(type)
-        #await RenderingServer.frame_post_draw
-        #await RenderingServer.frame_post_draw
+    for type in Item.Types:
+        generateItemIcon(type)
+        await RenderingServer.frame_post_draw
+        await RenderingServer.frame_post_draw
             
     for type in Mach.Types:
         if type:
