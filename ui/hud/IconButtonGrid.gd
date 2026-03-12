@@ -5,7 +5,10 @@ signal buttonPressed
 
 @export var buttonSize : float = 96
 @export var icons : Array[String]
+
 var buttonGroup : ButtonGroup
+
+var tooltipTimer
 
 func _ready():
     
@@ -25,6 +28,8 @@ func setIcons(icns):
 func addIcon(resPath):
     
     var button : Button = Button.new()
+    button.mouse_entered.connect(onButtonMouseEnter.bind(button))
+    button.mouse_exited.connect(onButtonMouseExit.bind(button))
     button.button_group = buttonGroup
     button.toggle_mode = true
     button.icon = load(resPath)
@@ -33,13 +38,36 @@ func addIcon(resPath):
     button.custom_minimum_size = Vector2(buttonSize, buttonSize)
     button.expand_icon = true
     %Grid.add_child(button)
+    
+func onButtonMouseEnter(button):
+    
+    if not tooltipTimer:
+        tooltipTimer = Timer.new()
+        tooltipTimer.one_shot = true
+        tooltipTimer.timeout.connect(onButtonTooltip.bind(button))
+        add_child(tooltipTimer)
+        tooltipTimer.start(1.0)
+
+func onButtonMouseExit(button):
+    
+    if tooltipTimer:
+        tooltipTimer.free()
+    Post.infoTooltipHide.emit()
+    
+func onButtonTooltip(button):
+    
+    Post.infoTooltip.emit(buttonName(button), button)
 
 func onButtonPressed(button):
     
+    buttonPressed.emit(buttonName(button))
+    
+func buttonName(button):
+    
     if button.icon:
-        buttonPressed.emit(button.icon.resource_path.get_file().get_basename())
+        return button.icon.resource_path.get_file().get_basename()
     else:
-        buttonPressed.emit(button.text)
+        return button.text
     
 func setNumber(index: int, number : int):
     

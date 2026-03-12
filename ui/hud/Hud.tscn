@@ -4,6 +4,7 @@
 [ext_resource type="Theme" uid="uid://g22p2j6a23ol" path="res://ui/theme/HUDTheme.tres" id="2_aaqae"]
 [ext_resource type="PackedScene" uid="uid://bp3vplo7lbscx" path="res://ui/hud/IconButtonGrid.tscn" id="4_by07e"]
 [ext_resource type="Theme" uid="uid://dmncnyjxue1mk" path="res://ui/theme/HUDItemsTheme.tres" id="4_gt2ij"]
+[ext_resource type="Script" uid="uid://dh8b0v6p5ptva" path="res://ui/hud/InfoTooltip.gd" id="5_gt2ij"]
 
 [node name="Hud" type="Control" unique_id=1410583153]
 process_mode = 3
@@ -71,6 +72,12 @@ allow_lesser = true
 tick_count = 11
 ticks_on_borders = true
 ticks_position = 2
+
+[node name="InfoTooltip" type="PanelContainer" parent="." unique_id=1389476073]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_gt2ij")
 
 [connection signal="buttonPressed" from="ItemButtonGrid" to="." method="itemButtonPressed"]
 [connection signal="buttonPressed" from="BuildButtonGrid" to="." method="buttonPressed"]

@@ -37,6 +37,8 @@ signal menuSound
 signal gameSound
 
 signal activateBuilder
+signal infoTooltip
+signal infoTooltipHide
 
 var sigDict : Dictionary
 
