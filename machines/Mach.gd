@@ -4,6 +4,8 @@ extends Node
 enum Type {
     Belt,
     Tunnel,
+    Tunnel2,
+    Tunnel3,
     Root,
     Storage,
     Prism,
@@ -31,6 +33,8 @@ func _init():
 var Class = [
     null, 
     MachineTunnel,
+    MachineTunnel2,
+    MachineTunnel3,
     MachineRoot,
     MachineStorage,
     MachinePrism,
@@ -47,7 +51,9 @@ var Class = [
 func costForType(type):
 
     match type:
-            Type.Tunnel:        return {Item.Type.CubeBlack: 10}
+            Type.Tunnel:        return {Item.Type.CubeBlack:     10}
+            Type.Tunnel2:       return {Item.Type.CylinderBlack: 20}
+            Type.Tunnel3:       return {Item.Type.SphereBlack:   30}
             Type.Root:          return {Item.Type.CubeRed: 1000, Item.Type.CubeGreen: 1000, Item.Type.CubeBlue: 1000}
             Type.Storage:       return {Item.Type.CubeBlack: 10}
             Type.Prism:         return {Item.Type.CubeBlack: 30}
@@ -79,7 +85,7 @@ func beltsForType(type):
 func slitsForType(type):        
     
     match type:
-        Type.Tunnel: 
+        Type.Tunnel, Type.Tunnel2, Type.Tunnel3: 
             return [
                 {"pos": Vector2i.ZERO, "dir": Belt.W},
             ]
@@ -130,6 +136,14 @@ func slotsForType(type):
         Type.Tunnel: 
             return [
                 {"pos": Belt.NEIGHBOR[Belt.E]*2,                     "dir": Belt.E},
+            ]
+        Type.Tunnel2: 
+            return [
+                {"pos": Belt.NEIGHBOR[Belt.E]*3,                     "dir": Belt.E},
+            ]
+        Type.Tunnel3: 
+            return [
+                {"pos": Belt.NEIGHBOR[Belt.E]*4,                     "dir": Belt.E},
             ]
         Type.Prism: 
             return [
@@ -250,11 +264,31 @@ func decosForType(type):
                 {"pos": Vector3(0.5, 0.9, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.ARROW,
                     "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
                 ]
-        Type.CubeCross, Type.CylinderCross:
+        Type.CubeCross:
             return [
                 {"pos": Vector3(0, 0.5, 0), "type": MachState.Module.Type.BOX, "color": COLOR.BUILDING,
                     "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
-                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.GEAR, "color": COLOR.ENERGY},
+                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.GEAR, "color": COLOR.ITEM_RED},
+                {"pos": Vector3( 1, 1, 0), "type": MachState.Module.Type.CUBE_CROSS}, 
+                {"pos": Vector3(-1, 1, -1), "type": MachState.Module.Type.CUBE, "color": COLOR.ITEM_RED, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(-1, 1, 0), "type": MachState.Module.Type.CUBE, "color": COLOR.ITEM_GREEN, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(-1, 1, 1), "type": MachState.Module.Type.CUBE, "color": COLOR.ITEM_BLUE, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                ]
+        Type.CylinderCross:
+            return [
+                {"pos": Vector3(0, 0.5, 0), "type": MachState.Module.Type.BOX, "color": COLOR.BUILDING,
+                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
+                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.GEAR, "color": COLOR.ITEM_GREEN},
+                {"pos": Vector3( 1, 1, 0), "type": MachState.Module.Type.CYLINDER_CROSS}, 
+                {"pos": Vector3(-1, 1, -1), "type": MachState.Module.Type.CYLINDER, "color": COLOR.ITEM_RED, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(-1, 1, 0), "type": MachState.Module.Type.CYLINDER, "color": COLOR.ITEM_GREEN, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(-1, 1, 1), "type": MachState.Module.Type.CYLINDER, "color": COLOR.ITEM_BLUE, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
                 ]
     return []
     

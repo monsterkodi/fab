@@ -1,13 +1,9 @@
 class_name Builder
 extends Node3D
 
-# Burner: Item + Time = Energy
 # Filter
-# Tunnel
-# Painter: Item + Color + Time + Energy = Colored Item
 # Hatchery: Food + Time + Energy + Space = Produce
 # Trains: Railed like belts, one model can, be chained
-# Shapes: Item + [Torus Sphere Cube] + Time + Energy = Converted Item
 # Merger: Torus + Sphere = TorusSphere
 # Splitter: TorusSphere = Torus + Sphere
 

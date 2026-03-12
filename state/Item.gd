@@ -52,8 +52,8 @@ var TypeInfo = [                        # energy     # white  # round # sphere
     [Shape.Sphere,    COLOR.ITEM_BLUE,       0.15,        0,      0,   0 ],
     [Shape.Sphere,    COLOR.ITEM_WHITE,      0.644,       0,      0,   0 ],
     [Shape.Torus,     COLOR.ENERGY,          1.0 ,        0,      0,   0 ],
-    [Shape.CubeCross, COLOR.ITEM_BLACK,      0.444,       0,      0,   0 ],
-    [Shape.CylinderCross, COLOR.ITEM_BLACK,  0.644,       0,      0,   0 ],
+    [Shape.CubeCross, COLOR.ITEM_BLACK,      1.0,         0,      0,   0 ],
+    [Shape.CylinderCross, COLOR.ITEM_BLACK,  2.0,         0,      0,   0 ],
 ]
 
 func _init():

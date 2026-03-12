@@ -62,8 +62,9 @@ class Building:
             if deco.has("type"):
                 module = Module.new()
                 module.bpos = pos
-                module.color = deco.color
                 module.type  = deco.type
+                if deco.has("color"):
+                    module.color = deco.color
                 if deco.has("basis"):
                     module.trans = Transform3D(deco.basis, Vector3.ZERO)
                 modules.push_back(module)
@@ -178,8 +179,8 @@ func _ready():
             Module.Type.CYLINDER_CHAMFER:   msh = CylinderMesh.new(); msh.height = 0.1; msh.top_radius = 0.4; msh.cap_bottom = false; msh.rings = 1; msh.radial_segments = 24
             Module.Type.GEAR:               msh = MachMeshes.gear(0.4, 0.1, 0.2, 8, 0.5, 0.5, false)
             Module.Type.FRAME:              msh = MachMeshes.frame(1.0, 1.0, 1.0, 0.2, 0.5)
-            Module.Type.CUBE_CROSS:         msh = MachMeshes.cubeCross(0.4, [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
-            Module.Type.CYLINDER_CROSS:     msh = MachMeshes.cylinderCross(0.4, 0.1, [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
+            Module.Type.CUBE_CROSS:         msh = MachMeshes.cubeCross(0.6, [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
+            Module.Type.CYLINDER_CROSS:     msh = MachMeshes.cylinderCross(0.6, 0.15, [COLOR.ITEM_GREEN, COLOR.ITEM_BLUE, COLOR.ITEM_RED])
         mm.multimesh.mesh = msh
         assert(mm.multimesh.mesh)
         
@@ -187,15 +188,17 @@ func _ready():
             mm.material_override = preload("uid://cqpqvcb8usfl0")
         else:
             match Module.Type[type]:
-                Module.Type.CYLINDER, \
-                Module.Type.CYLINDER_CHAMFER, \
+                #Module.Type.CYLINDER, \
+                #Module.Type.CYLINDER_CHAMFER, \
                 Module.Type.FRAME, \
                 Module.Type.BOX:                mm.material_override =  preload("uid://ci4cvsq2gbob7")       
                 Module.Type.ARROW:              mm.material_override =  preload("uid://dc38ipveu0heb")
                 _:                              mm.material_override =  preload("uid://bi5n2lthhnyix")
             
         mm.multimesh.transform_format = MultiMesh.TRANSFORM_3D
-        mm.multimesh.use_colors = true
+        match Module.Type[type]:
+            Module.Type.CUBE_CROSS, Module.Type.CYLINDER_CROSS: mm.multimesh.use_colors = false
+            _ : mm.multimesh.use_colors = true
         add_child(mm)
     
     for child in get_children():
@@ -223,7 +226,8 @@ func clear():
             
 func aryChange(mm : ModMap, module : Module): 
     
-    mm.msh.multimesh.set_instance_color(module.index, module.color)
+    if mm.msh.multimesh.use_colors:
+        mm.msh.multimesh.set_instance_color(module.index, module.color)
     mm.msh.multimesh.set_instance_transform(module.index, module.trans)
     
 func setBuildingPos(building, pos):

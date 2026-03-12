@@ -3,9 +3,9 @@ extends Machine
 
 var items : Array[Item.Type] = []
 
-func _init(p, o):
+func _init(p, o, t = Mach.Type.Tunnel):
     
-    super._init(Mach.Type.Tunnel, p, o)
+    super._init(t, p, o)
     
 func consumeItemAtSlit(item, slit):
     
