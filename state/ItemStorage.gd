@@ -14,7 +14,8 @@ func addItem(type : Item.Type):
 func reset():
     
     for type in Item.Types:
-        storage[type] = 0
+        #storage[type] = 0
+        storage[type] = 100
 
     storage[Item.Type.CubeBlack] = 100
     

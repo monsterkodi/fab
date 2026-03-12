@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://vbkjj0ppnyru"]
+
+[ext_resource type="Script" uid="uid://bro7f7dtu0b8g" path="res://components/TunnelBox.gd" id="1_odr1o"]
+
+[node name="TunnelBox" type="Node3D" unique_id=1573350988]
+script = ExtResource("1_odr1o")
+chamfer = 0.777

@@ -87,7 +87,7 @@ func slitsForType(type):
     match type:
         Type.Tunnel, Type.Tunnel2, Type.Tunnel3: 
             return [
-                {"pos": Vector2i.ZERO, "dir": Belt.W},
+                {"pos": Vector2i.ZERO, "dir": Belt.W, "type": MachState.Module.Type.TUNNEL_BOX},
             ]
         Type.Prism: 
             return [
@@ -135,15 +135,15 @@ func slotsForType(type):
     match type:
         Type.Tunnel: 
             return [
-                {"pos": Belt.NEIGHBOR[Belt.E]*2,                     "dir": Belt.E},
+                {"pos": Belt.NEIGHBOR[Belt.E]*2,                     "dir": Belt.E, "type": MachState.Module.Type.TUNNEL_BOX},
             ]
         Type.Tunnel2: 
             return [
-                {"pos": Belt.NEIGHBOR[Belt.E]*3,                     "dir": Belt.E},
+                {"pos": Belt.NEIGHBOR[Belt.E]*3,                     "dir": Belt.E, "type": MachState.Module.Type.TUNNEL_BOX},
             ]
         Type.Tunnel3: 
             return [
-                {"pos": Belt.NEIGHBOR[Belt.E]*4,                     "dir": Belt.E},
+                {"pos": Belt.NEIGHBOR[Belt.E]*4,                     "dir": Belt.E, "type": MachState.Module.Type.TUNNEL_BOX},
             ]
         Type.Prism: 
             return [
@@ -187,7 +187,28 @@ func slotsForType(type):
 func decosForType(type):
     
     match type:
-        
+
+        Type.Tunnel:        
+             return [   
+                {"pos": Vector3(1.16, 0.2, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.ARROW,
+                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
+                ]
+        Type.Tunnel2:        
+             return [   
+                {"pos": Vector3(1.16, 0.2, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.ARROW,
+                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
+                {"pos": Vector3(2.16, 0.2, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.ARROW,
+                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
+                ]
+        Type.Tunnel3:        
+             return [   
+                {"pos": Vector3(1.16, 0.2, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.ARROW,
+                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
+                {"pos": Vector3(2.16, 0.2, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.ARROW,
+                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
+                {"pos": Vector3(3.16, 0.2, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.ARROW,
+                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
+                ]
         Type.Root:   
             return [ 
                 {"pos": Vector3(0, 0.5, 0), "type": MachState.Module.Type.BOX, "color": COLOR.BUILDING },

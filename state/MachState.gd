@@ -5,7 +5,7 @@ extends Node3D
 
 class Module:
     
-    enum Type { BOX, ARROW, CUBE, TORUS, SPHERE, CYLINDER, CYLINDER_CHAMFER, GEAR, FRAME, CUBE_CROSS, CYLINDER_CROSS }
+    enum Type { BOX, ARROW, CUBE, TORUS, SPHERE, CYLINDER, CYLINDER_CHAMFER, GEAR, FRAME, CUBE_CROSS, CYLINDER_CROSS, TUNNEL_BOX }
     enum Kind { NONE, SLIT, SLOT }
     
     var trans : Transform3D
@@ -34,29 +34,37 @@ class Building:
             module = Module.new()
             module.bpos = pos
             module.color = Color.WHITE
-            module.type  = Module.Type.BOX
+            if slit.has("type"):
+                module.type  = slit.type
+            else:
+                module.type  = Module.Type.BOX
             modules.push_back(module)
             
-            module = Module.new()
-            module.bpos = pos
-            module.color = COLOR.ARROW
-            module.type  = Module.Type.ARROW
-            module.kind  = Module.Kind.SLIT
-            modules.push_back(module)
+            if module.type != MachState.Module.Type.TUNNEL_BOX:
+                module = Module.new()
+                module.bpos = pos
+                module.color = COLOR.ARROW
+                module.type  = Module.Type.ARROW
+                module.kind  = Module.Kind.SLIT
+                modules.push_back(module)
             
         for slot in Mach.slotsForType(type):
             module = Module.new()
             module.bpos = pos
             module.color = Color.WHITE
-            module.type  = Module.Type.BOX
+            if slot.has("type"):
+                module.type  = slot.type
+            else:
+                module.type  = Module.Type.BOX
             modules.push_back(module)
 
-            module = Module.new()
-            module.bpos = pos
-            module.color = COLOR.ARROW
-            module.type  = Module.Type.ARROW
-            module.kind  = Module.Kind.SLOT
-            modules.push_back(module)
+            if module.type != MachState.Module.Type.TUNNEL_BOX:
+                module = Module.new()
+                module.bpos = pos
+                module.color = COLOR.ARROW
+                module.type  = Module.Type.ARROW
+                module.kind  = Module.Kind.SLOT
+                modules.push_back(module)
             
         for deco in Mach.decosForType(type):
             if deco.has("type"):
@@ -77,15 +85,17 @@ class Building:
         for slit in Mach.slitsForType(type):
             var p = basis * Vector3(slit.pos.x, 0, slit.pos.y)
             modules[i].trans = Mach.boxTrans(slit, p + Vector3(pos.x, 0.5, pos.y), basis)
-            i += 1
-            modules[i].trans = Mach.slitArrowTrans(slit, p + Vector3(pos.x, 0.0, pos.y), basis)
+            if modules[i].type != MachState.Module.Type.TUNNEL_BOX:
+                i += 1
+                modules[i].trans = Mach.slitArrowTrans(slit, p + Vector3(pos.x, 0.0, pos.y), basis)
             i += 1
 
         for slot in Mach.slotsForType(type):
             var p = basis * Vector3(slot.pos.x, 0, slot.pos.y)
             modules[i].trans = Mach.boxTrans(slot, p + Vector3(pos.x, 0.5, pos.y), basis)
-            i += 1
-            modules[i].trans = Mach.slotArrowTrans(slot, p + Vector3(pos.x, 0.0, pos.y), basis)
+            if modules[i].type != MachState.Module.Type.TUNNEL_BOX:
+                i += 1
+                modules[i].trans = Mach.slotArrowTrans(slot, p + Vector3(pos.x, 0.0, pos.y), basis)
             i += 1
             
         for deco in Mach.decosForType(type):
@@ -181,6 +191,7 @@ func _ready():
             Module.Type.FRAME:              msh = MachMeshes.frame(1.0, 1.0, 1.0, 0.2, 0.5)
             Module.Type.CUBE_CROSS:         msh = MachMeshes.cubeCross(0.6, [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
             Module.Type.CYLINDER_CROSS:     msh = MachMeshes.cylinderCross(0.6, 0.15, [COLOR.ITEM_GREEN, COLOR.ITEM_BLUE, COLOR.ITEM_RED])
+            Module.Type.TUNNEL_BOX:         msh = MachMeshes.tunnelBox(1.0, 1.0, 1.0, 0.2, 0.5)
         mm.multimesh.mesh = msh
         assert(mm.multimesh.mesh)
         
@@ -191,6 +202,7 @@ func _ready():
                 #Module.Type.CYLINDER, \
                 #Module.Type.CYLINDER_CHAMFER, \
                 Module.Type.FRAME, \
+                Module.Type.TUNNEL_BOX, \
                 Module.Type.BOX:                mm.material_override =  preload("uid://ci4cvsq2gbob7")       
                 Module.Type.ARROW:              mm.material_override =  preload("uid://dc38ipveu0heb")
                 _:                              mm.material_override =  preload("uid://bi5n2lthhnyix")

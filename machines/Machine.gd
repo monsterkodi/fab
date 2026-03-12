@@ -123,6 +123,14 @@ func setOrientation(o : int):
     if bdg:
         for i in range(o):
             mst.rotateBuilding(bdg)
+            
+func hasSlotArrows():
+    
+    return type not in [Mach.Type.Tunnel, Mach.Type.Tunnel2, Mach.Type.Tunnel3]
+
+func hasSlitArrows():
+    
+    return type not in [Mach.Type.Tunnel, Mach.Type.Tunnel2, Mach.Type.Tunnel3]
     
 func consume(delta:float):
     
@@ -136,16 +144,17 @@ func consume(delta:float):
                 fab.delItem(item)
                 if slits[i].idle:
                     slits[i].idle = 0
-                    if bdg:
+                    if bdg and hasSlitArrows():
                         bdg.modules[2*i + 1].color = COLOR.ARROW
                         bdg.modules[2*i + 1].trans.origin.y = 0.9
                         mst.add(bdg)
         else:
             slits[i].idle += delta
-            if bdg and slits[i].idle >= 2.0 and slits[i].idle-delta < 2.0:
-                bdg.modules[2*i + 1].color = COLOR.SLIT
-                bdg.modules[2*i + 1].trans.origin.y = 0.901
-                mst.add(bdg)
+            if hasSlitArrows():
+                if bdg and slits[i].idle >= 2.0 and slits[i].idle-delta < 2.0:
+                    bdg.modules[2*i + 1].color = COLOR.SLIT
+                    bdg.modules[2*i + 1].trans.origin.y = 0.901
+                    mst.add(bdg)
     
 func advanceAtSlotIndex(i):
     
@@ -164,20 +173,21 @@ func produce(delta:float):
                 fab.addItem(pos + slots[i].pos, Belt.OPPOSITE[slots[i].dir], item)
                 if slots[i].idle:
                     slots[i].idle = 0
-                    if bdg:
-                        bdg.modules[slits.size() * 2 + 2*i + 1].color = COLOR.ARROW
+                    if bdg and hasSlotArrows(): # this sucks!
+                        bdg.modules[slits.size() * 2 + 2*i + 1].color = COLOR.ARROW # crap
                         bdg.modules[slits.size() * 2 + 2*i + 1].trans.origin.y = 0.9
                         mst.add(bdg)
         else:
             slots[i].idle += delta
-            if bdg and slots[i].idle >= 2.0 and slots[i].idle-delta < 2.0:
-                bdg.modules[slits.size() * 2 + 2*i + 1].color = COLOR.SLOT
-                bdg.modules[slits.size() * 2 + 2*i + 1].trans.origin.y = 0.901
-                mst.add(bdg)
-            elif bdg and slots[i].idle >= 4.0:
-                slots[i].idle = 1.6
-                bdg.modules[slits.size() * 2 + 2*i + 1].color = COLOR.ARROW
-                mst.add(bdg)
+            if hasSlotArrows(): # sucks also!
+                if bdg and slots[i].idle >= 2.0 and slots[i].idle-delta < 2.0:
+                    bdg.modules[slits.size() * 2 + 2*i + 1].color = COLOR.SLOT
+                    bdg.modules[slits.size() * 2 + 2*i + 1].trans.origin.y = 0.901
+                    mst.add(bdg)
+                elif bdg and slots[i].idle >= 4.0:
+                    slots[i].idle = 1.6
+                    bdg.modules[slits.size() * 2 + 2*i + 1].color = COLOR.ARROW
+                    mst.add(bdg)
         
 func produceItemAtSlot(slot): return null
 func consumeItemAtSlit(item, slit): return false

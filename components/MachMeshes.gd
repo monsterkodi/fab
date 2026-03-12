@@ -75,6 +75,86 @@ func arrow(width, height, thickness):
     
     return st.commit()
     
+func tunnelBox(width, height, depth, thickness, chamfer):    
+    
+    var st = SurfaceTool.new()
+    
+    st.begin(Mesh.PRIMITIVE_TRIANGLES)
+    st.set_smooth_group(-1) # flat shading
+
+    var w  = width/2
+    var h  = height/2
+    var d  = depth/2
+    var cw = w
+    var ch = h
+    var cd = d
+    var iw = w - thickness
+    var ih = h - thickness
+    var id = d - thickness
+    
+    var mh = 0
+    var mt = 0
+    var ml = 0
+    
+    if chamfer > 0:
+        cw = w - thickness * chamfer
+        ch = h - thickness * chamfer
+        cd = d - thickness * chamfer
+        
+        mt = thickness * chamfer
+
+        #quad3(st, Vector3( cw,  h, -cd), Vector3(-cw,  h, -cd), Vector3(-cw,  ch, -d)) # rear top
+        quad3(st, Vector3( cw,  mt, -cd), Vector3(-cw,  mt, -cd), Vector3(-cw,  ml, -d)) # rear top
+        quad3(st, Vector3( cw, -ch, -d), Vector3( w, -ch, -cd), Vector3( w,  ml, -cd)) # rear right
+        quad3(st, Vector3(-cw,  ml, -d), Vector3(-w,  ml, -cd), Vector3(-w, -ch, -cd)) # rear left
+        quad3(st, Vector3(-cw, -h, -cd), Vector3( cw, -h, -cd), Vector3( cw, -ch, -d)) # rear bottom
+
+        quad3(st, Vector3(-cw,  ch,  d), Vector3(-cw,  h,  cd), Vector3( cw,  h,  cd)) # front top
+        quad3(st, Vector3( w,  ch,  cd), Vector3( w, -ch,  cd), Vector3( cw, -ch,  d)) # front right
+        quad3(st, Vector3(-w, -ch,  cd), Vector3(-w,  ch,  cd), Vector3(-cw,  ch,  d)) # front left
+        quad3(st, Vector3( cw, -ch,  d), Vector3( cw, -h,  cd), Vector3(-cw, -h,  cd)) # front bottom
+        
+        quad3(st, Vector3(-cw,  h,  cd), Vector3(-w,  ch, cd), Vector3( -w,  ml, -cd)) # top left
+        quad3(st, Vector3( w,  ml, -cd), Vector3( w,  ch, cd), Vector3( cw,   h,  cd)) # top right
+        quad3(st, Vector3(-w, -ch, -cd), Vector3(-w, -ch, cd), Vector3(-cw,  -h,  cd)) # bottom left
+        quad3(st, Vector3( cw, -h,  cd), Vector3( w, -ch, cd), Vector3(  w, -ch, -cd)) # bottom right
+        
+        tri(st, Vector3(-cw,  ch,  d), Vector3(-w,  ch,  cd), Vector3(-cw,  h,  cd)) # top left front
+        tri(st, Vector3( cw,  ch,  d), Vector3(cw,   h,  cd), Vector3( w,  ch,  cd)) # top right front
+        tri(st, Vector3(-cw,  mt, -cd), Vector3(-w,  ml, -cd), Vector3(-cw,  ml, -d)) # top left  rear
+        tri(st, Vector3( w,  ml, -cd), Vector3(cw,   mt, -cd), Vector3( cw,  ml, -d)) # top right rear
+
+        tri(st, Vector3(-cw,  -h, cd), Vector3(-w, -ch,  cd), Vector3(-cw, -ch,  d)) # bottom left front
+        tri(st, Vector3( w,  -ch, cd), Vector3(cw,  -h,  cd), Vector3( cw, -ch,  d)) # bottom right front
+        tri(st, Vector3(-cw, -ch, -d), Vector3(-w, -ch, -cd), Vector3(-cw,  -h,-cd)) # bottom left  rear
+        tri(st, Vector3( cw, -ch, -d), Vector3(cw,  -h, -cd), Vector3( w,  -ch,-cd)) # bottom right rear
+    
+    # outer box
+    quad3(st, Vector3(-cw,  mh, -d),  Vector3(-cw, -ch, -d), Vector3( cw, -ch, -d)) # rear 
+    quad3(st, Vector3(-cw,  h,  cd),  Vector3(-cw,  mt, -cd), Vector3( cw,  mt, -cd)) # top 
+    quad (st, Vector3( w,  ml, -cd),  Vector3( w, -ch, -cd), Vector3( w, -ch,  cd), Vector3( w,  ch,  cd)) # right 
+    quad (st, Vector3(-w, -ch,  cd),  Vector3(-w, -ch, -cd), Vector3(-w,  ml, -cd), Vector3(-w,  ch,  cd)) # left
+    quad3(st, Vector3( cw, -h, -cd),  Vector3(-cw, -h, -cd), Vector3(-cw, -h,  cd)) # bottom  
+
+    # outer front frame
+    quad(st, Vector3(-cw, ch, d), Vector3( cw,  ch, d), Vector3( iw,  ih, d), Vector3(-iw,  ih, d)) # top
+    quad(st, Vector3(-cw, ch, d), Vector3(-iw,  ih, d), Vector3(-iw, -ih, d), Vector3(-cw, -ch, d)) # left
+    quad(st, Vector3( cw, ch, d), Vector3( cw, -ch, d), Vector3( iw, -ih, d), Vector3( iw,  ih, d)) # right
+    quad(st, Vector3(-cw,-ch, d), Vector3(-iw, -ih, d), Vector3( iw, -ih, d), Vector3( cw, -ch, d)) # bottom
+
+    # inner box
+    
+    quad3(st, Vector3( iw, -ih, -id),  Vector3(-iw, -ih, -id), Vector3(-iw,  mh, -id)) # rear 
+    quad3(st, Vector3( iw,  ml, -id),  Vector3(-iw,  ml, -id), Vector3(-iw,  ih,   d)) # top 
+    quad (st, Vector3( iw, -ih,   d),  Vector3( iw, -ih, -id), Vector3( iw,  ml, -id), Vector3(iw, ih, d)) # right 
+    quad (st, Vector3(-iw,  ml, -id),  Vector3(-iw, -ih, -id), Vector3(-iw, -ih,   d), Vector3(-iw, ih, d)) # left
+    quad3(st, Vector3(-iw, -ih,   d),  Vector3(-iw, -ih, -id), Vector3( iw, -ih, -id)) # bottom  
+        
+    st.index()
+    st.generate_normals()
+    
+    return st.commit()       
+    
 func regal(width, height, depth, thickness, chamfer):
 
     var st = SurfaceTool.new()
