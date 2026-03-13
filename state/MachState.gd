@@ -5,7 +5,7 @@ extends Node3D
 
 class Module:
     
-    enum Type { BOX, ARROW, CUBE, TORUS, SPHERE, CYLINDER, CYLINDER_CHAMFER, GEAR, FRAME, CUBE_CROSS, CYLINDER_CROSS, TUNNEL_BOX }
+    enum Type { BOX, ARROW, CUBE, TORUS, SPHERE, CYLINDER, STORAGE, GEAR, FRAME, CUBE_CROSS, CYLINDER_CROSS, TUNNEL_BOX }
     enum Kind { NONE, SLIT, SLOT }
     
     var trans : Transform3D
@@ -186,7 +186,7 @@ func _ready():
             Module.Type.TORUS:              msh = TorusMesh.new(); msh.outer_radius = 0.5; msh.inner_radius = 0.2; msh.ring_segments = 12; msh.rings = 24
             Module.Type.SPHERE:             msh = SphereMesh.new(); msh.radial_segments = 24; msh.rings = 12
             Module.Type.CYLINDER:           msh = CylinderMesh.new(); msh.height = 1.0; msh.rings = 1; msh.radial_segments = 24
-            Module.Type.CYLINDER_CHAMFER:   msh = CylinderMesh.new(); msh.height = 0.1; msh.top_radius = 0.4; msh.cap_bottom = false; msh.rings = 1; msh.radial_segments = 24
+            Module.Type.STORAGE:            msh = MachMeshes.storage(0.8, 0.5) 
             Module.Type.GEAR:               msh = MachMeshes.gear(0.4, 0.1, 0.2, 8, 0.5, 0.5, false)
             Module.Type.FRAME:              msh = MachMeshes.frame(1.0, 1.0, 1.0, 0.2, 0.5)
             Module.Type.CUBE_CROSS:         msh = MachMeshes.cubeCross(0.6, [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
@@ -199,8 +199,7 @@ func _ready():
             mm.material_override = preload("uid://cqpqvcb8usfl0")
         else:
             match Module.Type[type]:
-                #Module.Type.CYLINDER, \
-                #Module.Type.CYLINDER_CHAMFER, \
+                Module.Type.STORAGE, \
                 Module.Type.FRAME, \
                 Module.Type.TUNNEL_BOX, \
                 Module.Type.BOX:                mm.material_override =  preload("uid://ci4cvsq2gbob7")       

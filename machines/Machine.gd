@@ -11,6 +11,8 @@ var bdg
 var fab : FabState
 var mst : MachState
 
+const BLINK_TIME = 4.0
+
 func _init(t, p, o):
     
     type  = t
@@ -151,7 +153,7 @@ func consume(delta:float):
         else:
             slits[i].idle += delta
             if hasSlitArrows():
-                if bdg and slits[i].idle >= 2.0 and slits[i].idle-delta < 2.0:
+                if bdg and slits[i].idle >= BLINK_TIME and slits[i].idle-delta < BLINK_TIME:
                     bdg.modules[2*i + 1].color = COLOR.SLIT
                     bdg.modules[2*i + 1].trans.origin.y = 0.901
                     mst.add(bdg)
@@ -180,12 +182,12 @@ func produce(delta:float):
         else:
             slots[i].idle += delta
             if hasSlotArrows(): # sucks also!
-                if bdg and slots[i].idle >= 2.0 and slots[i].idle-delta < 2.0:
+                if bdg and slots[i].idle >= BLINK_TIME and slots[i].idle-delta < BLINK_TIME:
                     bdg.modules[slits.size() * 2 + 2*i + 1].color = COLOR.SLOT
                     bdg.modules[slits.size() * 2 + 2*i + 1].trans.origin.y = 0.901
                     mst.add(bdg)
-                elif bdg and slots[i].idle >= 4.0:
-                    slots[i].idle = 1.6
+                elif bdg and slots[i].idle >= BLINK_TIME*2:
+                    slots[i].idle = BLINK_TIME*0.75
                     bdg.modules[slits.size() * 2 + 2*i + 1].color = COLOR.ARROW
                     mst.add(bdg)
         

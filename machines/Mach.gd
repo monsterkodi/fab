@@ -217,12 +217,9 @@ func decosForType(type):
                 ]
         Type.Storage: 
             return [
-                {"pos": Vector3(0, 1.7, 0), "type": MachState.Module.Type.CYLINDER, "color": COLOR.BUILDING,
-                    "basis": Basis.from_scale(Vector3(0.9, 0.6, 0.9))},
-                {"pos": Vector3(0, 1.2, 0), "type": MachState.Module.Type.CYLINDER, "color": COLOR.BUILDING, 
-                    "basis": Basis.from_scale(Vector3(0.2, 0.4, 0.2))},
-                {"pos": Vector3(0, 2.045, 0), "type": MachState.Module.Type.CYLINDER_CHAMFER, "color": COLOR.BUILDING, 
-                    "basis": Basis.from_scale(Vector3(0.9, 0.9, 0.9))},
+                {"pos": Vector3(0, 1.6, 0), "type": MachState.Module.Type.STORAGE},
+                #{"pos": Vector3(0, 1.2, 0), "type": MachState.Module.Type.CYLINDER, "color": COLOR.BUILDING, 
+                    #"basis": Basis.from_scale(Vector3(0.2, 0.4, 0.2))},
             ]
         Type.Prism: 
             return [

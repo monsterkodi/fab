@@ -103,7 +103,6 @@ func tunnelBox(width, height, depth, thickness, chamfer):
         
         mt = thickness * chamfer
 
-        #quad3(st, Vector3( cw,  h, -cd), Vector3(-cw,  h, -cd), Vector3(-cw,  ch, -d)) # rear top
         quad3(st, Vector3( cw,  mt, -cd), Vector3(-cw,  mt, -cd), Vector3(-cw,  ml, -d)) # rear top
         quad3(st, Vector3( cw, -ch, -d), Vector3( w, -ch, -cd), Vector3( w,  ml, -cd)) # rear right
         quad3(st, Vector3(-cw,  ml, -d), Vector3(-w,  ml, -cd), Vector3(-w, -ch, -cd)) # rear left
@@ -425,9 +424,42 @@ func tube(st : SurfaceTool, bot : Vector3, top: Vector3, botRadius : float, topR
     for step in range(segments):
         var botRot = botRight.rotated(normal, TAU / segments)
         var topRot = topRight.rotated(normal, TAU / segments)
+        if step == segments - 1:
+            botRot = right * botRadius
+            topRot = right * topRadius
+
         quad(st, bot + botRight, top + topRight, top + topRot, bot + botRot)
         botRight = botRot
         topRight = topRot
+        
+func cylinderChamfer(st : SurfaceTool, botCenter : Vector3, topCenter : Vector3, botRadius : float, topRadius : float, botChamfer: float, topChamfer: float, segments : int = 18):
+
+    st.set_smooth_group(-1) # flat shading
+    var normal = (topCenter - botCenter).normalized()
+    circle(st, botCenter, botRadius * (1.0 - botChamfer), normal,        segments)
+    circle(st, topCenter, topRadius * (1.0 - topChamfer), normal * -1.0, segments)
+    
+    st.set_smooth_group(0) # smooth shading
+    tube(st, botCenter, botCenter + normal * (botRadius * botChamfer), botRadius * (1.0 - botChamfer), botRadius, segments)
+    st.set_smooth_group(1) # smooth shading
+    tube(st, topCenter - normal * (topRadius * topChamfer), topCenter, topRadius, topRadius * (1.0 - topChamfer), segments)
+    st.set_smooth_group(2) # smooth shading
+    tube(st, botCenter + normal * (botRadius * botChamfer), topCenter - normal * (topRadius * topChamfer), botRadius, topRadius, segments)
+    
+func storage(height : float, radius: float, segments : int = 24):
+    
+    var st = SurfaceTool.new()
+    st.begin(Mesh.PRIMITIVE_TRIANGLES)
+    
+    var h  = height/2
+    var chamfer = 0.2
+    
+    cylinderChamfer(st, Vector3(0, -h, 0), Vector3(0, h, 0), radius*0.8, radius, chamfer, chamfer, segments)
+    
+    st.index()
+    st.generate_normals()
+    
+    return st.commit()        
     
 func cylinder(st : SurfaceTool, botCenter : Vector3, topCenter : Vector3, botRadius : float, topRadius : float, segments : int = 18):
     

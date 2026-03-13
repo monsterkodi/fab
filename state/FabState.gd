@@ -271,7 +271,7 @@ func clearTemp(): tmp.clear()
 func gameSpeedFaster(): setGameSpeed(gameSpeed + 1)
 func gameSpeedSlower(): setGameSpeed(gameSpeed - 1)
 
-func gameSpeedReset():  setGameSpeed(1)
+func gameSpeedReset():  setGameSpeed(6)
     
 func gameSpeedSet(newSpeed): setGameSpeed(newSpeed) # hud throttle
 func setGameSpeed(newSpeed):
