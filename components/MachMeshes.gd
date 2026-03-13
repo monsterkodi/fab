@@ -471,6 +471,26 @@ func cylinder(st : SurfaceTool, botCenter : Vector3, topCenter : Vector3, botRad
     st.set_smooth_group(0) # smooth shading
     tube(st, botCenter, topCenter, botRadius, topRadius, segments)
     
+func sphere(st : SurfaceTool, center : Vector3, radius : float, color : Color, segments : int = 18):
+    
+    var sphereMesh := SphereMesh.new()
+    sphereMesh.radius = radius
+    sphereMesh.height = 2 * radius
+    sphereMesh.radial_segments = segments
+    sphereMesh.rings = int(segments / 2)
+    
+    var arrays = sphereMesh.get_mesh_arrays()
+    var vertex_count : int = arrays[Mesh.ARRAY_VERTEX].size()
+    var colors = PackedColorArray()
+    colors.resize(vertex_count)
+    colors.fill(color)
+
+    arrays[Mesh.ARRAY_COLOR] = colors
+    
+    var arrayMesh := ArrayMesh.new()
+    arrayMesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+    st.append_from(arrayMesh, 0, Transform3D.IDENTITY.translated(center))
+    
 func cylinderCross(width : float, radius : float, colors : Array, segments : int = 18):
 
     var st = SurfaceTool.new()
@@ -486,6 +506,77 @@ func cylinderCross(width : float, radius : float, colors : Array, segments : int
 
     st.set_color(colors[2])
     cylinder(st, Vector3(0, 0, -w), Vector3( 0, 0, w), radius, radius, segments)
+
+    st.index()
+    st.generate_normals()
+    
+    return st.commit()        
+
+func cubecule(width : float, tubeFactor : float, tubeRadius : float, colors : Array, segments : int = 18):
+
+    var st = SurfaceTool.new()
+    st.begin(Mesh.PRIMITIVE_TRIANGLES)
+
+    var tubeHeight = tubeFactor * width / 2
+    var crossWidth = width - 2 * tubeHeight
+    var radius     = tubeRadius
+    
+    var w  = crossWidth/2
+    var h  = crossWidth/6
+    var d  = crossWidth/6
+    
+    st.set_smooth_group(-1)
+    st.set_color(colors[0])
+    box(st, w, h, d)
+
+    st.set_color(colors[1])
+    cylinder(st, Vector3(w, 0, 0), Vector3( w+tubeHeight, 0, 0), radius, radius, segments)
+    cylinder(st, Vector3(-w, 0, 0), Vector3(-w-tubeHeight, 0, 0), radius, radius, segments)
+
+    w  = crossWidth/6
+    h  = crossWidth/2
+    d  = crossWidth/6
+
+    st.set_smooth_group(-1)
+    st.set_color(colors[0])
+    box(st, w, h, d)
+
+    st.set_color(colors[2])
+    cylinder(st, Vector3(0, h, 0), Vector3(0,  h+tubeHeight, 0), radius, radius, segments)
+    cylinder(st, Vector3(0, -h, 0), Vector3(0, -h-tubeHeight, 0), radius, radius, segments)
+
+    w  = crossWidth/6
+    h  = crossWidth/6
+    d  = crossWidth/2
+
+    st.set_smooth_group(-1)
+    st.set_color(colors[0])
+    box(st, w, h, d)
+
+    st.set_color(colors[3])
+    cylinder(st, Vector3(0, 0, d), Vector3(0, 0,  d+tubeHeight), radius, radius, segments)
+    cylinder(st, Vector3(0, 0, -d), Vector3(0, 0, -d-tubeHeight), radius, radius, segments)
+    
+    st.index()
+    st.generate_normals()
+    
+    return st.commit()        
+    
+func molecule(width : float, crossRadius : float, sphereRadius : float, colors : Array, segments : int = 18):
+
+    var st = SurfaceTool.new()    
+    var w  = width/2 - 2*sphereRadius
+
+    st.append_from(cylinderCross(width- 3*sphereRadius, crossRadius, [colors[0], colors[0], colors[0]], segments), 0, Transform3D.IDENTITY)
+    
+    sphere(st, Vector3(-w-sphereRadius, 0, 0), sphereRadius, colors[1], segments)
+    sphere(st, Vector3( w+sphereRadius, 0, 0), sphereRadius, colors[1], segments)
+
+    sphere(st, Vector3(0, -w-sphereRadius, 0), sphereRadius, colors[2], segments)
+    sphere(st, Vector3(0,  w+sphereRadius, 0), sphereRadius, colors[2], segments)
+
+    sphere(st, Vector3(0, 0, -w-sphereRadius), sphereRadius, colors[3], segments)
+    sphere(st, Vector3(0, 0,  w+sphereRadius), sphereRadius, colors[3], segments)
 
     st.index()
     st.generate_normals()

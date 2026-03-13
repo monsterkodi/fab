@@ -5,7 +5,7 @@ extends Node3D
 
 class Module:
     
-    enum Type { BOX, ARROW, CUBE, TORUS, SPHERE, CYLINDER, STORAGE, GEAR, FRAME, CUBE_CROSS, CYLINDER_CROSS, TUNNEL_BOX }
+    enum Type { BOX, ARROW, CUBE, TORUS, SPHERE, CYLINDER, STORAGE, GEAR, FRAME, CUBE_CROSS, CYLINDER_CROSS, TUNNEL_BOX, CUBECULE, MOLECULE }
     enum Kind { NONE, SLIT, SLOT }
     
     var trans : Transform3D
@@ -192,6 +192,8 @@ func _ready():
             Module.Type.CUBE_CROSS:         msh = MachMeshes.cubeCross(0.6, [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
             Module.Type.CYLINDER_CROSS:     msh = MachMeshes.cylinderCross(0.6, 0.15, [COLOR.ITEM_GREEN, COLOR.ITEM_BLUE, COLOR.ITEM_RED])
             Module.Type.TUNNEL_BOX:         msh = MachMeshes.tunnelBox(1.0, 1.0, 1.0, 0.2, 0.5)
+            Module.Type.CUBECULE:           msh = MachMeshes.cubecule(0.6, 0.2,  0.2, [COLOR.ITEM_BLACK, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE])
+            Module.Type.MOLECULE:           msh = MachMeshes.molecule(0.6, 0.05, 0.1, [COLOR.ITEM_BLACK, COLOR.ITEM_RED,   COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
         mm.multimesh.mesh = msh
         assert(mm.multimesh.mesh)
         
@@ -208,7 +210,11 @@ func _ready():
             
         mm.multimesh.transform_format = MultiMesh.TRANSFORM_3D
         match Module.Type[type]:
-            Module.Type.CUBE_CROSS, Module.Type.CYLINDER_CROSS: mm.multimesh.use_colors = false
+            Module.Type.CUBE_CROSS, \
+            Module.Type.CYLINDER_CROSS, \
+            Module.Type.CUBECULE, \
+            Module.Type.MOLECULE: 
+                mm.multimesh.use_colors = false
             _ : mm.multimesh.use_colors = true
         add_child(mm)
     

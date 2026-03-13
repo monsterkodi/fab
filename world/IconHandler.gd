@@ -131,7 +131,7 @@ func generateMachineIcon(type : Mach.Type):
     fab.addMachineAtPosOfType(Vector2i.ZERO, type)
     
     if type == Mach.Type.Counter:
-        fab.machines[Vector2i.ZERO].setFactor(0.666)
+        fab.machines[Vector2i.ZERO].gauge.setFactor(0.666)
 
     frame_camera_on_machine(camera, fab.mst, type)
     

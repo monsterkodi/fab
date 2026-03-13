@@ -17,6 +17,8 @@ enum Type {
     Counter,
     CubeCross,
     CylinderCross,
+    Cubecule,
+    Molecule,
 }
 
 var Types     : Array[Type]
@@ -46,6 +48,8 @@ var Class = [
     MachineCounter,
     MachineCubeCross,
     MachineCylinderCross,
+    MachineCubecule,
+    MachineMolecule,
 ]
 
 func costForType(type):
@@ -65,7 +69,9 @@ func costForType(type):
             Type.Counter:       return {Item.Type.CubeBlack:     10}
             Type.CubeCross:     return {Item.Type.CubeRed:       30, Item.Type.CubeGreen:     30, Item.Type.CubeBlue:     30}
             Type.CylinderCross: return {Item.Type.CylinderRed:   30, Item.Type.CylinderGreen: 30, Item.Type.CylinderBlue: 30}
-            _:                  return {Item.Type.CubeBlack: 1}
+            Type.Cubecule:      return {Item.Type.CylinderWhite: 30, Item.Type.CubeCross:     30, Item.Type.Energy:       30}
+            Type.Molecule:      return {Item.Type.SphereWhite:   60, Item.Type.CylinderCross: 60, Item.Type.Energy:       60}
+            _:                  return {Item.Type.CubeBlack:     10}
 
 func stringForType(type):   return TypeNames[type]
 func typeForString(string): return TypeMap[string]
@@ -122,10 +128,16 @@ func slitsForType(type):
                 {"pos": Vector2i.ZERO,         "dir": Belt.W, "shape": Item.Shape.Cylinder},
                 {"pos": Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "item":  Item.Type.Energy},
             ]
-        Type.CubeCross, Type.CylinderCross: 
+        Type.CubeCross, Type.CylinderCross:
             return [
                 {"pos": Belt.NEIGHBOR[Belt.W], "dir": Belt.W},
                 {"pos": Belt.NEIGHBOR[Belt.W] + Belt.NEIGHBOR[Belt.S], "dir": Belt.W},
+                {"pos": Belt.NEIGHBOR[Belt.W] + Belt.NEIGHBOR[Belt.N], "dir": Belt.W},
+            ]
+        Type.Cubecule, Type.Molecule: 
+            return [
+                {"pos": Belt.NEIGHBOR[Belt.W], "dir": Belt.W},
+                {"pos": Belt.NEIGHBOR[Belt.W] + Belt.NEIGHBOR[Belt.S], "dir": Belt.S},
                 {"pos": Belt.NEIGHBOR[Belt.W] + Belt.NEIGHBOR[Belt.N], "dir": Belt.W},
             ]
     return []
@@ -178,7 +190,7 @@ func slotsForType(type):
             return [
                 {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E},
                 ]
-        Type.CubeCross, Type.CylinderCross: 
+        Type.CubeCross, Type.CylinderCross, Type.Cubecule, Type.Molecule: 
             return [
                 {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E},
                 ]
@@ -306,6 +318,30 @@ func decosForType(type):
                 {"pos": Vector3(-1, 1, 0), "type": MachState.Module.Type.CYLINDER, "color": COLOR.ITEM_GREEN, 
                     "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
                 {"pos": Vector3(-1, 1, 1), "type": MachState.Module.Type.CYLINDER, "color": COLOR.ITEM_BLUE, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                ]
+        Type.Cubecule:
+            return [
+                {"pos": Vector3(0, 0.5, 0), "type": MachState.Module.Type.BOX, "color": COLOR.BUILDING,
+                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
+                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.GEAR, "color": COLOR.ITEM_BLUE},
+                {"pos": Vector3( 1, 1, 0), "type": MachState.Module.Type.CUBECULE}, 
+                {"pos": Vector3(-1, 1, -1), "type": MachState.Module.Type.CYLINDER, "color": COLOR.ITEM_WHITE, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(-1, 1, 0), "type": MachState.Module.Type.CUBE_CROSS },
+                {"pos": Vector3(-1, 1, 1), "type": MachState.Module.Type.TORUS, "color": COLOR.ENERGY, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                ]
+        Type.Molecule:
+            return [
+                {"pos": Vector3(0, 0.5, 0), "type": MachState.Module.Type.BOX, "color": COLOR.BUILDING,
+                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
+                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.GEAR, "color": COLOR.ITEM_WHITE},
+                {"pos": Vector3( 1, 1, 0), "type": MachState.Module.Type.MOLECULE}, 
+                {"pos": Vector3(-1, 1, -1), "type": MachState.Module.Type.SPHERE, "color": COLOR.ITEM_WHITE, 
+                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
+                {"pos": Vector3(-1, 1, 0), "type": MachState.Module.Type.CYLINDER_CROSS }, 
+                {"pos": Vector3(-1, 1, 1), "type": MachState.Module.Type.TORUS, "color": COLOR.ENERGY, 
                     "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
                 ]
     return []

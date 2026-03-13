@@ -20,6 +20,8 @@ enum Type {
     Energy,
     CubeCross,
     CylinderCross,
+    Cubecule,
+    Molecule,
 }
 
 enum Shape {
@@ -29,6 +31,8 @@ enum Shape {
     Torus,
     CubeCross,
     CylinderCross,
+    Cubecule,
+    Molecule,
 }
 
 var Types     : Array[Type]
@@ -36,24 +40,26 @@ var TypeNames : Array[String]
 var TypeMap   : Dictionary[String, Type]
 
 var TypeInfo = [                        # energy     # white  # round # sphere
-    [Shape.Cube,      COLOR.ITEM_BLACK,      0.1 ,      0.2,    0.1,   0   ],
-    [Shape.Cube,      COLOR.ITEM_RED,        0.05,      0.1,    0.1,   0   ],
-    [Shape.Cube,      COLOR.ITEM_GREEN,      0.05,      0.1,    0.1,   0   ],
-    [Shape.Cube,      COLOR.ITEM_BLUE,       0.05,      0.1,    0.1,   0   ],
-    [Shape.Cube,      COLOR.ITEM_WHITE,      0.2 ,      0.0,    0.1,   0   ],
-    [Shape.Cylinder,  COLOR.ITEM_BLACK,      0.1 ,        0,      0,   0.1 ],
-    [Shape.Cylinder,  COLOR.ITEM_RED,        0.1 ,        0,      0,   0.1 ],
-    [Shape.Cylinder,  COLOR.ITEM_GREEN,      0.1 ,        0,      0,   0.1 ],
-    [Shape.Cylinder,  COLOR.ITEM_BLUE,       0.1 ,        0,      0,   0.1 ],
-    [Shape.Cylinder,  COLOR.ITEM_WHITE,      0.4 ,        0,      0,   0.1 ],
-    [Shape.Sphere,    COLOR.ITEM_BLACK,      0.3 ,        0,      0,   0 ],
-    [Shape.Sphere,    COLOR.ITEM_RED,        0.15,        0,      0,   0 ],
-    [Shape.Sphere,    COLOR.ITEM_GREEN,      0.15,        0,      0,   0 ],
-    [Shape.Sphere,    COLOR.ITEM_BLUE,       0.15,        0,      0,   0 ],
-    [Shape.Sphere,    COLOR.ITEM_WHITE,      0.644,       0,      0,   0 ],
-    [Shape.Torus,     COLOR.ENERGY,          1.0 ,        0,      0,   0 ],
-    [Shape.CubeCross, COLOR.ITEM_BLACK,      1.0,         0,      0,   0 ],
-    [Shape.CylinderCross, COLOR.ITEM_BLACK,  2.0,         0,      0,   0 ],
+    [Shape.Cube,          COLOR.ITEM_BLACK,      0.1 ,      0.2,    0.1,   0   ],
+    [Shape.Cube,          COLOR.ITEM_RED,        0.05,      0.1,    0.1,   0   ],
+    [Shape.Cube,          COLOR.ITEM_GREEN,      0.05,      0.1,    0.1,   0   ],
+    [Shape.Cube,          COLOR.ITEM_BLUE,       0.05,      0.1,    0.1,   0   ],
+    [Shape.Cube,          COLOR.ITEM_WHITE,      0.2 ,      0.0,    0.1,   0   ],
+    [Shape.Cylinder,      COLOR.ITEM_BLACK,      0.1 ,        0,      0,   0.1 ],
+    [Shape.Cylinder,      COLOR.ITEM_RED,        0.1 ,        0,      0,   0.1 ],
+    [Shape.Cylinder,      COLOR.ITEM_GREEN,      0.1 ,        0,      0,   0.1 ],
+    [Shape.Cylinder,      COLOR.ITEM_BLUE,       0.1 ,        0,      0,   0.1 ],
+    [Shape.Cylinder,      COLOR.ITEM_WHITE,      0.4 ,        0,      0,   0.1 ],
+    [Shape.Sphere,        COLOR.ITEM_BLACK,      0.3 ,        0,      0,   0 ],
+    [Shape.Sphere,        COLOR.ITEM_RED,        0.15,        0,      0,   0 ],
+    [Shape.Sphere,        COLOR.ITEM_GREEN,      0.15,        0,      0,   0 ],
+    [Shape.Sphere,        COLOR.ITEM_BLUE,       0.15,        0,      0,   0 ],
+    [Shape.Sphere,        COLOR.ITEM_WHITE,      0.644,       0,      0,   0 ],
+    [Shape.Torus,         COLOR.ENERGY,          1.0 ,        0,      0,   0 ],
+    [Shape.CubeCross,     COLOR.ITEM_BLACK,      1.0,         0,      0,   0 ],
+    [Shape.CylinderCross, COLOR.ITEM_BLACK,      2.0,         0,      0,   0 ],
+    [Shape.Cubecule,      COLOR.ITEM_BLACK,      4.0,         0,      0,   0 ],
+    [Shape.Molecule,      COLOR.ITEM_BLACK,      8.0,         0,      0,   0 ],
 ]
 
 func _init():
