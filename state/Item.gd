@@ -71,6 +71,7 @@ func cylinderCost(type):    return TypeInfo[type][4]
 func sphereCost(type):      return TypeInfo[type][5]
 func typeForString(string): return TypeMap[string]
 func stringForType(type):   return TypeNames[type]
+func iconResForType(type):  return "res://icons/items/" + stringForType(type) + ".png"
 
 class Inst:
     

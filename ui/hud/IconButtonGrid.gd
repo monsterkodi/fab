@@ -8,7 +8,7 @@ signal buttonPressed
 
 var buttonGroup : ButtonGroup
 
-var tooltipTimer
+var tooltipTimer : Timer
 
 func _ready():
     
@@ -44,14 +44,18 @@ func onButtonMouseEnter(button):
     if not tooltipTimer:
         tooltipTimer = Timer.new()
         tooltipTimer.one_shot = true
-        tooltipTimer.timeout.connect(onButtonTooltip.bind(button))
         add_child(tooltipTimer)
-        tooltipTimer.start(1.0)
+    
+    for connection in tooltipTimer.timeout.get_connections():
+        connection.signal.disconnect(connection.callable)
+    tooltipTimer.timeout.connect(onButtonTooltip.bind(button))
+    if tooltipTimer.is_inside_tree():
+        tooltipTimer.start(0.01)
 
 func onButtonMouseExit(button):
     
     if tooltipTimer:
-        tooltipTimer.free()
+        tooltipTimer.stop()
     Post.infoTooltipHide.emit()
     
 func onButtonTooltip(button):

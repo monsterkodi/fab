@@ -54,17 +54,17 @@ func costForType(type):
             Type.Tunnel:        return {Item.Type.CubeBlack:     10}
             Type.Tunnel2:       return {Item.Type.CylinderBlack: 20}
             Type.Tunnel3:       return {Item.Type.SphereBlack:   30}
-            Type.Root:          return {Item.Type.CubeRed: 1000, Item.Type.CubeGreen: 1000, Item.Type.CubeBlue: 1000}
-            Type.Storage:       return {Item.Type.CubeBlack: 10}
-            Type.Prism:         return {Item.Type.CubeBlack: 30}
-            Type.Burner:        return {Item.Type.CubeRed:   10, Item.Type.CubeGreen: 10, Item.Type.CubeBlue: 10}
-            Type.Mixer:         return {Item.Type.CubeRed:   20, Item.Type.CubeGreen: 20, Item.Type.CubeBlue: 20}
-            Type.Whitener:      return {Item.Type.CubeWhite: 10}
-            Type.Cylinder:      return {Item.Type.CubeBlack: 20}
-            Type.Sphere:        return {Item.Type.CubeBlack: 20}
-            Type.Counter:       return {Item.Type.CubeBlack: 10}
-            Type.CubeCross:     return {Item.Type.CubeBlack: 10}
-            Type.CylinderCross: return {Item.Type.CubeBlack: 10}
+            Type.Root:          return {Item.Type.CubeCross:   1000, Item.Type.CylinderCross: 1000}
+            Type.Storage:       return {Item.Type.CubeBlack:     10}
+            Type.Prism:         return {Item.Type.CubeBlack:     30}
+            Type.Burner:        return {Item.Type.CubeRed:       10, Item.Type.CubeGreen: 10, Item.Type.CubeBlue: 10}
+            Type.Mixer:         return {Item.Type.CubeRed:       20, Item.Type.CubeGreen: 20, Item.Type.CubeBlue: 20}
+            Type.Whitener:      return {Item.Type.Energy:        10}
+            Type.Cylinder:      return {Item.Type.Energy:        20}
+            Type.Sphere:        return {Item.Type.Energy:        30}
+            Type.Counter:       return {Item.Type.CubeBlack:     10}
+            Type.CubeCross:     return {Item.Type.CubeRed:       30, Item.Type.CubeGreen:     30, Item.Type.CubeBlue:     30}
+            Type.CylinderCross: return {Item.Type.CylinderRed:   30, Item.Type.CylinderGreen: 30, Item.Type.CylinderBlue: 30}
             _:                  return {Item.Type.CubeBlack: 1}
 
 func stringForType(type):   return TypeNames[type]

@@ -8,7 +8,7 @@ func _ready():
     Post.subscribe(self)
     
     for type in Item.Types:
-        $ItemButtonGrid.addIcon("res://icons/items/" + Item.stringForType(type) + ".png")
+        $ItemButtonGrid.addIcon(Item.iconResForType(type))
     
     $BuildButtonGrid.addIcon("res://icons/buildings/BuildingRect.png")
     

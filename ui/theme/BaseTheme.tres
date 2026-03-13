@@ -1,0 +1,6 @@
+[gd_resource type="Theme" format=3 uid="uid://ck2ofhthyh3rs"]
+
+[ext_resource type="FontFile" uid="uid://dfqo0cb4uy7kl" path="res://ui/theme/Rounded.ttf" id="1_gcg65"]
+
+[resource]
+default_font = ExtResource("1_gcg65")

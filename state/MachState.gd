@@ -184,7 +184,7 @@ func _ready():
             Module.Type.ARROW:              msh = MachMeshes.arrow(0.4, 0.2, 0.5)
             Module.Type.CUBE:               msh = BoxMesh.new()
             Module.Type.TORUS:              msh = TorusMesh.new(); msh.outer_radius = 0.5; msh.inner_radius = 0.2; msh.ring_segments = 12; msh.rings = 24
-            Module.Type.SPHERE:             msh = SphereMesh.new()
+            Module.Type.SPHERE:             msh = SphereMesh.new(); msh.radial_segments = 24; msh.rings = 12
             Module.Type.CYLINDER:           msh = CylinderMesh.new(); msh.height = 1.0; msh.rings = 1; msh.radial_segments = 24
             Module.Type.CYLINDER_CHAMFER:   msh = CylinderMesh.new(); msh.height = 0.1; msh.top_radius = 0.4; msh.cap_bottom = false; msh.rings = 1; msh.radial_segments = 24
             Module.Type.GEAR:               msh = MachMeshes.gear(0.4, 0.1, 0.2, 8, 0.5, 0.5, false)

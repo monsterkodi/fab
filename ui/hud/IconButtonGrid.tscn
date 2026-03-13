@@ -2,13 +2,18 @@
 
 [ext_resource type="Script" uid="uid://ds1vo15kldabe" path="res://ui/hud/IconButtonGrid.gd" id="1_apxt1"]
 
-[node name="IconButtonGrid" type="Control" unique_id=1812349297]
-layout_mode = 3
-anchors_preset = 0
-script = ExtResource("1_apxt1")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_apxt1"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.1, 0.1, 0.1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=853705744]
-layout_mode = 1
+[node name="IconButtonGrid" type="PanelContainer" unique_id=1897497644]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -16,8 +21,12 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_apxt1")
+script = ExtResource("1_apxt1")
 
-[node name="Grid" type="GridContainer" parent="PanelContainer" unique_id=783350758]
+[node name="Grid" type="GridContainer" parent="." unique_id=783350758]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
 columns = 20

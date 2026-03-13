@@ -3,8 +3,24 @@
 [ext_resource type="Script" uid="uid://c4d3iwmln8sl4" path="res://ui/hud/Hud.gd" id="1_1x8ju"]
 [ext_resource type="Theme" uid="uid://g22p2j6a23ol" path="res://ui/theme/HUDTheme.tres" id="2_aaqae"]
 [ext_resource type="PackedScene" uid="uid://bp3vplo7lbscx" path="res://ui/hud/IconButtonGrid.tscn" id="4_by07e"]
-[ext_resource type="Theme" uid="uid://dmncnyjxue1mk" path="res://ui/theme/HUDItemsTheme.tres" id="4_gt2ij"]
 [ext_resource type="Script" uid="uid://dh8b0v6p5ptva" path="res://ui/hud/InfoTooltip.gd" id="5_gt2ij"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_by07e"]
+content_margin_left = 5.0
+content_margin_top = 10.0
+content_margin_right = 5.0
+content_margin_bottom = 10.0
+bg_color = Color(0.10965204, 0.10965204, 0.10965204, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dqfrj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_by07e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gt2ij"]
 
 [node name="Hud" type="Control" unique_id=1410583153]
 process_mode = 3
@@ -24,48 +40,39 @@ script = ExtResource("1_1x8ju")
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_top = 40.0
-offset_bottom = 40.0
-grow_horizontal = 2
-theme = ExtResource("4_gt2ij")
-buttonSize = 80.0
+anchor_top = 0.0
+anchor_bottom = 0.0
+grow_vertical = 1
+buttonSize = 64.0
 
 [node name="BuildButtonGrid" parent="." unique_id=675774317 instance=ExtResource("4_by07e")]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 7
-anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 0.5
 anchor_bottom = 1.0
-offset_top = -46.0
-offset_bottom = -46.0
-grow_horizontal = 2
 grow_vertical = 0
-theme = ExtResource("2_aaqae")
+buttonSize = 80.0
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=825940381]
 layout_mode = 1
-anchors_preset = 6
+anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -150.0
-offset_right = -10.0
-offset_bottom = 150.0
+offset_right = -20.0
 grow_horizontal = 0
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_by07e")
 
 [node name="Throttle" type="VSlider" parent="PanelContainer" unique_id=1600435605]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(40, 300)
+custom_minimum_size = Vector2(40, 400)
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+theme_override_styles/slider = SubResource("StyleBoxEmpty_dqfrj")
+theme_override_styles/grabber_area = SubResource("StyleBoxEmpty_by07e")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_gt2ij")
 max_value = 1.0
 step = 0.1
 allow_lesser = true
