@@ -12,8 +12,8 @@ func _init(t, p, o):
     super._init(t, p, o) 
     
 func consumeItemAtSlit(item, slit):
-    
-    for index in range(recipe.in.size()):
+
+    for index in recipe.in.size():
         if item.type == recipe.in[index][0] and consumed[index] < recipe.in[index][1]:
             consumed[index] += 1
             checkProducing()
@@ -22,7 +22,7 @@ func consumeItemAtSlit(item, slit):
     
 func checkProducing():
     
-    for index in range(recipe.in.size()):
+    for index in recipe.in.size():
         if consumed[index] < recipe.in[index][1]:
             canProduce = false
             return
@@ -32,6 +32,7 @@ func produce(delta:float):
     
     if not producing and canProduce:
         producing = true
+        elapsed = 0.0
         canProduce = false
         consumed  = [0, 0, 0]
     if producing:
@@ -42,8 +43,8 @@ func produce(delta:float):
     
 func produceItemAtSlot(slot):
     
-    if not producing: return false
-    if elapsed < recipe.time: return false
+    if not producing: return null
+    if elapsed < recipe.time: return null
     elapsed   = 0.0
     producing = false
     return Item.Inst.new(recipe.out)

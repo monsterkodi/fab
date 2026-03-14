@@ -50,8 +50,7 @@ func _ready():
     $CubeCross.multimesh.mesh     = MachMeshes.cubeCross(    0.4,      [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
     $CylinderCross.multimesh.mesh = MachMeshes.cylinderCross(0.4, 0.1, [COLOR.ITEM_GREEN, COLOR.ITEM_BLUE, COLOR.ITEM_RED])
     $Cubecule.multimesh.mesh      = MachMeshes.cubecule(     0.4, 0.133, 0.133, [COLOR.ITEM_BLACK, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE])
-    $Molecule.multimesh.mesh      = MachMeshes.molecule(     0.6, 0.05, 0.1, [COLOR.ITEM_BLACK, COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
-    
+    $Molecule.multimesh.mesh      = MachMeshes.molecule(     0.5, 0.05, 0.1, [COLOR.ITEM_BLACK, COLOR.ITEM_RED,   COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
     for child in get_children():
         child.multimesh.instance_count = 10000
         child.multimesh.visible_instance_count = 0
@@ -115,6 +114,8 @@ func aryChange(pm : ItemMap, index : int, item : Item.Inst):
 func itemTrans(item):
     
     var trans = Transform3D.IDENTITY
+    if item.type == Item.Type.Molecule:
+        trans = trans.rotated(Vector3.UP, deg_to_rad(45))
     trans = trans.scaled(Vector3(item.scale, item.scale, item.scale))
     var offset = Belt.offsetForAdvanceAndDir(fab.beltAtPos(item.pos), item.advance, item.dir)
     trans.origin = Vector3(item.pos.x, 0.5, item.pos.y) + offset

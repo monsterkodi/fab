@@ -16,7 +16,7 @@ func _ready():
     if not DirAccess.dir_exists_absolute("res://icons/items/"):
         DirAccess.make_dir_recursive_absolute("res://icons/items/")
         
-    for res in Utils.resourcesInDir("res://buildings/"):   
+    for res in Utils.resourcesInDir("res://buildings/"):
         if res is PackedScene: 
             generateIcon(res, "res://icons/buildings/")
 
@@ -24,16 +24,16 @@ func _ready():
     
 func levelStart():
             
-    #for type in Item.Types:
-        #generateItemIcon(type)
-        #await RenderingServer.frame_post_draw
-        #await RenderingServer.frame_post_draw
+    for type in Item.Types:
+        generateItemIcon(type)
+        await RenderingServer.frame_post_draw
+        await RenderingServer.frame_post_draw
             
-    for type in Mach.Types:
-        if type:
-            generateMachineIcon(type)
-            await RenderingServer.frame_post_draw
-            await RenderingServer.frame_post_draw
+    #for type in Mach.Types:
+        #if type:
+            #generateMachineIcon(type)
+            #await RenderingServer.frame_post_draw
+            #await RenderingServer.frame_post_draw
                     
 func get_full_aabb(node: Node3D) -> AABB:
     
@@ -65,8 +65,6 @@ func frame_camera(camera: Camera3D, item: Node3D):
     var aabb   = get_full_aabb(item)
     var center = aabb.get_center()
     var length = aabb.size.length()
-    #length = maxf(aabb.size.z, maxf(aabb.size.x, aabb.size.y))
-    #Log.log(length, aabb.size.length(), item.scene_file_path)
     var distance = (length / 2.0) / tan(deg_to_rad(camera.fov) / 2.0)
     
     distance *= 1.1

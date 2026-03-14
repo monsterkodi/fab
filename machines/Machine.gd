@@ -11,7 +11,7 @@ var bdg
 var fab : FabState
 var mst : MachState
 
-const SLIT_ALERT_TIME = 60.0
+const SLIT_ALERT_TIME = 180.0
 const SLOT_ALERT_TIME = 2.0
 
 func _init(t, p, o):

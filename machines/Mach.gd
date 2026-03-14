@@ -298,7 +298,7 @@ func decosForType(type):
             return [
                 {"pos": Vector3(0, 0.5, 0), "type": MachState.Module.Type.BOX, "color": COLOR.BUILDING,
                     "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
-                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.GEAR, "color": COLOR.ITEM_RED},
+                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.GEAR, "color": COLOR.BUILDING},
                 {"pos": Vector3( 1, 1, 0), "type": MachState.Module.Type.CUBE_CROSS}, 
                 {"pos": Vector3(-1, 1, -1), "type": MachState.Module.Type.CUBE, "color": COLOR.ITEM_RED, 
                     "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
@@ -311,7 +311,7 @@ func decosForType(type):
             return [
                 {"pos": Vector3(0, 0.5, 0), "type": MachState.Module.Type.BOX, "color": COLOR.BUILDING,
                     "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
-                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.GEAR, "color": COLOR.ITEM_GREEN},
+                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.GEAR, "color": COLOR.BUILDING},
                 {"pos": Vector3( 1, 1, 0), "type": MachState.Module.Type.CYLINDER_CROSS}, 
                 {"pos": Vector3(-1, 1, -1), "type": MachState.Module.Type.CYLINDER, "color": COLOR.ITEM_RED, 
                     "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
@@ -324,7 +324,7 @@ func decosForType(type):
             return [
                 {"pos": Vector3(0, 0.5, 0), "type": MachState.Module.Type.BOX, "color": COLOR.BUILDING,
                     "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
-                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.GEAR, "color": COLOR.ITEM_BLUE},
+                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.GEAR, "color": COLOR.BUILDING},
                 {"pos": Vector3( 1, 1, 0), "type": MachState.Module.Type.CUBECULE}, 
                 {"pos": Vector3(-1, 1, -1), "type": MachState.Module.Type.CYLINDER, "color": COLOR.ITEM_WHITE, 
                     "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
@@ -336,11 +336,11 @@ func decosForType(type):
             return [
                 {"pos": Vector3(0, 0.5, 0), "type": MachState.Module.Type.BOX, "color": COLOR.BUILDING,
                     "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
-                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.GEAR, "color": COLOR.ITEM_WHITE},
-                {"pos": Vector3( 1, 1, 0), "type": MachState.Module.Type.MOLECULE}, 
-                {"pos": Vector3(-1, 1, -1), "type": MachState.Module.Type.SPHERE, "color": COLOR.ITEM_WHITE, 
-                    "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
-                {"pos": Vector3(-1, 1, 0), "type": MachState.Module.Type.CYLINDER_CROSS }, 
+                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.GEAR, "color": COLOR.BUILDING},
+                {"pos": Vector3( 1, 1, 0), "type": MachState.Module.Type.MOLECULE,
+                    "basis": Basis.from_euler(Vector3(0, deg_to_rad(45), 0)) },
+                {"pos": Vector3(-1, 1, -1), "type": MachState.Module.Type.CYLINDER_CROSS }, 
+                {"pos": Vector3(-1, 1, 0), "type": MachState.Module.Type.CUBECULE}, 
                 {"pos": Vector3(-1, 1, 1), "type": MachState.Module.Type.TORUS, "color": COLOR.ENERGY, 
                     "basis": Basis.from_scale(Vector3(0.4,0.2,0.4)) },
                 ]
