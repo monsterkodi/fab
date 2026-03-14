@@ -14,4 +14,7 @@ const ITEM_BLACK := Color.BLACK
 const ITEM_RED   := Color(1, 0, 0)
 const ITEM_GREEN := Color(0, 0.8, 0)
 const ITEM_BLUE  := Color(0.1, 0.1, 1.0)
-const ITEM_WHITE := Color.GHOST_WHITE
+const ITEM_WHITE := Color(0.8, 0.8, 0.8)
+
+const GHOST_BLUE := Color(0.15, 0.15, 1.0)
+const GHOST_RED  := Color.RED

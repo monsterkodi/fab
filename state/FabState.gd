@@ -309,7 +309,8 @@ func saveGame(data : Dictionary):
             item.advance, 
             item.scale])
             
-    data.FabState.storage = storage.storage
+    #data.FabState.storage = storage.storage
+    data.FabState.storage = storage.saveData()
     
 func loadGame(data : Dictionary):
 
@@ -338,7 +339,8 @@ func loadGame(data : Dictionary):
                 addItem(pos, dir, item)
                 
         if data.FabState.has("storage"):
-            storage.storage = data.FabState.storage
+            #storage.storage = data.FabState.storage
+            storage.loadData(data.FabState.storage)
                         
 func occupiedByRoot(posl):
     

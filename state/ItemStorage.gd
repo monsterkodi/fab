@@ -1,20 +1,67 @@
 class_name ItemStorage
 extends Node
 
+var maxItem : int = 1000
 var storage : Dictionary[Item.Type, int]
 
 func _ready():
     
     reset()
     
-func addItem(type : Item.Type):
+func saveData() -> Dictionary[Item.Type, int]: return storage
+func loadData(data : Dictionary[Item.Type, int]):
     
+    storage = data 
+    for type in storage:
+        storage[type] = mini(maxItem, storage[type])
+        if storage[type] == maxItem:
+            Post.storageItemMax.emit(type)
+        elif storage[type] == 0:
+            Post.storageItemEmpty.emit(type)
+        else:
+            Post.storageItemChange.emit(type)
+    
+func addItem(type : Item.Type):
+
+    assert(storage[type] <= maxItem)
+    if storage[type] == maxItem: return
+    if storage[type] == maxItem-1:
+        storage[type] = maxItem
+        Post.storageItemMax.emit(type)
+        return
+    if storage[type] == 0:
+        Post.storageItemChange.emit(type)
     storage[type] += 1
+    
+func addItems(type : Item.Type, num : int):
+    
+    assert(num > 0)
+    assert(storage[type] <= maxItem)
+    if storage[type] == maxItem: return
+    if storage[type] + num >= maxItem:
+        storage[type] = maxItem
+        Post.storageItemMax.emit(type)
+        return
+    if storage[type] == 0:
+        Post.storageItemChange.emit(type)
+    storage[type] += num
+    
+func delItems(type : Item.Type, num : int):
+    
+    assert(num > 0)
+    assert(storage[type] >= 0)
+    if storage[type] == 0: return
+    if storage[type] - num <= 0:
+        storage[type] = 0
+        Post.storageItemEmpty.emit(type)
+        return
+    if storage[type] == maxItem:
+        Post.storageItemChange.emit(type)
+    storage[type] -= num
     
 func reset():
     
     for type in Item.Types:
-        #storage[type] = 0
         storage[type] = 100
 
     storage[Item.Type.CubeBlack] = 100
@@ -22,7 +69,6 @@ func reset():
 func canAfford(type):
 
     var cost = Mach.costForType(type)
-    #Log.log(type, cost)
     for itemType in cost:
         if storage[itemType] < cost[itemType]: return false
     return true
@@ -31,11 +77,11 @@ func refund(type):
 
     var cost = Mach.costForType(type)
     for itemType in cost:
-        storage[itemType] += cost[itemType]
+        addItems(itemType, cost[itemType])
     
 func buy(type):
     
     var cost = Mach.costForType(type)
     for itemType in cost:
-        storage[itemType] -= cost[itemType]
+        delItems(itemType, cost[itemType])
     

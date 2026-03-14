@@ -55,6 +55,7 @@ var Class = [
 func costForType(type):
 
     match type:
+            Type.Belt:          return {Item.Type.CubeBlack:     1}
             Type.Tunnel:        return {Item.Type.CubeBlack:     10}
             Type.Tunnel2:       return {Item.Type.CylinderBlack: 20}
             Type.Tunnel3:       return {Item.Type.SphereBlack:   30}
@@ -71,7 +72,7 @@ func costForType(type):
             Type.CylinderCross: return {Item.Type.CylinderRed:   30, Item.Type.CylinderGreen: 30, Item.Type.CylinderBlue: 30}
             Type.Cubecule:      return {Item.Type.CylinderWhite: 30, Item.Type.CubeCross:     30, Item.Type.Energy:       30}
             Type.Molecule:      return {Item.Type.SphereWhite:   60, Item.Type.CylinderCross: 60, Item.Type.Energy:       60}
-            _:                  return {Item.Type.CubeBlack:     10}
+            _:                  return {Item.Type.CubeBlack:     0}
 
 func stringForType(type):   return TypeNames[type]
 func typeForString(string): return TypeMap[string]

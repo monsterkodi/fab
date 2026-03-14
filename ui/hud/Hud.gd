@@ -8,24 +8,25 @@ func _ready():
     Post.subscribe(self)
     
     for type in Item.Types:
-        $ItemButtonGrid.addIcon(Item.iconResForType(type))
+        $ItemButtonGrid.addIcon(Item.iconResForType(type), type)
     
-    $BuildButtonGrid.addIcon("res://icons/buildings/BuildingRect.png")
+    $BuildButtonGrid.addIcon("res://icons/buildings/BuildingRect.png", "Rect")
     
     for type in Mach.Types:
         if type == Mach.Type.Belt:
-            $BuildButtonGrid.addIcon("res://icons/buildings/BuildingBelt.png")
+            $BuildButtonGrid.addIcon("res://icons/buildings/BuildingBelt.png", type)
         else:
-            $BuildButtonGrid.addIcon("res://icons/machines/" + Mach.stringForType(type) + ".png")
+            $BuildButtonGrid.addIcon("res://icons/machines/" + Mach.stringForType(type) + ".png", type)
         
-    $BuildButtonGrid.addIcon("res://icons/buildings/BuildingDel.png")
+    $BuildButtonGrid.addIcon("res://icons/buildings/BuildingDel.png", "Del")
     
 func _process(delta: float):
     
     if not storage: return
     #Log.log(storage.storage)
     for itemType in storage.storage:
-        %ItemButtonGrid.setNumber(itemType, storage.storage[itemType])
+        if storage.storage[itemType] < storage.maxItem:
+            %ItemButtonGrid.setNumber(itemType, storage.storage[itemType])
     
 func levelStart():
     
@@ -94,3 +95,16 @@ func throttleValue(value: float):
 func gameSpeed(value):
     
     %Throttle.set_value_no_signal((value-1.0)/10.0)
+    
+func storageItemMax(type):
+    
+    %ItemButtonGrid.setText(type, "1k")
+    %ItemButtonGrid.setTextColor(type, Color(0.3, 0.3, 0.3))
+
+func storageItemEmpty(type):
+    
+    %ItemButtonGrid.setTextColor(type, Color.RED)
+
+func storageItemChange(type):
+    
+    %ItemButtonGrid.setTextColor(type, Color(0.7, 0.7, 0.7))

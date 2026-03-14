@@ -40,6 +40,10 @@ signal activateBuilder
 signal infoTooltip
 signal infoTooltipHide
 
+signal storageItemMax
+signal storageItemEmpty
+signal storageItemChange
+
 var sigDict : Dictionary
 
 func _ready():

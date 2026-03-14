@@ -41,6 +41,6 @@ func pointerHover(pos):
         if ghost: ghost.free()
         var machine = fab.machines[pos]
         if machine.pos != Vector2i.ZERO:
-            ghost = fab.ghostForMachine(machine, Color.RED)
+            ghost = fab.ghostForMachine(machine, COLOR.GHOST_RED)
     elif ghost:
         ghost.free()    

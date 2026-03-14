@@ -30,7 +30,7 @@ func clearDelGhosts():
 func ghostColor(type):
     
     if fab.storage.canAfford(type):
-        return Color(0.15, 0.15, 1.0)
+        return COLOR.GHOST_BLUE
     else:
         unaffordable = true
         return Color.RED
@@ -44,8 +44,8 @@ func pointerHover(pos):
     
     clearDelGhosts()        
     if ghost and ghost.is_inside_tree():
+        ghost.setPos(pos) # has to come first
         ghost.setColor(ghostColor(ghost.type))
-        ghost.setPos(pos)
         for gp in ghost.getOccupied():
             if fab.machines.has(gp):
                 var machine = fab.machines[gp]

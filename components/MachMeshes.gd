@@ -641,3 +641,17 @@ func gear(outerRadius, innerRadius, height, spokeCount, spokeWidthFactor, spokeL
     st.generate_normals()
     
     return st.commit()    
+
+func tree(width, height, thickness):
+
+    var st = SurfaceTool.new()
+    
+    st.begin(Mesh.PRIMITIVE_TRIANGLES)
+    st.set_smooth_group(-1) # flat shading
+    
+    tube(st, Vector3(0,0,0), Vector3(0, height, 0), width, width/2, 8)
+
+    st.index()
+    st.generate_normals()
+    
+    return st.commit()

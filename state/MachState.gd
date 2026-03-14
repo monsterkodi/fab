@@ -114,9 +114,9 @@ class Building:
     func setPos(p : Vector2i):
         
         pos = p
-        update()
         for module in modules:
             module.bpos = pos
+        update()
                 
     func rotate():
         
@@ -263,5 +263,6 @@ func setBuildingPos(building, pos):
     
 func rotateBuilding(building):
     
+    del(building)
     building.rotate()
     add(building)
