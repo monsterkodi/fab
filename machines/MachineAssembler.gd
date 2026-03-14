@@ -11,6 +11,13 @@ func _init(t, p, o):
     
     super._init(t, p, o) 
     
+func saveData(): return super.saveData() + [consumed, canProduce, producing, elapsed]
+func loadData(d): 
+    consumed   = d[5]
+    canProduce = d[6]
+    producing  = d[7]
+    elapsed    = d[8]
+    
 func consumeItemAtSlit(item, slit):
 
     for index in recipe.in.size():

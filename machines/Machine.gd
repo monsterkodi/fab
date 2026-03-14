@@ -210,4 +210,5 @@ func slitAtPos(p : Vector2i):
             return slit
     return null
 
-    
+func saveData():  return [pos.x, pos.y, type, orientation]
+func loadData(d): pass    

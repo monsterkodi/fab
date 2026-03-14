@@ -47,6 +47,10 @@ func pointerContext(pos):
 func pointerClick(pos):
     
     if fab.numTemp() == 0:
+        
+        if Input.is_key_pressed(KEY_META):
+            fab.delMachineAtPos(pos)
+        
         addTempPoint(pos)
     
 func addTempPoint(pos):

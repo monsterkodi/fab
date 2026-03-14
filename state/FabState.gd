@@ -286,12 +286,8 @@ func saveGame(data : Dictionary):
     data.FabState.gameSpeed  = gameSpeed
     
     data.FabState.machines = []
-    for machine in $Machines.get_children():
-        var machineData = {
-            "pos":         machine.pos, 
-            "type":        machine.type, 
-            "orientation": machine.orientation}
-        data.FabState.machines.push_back(machineData)
+    for machine in $Machines.get_children():        
+        data.FabState.machines.push_back(machine.saveData())
                 
     data.FabState.tracks = []
     for i in range(tst.size()):
@@ -309,7 +305,6 @@ func saveGame(data : Dictionary):
             item.advance, 
             item.scale])
             
-    #data.FabState.storage = storage.storage
     data.FabState.storage = storage.saveData()
     
 func loadGame(data : Dictionary):
@@ -319,9 +314,9 @@ func loadGame(data : Dictionary):
         Post.gameSpeedSet.emit(data.FabState.gameSpeed)
         
         if data.FabState.has("machines"):
-            for machine in data.FabState.machines:
-                var pos = Vector2i(machine.pos.x, machine.pos.y)
-                addMachineAtPosOfType(pos, machine.type, machine.orientation)
+            for d in data.FabState.machines:
+                var machine = addMachineAtPosOfType(Vector2i(d[0], d[1]), d[2], d[3])
+                machine.loadData(d)
 
         if data.FabState.has("tracks"):
             for track in data.FabState.tracks:
@@ -339,7 +334,6 @@ func loadGame(data : Dictionary):
                 addItem(pos, dir, item)
                 
         if data.FabState.has("storage"):
-            #storage.storage = data.FabState.storage
             storage.loadData(data.FabState.storage)
                         
 func occupiedByRoot(posl):

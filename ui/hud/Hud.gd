@@ -7,31 +7,35 @@ func _ready():
     
     Post.subscribe(self)
     
-    for type in Item.Types:
-        $ItemButtonGrid.addIcon(Item.iconResForType(type), type)
-    
-    $BuildButtonGrid.addIcon("res://icons/buildings/BuildingRect.png", "Rect")
+    $BuildButtonGrid.addButton("res://icons/buildings/BuildingRect.png", "Rect")
     
     for type in Mach.Types:
         if type == Mach.Type.Belt:
-            $BuildButtonGrid.addIcon("res://icons/buildings/BuildingBelt.png", type)
+            $BuildButtonGrid.addButton("res://icons/buildings/BuildingBelt.png", type)
         else:
-            $BuildButtonGrid.addIcon("res://icons/machines/" + Mach.stringForType(type) + ".png", type)
+            $BuildButtonGrid.addButton("res://icons/machines/" + Mach.stringForType(type) + ".png", type)
         
-    $BuildButtonGrid.addIcon("res://icons/buildings/BuildingDel.png", "Del")
+    $BuildButtonGrid.addButton("res://icons/buildings/BuildingDel.png", "Del")
     
 func _process(delta: float):
     
     if not storage: return
-    #Log.log(storage.storage)
+
     for itemType in storage.storage:
         if storage.storage[itemType] < storage.maxItem:
-            %ItemButtonGrid.setNumber(itemType, storage.storage[itemType])
+            if %ItemButtonGrid.hasButton(itemType):
+                %ItemButtonGrid.setNumber(itemType, storage.storage[itemType])
     
 func levelStart():
     
     storage = Utils.fabState().storage
-    #Log.log("hud.levelStart", storage.storage)
+
+    for type in Item.Types:
+        if storage.storage[type]:
+            $ItemButtonGrid.addButton(Item.iconResForType(type), type)
+            if storage.storage[type] == storage.maxItem:
+                storageItemMax(type)
+
     activateButton(0)
     
 func activateButton(index):    
@@ -47,7 +51,7 @@ func buttonPressed(buildingName : String):
 func _shortcut_input(event: InputEvent):
     
     if not event.pressed: return
-    #Log.log("event", event)
+
     if event.is_action("delete"):
         var btn = %BuildButtonGrid.buttonGroup.get_buttons()[-1]
         btn.button_pressed = true
@@ -86,7 +90,6 @@ func itemButtonPressed(itemName : String):
 
     for i in range(50):
         Utils.fabState().storage.addItem(Item.typeForString(itemName.replace("Item", "")))
-    
 
 func throttleValue(value: float):
     
@@ -106,5 +109,8 @@ func storageItemEmpty(type):
     %ItemButtonGrid.setTextColor(type, Color.RED)
 
 func storageItemChange(type):
+    
+    if not %ItemButtonGrid.hasButton(type):
+        $ItemButtonGrid.addButton(Item.iconResForType(type), type)
     
     %ItemButtonGrid.setTextColor(type, Color(0.7, 0.7, 0.7))

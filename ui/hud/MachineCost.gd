@@ -16,9 +16,7 @@ func _ready():
         cost = {Item.Type.CubeBlack: 1}
     else:
         cost = Mach.costForType(Mach.typeForString(machineName))
-    #var index = 0
+
     for item in cost:
-        %IconGrid.addIcon(Item.iconResForType(item), item)
-        #%IconGrid.setNumber(index, cost[item])
+        %IconGrid.addButton(Item.iconResForType(item), item)
         %IconGrid.setNumber(item, cost[item])
-        #index += 1

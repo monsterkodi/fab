@@ -14,12 +14,6 @@ func loadData(data : Dictionary[Item.Type, int]):
     storage = data 
     for type in storage:
         storage[type] = mini(maxItem, storage[type])
-        if storage[type] == maxItem:
-            Post.storageItemMax.emit(type)
-        elif storage[type] == 0:
-            Post.storageItemEmpty.emit(type)
-        else:
-            Post.storageItemChange.emit(type)
     
 func addItem(type : Item.Type):
 
@@ -62,7 +56,7 @@ func delItems(type : Item.Type, num : int):
 func reset():
     
     for type in Item.Types:
-        storage[type] = 100
+        storage[type] = 0
 
     storage[Item.Type.CubeBlack] = 100
     

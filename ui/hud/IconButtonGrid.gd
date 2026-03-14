@@ -16,17 +16,9 @@ func _ready():
     buttonGroup = ButtonGroup.new()
     buttonGroup.pressed.connect(onButtonPressed)
     
-    #if icons.size():
-        #setIcons(icons)
-        
-#func setIcons(icns):
-    #
-    #icons = icns
-    #for resPath in icons:
-        #if not resPath.is_empty():
-            #addIcon(resPath)
-        
-func addIcon(resPath, type):
+func addButton(iconPath : String, type):
+    
+    #if iconPath.contains("/items/"): Log.log(iconPath, type)
     
     var button : Button = Button.new()
     button.mouse_entered.connect(onButtonMouseEnter.bind(button))
@@ -40,9 +32,9 @@ func addIcon(resPath, type):
 
     button.button_group = buttonGroup
     button.toggle_mode = true
-    button.icon = load(resPath)
+    button.icon = load(iconPath)
     if not button.icon:
-        button.text = resPath.get_file().get_basename()
+        button.text = iconPath.get_file().get_basename()
     button.custom_minimum_size = Vector2(buttonSize, buttonSize)
     button.expand_icon = true
     %Grid.add_child(button)
@@ -85,17 +77,21 @@ func getButton(type) -> Button:
     
     return buttonGroup.get_buttons()[buttonMap[type]]
     
+func hasButton(type):
+    
+    return buttonMap.has(type)
+    
 func setNumber(type, number : int):
     
-    var button = getButton(type)
-    button.text = String.num_int64(number)
+    if hasButton(type):
+        getButton(type).text = String.num_int64(number)
 
 func setTextColor(type, color : Color):
     
-    var button = getButton(type)
-    button.add_theme_color_override("font_color", color)
+    if hasButton(type):
+        getButton(type).add_theme_color_override("font_color", color)
 
 func setText(type, text : String):
     
-    var button = getButton(type)
-    button.text = text
+    if hasButton(type):
+        getButton(type).text = text

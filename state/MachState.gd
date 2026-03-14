@@ -195,7 +195,7 @@ func _ready():
             Module.Type.SPHERE:             msh = SphereMesh.new(); msh.radial_segments = 24; msh.rings = 12
             Module.Type.CYLINDER:           msh = CylinderMesh.new(); msh.height = 1.0; msh.rings = 1; msh.radial_segments = 24
             Module.Type.STORAGE:            msh = MachMeshes.storage(0.8, 0.5) 
-            Module.Type.GEAR:               msh = MachMeshes.gear(0.4, 0.1, 0.2, 8, 0.5, 0.5, false)
+            Module.Type.GEAR:               msh = MachMeshes.gear(0.4, 0.1, 0.2, 7, 0.5, 0.5, false)
             Module.Type.FRAME:              msh = MachMeshes.frame(1.0, 1.0, 1.0, 0.2, 0.5)
             Module.Type.CUBE_CROSS:         msh = MachMeshes.cubeCross(0.6, [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
             Module.Type.CYLINDER_CROSS:     msh = MachMeshes.cylinderCross(0.6, 0.15, [COLOR.ITEM_GREEN, COLOR.ITEM_BLUE, COLOR.ITEM_RED])
