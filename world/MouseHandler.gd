@@ -1,8 +1,9 @@
 class_name MouseHandler
 extends Control
 
-var lastPos : Vector2i
+var lastPos    : Vector2i
 var contextPos : Vector2
+var middlePos  : Vector2
 
 func _process(delta: float):
     
@@ -38,7 +39,7 @@ func _gui_input(event: InputEvent):
             lastPos = ipos
                     
     elif event is InputEventMouseButton:
-
+        
         if event.button_index == 1:
             if event.pressed:
                 if event.shift_pressed:
@@ -60,4 +61,10 @@ func _gui_input(event: InputEvent):
             else:
                 if (contextPos - mousePos).length() < 10:
                     Post.pointerContext.emit(ipos)
-                
+                    
+        elif event.button_index == 3:
+            if event.pressed:
+                middlePos = mousePos
+            else:
+                if (middlePos - mousePos).length() < 10:
+                    Post.pointerMiddle.emit(ipos)

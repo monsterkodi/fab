@@ -8,6 +8,9 @@ class Module:
     enum Type { BOX, ARROW, CUBE, TORUS, SPHERE, CYLINDER, STORAGE, GEAR, FRAME, CUBE_CROSS, CYLINDER_CROSS, TUNNEL_BOX, CUBECULE, MOLECULE }
     enum Kind { NONE, SLIT, SLOT }
     
+    func _init(p : Vector2i): 
+        bpos = p
+    
     var trans : Transform3D
     var color : Color
     var type  : int
@@ -36,9 +39,10 @@ class Building:
         var module
         
         for slit in Mach.slitsForType(type):
-            module = Module.new()
-            module.bpos = pos
-            module.color = Color.WHITE
+            module = Module.new(pos)
+            module.color = COLOR.BUILDING
+            if slit.has("color"):
+                module.color = slit.color
             if slit.has("type"):
                 module.type  = slit.type
             else:
@@ -46,17 +50,17 @@ class Building:
             modules.push_back(module)
             
             if module.type != MachState.Module.Type.TUNNEL_BOX:
-                module = Module.new()
-                module.bpos = pos
+                module = Module.new(pos)
                 module.color = COLOR.ARROW
                 module.type  = Module.Type.ARROW
                 module.kind  = Module.Kind.SLIT
                 modules.push_back(module)
             
         for slot in Mach.slotsForType(type):
-            module = Module.new()
-            module.bpos = pos
-            module.color = Color.WHITE
+            module = Module.new(pos)
+            module.color = COLOR.BUILDING
+            if slot.has("color"):
+                module.color = slot.color
             if slot.has("type"):
                 module.type  = slot.type
             else:
@@ -64,8 +68,7 @@ class Building:
             modules.push_back(module)
 
             if module.type != MachState.Module.Type.TUNNEL_BOX:
-                module = Module.new()
-                module.bpos = pos
+                module = Module.new(pos)
                 module.color = COLOR.ARROW
                 module.type  = Module.Type.ARROW
                 module.kind  = Module.Kind.SLOT
@@ -73,8 +76,7 @@ class Building:
             
         for deco in Mach.decosForType(type):
             if deco.has("type"):
-                module = Module.new()
-                module.bpos = pos
+                module = Module.new(pos)
                 module.type  = deco.type
                 if deco.has("color"):
                     module.color = deco.color
@@ -155,14 +157,12 @@ class ModMap:
             assert(module.index == index)
             if module.index < ary.size()-1: # swap with last
                 var lastModule = ary[-1]
-                module.trans = lastModule.trans
-                module.color = lastModule.color
-                module.bpos  = lastModule.bpos
                 var li = map[lastModule.bpos].find(lastModule.index)
                 assert(li >= 0)
-                map[module.bpos][li] = module.index
+                map[lastModule.bpos][li] = module.index
                 lastModule.index = module.index
-                hdl.aryChange(self, module)
+                ary.set(module.index, lastModule)
+                hdl.aryChange(self, lastModule)
             ary.pop_back()
             msh.multimesh.visible_instance_count -= 1
             assert(ary.size() == msh.multimesh.visible_instance_count)
@@ -263,6 +263,6 @@ func setBuildingPos(building, pos):
     
 func rotateBuilding(building):
     
-    del(building)
+    #del(building)
     building.rotate()
     add(building)

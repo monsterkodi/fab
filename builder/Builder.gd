@@ -20,6 +20,7 @@ func pointerShiftClick(pos): pass
 func pointerDrag(pos):       pass
 func pointerCancel(pos):     pass
 func pointerContext(pos):    pass
+func pointerMiddle(pos):     pass
 func pointerRelease(pos):    pass
 func pointerRotate():        pass
 

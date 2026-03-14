@@ -79,6 +79,10 @@ func pointerRelease(pos):
 
 func pointerContext(pos):
     
+    pointerRotate()
+
+func pointerMiddle(pos):
+    
     if isPasting: stopPasting()
     startPos = pos
     endPos = pos

@@ -94,7 +94,7 @@ func slitsForType(type):
     match type:
         Type.Tunnel, Type.Tunnel2, Type.Tunnel3: 
             return [
-                {"pos": Vector2i.ZERO, "dir": Belt.W, "type": MachState.Module.Type.TUNNEL_BOX},
+                {"pos": Vector2i.ZERO, "dir": Belt.W, "type": MachState.Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
             ]
         Type.Prism: 
             return [
@@ -148,15 +148,15 @@ func slotsForType(type):
     match type:
         Type.Tunnel: 
             return [
-                {"pos": Belt.NEIGHBOR[Belt.E]*2,                     "dir": Belt.E, "type": MachState.Module.Type.TUNNEL_BOX},
+                {"pos": Belt.NEIGHBOR[Belt.E]*2,                     "dir": Belt.E, "type": MachState.Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
             ]
         Type.Tunnel2: 
             return [
-                {"pos": Belt.NEIGHBOR[Belt.E]*3,                     "dir": Belt.E, "type": MachState.Module.Type.TUNNEL_BOX},
+                {"pos": Belt.NEIGHBOR[Belt.E]*3,                     "dir": Belt.E, "type": MachState.Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
             ]
         Type.Tunnel3: 
             return [
-                {"pos": Belt.NEIGHBOR[Belt.E]*4,                     "dir": Belt.E, "type": MachState.Module.Type.TUNNEL_BOX},
+                {"pos": Belt.NEIGHBOR[Belt.E]*4,                     "dir": Belt.E, "type": MachState.Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
             ]
         Type.Prism: 
             return [
@@ -203,23 +203,23 @@ func decosForType(type):
 
         Type.Tunnel:        
              return [   
-                {"pos": Vector3(1.16, 0.2, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.ARROW,
+                {"pos": Vector3(1.16, 0.2, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.TUNNEL,
                     "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
                 ]
         Type.Tunnel2:        
              return [   
-                {"pos": Vector3(1.16, 0.2, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.ARROW,
+                {"pos": Vector3(1.16, 0.2, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.TUNNEL,
                     "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
-                {"pos": Vector3(2.16, 0.2, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.ARROW,
+                {"pos": Vector3(2.16, 0.2, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.TUNNEL,
                     "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
                 ]
         Type.Tunnel3:        
              return [   
-                {"pos": Vector3(1.16, 0.2, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.ARROW,
+                {"pos": Vector3(1.16, 0.2, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.TUNNEL,
                     "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
-                {"pos": Vector3(2.16, 0.2, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.ARROW,
+                {"pos": Vector3(2.16, 0.2, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.TUNNEL,
                     "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
-                {"pos": Vector3(3.16, 0.2, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.ARROW,
+                {"pos": Vector3(3.16, 0.2, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.TUNNEL,
                     "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
                 ]
         Type.Root:   
@@ -230,9 +230,7 @@ func decosForType(type):
                 ]
         Type.Storage: 
             return [
-                {"pos": Vector3(0, 1.6, 0), "type": MachState.Module.Type.STORAGE},
-                #{"pos": Vector3(0, 1.2, 0), "type": MachState.Module.Type.CYLINDER, "color": COLOR.BUILDING, 
-                    #"basis": Basis.from_scale(Vector3(0.2, 0.4, 0.2))},
+                {"pos": Vector3(0, 1.6, 0), "type": MachState.Module.Type.STORAGE, "color": COLOR.BUILDING},
             ]
         Type.Prism: 
             return [
@@ -291,8 +289,8 @@ func decosForType(type):
                 ]
         Type.Counter:
             return [
-                {"pos": Vector3(0, 0.5, 0), "type": MachState.Module.Type.FRAME, "color": COLOR.BUILDING},
-                {"pos": Vector3(0.5, 0.9, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.ARROW,
+                {"pos": Vector3(0, 0.5, 0), "type": MachState.Module.Type.FRAME, "color": COLOR.COUNTER_BOX},
+                {"pos": Vector3(0.5, 0.9, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.COUNTER_BOX,
                     "basis": Basis.from_euler(Vector3(0, deg_to_rad(90), 0)) },
                 ]
         Type.CubeCross:
