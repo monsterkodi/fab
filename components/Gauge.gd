@@ -18,8 +18,6 @@ func _ready():
     mat.set_shader_parameter("EndAngle", 0.0)
     mat.set_shader_parameter("Color", color)
     material_override = mat
-    #Utils.level(self).add_child(self)
-    #rotate_object_local(Vector3.UP, deg_to_rad(-90 * orientation))
 
 func setFactor(f):
     
@@ -43,7 +41,7 @@ func update(delta : float):
             for h in history:
                 itemSum += h
                 
-            setFactor(1.05 * itemSum / history.size())
+            setFactor(0.54 * itemSum / history.size())
             
         deltaSum  = 0
         itemCount = 0

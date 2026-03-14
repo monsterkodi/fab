@@ -15,6 +15,11 @@ class Module:
     var bpos  : Vector2i
     var kind  : int = Module.Kind.NONE
     
+    static func stringForType(t):
+        for key in Type:
+            if Type[key] == t: return key
+        return "???"
+    
 class Building:
     
     var modules : Array[Module]
@@ -126,24 +131,24 @@ class ModMap:
     var hdl
     
     func add(pos : Vector2i, module : Module):
-
         if map.has(pos):
             if module.index >= 0 and map[pos].find(module.index) >= 0:
                 ary[module.index] = module
                 assert(module.bpos == pos)
                 hdl.aryChange(self, module)
                 return
-
         module.index = ary.size()
         if not map.has(pos): map[pos] = []
         map[pos].push_back(module.index)
         ary.push_back(module)
         assert(msh.multimesh.visible_instance_count == module.index)
         msh.multimesh.visible_instance_count += 1
+        assert(msh.multimesh.visible_instance_count == ary.size())
         hdl.aryChange(self, module)
             
     func del(pos : Vector2i):
-        if not map.has(pos): return
+        if not map.has(pos):
+            return
         for i in range(map[pos].size()-1, -1, -1):
             var index = map[pos][i]
             var module = ary[index]
@@ -152,14 +157,16 @@ class ModMap:
                 var lastModule = ary[-1]
                 module.trans = lastModule.trans
                 module.color = lastModule.color
+                module.bpos  = lastModule.bpos
                 var li = map[lastModule.bpos].find(lastModule.index)
                 assert(li >= 0)
-                map[lastModule.bpos][li] = module.index
-                module.bpos  = lastModule.bpos
+                map[module.bpos][li] = module.index
+                lastModule.index = module.index
                 hdl.aryChange(self, module)
             ary.pop_back()
             msh.multimesh.visible_instance_count -= 1
             assert(ary.size() == msh.multimesh.visible_instance_count)
+        assert(ary.size() == msh.multimesh.visible_instance_count)
         map.erase(pos)
             
     func clear():
@@ -174,12 +181,13 @@ var modMap : Array[ModMap] = []
 
 func _ready():
     
-    for type in Module.Type:
-
+    for typeName in Module.Type:
+        var type = Module.Type[typeName]
         var mm = MultiMeshInstance3D.new()
+        mm.name = typeName
         mm.multimesh = MultiMesh.new()
         var msh
-        match Module.Type[type]:
+        match type:
             Module.Type.BOX:                msh = MachMeshes.regal(1.0, 1.0, 1.0, 0.2, 0.5)
             Module.Type.ARROW:              msh = MachMeshes.arrow(0.4, 0.2, 0.5)
             Module.Type.CUBE:               msh = BoxMesh.new()
@@ -200,7 +208,7 @@ func _ready():
         if isGhost:
             mm.material_override = preload("uid://cqpqvcb8usfl0")
         else:
-            match Module.Type[type]:
+            match type:
                 Module.Type.STORAGE, \
                 Module.Type.FRAME, \
                 Module.Type.TUNNEL_BOX, \
@@ -209,7 +217,7 @@ func _ready():
                 _:                              mm.material_override =  preload("uid://bi5n2lthhnyix")
             
         mm.multimesh.transform_format = MultiMesh.TRANSFORM_3D
-        match Module.Type[type]:
+        match type:
             Module.Type.CUBE_CROSS, \
             Module.Type.CYLINDER_CROSS, \
             Module.Type.CUBECULE, \

@@ -140,7 +140,7 @@ func aryClear(pm : ItemMap):
         
 func advanceItems(delta):
       
-    var advance = delta * 0.5
+    var advance = delta
     
     for imap in itemMap:
         for item in imap.ary:

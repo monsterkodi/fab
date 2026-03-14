@@ -65,9 +65,7 @@ func show():
 
 func _exit_tree():
     
-    if bdg:
-        fab.mst.del(bdg)
-        bdg = null
+    hide()
         
     for belt in belts:
         fab.delBeltAtPos(pos + belt.pos)
@@ -137,7 +135,7 @@ func hasSlitArrows():
     
 func consume(delta:float):
     
-    var advance = delta * 0.5
+    var advance = delta
     
     for i in range(slits.size()):
         var slit = slits[i]
@@ -165,7 +163,7 @@ func advanceAtSlotIndex(i):
     
 func produce(delta:float):
     
-    var advance = delta * 0.5
+    var advance = delta
     
     for i in range(slots.size()):
         var adv = advanceAtSlotIndex(i)

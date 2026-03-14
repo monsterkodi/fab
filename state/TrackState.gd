@@ -250,7 +250,7 @@ func gameResume():
 func gameSpeed(speed):
     
     for child in get_children():
-        child.multimesh.mesh.material.set_shader_parameter("Speed", speed)
+        child.multimesh.mesh.material.set_shader_parameter("Speed", speed*2)
         
 func rotateAround(center : Vector2i):
 
