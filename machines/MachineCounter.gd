@@ -21,7 +21,7 @@ func _ready():
     
 func _exit_tree():
     
-    gauge.free()
+    gauge.queue_free()
     super._exit_tree()
     
 func consume(delta):

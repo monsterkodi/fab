@@ -26,10 +26,12 @@ class Inst:
     
     var type  : Type
     var kind  : Kind = Kind.NONE
+    var basis : Basis
     var trans : Transform3D
     var color : Color
     var index : int = -1
     var bpos  : Vector2i
+    var pos   : Vector3
     
     func _init(p : Vector2i): bpos = p
         
@@ -91,3 +93,11 @@ func stringForType(t):
     for key in Type:
         if Type[key] == t: return key
     return "???"
+    
+func stringForKind(t):
+    for key in Kind:
+        if Kind[key] == t: return key
+    return "???"
+
+func stringForModule(m : Module.Inst):
+    return stringForKind(m.kind) + " " + stringForType(m.type) + " " + String.num_int64(m.index)

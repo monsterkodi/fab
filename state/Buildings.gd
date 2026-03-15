@@ -16,83 +16,50 @@ class Building:
         type = t
         pos = p
         
-        var module
+        for mod in Mach.Def[type].mods:
+            
+            var module = Module.Inst.new(pos)
+            
+            var isSlot = mod.has("in") or mod.has("out")
+            
+            if  mod.has("out"): module.kind = Module.Kind.SLOT; module.pos = Vector3(mod.out.x, 0.5, mod.out.y)
+            elif mod.has("in"): module.kind = Module.Kind.SLIT; module.pos = Vector3(mod.in.x, 0.5, mod.in.y)
+            else:               module.kind = Module.Kind.DECO; module.pos = mod.pos
+            
+            if mod.has("color"): module.color = mod.color
+            elif isSlot:         module.color = COLOR.BUILDING
+                
+            if mod.has("type"):  module.type = mod.type
+            elif isSlot:         module.type = Module.Type.BOX
+            
+            if mod.has("basis"):   module.basis = mod.basis
+            elif mod.has("scale"): module.basis = Basis.from_scale(Vector3(mod.scale, mod.scale, mod.scale))
+            elif isSlot:           module.basis = Basis.IDENTITY.rotated(Vector3.UP, [3, 0, 1, 2][mod.dir] * deg_to_rad(-90))
+            else:                  module.basis = Basis.IDENTITY
+            
+            modules.push_back(module)
+                        
+            if isSlot and module.type != Module.Type.TUNNEL_BOX:
+                var arrow = Module.Inst.new(pos)
+                arrow.color = COLOR.ARROW
+                arrow.type  = Module.Type.ARROW
+                arrow.kind  = Module.Kind.DECO
+                if module.kind == Module.Kind.SLIT:
+                    arrow.pos   = (module.pos + Vector3(-0.2, 0.401, 0.0)).rotated(Vector3.UP, [2, 3, 0, 1][mod.dir] * deg_to_rad(-90))
+                    #arrow.basis = module.basis.rotated(Vector3.UP, deg_to_rad(180))
+                    arrow.basis = module.basis
+                else:
+                    arrow.pos   = module.pos + Vector3(0.0, 0.401, 0.5)                    
+                    arrow.basis = module.basis
+                modules.push_back(arrow)
         
-        for slit in Mach.slitsForType(type):
-            module = Module.Inst.new(pos)
-            module.color = COLOR.BUILDING
-            if slit.has("color"):
-                module.color = slit.color
-            if slit.has("type"):
-                module.type  = slit.type
-            else:
-                module.type  = Module.Type.BOX
-            modules.push_back(module)
-            
-            if module.type != Module.Type.TUNNEL_BOX:
-                module = Module.Inst.new(pos)
-                module.color = COLOR.ARROW
-                module.type  = Module.Type.ARROW
-                module.kind  = Module.Kind.SLIT
-                modules.push_back(module)
-            
-        for slot in Mach.slotsForType(type):
-            module = Module.Inst.new(pos)
-            module.color = COLOR.BUILDING
-            if slot.has("color"):
-                module.color = slot.color
-            if slot.has("type"):
-                module.type  = slot.type
-            else:
-                module.type  = Module.Type.BOX
-            modules.push_back(module)
-
-            if module.type != Module.Type.TUNNEL_BOX:
-                module = Module.Inst.new(pos)
-                module.color = COLOR.ARROW
-                module.type  = Module.Type.ARROW
-                module.kind  = Module.Kind.SLOT
-                modules.push_back(module)
-            
-        for deco in Mach.decosForType(type):
-            if deco.has("type"):
-                module = Module.Inst.new(pos)
-                module.type  = deco.type
-                if deco.has("color"):
-                    module.color = deco.color
-                if deco.has("basis"):
-                    module.trans = Transform3D(deco.basis, Vector3.ZERO)
-                modules.push_back(module)
-            
         update()
         
     func update():
         
-        var i = 0
-        for slit in Mach.slitsForType(type):
-            var p = basis * Vector3(slit.pos.x, 0, slit.pos.y)
-            modules[i].trans = Mach.boxTrans(slit, p + Vector3(pos.x, 0.5, pos.y), basis)
-            if modules[i].type != Module.Type.TUNNEL_BOX:
-                i += 1
-                modules[i].trans = Mach.slitArrowTrans(slit, p + Vector3(pos.x, 0.0, pos.y), basis)
-            i += 1
-
-        for slot in Mach.slotsForType(type):
-            var p = basis * Vector3(slot.pos.x, 0, slot.pos.y)
-            modules[i].trans = Mach.boxTrans(slot, p + Vector3(pos.x, 0.5, pos.y), basis)
-            if modules[i].type != Module.Type.TUNNEL_BOX:
-                i += 1
-                modules[i].trans = Mach.slotArrowTrans(slot, p + Vector3(pos.x, 0.0, pos.y), basis)
-            i += 1
-            
-        for deco in Mach.decosForType(type):
-            if deco.has("type"):
-                var b = basis
-                if deco.has("basis"):
-                    b = basis * deco.basis
-                modules[i].trans = Transform3D(b, basis * deco.pos + Vector3(pos.x, 0.0, pos.y))
-                i += 1
-        
+        for module in modules:
+            module.trans = Transform3D(basis * module.basis, Vector3(pos.x, 0.0, pos.y) + basis * module.pos)
+                
     func setPos(p : Vector2i):
         
         pos = p
