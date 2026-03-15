@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dyukdydgv7gfn"]
+
+[ext_resource type="Script" uid="uid://ch0wd6uae584f" path="res://state/Buildings.gd" id="1_srn14"]
+
+[node name="Ghosts" type="Node3D" unique_id=774702764]
+script = ExtResource("1_srn14")
+isGhost = true

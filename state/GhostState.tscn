@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://dyukdydgv7gfn"]
-
-[ext_resource type="Script" uid="uid://ch0wd6uae584f" path="res://state/MachState.gd" id="1_6pm0w"]
-
-[node name="GhostState" type="Node3D" unique_id=774702764]
-script = ExtResource("1_6pm0w")
-isGhost = true

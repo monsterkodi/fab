@@ -8,8 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://dlfbgp57udspw" path="res://state/TrackState.tscn" id="7_35mqu"]
 [ext_resource type="PackedScene" uid="uid://crjdati3mqanw" path="res://state/ItemState.tscn" id="8_ioj0i"]
 [ext_resource type="PackedScene" uid="uid://b0tqyvht5fp52" path="res://state/TempState.tscn" id="8_kp7rj"]
-[ext_resource type="PackedScene" uid="uid://dq0uh1pt40co1" path="res://state/MachState.tscn" id="9_kp7rj"]
-[ext_resource type="PackedScene" uid="uid://dyukdydgv7gfn" path="res://state/GhostState.tscn" id="10_ioj0i"]
+[ext_resource type="PackedScene" uid="uid://dq0uh1pt40co1" path="res://state/Buildings.tscn" id="9_kp7rj"]
+[ext_resource type="PackedScene" uid="uid://dyukdydgv7gfn" path="res://state/Ghosts.tscn" id="10_ioj0i"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w56at"]
 size = Vector3(1000, 1, 1000)

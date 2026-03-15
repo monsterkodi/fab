@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://dq0uh1pt40co1"]
-
-[ext_resource type="Script" uid="uid://ch0wd6uae584f" path="res://state/MachState.gd" id="1_ivwl2"]
-
-[node name="MachState" type="Node3D" unique_id=774702764]
-script = ExtResource("1_ivwl2")

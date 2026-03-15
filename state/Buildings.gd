@@ -2,47 +2,10 @@ class_name MachState
 extends Node3D
 
 @export var isGhost : bool = false
-
-class Module:
-    
-    enum Type { 
-        BOX, 
-        ARROW, 
-        CUBE, 
-        TORUS, 
-        SPHERE, 
-        CYLINDER, 
-        STORAGE, 
-        GEAR, 
-        FRAME, 
-        CUBE_CROSS, 
-        CYLINDER_CROSS, 
-        TUNNEL_BOX, 
-        CUBECULE, 
-        MOLECULE, 
-        TREE_BRANCH,
-        TREE_CANOPY }
-        
-    enum Kind { NONE, SLIT, SLOT }
-    
-    func _init(p : Vector2i): 
-        bpos = p
-    
-    var trans : Transform3D
-    var color : Color
-    var type  : int
-    var index : int = -1
-    var bpos  : Vector2i
-    var kind  : int = Module.Kind.NONE
-    
-    static func stringForType(t):
-        for key in Type:
-            if Type[key] == t: return key
-        return "???"
     
 class Building:
     
-    var modules : Array[Module]
+    var modules : Array[Module.Inst]
     var basis   : Basis
     var type    : Mach.Type
     var pos     : Vector2i
@@ -56,7 +19,7 @@ class Building:
         var module
         
         for slit in Mach.slitsForType(type):
-            module = Module.new(pos)
+            module = Module.Inst.new(pos)
             module.color = COLOR.BUILDING
             if slit.has("color"):
                 module.color = slit.color
@@ -66,15 +29,15 @@ class Building:
                 module.type  = Module.Type.BOX
             modules.push_back(module)
             
-            if module.type != MachState.Module.Type.TUNNEL_BOX:
-                module = Module.new(pos)
+            if module.type != Module.Type.TUNNEL_BOX:
+                module = Module.Inst.new(pos)
                 module.color = COLOR.ARROW
                 module.type  = Module.Type.ARROW
                 module.kind  = Module.Kind.SLIT
                 modules.push_back(module)
             
         for slot in Mach.slotsForType(type):
-            module = Module.new(pos)
+            module = Module.Inst.new(pos)
             module.color = COLOR.BUILDING
             if slot.has("color"):
                 module.color = slot.color
@@ -84,8 +47,8 @@ class Building:
                 module.type  = Module.Type.BOX
             modules.push_back(module)
 
-            if module.type != MachState.Module.Type.TUNNEL_BOX:
-                module = Module.new(pos)
+            if module.type != Module.Type.TUNNEL_BOX:
+                module = Module.Inst.new(pos)
                 module.color = COLOR.ARROW
                 module.type  = Module.Type.ARROW
                 module.kind  = Module.Kind.SLOT
@@ -93,7 +56,7 @@ class Building:
             
         for deco in Mach.decosForType(type):
             if deco.has("type"):
-                module = Module.new(pos)
+                module = Module.Inst.new(pos)
                 module.type  = deco.type
                 if deco.has("color"):
                     module.color = deco.color
@@ -109,7 +72,7 @@ class Building:
         for slit in Mach.slitsForType(type):
             var p = basis * Vector3(slit.pos.x, 0, slit.pos.y)
             modules[i].trans = Mach.boxTrans(slit, p + Vector3(pos.x, 0.5, pos.y), basis)
-            if modules[i].type != MachState.Module.Type.TUNNEL_BOX:
+            if modules[i].type != Module.Type.TUNNEL_BOX:
                 i += 1
                 modules[i].trans = Mach.slitArrowTrans(slit, p + Vector3(pos.x, 0.0, pos.y), basis)
             i += 1
@@ -117,7 +80,7 @@ class Building:
         for slot in Mach.slotsForType(type):
             var p = basis * Vector3(slot.pos.x, 0, slot.pos.y)
             modules[i].trans = Mach.boxTrans(slot, p + Vector3(pos.x, 0.5, pos.y), basis)
-            if modules[i].type != MachState.Module.Type.TUNNEL_BOX:
+            if modules[i].type != Module.Type.TUNNEL_BOX:
                 i += 1
                 modules[i].trans = Mach.slotArrowTrans(slot, p + Vector3(pos.x, 0.0, pos.y), basis)
             i += 1
@@ -145,11 +108,11 @@ class Building:
 class ModMap:
     
     var map : Dictionary[Vector2i, Array] # building pos to module indices
-    var ary : Array[Module] = []
+    var ary : Array[Module.Inst] = []
     var msh : MultiMeshInstance3D
     var hdl
     
-    func add(pos : Vector2i, module : Module):
+    func add(pos : Vector2i, module : Module.Inst):
         if map.has(pos):
             if module.index >= 0 and map[pos].find(module.index) >= 0:
                 ary[module.index] = module
@@ -199,53 +162,7 @@ var modMap : Array[ModMap] = []
 func _ready():
     
     for typeName in Module.Type:
-        var type = Module.Type[typeName]
-        var mm = MultiMeshInstance3D.new()
-        mm.name = typeName
-        mm.multimesh = MultiMesh.new()
-        var msh
-        match type:
-            Module.Type.BOX:                msh = MachMeshes.regal(1.0, 1.0, 1.0, 0.2, 0.5)
-            Module.Type.ARROW:              msh = MachMeshes.arrow(0.4, 0.2, 0.5)
-            Module.Type.CUBE:               msh = BoxMesh.new()
-            Module.Type.TORUS:              msh = TorusMesh.new(); msh.outer_radius = 0.5; msh.inner_radius = 0.2; msh.ring_segments = 12; msh.rings = 24
-            Module.Type.SPHERE:             msh = SphereMesh.new(); msh.radial_segments = 24; msh.rings = 12
-            Module.Type.CYLINDER:           msh = CylinderMesh.new(); msh.height = 1.0; msh.rings = 1; msh.radial_segments = 24
-            Module.Type.STORAGE:            msh = MachMeshes.storage(0.8, 0.5) 
-            Module.Type.GEAR:               msh = MachMeshes.gear(0.4, 0.1, 0.2, 7, 0.5, 0.5, false)
-            Module.Type.FRAME:              msh = MachMeshes.frame(1.0, 1.0, 1.0, 0.2, 0.5)
-            Module.Type.CUBE_CROSS:         msh = MachMeshes.cubeCross(0.6, [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
-            Module.Type.CYLINDER_CROSS:     msh = MachMeshes.cylinderCross(0.6, 0.15, [COLOR.ITEM_GREEN, COLOR.ITEM_BLUE, COLOR.ITEM_RED])
-            Module.Type.TUNNEL_BOX:         msh = MachMeshes.tunnelBox(1.0, 1.0, 1.0, 0.2, 0.5)
-            Module.Type.CUBECULE:           msh = MachMeshes.cubecule(0.6, 0.2,  0.2, [COLOR.ITEM_BLACK, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE])
-            Module.Type.MOLECULE:           msh = MachMeshes.molecule(0.7, 0.07, 0.14, [COLOR.ITEM_BLACK, COLOR.ITEM_RED,   COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
-            Module.Type.TREE_BRANCH:        msh = MachMeshes.treeBranch(0.5, 1, 0.5, 0.5)
-            Module.Type.TREE_CANOPY:        msh = MachMeshes.treeCanopy(1.6, 0.8, 0.6) 
-        mm.multimesh.mesh = msh
-        assert(mm.multimesh.mesh)
-        
-        if isGhost:
-            mm.material_override = preload("uid://cqpqvcb8usfl0")
-        else:
-            match type:
-                Module.Type.STORAGE, \
-                Module.Type.FRAME, \
-                Module.Type.TUNNEL_BOX, \
-                Module.Type.TREE_BRANCH, \
-                Module.Type.BOX:                mm.material_override =  preload("uid://ci4cvsq2gbob7")       
-                Module.Type.ARROW:              mm.material_override =  preload("uid://dc38ipveu0heb")
-                Module.Type.TREE_CANOPY:        mm.material_override =  preload("uid://bw6ugjcrosrkd")
-                _:                              mm.material_override =  preload("uid://bi5n2lthhnyix")
-            
-        mm.multimesh.transform_format = MultiMesh.TRANSFORM_3D
-        match type:
-            Module.Type.CUBE_CROSS, \
-            Module.Type.CYLINDER_CROSS, \
-            Module.Type.CUBECULE, \
-            Module.Type.MOLECULE: 
-                mm.multimesh.use_colors = false
-            _ : mm.multimesh.use_colors = true
-        add_child(mm)
+        add_child(Module.multiMeshForType(Module.Type[typeName], isGhost))
     
     for child in get_children():
         child.multimesh.instance_count = 1000
@@ -270,7 +187,7 @@ func clear():
     for mm in modMap:
         mm.clear()
             
-func aryChange(mm : ModMap, module : Module): 
+func aryChange(mm : ModMap, module : Module.Inst): 
     
     if mm.msh.multimesh.use_colors:
         mm.msh.multimesh.set_instance_color(module.index, module.color)
