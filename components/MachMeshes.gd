@@ -451,10 +451,25 @@ func storage(height : float, radius: float, segments : int = 24):
     var st = SurfaceTool.new()
     st.begin(Mesh.PRIMITIVE_TRIANGLES)
     
-    var h  = height/2
+    var h = height/2
     var chamfer = 0.2
     
     cylinderChamfer(st, Vector3(0, -h, 0), Vector3(0, h, 0), radius*0.8, radius, chamfer, chamfer, segments)
+    
+    st.index()
+    st.generate_normals()
+    
+    return st.commit()        
+
+func treeCanopy(height : float, botRadius: float, topRadius: float, segments : int = 24):
+    
+    var st = SurfaceTool.new()
+    st.begin(Mesh.PRIMITIVE_TRIANGLES)
+    
+    var h = height/2
+    var chamfer = 0.2
+    
+    cylinderChamfer(st, Vector3(0, -h, 0), Vector3(0, h, 0), botRadius, topRadius, chamfer, chamfer, segments)
     
     st.index()
     st.generate_normals()
@@ -641,16 +656,64 @@ func gear(outerRadius, innerRadius, height, spokeCount, spokeWidthFactor, spokeL
     st.generate_normals()
     
     return st.commit()    
+    
+func quadtube(st : SurfaceTool, b0, b1, b2, b3, t0, t1, t2, t3):
+    
+    quad(st, b0, b1, t1, t0)
+    quad(st, b1, b2, t2, t1)
+    quad(st, b2, b3, t3, t2)
+    quad(st, b3, b0, t0, t3)
 
-func tree(width, height, thickness):
+func treeBranch(width, height, thickness, upfactor):
 
     var st = SurfaceTool.new()
     
     st.begin(Mesh.PRIMITIVE_TRIANGLES)
     st.set_smooth_group(-1) # flat shading
     
-    tube(st, Vector3(0,0,0), Vector3(0, height, 0), width, width/2, 8)
+    var b0 = Vector3(width, 0, width)
+    var b1 = b0.rotated(Vector3.UP, deg_to_rad(-90))
+    var b2 = b0.rotated(Vector3.UP, deg_to_rad(-180))
+    var b3 = b0.rotated(Vector3.UP, deg_to_rad(-270))
+    
+    var t0 = Vector3(width*thickness, height, width*thickness)
+    var t1 = t0.rotated(Vector3.UP, deg_to_rad(-90))
+    var t2 = t0.rotated(Vector3.UP, deg_to_rad(-180))
+    var t3 = t0.rotated(Vector3.UP, deg_to_rad(-270))
+    
+    quadtube(st, b0, b1, b2, b3, t0, t1, t2, t3)
+    
+    var tqh = 2 * width*thickness
+    var offset = tqh * upfactor
+    
+    for i in 4:
+        
+        var s0 = t0
+        var s1 = t1
+        var s2 = s1 + Vector3(0, tqh, 0)
+        var s3 = s0 + Vector3(0, tqh, 0)
 
+        var e0 = s0 + Vector3(0, tqh + offset, 2 * tqh)
+        var e1 = s1 + Vector3(0, tqh + offset, 2 * tqh)
+        var e2 = s2 + Vector3(0,     + offset,   tqh)
+        var e3 = s3 + Vector3(0,     + offset,   tqh)
+        
+        s0 = s0.rotated(Vector3.UP, deg_to_rad(-90*i))
+        s1 = s1.rotated(Vector3.UP, deg_to_rad(-90*i))
+        s2 = s2.rotated(Vector3.UP, deg_to_rad(-90*i))
+        s3 = s3.rotated(Vector3.UP, deg_to_rad(-90*i))
+        
+        e0 = e0.rotated(Vector3.UP, deg_to_rad(-90*i))
+        e1 = e1.rotated(Vector3.UP, deg_to_rad(-90*i))
+        e2 = e2.rotated(Vector3.UP, deg_to_rad(-90*i))
+        e3 = e3.rotated(Vector3.UP, deg_to_rad(-90*i))
+
+        quadtube(st, s0, s1, s2, s3, e0, e1, e2, e3)
+        
+        quad3(st, e0, e1, e2)
+        
+    quad3(st, t0+ Vector3(0, tqh, 0), t1+ Vector3(0, tqh, 0), t2+ Vector3(0, tqh, 0))
+    
     st.index()
     st.generate_normals()
     

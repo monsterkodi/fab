@@ -20,3 +20,7 @@ const ITEM_WHITE  := Color(0.8, 0.8, 0.8)
  
 const GHOST_BLUE  := Color(0.15, 0.15, 1.0)
 const GHOST_RED   := Color.RED
+
+const TREE_BRANCH := Color(0.03, 0.03, 0.03)
+#const TREE_CANOPY := Color(0.0, 0.2, 0.0)
+const TREE_CANOPY := Color(0.0, 0.5, 0.0)

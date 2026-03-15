@@ -19,6 +19,7 @@ enum Type {
     CylinderCross,
     Cubecule,
     Molecule,
+    Tree,
 }
 
 var Types     : Array[Type]
@@ -50,6 +51,7 @@ var Class = [
     MachineCylinderCross,
     MachineCubecule,
     MachineMolecule,
+    MachineTree,
 ]
 
 func costForType(type):
@@ -72,7 +74,7 @@ func costForType(type):
             Type.CylinderCross: return {Item.Type.CylinderRed:   30, Item.Type.CylinderGreen: 30, Item.Type.CylinderBlue: 30}
             Type.Cubecule:      return {Item.Type.CylinderWhite: 30, Item.Type.CubeCross:     30, Item.Type.Energy:       30}
             Type.Molecule:      return {Item.Type.SphereWhite:   60, Item.Type.CylinderCross: 60, Item.Type.Energy:       60}
-            _:                  return {Item.Type.CubeBlack:     0}
+            _:                  return {Item.Type.CubeBlack:     1}
 
 func stringForType(type):   return TypeNames[type]
 func typeForString(string): return TypeMap[string]
@@ -92,6 +94,13 @@ func beltsForType(type):
 func slitsForType(type):        
     
     match type:
+        
+        Type.Tree:
+            return [
+                {"pos": Belt.NEIGHBOR[Belt.W], "dir": Belt.W, "item": Item.Type.SphereBlue},
+                {"pos": Belt.NEIGHBOR[Belt.N], "dir": Belt.N, "item": Item.Type.Molecule},
+                {"pos": Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "item": Item.Type.CylinderGreen},
+            ]        
         Type.Tunnel, Type.Tunnel2, Type.Tunnel3: 
             return [
                 {"pos": Vector2i.ZERO, "dir": Belt.W, "type": MachState.Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
@@ -146,6 +155,10 @@ func slitsForType(type):
 func slotsForType(type):
     
     match type:
+        Type.Tree:
+            return [
+                {"pos": Belt.NEIGHBOR[Belt.E], "dir": Belt.E },
+            ]
         Type.Tunnel: 
             return [
                 {"pos": Belt.NEIGHBOR[Belt.E]*2,                     "dir": Belt.E, "type": MachState.Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
@@ -196,11 +209,32 @@ func slotsForType(type):
                 {"pos": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E},
                 ]
     return []
+
+const BRANCH_Y = 2.75
+const CANOPY_Y = 4.435
     
 func decosForType(type):
     
     match type:
 
+        Type.Tree:
+             return [   
+                {"pos": Vector3(0, 0.5, 0), "type": MachState.Module.Type.CUBE, "color": COLOR.TREE_BRANCH},
+                {"pos": Vector3(0, 1, 0), "type": MachState.Module.Type.TREE_BRANCH, "color": COLOR.TREE_BRANCH},
+                {"pos": Vector3(1, BRANCH_Y, 0), "type": MachState.Module.Type.TREE_BRANCH, "color": COLOR.TREE_BRANCH,
+                    "basis": Basis.from_scale(Vector3(0.5, 0.5, 0.5))},
+                {"pos": Vector3(-1, BRANCH_Y, 0), "type": MachState.Module.Type.TREE_BRANCH, "color": COLOR.TREE_BRANCH,
+                    "basis": Basis.from_scale(Vector3(0.5, 0.5, 0.5))},
+                {"pos": Vector3(0, BRANCH_Y, 1), "type": MachState.Module.Type.TREE_BRANCH, "color": COLOR.TREE_BRANCH,
+                    "basis": Basis.from_scale(Vector3(0.5, 0.5, 0.5))},
+                {"pos": Vector3(0, BRANCH_Y, -1), "type": MachState.Module.Type.TREE_BRANCH, "color": COLOR.TREE_BRANCH,
+                    "basis": Basis.from_scale(Vector3(0.5, 0.5, 0.5))},
+                    
+                {"pos": Vector3(1, CANOPY_Y, 0), "type": MachState.Module.Type.TREE_CANOPY, "color": COLOR.TREE_CANOPY}, 
+                {"pos": Vector3(-1, CANOPY_Y, 0), "type": MachState.Module.Type.TREE_CANOPY, "color": COLOR.TREE_CANOPY}, 
+                {"pos": Vector3(0, CANOPY_Y, 1), "type": MachState.Module.Type.TREE_CANOPY, "color": COLOR.TREE_CANOPY}, 
+                {"pos": Vector3(0, CANOPY_Y, -1), "type": MachState.Module.Type.TREE_CANOPY, "color": COLOR.TREE_CANOPY}, 
+                ]
         Type.Tunnel:        
              return [   
                 {"pos": Vector3(1.16, 0.2, 0), "type": MachState.Module.Type.ARROW, "color": COLOR.TUNNEL,

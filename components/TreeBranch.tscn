@@ -4,4 +4,3 @@
 
 [node name="TreeBranch" type="Node3D" unique_id=1573350988]
 script = ExtResource("1_va3x5")
-width = 1.0

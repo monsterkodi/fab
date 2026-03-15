@@ -5,7 +5,24 @@ extends Node3D
 
 class Module:
     
-    enum Type { BOX, ARROW, CUBE, TORUS, SPHERE, CYLINDER, STORAGE, GEAR, FRAME, CUBE_CROSS, CYLINDER_CROSS, TUNNEL_BOX, CUBECULE, MOLECULE }
+    enum Type { 
+        BOX, 
+        ARROW, 
+        CUBE, 
+        TORUS, 
+        SPHERE, 
+        CYLINDER, 
+        STORAGE, 
+        GEAR, 
+        FRAME, 
+        CUBE_CROSS, 
+        CYLINDER_CROSS, 
+        TUNNEL_BOX, 
+        CUBECULE, 
+        MOLECULE, 
+        TREE_BRANCH,
+        TREE_CANOPY }
+        
     enum Kind { NONE, SLIT, SLOT }
     
     func _init(p : Vector2i): 
@@ -202,6 +219,8 @@ func _ready():
             Module.Type.TUNNEL_BOX:         msh = MachMeshes.tunnelBox(1.0, 1.0, 1.0, 0.2, 0.5)
             Module.Type.CUBECULE:           msh = MachMeshes.cubecule(0.6, 0.2,  0.2, [COLOR.ITEM_BLACK, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE])
             Module.Type.MOLECULE:           msh = MachMeshes.molecule(0.7, 0.07, 0.14, [COLOR.ITEM_BLACK, COLOR.ITEM_RED,   COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
+            Module.Type.TREE_BRANCH:        msh = MachMeshes.treeBranch(0.5, 1, 0.5, 0.5)
+            Module.Type.TREE_CANOPY:        msh = MachMeshes.treeCanopy(1.6, 0.8, 0.6) 
         mm.multimesh.mesh = msh
         assert(mm.multimesh.mesh)
         
@@ -214,6 +233,7 @@ func _ready():
                 Module.Type.TUNNEL_BOX, \
                 Module.Type.BOX:                mm.material_override =  preload("uid://ci4cvsq2gbob7")       
                 Module.Type.ARROW:              mm.material_override =  preload("uid://dc38ipveu0heb")
+                Module.Type.TREE_CANOPY:        mm.material_override =  preload("uid://bw6ugjcrosrkd")
                 _:                              mm.material_override =  preload("uid://bi5n2lthhnyix")
             
         mm.multimesh.transform_format = MultiMesh.TRANSFORM_3D
