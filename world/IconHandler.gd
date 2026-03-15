@@ -24,16 +24,16 @@ func _ready():
     
 func levelStart():
             
-    for type in Item.Types:
-        generateItemIcon(type)
-        await RenderingServer.frame_post_draw
-        await RenderingServer.frame_post_draw
+    #for type in Item.Types:
+        #generateItemIcon(type)
+        #await RenderingServer.frame_post_draw
+        #await RenderingServer.frame_post_draw
             
-    #for type in Mach.Types:
-        #if type:
-            #generateMachineIcon(type)
-            #await RenderingServer.frame_post_draw
-            #await RenderingServer.frame_post_draw
+    for type in Mach.Types:
+        if type:
+            generateMachineIcon(type)
+            await RenderingServer.frame_post_draw
+            await RenderingServer.frame_post_draw
                     
 func get_full_aabb(node: Node3D) -> AABB:
     

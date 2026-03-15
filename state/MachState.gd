@@ -231,6 +231,7 @@ func _ready():
                 Module.Type.STORAGE, \
                 Module.Type.FRAME, \
                 Module.Type.TUNNEL_BOX, \
+                Module.Type.TREE_BRANCH, \
                 Module.Type.BOX:                mm.material_override =  preload("uid://ci4cvsq2gbob7")       
                 Module.Type.ARROW:              mm.material_override =  preload("uid://dc38ipveu0heb")
                 Module.Type.TREE_CANOPY:        mm.material_override =  preload("uid://bw6ugjcrosrkd")

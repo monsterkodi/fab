@@ -97,9 +97,9 @@ func slitsForType(type):
         
         Type.Tree:
             return [
-                {"pos": Belt.NEIGHBOR[Belt.W], "dir": Belt.W, "item": Item.Type.SphereBlue},
-                {"pos": Belt.NEIGHBOR[Belt.N], "dir": Belt.N, "item": Item.Type.Molecule},
-                {"pos": Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "item": Item.Type.CylinderGreen},
+                {"pos": Belt.NEIGHBOR[Belt.W], "dir": Belt.W, "item": Item.Type.SphereBlue   , "color": COLOR.TREE_BUILDING},
+                {"pos": Belt.NEIGHBOR[Belt.N], "dir": Belt.N, "item": Item.Type.Molecule     , "color": COLOR.TREE_BUILDING},
+                {"pos": Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "item": Item.Type.CylinderGreen, "color": COLOR.TREE_BUILDING},
             ]        
         Type.Tunnel, Type.Tunnel2, Type.Tunnel3: 
             return [
@@ -157,7 +157,7 @@ func slotsForType(type):
     match type:
         Type.Tree:
             return [
-                {"pos": Belt.NEIGHBOR[Belt.E], "dir": Belt.E },
+                {"pos": Belt.NEIGHBOR[Belt.E], "dir": Belt.E , "color": COLOR.TREE_BUILDING},
             ]
         Type.Tunnel: 
             return [
