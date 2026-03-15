@@ -24,35 +24,12 @@ enum Type {
 
 var Types     : Array[Type]
 var TypeNames : Array[String]
-var TypeMap   : Dictionary[String,Type]
 
 func _init():
     
     for key in Type:
         Types.push_back(Type[key])
         TypeNames.push_back(key)
-        TypeMap[key] = Type[key]
-
-var Class = [
-    null, 
-    MachineTunnel,
-    MachineTunnel2,
-    MachineTunnel3,
-    MachineRoot,
-    MachineStorage,
-    MachinePrism,
-    MachineMixer,
-    MachineBurner,
-    MachineWhitener,
-    MachineCylinder,
-    MachineSphere,
-    MachineCounter,
-    MachineCubeCross,
-    MachineCylinderCross,
-    MachineCubecule,
-    MachineMolecule,
-    MachineTree,
-]
 
 func costForType(type):
 
@@ -77,7 +54,7 @@ func costForType(type):
             _:                  return {Item.Type.CubeBlack:     1}
 
 func stringForType(type):   return TypeNames[type]
-func typeForString(string): return TypeMap[string]
+func typeForString(string): return Type[string]
     
 func buildingNameForType(type): return "Building" + stringForType(type)
 

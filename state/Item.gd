@@ -37,7 +37,6 @@ enum Shape {
 
 var Types     : Array[Type]
 var TypeNames : Array[String]
-var TypeMap   : Dictionary[String, Type]
 
 var TypeInfo = [                        # energy     # white  # round # sphere
     [Shape.Cube,          COLOR.ITEM_BLACK,      0.1 ,      0.2,    0.1,   0   ],
@@ -67,7 +66,6 @@ func _init():
     for key in Type:
         Types.push_back(Type[key])
         TypeNames.push_back(key)
-        TypeMap[key] = Type[key]
         
 func shapeForType(type):    return TypeInfo[type][0]
 func colorForType(type):    return TypeInfo[type][1]
@@ -75,7 +73,7 @@ func energyForType(type):   return TypeInfo[type][2]
 func whiteningCost(type):   return TypeInfo[type][3]
 func cylinderCost(type):    return TypeInfo[type][4]
 func sphereCost(type):      return TypeInfo[type][5]
-func typeForString(string): return TypeMap[string]
+func typeForString(string): return Type[string]
 func stringForType(type):   return TypeNames[type]
 func iconResForType(type):  return "res://icons/items/" + stringForType(type) + ".png"
 

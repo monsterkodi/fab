@@ -101,10 +101,19 @@ func outSpace(pos : Vector2i, dir : int, advance: float = 0.5) -> float:
             else:
                 return space - Belt.HALFSIZE
     return advance
+    
+func newMachine(type : Mach.Type, pos : Vector2i, orientation : int) -> Machine:
+    
+    var path = "res://machines/Machine" + Mach.stringForType(type) + ".gd"
+    var script = load(path)
+    if script:
+        return script.new(pos, orientation)
+    Log.error("can't find machine!", path)
+    return null
 
 func buyMachineAtPosOfType(pos : Vector2i, type : int, orientation : int = 0):
     
-    var machine = Mach.Class[type].new(pos, orientation)
+    var machine = newMachine(type, pos, orientation)
 
     if occupiedByRoot(machine.getOccupied()):
         machine.free()
@@ -116,7 +125,7 @@ func buyMachineAtPosOfType(pos : Vector2i, type : int, orientation : int = 0):
             
 func addMachineAtPosOfType(pos : Vector2i, type : int, orientation : int = 0):
         
-    var machine = Mach.Class[type].new(pos, orientation)
+    var machine = newMachine(type, pos, orientation)
     
     for opos in machine.getOccupied():
         sellMachineAtPos(opos)

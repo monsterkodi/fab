@@ -19,7 +19,7 @@ func infoTooltip(string : String, button : Button):
     
     clear()
     show()
-    if Mach.TypeMap.has(string) or string == "BuildingBelt":
+    if Mach.Type.has(string) or string == "BuildingBelt":
         #Log.log("machine.tooltip", string)
         var machineCost : Control = MACHINE_COST.instantiate()
         machineCost.setMachineName(string)
@@ -27,7 +27,7 @@ func infoTooltip(string : String, button : Button):
         reset_size()
         global_position.x = button.get_global_rect().get_center().x - get_global_rect().size.x / 2 
         global_position.y = button.get_global_rect().position.y - get_global_rect().size.y
-    elif Item.TypeMap.has(string):
+    elif Item.Type.has(string):
         global_position = button.get_global_rect().end
     #else:
         #Log.log("misc.tooltip", string)
