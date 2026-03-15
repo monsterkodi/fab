@@ -34,22 +34,21 @@ class Building:
             
             if mod.has("basis"):   module.basis = mod.basis
             elif mod.has("scale"): module.basis = Basis.from_scale(Vector3(mod.scale, mod.scale, mod.scale))
-            elif isSlot:           module.basis = Basis.IDENTITY.rotated(Vector3.UP, [3, 0, 1, 2][mod.dir] * deg_to_rad(-90))
+            elif isSlot:           module.basis = Basis.IDENTITY.rotated(Vector3.UP, deg_to_rad(-90*mod.dir))
             else:                  module.basis = Basis.IDENTITY
             
             modules.push_back(module)
                         
             if isSlot and module.type != Module.Type.TUNNEL_BOX:
-                var arrow = Module.Inst.new(pos)
+                var arrow   = Module.Inst.new(pos)
                 arrow.color = COLOR.ARROW
                 arrow.type  = Module.Type.ARROW
-                arrow.kind  = Module.Kind.DECO
+                arrow.kind  = Module.Kind.ARROW
                 if module.kind == Module.Kind.SLIT:
-                    arrow.pos   = (module.pos + Vector3(-0.2, 0.401, 0.0)).rotated(Vector3.UP, [2, 3, 0, 1][mod.dir] * deg_to_rad(-90))
-                    #arrow.basis = module.basis.rotated(Vector3.UP, deg_to_rad(180))
-                    arrow.basis = module.basis
+                    arrow.pos   = module.pos + Vector3(0.2, 0.401, 0.0).rotated(Vector3.UP, deg_to_rad(-90*mod.dir))
+                    arrow.basis = Basis.IDENTITY.rotated(Vector3.UP, deg_to_rad([180, 90, 0, -90][mod.dir]))
                 else:
-                    arrow.pos   = module.pos + Vector3(0.0, 0.401, 0.5)                    
+                    arrow.pos   = module.pos + Vector3(0.5, 0.401, 0.0).rotated(Vector3.UP, deg_to_rad(-90*mod.dir))                    
                     arrow.basis = module.basis
                 modules.push_back(arrow)
         
@@ -67,11 +66,6 @@ class Building:
             module.bpos = pos
         update()
                 
-    func rotate():
-        
-        basis = basis.rotated(Vector3.UP, deg_to_rad(-90))
-        update()
-            
 class ModMap:
     
     var map : Dictionary[Vector2i, Array] # building pos to module indices
@@ -166,8 +160,3 @@ func setBuildingPos(building, pos):
     building.setPos(pos)
     add(building)
     
-func rotateBuilding(building):
-    
-    #del(building)
-    building.rotate()
-    add(building)

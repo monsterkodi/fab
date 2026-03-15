@@ -25,51 +25,69 @@ func box(st : SurfaceTool, w : float, h: float, d: float):
     quad3(st, Vector3(-w, -h,  d),  Vector3(-w, -h, -d), Vector3(-w,  h, -d)) # left
     quad3(st, Vector3( w, -h, -d),  Vector3(-w, -h, -d), Vector3(-w, -h,  d)) # bottom  
     quad3(st, Vector3(-w,  h,  d),  Vector3( w,  h,  d), Vector3( w, -h,  d)) # front
+    
+func quadHole(st : SurfaceTool, p1 : Vector3, p2 : Vector3, p3 : Vector3, thickness : float):
+
+    var p4 = p3 + (p1-p2)
+    
+    var h1 = p1 + (p2-p1).normalized() * thickness + (p4-p1).normalized() * thickness
+    var h2 = p2 + (p3-p2).normalized() * thickness + (p1-p2).normalized() * thickness
+    var h3 = p3 + (p4-p3).normalized() * thickness + (p2-p3).normalized() * thickness
+    var h4 = p4 + (p1-p4).normalized() * thickness + (p3-p4).normalized() * thickness
+    
+    quad(st, p1, p2, h2, h1) 
+    quad(st, p4, p1, h1, h4) 
+    quad(st, p2, p3, h3, h2) 
+    quad(st, p3, p4, h4, h3) 
+
+func arrowDir(st : SurfaceTool, right : Vector3, up: Vector3, thickness : float):
+    
+    var width = right.length()
+    var sh    = width * thickness
+    
+    var dir = right.normalized().cross(up.normalized())
+
+    var cf = up       
+    var cb = up - dir * 2 * width * thickness
+    var rf = up + right - dir * width 
+    var lf = up - right - dir * width 
+    var rb = rf - right.normalized() * sh - dir * sh 
+    var lb = lf + right.normalized() * sh - dir * sh 
+    
+    quad(st, cf, cb, rb, rf)
+    quad(st, cb, cf, lf, lb)
+    
+    var bcf = cf - up * 2
+    var bcb = cb - up * 2
+    var brf = rf - up * 2
+    var blf = lf - up * 2
+    var brb = rb - up * 2
+    var blb = lb - up * 2
+    
+    quad3(st, bcf, cf, rf)
+    quad3(st, cf, bcf, blf)
+
+    quad3(st, rf, rb, brb)
+    quad3(st, brb, rb, cb)
+
+    quad3(st, lf, blf, blb)
+    quad3(st, lb, blb, bcb)
+    
+    quad(st, brb, bcb, bcf, brf)
+    quad(st, blf, bcf, bcb, blb)
 
 func arrow(width, height, thickness):
 
     var st = SurfaceTool.new()
     
     st.begin(Mesh.PRIMITIVE_TRIANGLES)
+    st.set_smooth_group(-1) # flat shading
     
     var w  = width/2
     var h  = height/2
-    
-    st.set_smooth_group(-1) # flat shading
-    
-    var s  = width * thickness
-    var sh = s/2
-    var cf = Vector3( 0, h,  0)
-    var cb = Vector3( 0, h, -s)
-    var rf = Vector3( w, h, -w)
-    var lf = Vector3(-w, h, -w)
-    var rb = Vector3( w-sh, h, -w-sh)
-    var lb = Vector3(-w+sh, h, -w-sh)
-    
-    quad(st, cf, cb, rb, rf)
-    quad(st, cb, cf, lf, lb)
-    
-    if height > 0:
-        
-        var bcf = Vector3( 0,    -h,  0)
-        var bcb = Vector3( 0,    -h, -s)
-        var brf = Vector3( w,    -h, -w)
-        var blf = Vector3(-w,    -h, -w)
-        var brb = Vector3( w-sh, -h, -w-sh)
-        var blb = Vector3(-w+sh, -h, -w-sh)
-        
-        quad3(st, bcf, cf, rf)
-        quad3(st, cf, bcf, blf)
 
-        quad3(st, rf, rb, brb)
-        quad3(st, brb, rb, cb)
-
-        quad3(st, lf, blf, blb)
-        quad3(st, lb, blb, bcb)
-        
-        quad(st, brb, bcb, bcf, brf)
-        quad(st, blf, bcf, bcb, blb)
-        
+    arrowDir(st, Vector3(0,0,-1) * w, Vector3.UP * h, thickness)
+            
     st.index()
     st.generate_normals()
     
@@ -103,25 +121,25 @@ func tunnelBox(width, height, depth, thickness, chamfer):
         
         mt = thickness * chamfer
 
-        quad3(st, Vector3( cw,  mt, -cd), Vector3(-cw,  mt, -cd), Vector3(-cw,  ml, -d)) # rear top
-        quad3(st, Vector3( cw, -ch, -d), Vector3( w, -ch, -cd), Vector3( w,  ml, -cd)) # rear right
+        quad3(st, Vector3( cw,  h, -cd), Vector3(-cw,  mt, -cd), Vector3(-cw,  ml, -d)) # rear top
+        quad3(st, Vector3( cw, -ch, -d), Vector3( w, -ch, -cd), Vector3( w,  ch, -cd)) # rear right
         quad3(st, Vector3(-cw,  ml, -d), Vector3(-w,  ml, -cd), Vector3(-w, -ch, -cd)) # rear left
         quad3(st, Vector3(-cw, -h, -cd), Vector3( cw, -h, -cd), Vector3( cw, -ch, -d)) # rear bottom
 
-        quad3(st, Vector3(-cw,  ch,  d), Vector3(-cw,  h,  cd), Vector3( cw,  h,  cd)) # front top
+        quad3(st, Vector3(-cw,  ml,  d), Vector3(-cw,  mt,  cd), Vector3( cw,  h,  cd)) # front top
         quad3(st, Vector3( w,  ch,  cd), Vector3( w, -ch,  cd), Vector3( cw, -ch,  d)) # front right
-        quad3(st, Vector3(-w, -ch,  cd), Vector3(-w,  ch,  cd), Vector3(-cw,  ch,  d)) # front left
+        quad3(st, Vector3(-w, -ch,  cd), Vector3(-w,  ml,  cd), Vector3(-cw,  ml,  d)) # front left
         quad3(st, Vector3( cw, -ch,  d), Vector3( cw, -h,  cd), Vector3(-cw, -h,  cd)) # front bottom
         
-        quad3(st, Vector3(-cw,  h,  cd), Vector3(-w,  ch, cd), Vector3( -w,  ml, -cd)) # top left
-        quad3(st, Vector3( w,  ml, -cd), Vector3( w,  ch, cd), Vector3( cw,   h,  cd)) # top right
+        quad3(st, Vector3(-cw, mt,  cd), Vector3(-w,  ml, cd), Vector3( -w,  ml, -cd)) # top left
+        quad3(st, Vector3( w,  ch, -cd), Vector3( w,  ch, cd), Vector3( cw,   h,  cd)) # top right
         quad3(st, Vector3(-w, -ch, -cd), Vector3(-w, -ch, cd), Vector3(-cw,  -h,  cd)) # bottom left
         quad3(st, Vector3( cw, -h,  cd), Vector3( w, -ch, cd), Vector3(  w, -ch, -cd)) # bottom right
         
-        tri(st, Vector3(-cw,  ch,  d), Vector3(-w,  ch,  cd), Vector3(-cw,  h,  cd)) # top left front
+        tri(st, Vector3(-cw,  ml,  d), Vector3(-w,  ml,  cd), Vector3(-cw,  mt,  cd)) # top left front
         tri(st, Vector3( cw,  ch,  d), Vector3(cw,   h,  cd), Vector3( w,  ch,  cd)) # top right front
         tri(st, Vector3(-cw,  mt, -cd), Vector3(-w,  ml, -cd), Vector3(-cw,  ml, -d)) # top left  rear
-        tri(st, Vector3( w,  ml, -cd), Vector3(cw,   mt, -cd), Vector3( cw,  ml, -d)) # top right rear
+        tri(st, Vector3( w,  ch, -cd), Vector3(cw,   h, -cd), Vector3( cw,  ch, -d)) # top right rear
 
         tri(st, Vector3(-cw,  -h, cd), Vector3(-w, -ch,  cd), Vector3(-cw, -ch,  d)) # bottom left front
         tri(st, Vector3( w,  -ch, cd), Vector3(cw,  -h,  cd), Vector3( cw, -ch,  d)) # bottom right front
@@ -129,30 +147,27 @@ func tunnelBox(width, height, depth, thickness, chamfer):
         tri(st, Vector3( cw, -ch, -d), Vector3(cw,  -h, -cd), Vector3( w,  -ch,-cd)) # bottom right rear
     
     # outer box
-    quad3(st, Vector3(-cw,  mh, -d),  Vector3(-cw, -ch, -d), Vector3( cw, -ch, -d)) # rear 
-    quad3(st, Vector3(-cw,  h,  cd),  Vector3(-cw,  mt, -cd), Vector3( cw,  mt, -cd)) # top 
-    quad (st, Vector3( w,  ml, -cd),  Vector3( w, -ch, -cd), Vector3( w, -ch,  cd), Vector3( w,  ch,  cd)) # right 
-    quad (st, Vector3(-w, -ch,  cd),  Vector3(-w, -ch, -cd), Vector3(-w,  ml, -cd), Vector3(-w,  ch,  cd)) # left
+    quad (st, Vector3( cw,  ch, -d), Vector3( -cw, ml, -d), Vector3( -cw, -ch, -d), Vector3( cw, -ch, -d)) # rear
+    quad (st, Vector3( cw,  ch, d),  Vector3( cw, -ch, d), Vector3( -cw, -ch, d), Vector3( -cw, ml, d)) # front
+    quad3(st, Vector3(-cw,  mt,  cd),  Vector3(-cw,  mt, -cd), Vector3( cw,  h, -cd)) # top 
+    quad3(st, Vector3(-w, -ch,  cd),  Vector3(-w, -ch, -cd), Vector3(-w,  ml, -cd)) # left
     quad3(st, Vector3( cw, -h, -cd),  Vector3(-cw, -h, -cd), Vector3(-cw, -h,  cd)) # bottom  
 
-    # outer front frame
-    quad(st, Vector3(-cw, ch, d), Vector3( cw,  ch, d), Vector3( iw,  ih, d), Vector3(-iw,  ih, d)) # top
-    quad(st, Vector3(-cw, ch, d), Vector3(-iw,  ih, d), Vector3(-iw, -ih, d), Vector3(-cw, -ch, d)) # left
-    quad(st, Vector3( cw, ch, d), Vector3( cw, -ch, d), Vector3( iw, -ih, d), Vector3( iw,  ih, d)) # right
-    quad(st, Vector3(-cw,-ch, d), Vector3(-iw, -ih, d), Vector3( iw, -ih, d), Vector3( cw, -ch, d)) # bottom
+    # outer right frame
+    quadHole(st, Vector3( w,  ch, cd),  Vector3( w, ch, -cd), Vector3( w, -ch, -cd), thickness * (1.0 - chamfer))
 
     # inner box
     
-    quad3(st, Vector3( iw, -ih, -id),  Vector3(-iw, -ih, -id), Vector3(-iw,  mh, -id)) # rear 
-    quad3(st, Vector3( iw,  ml, -id),  Vector3(-iw,  ml, -id), Vector3(-iw,  ih,   d)) # top 
-    quad (st, Vector3( iw, -ih,   d),  Vector3( iw, -ih, -id), Vector3( iw,  ml, -id), Vector3(iw, ih, d)) # right 
-    quad (st, Vector3(-iw,  ml, -id),  Vector3(-iw, -ih, -id), Vector3(-iw, -ih,   d), Vector3(-iw, ih, d)) # left
-    quad3(st, Vector3(-iw, -ih,   d),  Vector3(-iw, -ih, -id), Vector3( iw, -ih, -id)) # bottom  
+    quad (st, Vector3(  w, -ih, -id),  Vector3(-iw, -ih, -id), Vector3(-iw,  ml, -id), Vector3(w,  ih, -id)) # rear 
+    quad (st, Vector3(  w, -ih,  id),  Vector3(  w,  ih,  id), Vector3(-iw,  ml,  id), Vector3(-iw, -ih, id)) # front
+    quad3(st, Vector3(  w,  ih, -id),  Vector3(-iw,  ml, -id), Vector3(-iw,  ml,  id)) # top 
+    quad3(st, Vector3(-iw,  ml, -id),  Vector3(-iw, -ih, -id), Vector3(-iw, -ih,  id)) # left
+    quad3(st, Vector3(-iw, -ih,  id),  Vector3(-iw, -ih, -id), Vector3(  w, -ih, -id)) # bottom  
         
     st.index()
     st.generate_normals()
     
-    return st.commit()       
+    return st.commit()   
     
 func regal(width, height, depth, thickness, chamfer):
 
@@ -203,29 +218,27 @@ func regal(width, height, depth, thickness, chamfer):
     
     # outer box
     quad3(st, Vector3(-cw,  ch, -d),  Vector3(-cw, -ch, -d), Vector3( cw, -ch, -d)) # rear 
+    quad3(st, Vector3(-cw,  ch,  d),  Vector3( cw,  ch,  d), Vector3( cw, -ch,  d)) # front
     quad3(st, Vector3(-cw,  h,  cd),  Vector3(-cw,  h, -cd), Vector3( cw,  h, -cd)) # top 
-    quad3(st, Vector3( w,  ch, -cd),  Vector3( w, -ch, -cd), Vector3( w, -ch,  cd)) # right 
     quad3(st, Vector3(-w, -ch,  cd),  Vector3(-w, -ch, -cd), Vector3(-w,  ch, -cd)) # left
     quad3(st, Vector3( cw, -h, -cd),  Vector3(-cw, -h, -cd), Vector3(-cw, -h,  cd)) # bottom  
 
-    # outer front frame
-    quad(st, Vector3(-cw, ch, d), Vector3( cw,  ch, d), Vector3( iw,  ih, d), Vector3(-iw,  ih, d)) # top
-    quad(st, Vector3(-cw, ch, d), Vector3(-iw,  ih, d), Vector3(-iw, -ih, d), Vector3(-cw, -ch, d)) # left
-    quad(st, Vector3( cw, ch, d), Vector3( cw, -ch, d), Vector3( iw, -ih, d), Vector3( iw,  ih, d)) # right
-    quad(st, Vector3(-cw,-ch, d), Vector3(-iw, -ih, d), Vector3( iw, -ih, d), Vector3( cw, -ch, d)) # bottom
+    # outer right frame
+    
+    quadHole(st, Vector3( w,  ch, cd),  Vector3( w, ch, -cd), Vector3( w, -ch, -cd), thickness * (1.0 - chamfer))
 
     # inner box
     
-    quad3(st, Vector3( iw, -ih, -id),  Vector3(-iw, -ih, -id), Vector3(-iw,  ih, -id)) # rear 
-    quad3(st, Vector3( iw,  ih, -id),  Vector3(-iw,  ih, -id), Vector3(-iw,  ih,   d)) # top 
-    quad3(st, Vector3( iw, -ih,   d),  Vector3( iw, -ih, -id), Vector3( iw,  ih, -id)) # right 
-    quad3(st, Vector3(-iw,  ih, -id),  Vector3(-iw, -ih, -id), Vector3(-iw, -ih,   d)) # left
-    quad3(st, Vector3(-iw, -ih,   d),  Vector3(-iw, -ih, -id), Vector3( iw, -ih, -id)) # bottom  
+    quad3(st, Vector3(  w, -ih, -id),  Vector3(-iw, -ih, -id), Vector3(-iw,  ih, -id)) # rear 
+    quad3(st, Vector3(  w, -ih,  id),  Vector3(  w,  ih,  id), Vector3(-iw,  ih,  id)) # front
+    quad3(st, Vector3(  w,  ih, -id),  Vector3(-iw,  ih, -id), Vector3(-iw,  ih,  id)) # top 
+    quad3(st, Vector3(-iw,  ih, -id),  Vector3(-iw, -ih, -id), Vector3(-iw, -ih,  id)) # left
+    quad3(st, Vector3(-iw, -ih,  id),  Vector3(-iw, -ih, -id), Vector3(  w, -ih, -id)) # bottom  
         
     st.index()
     st.generate_normals()
     
-    return st.commit()    
+    return st.commit()   
     
 func frame(width, height, depth, thickness, chamfer):
 

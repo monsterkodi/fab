@@ -26,6 +26,8 @@ var ROT_Y   = Basis.from_euler(Vector3(0, deg_to_rad(90), 0))
 var ROT_Y45 = Basis.from_euler(Vector3(0, deg_to_rad(45), 0))
 var ROT_TIP = Basis.from_euler(Vector3(deg_to_rad(35.5), 0, deg_to_rad(45)))
 var SCL_ITM = Basis.from_scale(Vector3(0.4, 0.2, 0.4))
+const BRANCH_Y = 2.75
+const CANOPY_Y = 4.435
 
 var Def : Dictionary[Mach.Type,Dictionary] = {
     Type.Belt:          { 
@@ -38,7 +40,7 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
         "mods": [
                 {"in": Vector2i.ZERO,            "dir": Belt.W, "type": Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
                 {"out": Belt.NEIGHBOR[Belt.E]*2, "dir": Belt.E, "type": Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
-                {"pos": Vector3(1.16, 0.2, 0),                  "type": Module.Type.ARROW,      "color": COLOR.TUNNEL, "basis": ROT_Y },
+                {"pos": Vector3(1.16, 0.2, 0),                  "type": Module.Type.ARROW,      "color": COLOR.TUNNEL},
                 ],
         },
     Type.Tunnel2:       {
@@ -46,8 +48,8 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
         "mods": [
                 {"in": Vector2i.ZERO,            "dir": Belt.W, "type": Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
                 {"out": Belt.NEIGHBOR[Belt.E]*3, "dir": Belt.E, "type": Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
-                {"pos": Vector3(1.16, 0.2, 0),                  "type": Module.Type.ARROW,      "color": COLOR.TUNNEL, "basis": ROT_Y },
-                {"pos": Vector3(2.16, 0.2, 0),                  "type": Module.Type.ARROW,      "color": COLOR.TUNNEL, "basis": ROT_Y },
+                {"pos": Vector3(1.16, 0.2, 0),                  "type": Module.Type.ARROW,      "color": COLOR.TUNNEL},
+                {"pos": Vector3(2.16, 0.2, 0),                  "type": Module.Type.ARROW,      "color": COLOR.TUNNEL},
                 ],
         },
     Type.Tunnel3:       {
@@ -55,9 +57,9 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
         "mods": [
                 {"in": Vector2i.ZERO,            "dir": Belt.W, "type": Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
                 {"out": Belt.NEIGHBOR[Belt.E]*4, "dir": Belt.E, "type": Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
-                {"pos": Vector3(1.16, 0.2, 0),                  "type": Module.Type.ARROW,      "color": COLOR.TUNNEL, "basis": ROT_Y },
-                {"pos": Vector3(2.16, 0.2, 0),                  "type": Module.Type.ARROW,      "color": COLOR.TUNNEL, "basis": ROT_Y },
-                {"pos": Vector3(3.16, 0.2, 0),                  "type": Module.Type.ARROW,      "color": COLOR.TUNNEL, "basis": ROT_Y },
+                {"pos": Vector3(1.16, 0.2, 0),                  "type": Module.Type.ARROW,      "color": COLOR.TUNNEL},
+                {"pos": Vector3(2.16, 0.2, 0),                  "type": Module.Type.ARROW,      "color": COLOR.TUNNEL},
+                {"pos": Vector3(3.16, 0.2, 0),                  "type": Module.Type.ARROW,      "color": COLOR.TUNNEL},
                 ],
         },
     Type.Root:          {
@@ -150,7 +152,7 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
         "cost": {Item.Type.CubeBlack:     10},
         "mods": [
                 {"pos": Vector3(0.0, 0.5, 0), "type": Module.Type.FRAME, "color": COLOR.COUNTER_BOX},
-                {"pos": Vector3(0.5, 0.9, 0), "type": Module.Type.ARROW, "color": COLOR.COUNTER_BOX, "basis": ROT_Y },
+                {"pos": Vector3(0.5, 0.9, 0), "type": Module.Type.ARROW, "color": COLOR.COUNTER_BOX },
                 #{"belt": Vector2i.ZERO,       "type": Belt.I_W | Belt.O_E },
                 ],
         },
@@ -256,7 +258,6 @@ func buildingNameForType(type): return "Building" + stringForType(type)
 func beltsForType(type):        
     
     match type:
-        
         Type.Counter:
             return [
                 {"pos": Vector2i.ZERO, "type": Belt.I_W | Belt.O_E}
@@ -265,35 +266,31 @@ func beltsForType(type):
 
 func slitsForType(type):        
     
-    var slits = []
-    var mods = Def[type].mods
-    for mod in mods:
+    var res = []
+    for mod in Def[type].mods:
         if mod.has("in"):
-            mod["pos"] = mod["in"]
-            slits.append(mod)
-    return slits
+            var dup = mod.duplicate()
+            dup["pos"] = dup["in"]
+            res.append(dup)
+    return res
     
 func slotsForType(type):
 
-    var slits = []
-    var mods = Def[type].mods
-    for mod in mods:
-        if mod.has("out"):
-            mod["pos"] = mod["out"]
-            slits.append(mod)
-    return slits
-    
-const BRANCH_Y = 2.75
-const CANOPY_Y = 4.435
-    
+    var res = []
+    for mod in Def[type].mods:
+        if mod.has("out"):            
+            var dup = mod.duplicate()
+            dup["pos"] = dup["out"]
+            res.append(dup)
+    return res
+        
 func decosForType(type):
 
-    var slits = []
-    var mods = Def[type].mods
-    for mod in mods:
+    var res = []
+    for mod in Def[type].mods:
         if mod.has("pos") and not mod.has("in") and not mod.has("out"):
-            slits.append(mod)
-    return slits
+            res.append(mod.duplicate())
+    return res
     
 func boxTrans(slit, p : Vector3, basis : Basis) -> Transform3D:
 

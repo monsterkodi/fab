@@ -2,9 +2,9 @@
 class_name TunnelBox
 extends Node3D
 
-@export_range(0.0, 1.0, 0.001) var thickness = 0.2:
+@export_range(0.0, 0.5, 0.001) var thickness = 0.2:
     set(v): thickness = v; generate()
-@export_range(0.0, 1.0, 0.001) var chamfer = 0.05:
+@export_range(0.0, 1.0, 0.001) var chamfer = 0.5:
     set(v): chamfer = v; generate()
     
 @export var material : Material:

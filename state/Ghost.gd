@@ -7,8 +7,8 @@ var color : Color
 func _ready():
 
     assert(type)
-    slits = Mach.slitsForType(type)
-    slots = Mach.slotsForType(type)
+    #slits = Mach.slitsForType(type)
+    #slots = Mach.slotsForType(type)
     
     if proxy:
         proxy.hide()

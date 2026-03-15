@@ -16,22 +16,22 @@ script = ExtResource("1_vpfin")
 [node name="Corners" type="Node3D" parent="." unique_id=1672911126]
 
 [node name="CornerNE" parent="Corners" unique_id=1573350988 instance=ExtResource("2_ebfaj")]
-transform = Transform3D(-0.70710665, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, -0.70710665, 0.5, 0.15, -0.5)
+transform = Transform3D(0.7071067, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, 0.7071067, 0.5, 0.15, -0.5)
 height = 0.2
 width = 0.6
 
 [node name="CornerSE" parent="Corners" unique_id=551695498 instance=ExtResource("2_ebfaj")]
-transform = Transform3D(0.7071068, 0, 0.7071066, 0, 1, 0, -0.7071066, 0, 0.7071068, 0.5, 0.15, 0.5)
+transform = Transform3D(0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, 0.7071067, 0.5, 0.15, 0.5)
 height = 0.2
 width = 0.6
 
 [node name="CornerSW" parent="Corners" unique_id=1594268281 instance=ExtResource("2_ebfaj")]
-transform = Transform3D(0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, 0.7071067, -0.5, 0.15, 0.5)
+transform = Transform3D(-0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, -0.7071067, -0.5, 0.15, 0.5)
 height = 0.2
 width = 0.6
 
 [node name="CornerNW" parent="Corners" unique_id=948340220 instance=ExtResource("2_ebfaj")]
-transform = Transform3D(-0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, -0.7071067, -0.5, 0.15, -0.5)
+transform = Transform3D(-0.7071067, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071067, -0.5, 0.15, -0.5)
 height = 0.2
 width = 0.6
 

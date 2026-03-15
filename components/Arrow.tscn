@@ -4,3 +4,5 @@
 
 [node name="Arrow" type="Node3D" unique_id=1573350988]
 script = ExtResource("1_8435s")
+width = 1.4000000000000001
+thickness = 0.385

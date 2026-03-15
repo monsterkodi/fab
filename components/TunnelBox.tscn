@@ -4,4 +4,3 @@
 
 [node name="TunnelBox" type="Node3D" unique_id=1573350988]
 script = ExtResource("1_odr1o")
-chamfer = 0.777

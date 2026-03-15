@@ -20,7 +20,7 @@ enum Type {
     TREE_CANOPY 
     }
     
-enum Kind { NONE, SLIT, SLOT, DECO }
+enum Kind { NONE, SLIT, SLOT, ARROW, DECO }
 
 class Inst:
     

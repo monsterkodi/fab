@@ -17,11 +17,12 @@ const SLOT_ALERT_TIME = 2.0
 func _init(t, p, o):
     
     type  = t
+    pos   = p
+    
     belts = Mach.beltsForType(type)
     slots = Mach.slotsForType(type)
     slits = Mach.slitsForType(type)
     
-    pos = p
     setOrientation(o)
 
 func _ready():
@@ -93,7 +94,9 @@ func rotateCW():
         slit.pos = Belt.rotatePos(slit.pos)
         slit.dir = Belt.rotateDir(slit.dir)
         
-    if bdg: mst.rotateBuilding(bdg)
+    if bdg: 
+        mst.del(bdg)
+        createBuilding()
 
 func rotateAround(center: Vector2i):
 
@@ -120,10 +123,10 @@ func setOrientation(o : int):
     for slit in slits:
         slit.pos = Belt.orientatePos(o, slit.pos)
         slit.dir = Belt.orientateDir(o, slit.dir)
-        
+  
     if bdg:
-        for i in range(o):
-            mst.rotateBuilding(bdg)
+        mst.del(bdg)
+        createBuilding()
             
 func hasSlotArrows():
     
