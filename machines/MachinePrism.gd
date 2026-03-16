@@ -7,6 +7,10 @@ func _init(p, o):
     
     super._init(Mach.Type.Prism, p, o)
     
+func saveData(): return super.saveData() + [canProduce]
+func loadData(d): 
+    canProduce = d[4]
+    
 func consumeItemAtSlit(item, slit):
     
     if canProduce: return false

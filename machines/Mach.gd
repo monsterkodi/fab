@@ -16,16 +16,13 @@ enum Type {
     Sphere,
     Counter,
     CubeCross,
-    CylinderCross,
+    TubeCross,
     Cubecule,
     Molecule,
     Tree,
 }
 
-var ROT_Y   = Basis.from_euler(Vector3(0, deg_to_rad(90), 0))
-var ROT_Y45 = Basis.from_euler(Vector3(0, deg_to_rad(45), 0))
 var ROT_TIP = Basis.from_euler(Vector3(deg_to_rad(35.5), 0, deg_to_rad(45)))
-var SCL_ITM = Basis.from_scale(Vector3(0.4, 0.2, 0.4))
 const BRANCH_Y = 2.75
 const CANOPY_Y = 4.435
 
@@ -63,7 +60,7 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
                 ],
         },
     Type.Root:          {
-        "cost": {Item.Type.CubeCross:   1000, Item.Type.CylinderCross: 1000},
+        "cost": {Item.Type.CubeCross:   1000, Item.Type.TubeCross: 1000},
         "mods": [
                 {"out": Belt.NEIGHBOR[Belt.E], "dir": Belt.E},
                 {"out": Belt.NEIGHBOR[Belt.S], "dir": Belt.S},
@@ -87,10 +84,6 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
                 {"out": Belt.NEIGHBOR[Belt.E]+Belt.NEIGHBOR[Belt.N], "dir": Belt.E, "item": Item.Type.CubeRed},
                 {"out": Belt.NEIGHBOR[Belt.E],                       "dir": Belt.E, "item": Item.Type.CubeGreen},
                 {"out": Belt.NEIGHBOR[Belt.E]+Belt.NEIGHBOR[Belt.S], "dir": Belt.E, "item": Item.Type.CubeBlue},
-                {"pos": Vector3(0, 1, 0),  "type": Module.Type.CUBE, "color": COLOR.ITEM_BLACK, "basis": SCL_ITM },
-                {"pos": Vector3(1, 1, -1), "type": Module.Type.CUBE, "color": COLOR.ITEM_RED,   "basis": SCL_ITM },
-                {"pos": Vector3(1, 1,  0), "type": Module.Type.CUBE, "color": COLOR.ITEM_GREEN, "basis": SCL_ITM },
-                {"pos": Vector3(1, 1,  1), "type": Module.Type.CUBE, "color": COLOR.ITEM_BLUE,  "basis": SCL_ITM },
                 ],
         },
     Type.Burner:        {
@@ -98,7 +91,6 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
         "mods": [
                 {"in": Vector2i.ZERO,          "dir": Belt.W},
                 {"out": Belt.NEIGHBOR[Belt.E], "dir": Belt.E, "item": Item.Type.Energy},
-                {"pos": Vector3(1, 1, 0), "type": Module.Type.TORUS, "color": COLOR.ENERGY, "scale": 0.8 },
                 {"pos": Vector3(0, 1, 0), "type": Module.Type.GEAR,  "color": COLOR.ENERGY},
                 ],
         },
@@ -109,10 +101,6 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
                 {"in":  Vector2i.ZERO,         "dir": Belt.W, "item": Item.Type.CubeGreen},
                 {"in":  Belt.NEIGHBOR[Belt.S], "dir": Belt.W, "item": Item.Type.CubeBlue},
                 {"out": Belt.NEIGHBOR[Belt.E], "dir": Belt.E, "item": Item.Type.CubeWhite},
-                {"pos": Vector3(1, 1, 0),  "type": Module.Type.CUBE, "color": COLOR.ITEM_WHITE, "basis": SCL_ITM },
-                {"pos": Vector3(0, 1, -1), "type": Module.Type.CUBE, "color": COLOR.ITEM_RED,   "basis": SCL_ITM },
-                {"pos": Vector3(0, 1,  0), "type": Module.Type.CUBE, "color": COLOR.ITEM_GREEN, "basis": SCL_ITM },
-                {"pos": Vector3(0, 1,  1), "type": Module.Type.CUBE, "color": COLOR.ITEM_BLUE,  "basis": SCL_ITM },
                 ],
         },
     Type.Whitener:      {
@@ -121,9 +109,6 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
                 {"in":  Vector2i.ZERO,         "dir": Belt.W, "shape": Item.Shape.Cube},
                 {"in":  Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "item":  Item.Type.Energy},
                 {"out": Belt.NEIGHBOR[Belt.E], "dir": Belt.E, "item":  Item.Type.CubeWhite},
-                {"pos": Vector3(0, 1, 0),     "type": Module.Type.CUBE,  "color": COLOR.BUILDING,   "basis": SCL_ITM },
-                {"pos": Vector3(1, 1, 0),     "type": Module.Type.CUBE,  "color": COLOR.ITEM_WHITE, "basis": SCL_ITM },
-                {"pos": Vector3(0, 1.025, 1), "type": Module.Type.TORUS, "color": COLOR.ENERGY,     "scale": 0.4 },
                 ],
         },
     Type.Cylinder:      {
@@ -132,9 +117,6 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
                 {"in":  Vector2i.ZERO,         "dir": Belt.W, "shape": Item.Shape.Cube},
                 {"in":  Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "item":  Item.Type.Energy},
                 {"out": Belt.NEIGHBOR[Belt.E], "dir": Belt.E},
-                {"pos": Vector3(0, 1, 0),     "type": Module.Type.CUBE,     "color": COLOR.BUILDING, "basis": SCL_ITM },
-                {"pos": Vector3(1, 1, 0),     "type": Module.Type.CYLINDER, "color": COLOR.BUILDING, "basis": SCL_ITM },
-                {"pos": Vector3(0, 1.025, 1), "type": Module.Type.TORUS,    "color": COLOR.ENERGY,   "scale": 0.4 },
                 ],
         },
     Type.Sphere:        {
@@ -143,9 +125,6 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
                 {"in":  Vector2i.ZERO,         "dir": Belt.W, "shape": Item.Shape.Cylinder},
                 {"in":  Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "item":  Item.Type.Energy},
                 {"out": Belt.NEIGHBOR[Belt.E], "dir": Belt.E},
-                {"pos": Vector3(0, 1, 0),     "type": Module.Type.CYLINDER, "color": COLOR.BUILDING, "basis": SCL_ITM },
-                {"pos": Vector3(1, 1, 0),     "type": Module.Type.SPHERE,   "color": COLOR.BUILDING, "basis": SCL_ITM },
-                {"pos": Vector3(0, 1.025, 1), "type": Module.Type.TORUS,    "color": COLOR.ENERGY,   "scale": 0.4 },
                 ],
         },
     Type.Counter:       {
@@ -158,71 +137,65 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
         },
     Type.CubeCross:     {
         "cost": {Item.Type.CubeRed:       30, Item.Type.CubeGreen:     30, Item.Type.CubeBlue:     30},
+        "recipe": { "in":   [[Item.Type.CubeRed,   2], [Item.Type.CubeGreen, 2], [Item.Type.CubeBlue, 2]], 
+                    "out":  [[Item.Type.CubeCross, 1]], "time": 2.0},
         "mods": [
+                {"in":  Belt.NEIGHBOR[Belt.W] + Belt.NEIGHBOR[Belt.N], "dir": Belt.W},
                 {"in":  Belt.NEIGHBOR[Belt.W],                         "dir": Belt.W},
                 {"in":  Belt.NEIGHBOR[Belt.W] + Belt.NEIGHBOR[Belt.S], "dir": Belt.W},
-                {"in":  Belt.NEIGHBOR[Belt.W] + Belt.NEIGHBOR[Belt.N], "dir": Belt.W},
                 {"out": Belt.NEIGHBOR[Belt.E],                         "dir": Belt.E},
-                {"pos": Vector3( 0,0.5,0), "type": Module.Type.BOX,     "color": COLOR.BUILDING,   "basis": ROT_Y },
+                {"pos": Vector3( 0,0.5,0), "type": Module.Type.BOX,     "color": COLOR.BUILDING },
                 {"pos": Vector3( 0, 1, 0), "type": Module.Type.GEAR,    "color": COLOR.BUILDING},
-                {"pos": Vector3( 1, 1, 0), "type": Module.Type.CUBE_CROSS}, 
-                {"pos": Vector3(-1, 1,-1), "type": Module.Type.CUBE,    "color": COLOR.ITEM_RED,   "basis": SCL_ITM },
-                {"pos": Vector3(-1, 1, 0), "type": Module.Type.CUBE,    "color": COLOR.ITEM_GREEN, "basis": SCL_ITM },
-                {"pos": Vector3(-1, 1, 1), "type": Module.Type.CUBE,    "color": COLOR.ITEM_BLUE,  "basis": SCL_ITM },
                 ],
         },
-    Type.CylinderCross: {
+    Type.TubeCross: {
         "cost": {Item.Type.CylinderRed:   30, Item.Type.CylinderGreen: 30, Item.Type.CylinderBlue: 30},
+        "recipe": { "in":   [[Item.Type.CylinderRed,   2], [Item.Type.CylinderGreen, 2], [Item.Type.CylinderBlue, 2]], 
+                    "out":  [[Item.Type.TubeCross, 1]], "time": 2.0},
         "mods": [
+                {"in":  Belt.NEIGHBOR[Belt.W] + Belt.NEIGHBOR[Belt.N], "dir": Belt.W},
                 {"in":  Belt.NEIGHBOR[Belt.W],                         "dir": Belt.W},
                 {"in":  Belt.NEIGHBOR[Belt.W] + Belt.NEIGHBOR[Belt.S], "dir": Belt.W},
-                {"in":  Belt.NEIGHBOR[Belt.W] + Belt.NEIGHBOR[Belt.N], "dir": Belt.W},
                 {"out": Belt.NEIGHBOR[Belt.E],                         "dir": Belt.E},
-                {"pos": Vector3( 0,0.5,0), "type": Module.Type.BOX,         "color": COLOR.BUILDING,  "basis": ROT_Y },
-                {"pos": Vector3( 0, 1, 0), "type": Module.Type.GEAR,        "color": COLOR.BUILDING},
-                {"pos": Vector3( 1, 1, 0), "type": Module.Type.CYLINDER_CROSS}, 
-                {"pos": Vector3(-1, 1,-1), "type": Module.Type.CYLINDER,    "color": COLOR.ITEM_RED,   "basis": SCL_ITM },
-                {"pos": Vector3(-1, 1, 0), "type": Module.Type.CYLINDER,    "color": COLOR.ITEM_GREEN, "basis": SCL_ITM },
-                {"pos": Vector3(-1, 1, 1), "type": Module.Type.CYLINDER,    "color": COLOR.ITEM_BLUE,  "basis": SCL_ITM },                
+                {"pos": Vector3( 0,0.5,0), "type": Module.Type.BOX,    "color": COLOR.BUILDING },
+                {"pos": Vector3( 0, 1, 0), "type": Module.Type.GEAR,   "color": COLOR.BUILDING},
                 ],
         },
     Type.Cubecule:      {
         "cost": {Item.Type.CylinderWhite: 30, Item.Type.CubeCross:     30, Item.Type.Energy:       30},
+        "recipe": { "in":   [[Item.Type.CylinderWhite, 2], [Item.Type.CubeCross, 2], [Item.Type.Energy, 2]], 
+                    "out":  [[Item.Type.Cubecule,      1]], "time": 2.0},
         "mods": [
+                {"in":  Belt.NEIGHBOR[Belt.W] + Belt.NEIGHBOR[Belt.N], "dir": Belt.W},
                 {"in":  Belt.NEIGHBOR[Belt.W],                         "dir": Belt.W},
                 {"in":  Belt.NEIGHBOR[Belt.W] + Belt.NEIGHBOR[Belt.S], "dir": Belt.S},
-                {"in":  Belt.NEIGHBOR[Belt.W] + Belt.NEIGHBOR[Belt.N], "dir": Belt.W},
                 {"out": Belt.NEIGHBOR[Belt.E],                         "dir": Belt.E},
-                {"pos": Vector3( 0,0.5,0), "type": Module.Type.BOX,      "color": COLOR.BUILDING,   "basis": ROT_Y },
-                {"pos": Vector3( 0, 1, 0), "type": Module.Type.GEAR,     "color": COLOR.BUILDING},
-                {"pos": Vector3( 1, 1, 0), "type": Module.Type.CUBECULE}, 
-                {"pos": Vector3(-1, 1,-1), "type": Module.Type.CYLINDER, "color": COLOR.ITEM_WHITE, "basis": SCL_ITM },
-                {"pos": Vector3(-1, 1, 0), "type": Module.Type.CUBE_CROSS },
-                {"pos": Vector3(-1, 1, 1), "type": Module.Type.TORUS,    "color": COLOR.ENERGY,     "basis": SCL_ITM },
+                {"pos": Vector3( 0,0.5,0), "type": Module.Type.BOX,    "color": COLOR.BUILDING },
+                {"pos": Vector3( 0, 1, 0), "type": Module.Type.GEAR,   "color": COLOR.BUILDING},
                 ],
         },
     Type.Molecule:      {
-        "cost": {Item.Type.SphereWhite:   60, Item.Type.CylinderCross: 60, Item.Type.Energy:       60},
+        "cost": {Item.Type.TubeCross:   60, Item.Type.Cubecule: 60, Item.Type.Energy:       60},
+        "recipe": { "in":  [[Item.Type.TubeCross, 4], [Item.Type.Cubecule, 4], [Item.Type.Energy, 4]], 
+                    "out": [[Item.Type.Molecule,  1]], "time": 6.0},
         "mods": [
+                {"in":  Belt.NEIGHBOR[Belt.W] + Belt.NEIGHBOR[Belt.N], "dir": Belt.W},
                 {"in":  Belt.NEIGHBOR[Belt.W],                         "dir": Belt.W},
                 {"in":  Belt.NEIGHBOR[Belt.W] + Belt.NEIGHBOR[Belt.S], "dir": Belt.S},
-                {"in":  Belt.NEIGHBOR[Belt.W] + Belt.NEIGHBOR[Belt.N], "dir": Belt.W},
                 {"out": Belt.NEIGHBOR[Belt.E],                         "dir": Belt.E},
-                {"pos": Vector3( 0,0.5,0), "type": Module.Type.BOX,      "color": COLOR.BUILDING, "basis": ROT_Y },
-                {"pos": Vector3( 0, 1, 0), "type": Module.Type.GEAR,     "color": COLOR.BUILDING},
-                {"pos": Vector3( 1, 1, 0), "type": Module.Type.MOLECULE,                          "basis": ROT_Y45 },
-                {"pos": Vector3(-1, 1,-1), "type": Module.Type.CYLINDER_CROSS }, 
-                {"pos": Vector3(-1, 1, 0), "type": Module.Type.CUBECULE}, 
-                {"pos": Vector3(-1, 1, 1), "type": Module.Type.TORUS,    "color": COLOR.ENERGY,   "basis": SCL_ITM },
+                {"pos": Vector3( 0,0.5,0), "type": Module.Type.BOX,    "color": COLOR.BUILDING },
+                {"pos": Vector3( 0, 1, 0), "type": Module.Type.GEAR,   "color": COLOR.BUILDING},
                 ],
         },
     Type.Tree: {
-        "cost": {Item.Type.SphereWhite:   60, Item.Type.CylinderCross: 60, Item.Type.Energy:       60},
+        "cost": {Item.Type.SphereBlue:   60, Item.Type.Molecule: 10, Item.Type.CylinderGreen: 60},
+        "recipe": { "in":   [[Item.Type.CylinderGreen, 2], [Item.Type.Molecule,   1], [Item.Type.SphereBlue, 2]], 
+                    "out":  [[Item.Type.Molecule, 0.01, Item.Type.CubeBlack, 0.2]], "time": 1.0 },
         "mods": [
-                {"in":  Belt.NEIGHBOR[Belt.W], "dir": Belt.W, "item": Item.Type.SphereBlue,    "color": COLOR.TREE_BUILDING},
-                {"in":  Belt.NEIGHBOR[Belt.N], "dir": Belt.N, "item": Item.Type.Molecule,      "color": COLOR.TREE_BUILDING},
-                {"in":  Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "item": Item.Type.CylinderGreen, "color": COLOR.TREE_BUILDING},
-                {"out": Belt.NEIGHBOR[Belt.E], "dir": Belt.E,                                  "color": COLOR.TREE_BUILDING},
+                {"in":  Belt.NEIGHBOR[Belt.N], "dir": Belt.N,  "color": COLOR.TREE_BUILDING},
+                {"in":  Belt.NEIGHBOR[Belt.W], "dir": Belt.W,  "color": COLOR.TREE_BUILDING},
+                {"in":  Belt.NEIGHBOR[Belt.S], "dir": Belt.S,  "color": COLOR.TREE_BUILDING},
+                {"out": Belt.NEIGHBOR[Belt.E], "dir": Belt.E,  "color": COLOR.TREE_BUILDING},
                 {"pos": Vector3(0, 0.5, 0),       "type": Module.Type.CUBE,         "color": COLOR.TREE_BRANCH},
                 {"pos": Vector3(0, 1.0, 0),       "type": Module.Type.TREE_BRANCH,  "color": COLOR.TREE_BRANCH},
                 {"pos": Vector3( 1, BRANCH_Y, 0), "type": Module.Type.TREE_BRANCH,  "color": COLOR.TREE_BRANCH, "scale": 0.5},
@@ -245,7 +218,62 @@ func _init():
     for key in Type:
         Types.push_back(Type[key])
         TypeNames.push_back(key)
+        
+func posOfSlitAtIndex(modules : Array, index : int):
+    
+    for module in modules:
+        if module.has("in"):
+            if index > 0: 
+                index -= 1
+            else:
+                return Vector3(module.in.x, 0.5, module.in.y)
+    return null
 
+func posOfSlotAtIndex(modules : Array, index : int):
+    
+    for module in modules:
+        if module.has("out"):
+            if index > 0: 
+                index -= 1
+            else:
+                return Vector3(module.out.x, 0.5, module.out.y)
+    return null
+        
+func basisForItemType(type):
+    
+    var sy = 0.6
+    var sx = 0.6
+    if Item.shapeForType(type) in [Item.Shape.Cube, Item.Shape.Cylinder]:
+        sy = 0.2
+        sx = 0.5
+    return Basis.from_scale(Vector3(sx, sy, sx))
+        
+func modulesForType(type):
+    
+    var modules = Mach.Def[type].mods.duplicate()
+    if Mach.Def[type].has("recipe"):
+        for item in Mach.Def[type].recipe.in:
+            var itemType = item[0]
+            var pos = posOfSlitAtIndex(modules, Mach.Def[type].recipe.in.find(item)) + Vector3(0,0.5,0)
+            var modType = moduleTypeForItemType(itemType)
+            var color   = colorForItemType(itemType)
+            modules.push_back({"pos": pos, "type": modType, "color": color, "basis": basisForItemType(itemType)})
+        for item in Mach.Def[type].recipe.out:
+            var itemType = item[0]
+            var pos = posOfSlotAtIndex(modules, Mach.Def[type].recipe.out.find(item)) + Vector3(0,0.5,0)
+            var modType = moduleTypeForItemType(itemType)
+            var color   = colorForItemType(itemType)
+            modules.push_back({"pos": pos, "type": modType, "color": color, "basis": basisForItemType(itemType)})
+    return modules        
+    
+func moduleTypeForItemType(itemType):
+    
+    return Module.Type[Item.stringForShape(Item.shapeForType(itemType)).to_upper()]
+    
+func colorForItemType(itemType):
+    
+    return Item.colorForType(itemType)
+    
 func costForType(type):
     
     return Def[type].cost
@@ -291,6 +319,12 @@ func decosForType(type):
         if mod.has("pos") and not mod.has("in") and not mod.has("out"):
             res.append(mod.duplicate())
     return res
+    
+func recipeForType(type):
+    
+    if Def[type].has("recipe"):
+        return Def[type].recipe.duplicate()
+    return null
     
 func boxTrans(slit, p : Vector3, basis : Basis) -> Transform3D:
 

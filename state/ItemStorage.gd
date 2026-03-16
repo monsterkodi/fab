@@ -1,7 +1,7 @@
 class_name ItemStorage
 extends Node
 
-var maxItem : int = 1000
+var maxItem : int = 10000
 var storage : Dictionary[Item.Type, int]
 
 func _ready():
@@ -14,6 +14,9 @@ func loadData(data : Dictionary[Item.Type, int]):
     storage = data 
     for type in storage:
         storage[type] = mini(maxItem, storage[type])
+
+func canTakeItem(type : Item.Type):
+    return storage[type] < maxItem
     
 func addItem(type : Item.Type):
 
@@ -56,7 +59,7 @@ func delItems(type : Item.Type, num : int):
 func reset():
     
     for type in Item.Types:
-        storage[type] = 0
+        storage[type] = 1000
 
     storage[Item.Type.CubeBlack] = 100
     

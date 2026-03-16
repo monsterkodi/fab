@@ -6,6 +6,10 @@ var items : Array[Item.Type] = []
 func _init(p, o, t = Mach.Type.Tunnel):
     
     super._init(t, p, o)
+
+func saveData(): return super.saveData() + [items]
+func loadData(d): 
+    items = d[4]
     
 func consumeItemAtSlit(item, slit):
     

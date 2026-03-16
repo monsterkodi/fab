@@ -18,6 +18,10 @@ func _ready():
     mat.set_shader_parameter("EndAngle", 0.0)
     mat.set_shader_parameter("Color", color)
     material_override = mat
+    
+func setColor(c : Color):
+    color = c
+    material_override.set_shader_parameter("Color", color)
 
 func setFactor(f):
     

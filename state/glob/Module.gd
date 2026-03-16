@@ -11,8 +11,8 @@ enum Type {
     STORAGE, 
     GEAR, 
     FRAME, 
-    CUBE_CROSS, 
-    CYLINDER_CROSS, 
+    CUBECROSS, 
+    TUBECROSS, 
     TUNNEL_BOX, 
     CUBECULE, 
     MOLECULE, 
@@ -40,21 +40,21 @@ func meshForType(type : Type):
     var mesh
     match type:
         Module.Type.BOX:                mesh = MachMeshes.regal(1.0, 1.0, 1.0, 0.2, 0.5)
+        Module.Type.FRAME:              mesh = MachMeshes.frame(1.0, 1.0, 1.0, 0.2, 0.5)
+        Module.Type.TUNNEL_BOX:         mesh = MachMeshes.tunnelBox(1.0, 1.0, 1.0, 0.2, 0.5)
         Module.Type.ARROW:              mesh = MachMeshes.arrow(0.4, 0.2, 0.5)
+        Module.Type.GEAR:               mesh = MachMeshes.gear(0.4, 0.1, 0.2, 7, 0.5, 0.5, false)
+        Module.Type.STORAGE:            mesh = MachMeshes.storage(0.8, 0.5) 
+        Module.Type.TREE_BRANCH:        mesh = MachMeshes.treeBranch(0.5, 1, 0.5, 0.5)
+        Module.Type.TREE_CANOPY:        mesh = MachMeshes.treeCanopy(1.6, 0.8, 0.6) 
         Module.Type.CUBE:               mesh = BoxMesh.new()
         Module.Type.TORUS:              mesh = TorusMesh.new(); mesh.outer_radius = 0.5; mesh.inner_radius = 0.2; mesh.ring_segments = 12; mesh.rings = 24
         Module.Type.SPHERE:             mesh = SphereMesh.new(); mesh.radial_segments = 24; mesh.rings = 12
         Module.Type.CYLINDER:           mesh = CylinderMesh.new(); mesh.height = 1.0; mesh.rings = 1; mesh.radial_segments = 24
-        Module.Type.STORAGE:            mesh = MachMeshes.storage(0.8, 0.5) 
-        Module.Type.GEAR:               mesh = MachMeshes.gear(0.4, 0.1, 0.2, 7, 0.5, 0.5, false)
-        Module.Type.FRAME:              mesh = MachMeshes.frame(1.0, 1.0, 1.0, 0.2, 0.5)
-        Module.Type.CUBE_CROSS:         mesh = MachMeshes.cubeCross(0.6, [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
-        Module.Type.CYLINDER_CROSS:     mesh = MachMeshes.cylinderCross(0.6, 0.15, [COLOR.ITEM_GREEN, COLOR.ITEM_BLUE, COLOR.ITEM_RED])
-        Module.Type.TUNNEL_BOX:         mesh = MachMeshes.tunnelBox(1.0, 1.0, 1.0, 0.2, 0.5)
-        Module.Type.CUBECULE:           mesh = MachMeshes.cubecule(0.6, 0.2,  0.2, [COLOR.ITEM_BLACK, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE])
-        Module.Type.MOLECULE:           mesh = MachMeshes.molecule(0.7, 0.07, 0.14, [COLOR.ITEM_BLACK, COLOR.ITEM_RED,   COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
-        Module.Type.TREE_BRANCH:        mesh = MachMeshes.treeBranch(0.5, 1, 0.5, 0.5)
-        Module.Type.TREE_CANOPY:        mesh = MachMeshes.treeCanopy(1.6, 0.8, 0.6) 
+        Module.Type.CUBECROSS:          mesh = MachMeshes.cubeCross(1.0, [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
+        Module.Type.TUBECROSS:          mesh = MachMeshes.cylinderCross(1.0, 0.25, [COLOR.ITEM_GREEN, COLOR.ITEM_BLUE, COLOR.ITEM_RED])
+        Module.Type.CUBECULE:           mesh = MachMeshes.cubecule(1.0, 0.3,  0.3, [COLOR.ITEM_BLACK, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE])
+        Module.Type.MOLECULE:           mesh = MachMeshes.molecule(1.0, 0.1, 0.2, [COLOR.ITEM_BLACK, COLOR.ITEM_RED,   COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
     return mesh
     
 func multiMeshForType(type : Type, isGhost = false):
@@ -80,8 +80,8 @@ func multiMeshForType(type : Type, isGhost = false):
         
     mm.multimesh.transform_format = MultiMesh.TRANSFORM_3D
     match type:
-        Module.Type.CUBE_CROSS, \
-        Module.Type.CYLINDER_CROSS, \
+        Module.Type.CUBECROSS, \
+        Module.Type.TUBECROSS, \
         Module.Type.CUBECULE, \
         Module.Type.MOLECULE: 
             mm.multimesh.use_colors = false

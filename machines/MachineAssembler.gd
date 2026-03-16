@@ -9,6 +9,7 @@ var elapsed = 0
 
 func _init(t, p, o):
     
+    recipe = Mach.recipeForType(t)
     super._init(t, p, o) 
     
 func saveData(): return super.saveData() + [consumed, canProduce, producing, elapsed]
@@ -45,7 +46,7 @@ func produce(delta:float):
     if producing:
         elapsed += delta
         if elapsed < recipe.time:
-            rotate(-deg_to_rad(delta * 360 / 16))
+            rotateGear(-deg_to_rad(delta * 360 / 16))
     super.produce(delta)
     
 func produceItemAtSlot(slot):
@@ -54,9 +55,9 @@ func produceItemAtSlot(slot):
     if elapsed < recipe.time: return null
     elapsed   = 0.0
     producing = false
-    return Item.Inst.new(recipe.out)
+    return Item.Inst.new(recipe.out[0][0]) # fix me!
 
-func rotate(delta: float):
+func rotateGear(delta: float):
     
     if bdg:
         bdg.modules[9].trans = bdg.modules[9].trans.rotated_local(Vector3.UP, delta)

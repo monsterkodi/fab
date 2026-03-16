@@ -19,7 +19,7 @@ enum Type {
     SphereWhite,
     Energy,
     CubeCross,
-    CylinderCross,
+    TubeCross,
     Cubecule,
     Molecule,
 }
@@ -30,13 +30,14 @@ enum Shape {
     Sphere,
     Torus,
     CubeCross,
-    CylinderCross,
+    TubeCross,
     Cubecule,
     Molecule,
 }
 
-var Types     : Array[Type]
-var TypeNames : Array[String]
+var Types      : Array[Type]
+var TypeNames  : Array[String]
+var ShapeNames : Array[String]
 
 var TypeInfo = [                        # energy     # white  # round # sphere
     [Shape.Cube,          COLOR.ITEM_BLACK,      0.1 ,      0.2,    0.1,   0   ],
@@ -56,7 +57,7 @@ var TypeInfo = [                        # energy     # white  # round # sphere
     [Shape.Sphere,        COLOR.ITEM_WHITE,      0.644,       0,      0,   0 ],
     [Shape.Torus,         COLOR.ENERGY,          1.0 ,        0,      0,   0 ],
     [Shape.CubeCross,     COLOR.ITEM_BLACK,      1.0,         0,      0,   0 ],
-    [Shape.CylinderCross, COLOR.ITEM_BLACK,      2.0,         0,      0,   0 ],
+    [Shape.TubeCross,     COLOR.ITEM_BLACK,      2.0,         0,      0,   0 ],
     [Shape.Cubecule,      COLOR.ITEM_BLACK,      4.0,         0,      0,   0 ],
     [Shape.Molecule,      COLOR.ITEM_BLACK,      8.0,         0,      0,   0 ],
 ]
@@ -66,6 +67,9 @@ func _init():
     for key in Type:
         Types.push_back(Type[key])
         TypeNames.push_back(key)
+
+    for key in Shape:
+        ShapeNames.push_back(key)
         
 func shapeForType(type):    return TypeInfo[type][0]
 func colorForType(type):    return TypeInfo[type][1]
@@ -75,6 +79,7 @@ func cylinderCost(type):    return TypeInfo[type][4]
 func sphereCost(type):      return TypeInfo[type][5]
 func typeForString(string): return Type[string]
 func stringForType(type):   return TypeNames[type]
+func stringForShape(shape): return ShapeNames[shape]
 func iconResForType(type):  return "res://icons/items/" + stringForType(type) + ".png"
 
 class Inst:

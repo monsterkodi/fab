@@ -7,6 +7,10 @@ func _init(p, o):
     
     super._init(Mach.Type.Mixer, p, o)
     
+func saveData(): return super.saveData() + [consumed]
+func loadData(d): 
+    consumed = d[4]
+    
 func consumeItemAtSlit(item, slit):
     
     var slitIndex = slits.find(slit)

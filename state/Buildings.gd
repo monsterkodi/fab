@@ -16,7 +16,7 @@ class Building:
         type = t
         pos = p
         
-        for mod in Mach.Def[type].mods:
+        for mod in Mach.modulesForType(type):
             
             var module = Module.Inst.new(pos)
             

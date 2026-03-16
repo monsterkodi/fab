@@ -29,6 +29,10 @@ func consume(delta:float):
 func consumeItemAtSlit(item, slit): 
     
     gauge.increment()
-    fab.storage.addItem(item.type)
-    return true
+    if fab.storage.canTakeItem(item.type):
+        fab.storage.addItem(item.type)
+        gauge.setColor(COLOR.GAUGE)
+        return true
+    gauge.setColor(COLOR.GAUGE_ALERT)
+    return false
     

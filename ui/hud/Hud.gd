@@ -101,7 +101,7 @@ func gameSpeed(value):
     
 func storageItemMax(type):
     
-    %ItemButtonGrid.setText(type, "1k")
+    %ItemButtonGrid.setText(type, "10k")
     %ItemButtonGrid.setTextColor(type, Color(0.3, 0.3, 0.3))
 
 func storageItemEmpty(type):

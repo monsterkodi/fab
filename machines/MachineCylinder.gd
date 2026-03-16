@@ -15,6 +15,11 @@ var roundeningEnergy = {
 func _init(p, o):
     
     super._init(Mach.Type.Cylinder, p, o)
+
+func saveData(): return super.saveData() + [consumedEnergy, consumedItem]
+func loadData(d): 
+    consumedEnergy = d[4]
+    consumedItem   = d[5]
     
 func consumeItemAtSlit(item, slit): 
     
