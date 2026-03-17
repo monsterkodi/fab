@@ -39,10 +39,11 @@ func checkProducing():
 func produce(delta:float):
     
     if not producing and canProduce:
-        producing = true
-        elapsed = 0.0
+        producing  = true
+        elapsed    = 0.0
         canProduce = false
-        consumed  = [0, 0, 0]
+        for i in recipe.in.size():
+            consumed[i] -= recipe.in[i][1]
     if producing:
         elapsed += delta
         if elapsed < recipe.time:
@@ -55,7 +56,14 @@ func produceItemAtSlot(slot):
     if elapsed < recipe.time: return null
     elapsed   = 0.0
     producing = false
-    return Item.Inst.new(recipe.out[0][0]) # fix me!
+    
+    if recipe.out[0].size() == 2:
+        return Item.Inst.new(recipe.out[0][0])
+    else:
+        var r = randf()
+        for i in range(1, recipe.out[0].size(), 2):
+            if r <= recipe.out[0][i]:
+                return Item.Inst.new(recipe.out[0][i-1])
 
 func rotateGear(delta: float):
     

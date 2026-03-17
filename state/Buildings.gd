@@ -41,7 +41,7 @@ class Building:
                         
             if isSlot and module.type != Module.Type.TUNNEL_BOX:
                 var arrow   = Module.Inst.new(pos)
-                arrow.color = COLOR.ARROW
+                arrow.color = module.color
                 arrow.type  = Module.Type.ARROW
                 arrow.kind  = Module.Kind.ARROW
                 if module.kind == Module.Kind.SLIT:

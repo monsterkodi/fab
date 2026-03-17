@@ -269,7 +269,7 @@ func _physics_process(delta: float):
 
     for machine in $Machines.get_children():
         machine.consume(delta * gameSpeed)
-        
+
     itm.advanceItems(delta * gameSpeed)
     
     for machine in $Machines.get_children():

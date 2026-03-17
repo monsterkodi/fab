@@ -23,8 +23,12 @@ func _ready():
         if Saver.getSaveGame(): # bypass main menu when savegame exists
             Post.continueGame.emit()
             return
-        
-    %MenuHandler.appear(%MainMenu)
+    
+    if $IconHandler.visible:
+        newGame()
+        get_tree().paused = true
+    else:
+        %MenuHandler.appear(%MainMenu)
     
 func mainMenu():
     

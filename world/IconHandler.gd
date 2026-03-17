@@ -4,6 +4,8 @@ extends Control
 func _ready():
     
     if not is_visible_in_tree(): return
+    
+    get_tree().paused = true
 
     %Viewport.get_node("Camera").look_at(Vector3.ZERO)
 
@@ -16,23 +18,21 @@ func _ready():
     if not DirAccess.dir_exists_absolute("res://icons/items/"):
         DirAccess.make_dir_recursive_absolute("res://icons/items/")
         
-    for res in Utils.resourcesInDir("res://buildings/"):
-        if res is PackedScene: 
-            generateIcon(res, "res://icons/buildings/")
+    #for res in Utils.resourcesInDir("res://buildings/"):
+        #if res is PackedScene: 
+            #generateIcon(res, "res://icons/buildings/")
 
     Post.subscribe(self)
     
 func levelStart():
             
-    #for type in Item.Types:
-        #generateItemIcon(type)
-        #await RenderingServer.frame_post_draw
-        #await RenderingServer.frame_post_draw
+    for type in Item.Types:
+        generateItemIcon(type)
+        await RenderingServer.frame_post_draw
             
     for type in Mach.Types:
         if type:
             generateMachineIcon(type)
-            await RenderingServer.frame_post_draw
             await RenderingServer.frame_post_draw
                     
 func get_full_aabb(node: Node3D) -> AABB:
@@ -149,7 +149,7 @@ func generateMachineIcon(type : Mach.Type):
     
 func frame_camera_on_item(camera: Camera3D, type : Item.Type):
     
-    var center = Vector3(-0.5, 0.5, 0)
+    var center = Vector3.ZERO
     camera.position = center + Vector3(1, 1, 1).normalized() * 1.75
     camera.look_at(center)        
     
@@ -168,13 +168,12 @@ func generateItemIcon(type : Item.Type):
     level.get_node("TrackState").hide()
     var fab : FabState = level.get_node("FabState")
     
-    fab.addBeltAtPos(Vector2.ZERO, Belt.I_W | Belt.O_E)
     var item = Item.Inst.new(type)
+    item.scale = -1
     fab.addItem(Vector2.ZERO, Belt.W, item)
 
     frame_camera_on_item(camera, type)
     
-    await RenderingServer.frame_post_draw # wait for the frame to render
     await RenderingServer.frame_post_draw # wait for the frame to render
     
     var iconPath = "res://icons/items/" + Item.stringForType(type) + ".png"
@@ -184,7 +183,7 @@ func generateItemIcon(type : Item.Type):
     else:
         print("icon: ", iconPath)
 
-    fab.delBeltAtPos(Vector2i.ZERO)
+    fab.delItemsAtPos(Vector2.ZERO)
     viewport.remove_child(level)
     oldParent.add_child(level)
     level.get_node("Floor").show()

@@ -149,7 +149,7 @@ func consume(delta:float):
                 if slits[i].idle:
                     slits[i].idle = 0
                     if bdg and hasSlitArrows():
-                        bdg.modules[2*i + 1].color = COLOR.ARROW
+                        bdg.modules[2*i + 1].color = COLOR.BUILDING
                         bdg.modules[2*i + 1].trans.origin.y = 0.9
                         mst.add(bdg)
         else:
@@ -178,7 +178,7 @@ func produce(delta:float):
                 if slots[i].idle:
                     slots[i].idle = 0
                     if bdg and hasSlotArrows(): # this sucks!
-                        bdg.modules[slits.size() * 2 + 2*i + 1].color = COLOR.ARROW # crap
+                        bdg.modules[slits.size() * 2 + 2*i + 1].color = COLOR.BUILDING # crap
                         bdg.modules[slits.size() * 2 + 2*i + 1].trans.origin.y = 0.9
                         mst.add(bdg)
         else:

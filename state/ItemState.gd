@@ -114,6 +114,7 @@ func aryChange(pm : ItemMap, index : int, item : Item.Inst):
 func itemTrans(item):
     
     var trans = Transform3D.IDENTITY
+    if item.scale == -1: return trans # hack for positioning icon items
     if item.type == Item.Type.Molecule:
         trans = trans.rotated(Vector3.UP, deg_to_rad(45))
     trans = trans.scaled(Vector3(item.scale, item.scale, item.scale))

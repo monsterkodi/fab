@@ -116,7 +116,7 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
         "mods": [
                 {"in":  Vector2i.ZERO,         "dir": Belt.W, "shape": Item.Shape.Cube},
                 {"in":  Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "item":  Item.Type.Energy},
-                {"out": Belt.NEIGHBOR[Belt.E], "dir": Belt.E},
+                {"out": Belt.NEIGHBOR[Belt.E], "dir": Belt.E, "shape": Item.Shape.Cylinder},
                 ],
         },
     Type.Sphere:        {
@@ -124,7 +124,7 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
         "mods": [
                 {"in":  Vector2i.ZERO,         "dir": Belt.W, "shape": Item.Shape.Cylinder},
                 {"in":  Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "item":  Item.Type.Energy},
-                {"out": Belt.NEIGHBOR[Belt.E], "dir": Belt.E},
+                {"out": Belt.NEIGHBOR[Belt.E], "dir": Belt.E, "shape": Item.Shape.Sphere},
                 ],
         },
     Type.Counter:       {
@@ -189,8 +189,8 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
         },
     Type.Tree: {
         "cost": {Item.Type.SphereBlue:   60, Item.Type.Molecule: 10, Item.Type.CylinderGreen: 60},
-        "recipe": { "in":   [[Item.Type.CylinderGreen, 2], [Item.Type.Molecule,   1], [Item.Type.SphereBlue, 2]], 
-                    "out":  [[Item.Type.Molecule, 0.01, Item.Type.CubeBlack, 0.2]], "time": 1.0 },
+        "recipe": { "in":   [[Item.Type.CylinderGreen, 2], [Item.Type.Molecule, 0.1], [Item.Type.SphereBlue, 2]], 
+                    "out":  [[Item.Type.Molecule, 0.1, Item.Type.CubeBlack, 1.0]], "time": 1.0 },
         "mods": [
                 {"in":  Belt.NEIGHBOR[Belt.N], "dir": Belt.N,  "color": COLOR.TREE_BUILDING},
                 {"in":  Belt.NEIGHBOR[Belt.W], "dir": Belt.W,  "color": COLOR.TREE_BUILDING},
@@ -239,15 +239,23 @@ func posOfSlotAtIndex(modules : Array, index : int):
                 return Vector3(module.out.x, 0.5, module.out.y)
     return null
         
-func basisForItemType(type):
+func scaleForShape(shape):
     
     var sy = 0.6
     var sx = 0.6
-    if Item.shapeForType(type) in [Item.Shape.Cube, Item.Shape.Cylinder]:
-        sy = 0.2
-        sx = 0.5
-    return Basis.from_scale(Vector3(sx, sy, sx))
+
+    if shape in [Item.Shape.Cube, Item.Shape.Cylinder, Item.Shape.Sphere, Item.Shape.Torus]:
+        sx = 0.4
+        if shape in [Item.Shape.Torus, Item.Shape.Sphere]:
+            sy = sx
+        else:
+            sy = 0.2
+    return Basis.from_scale(Vector3(sx, sy, sx))    
         
+func scaleForItemType(type):
+    
+    return scaleForShape(Item.shapeForType(type))
+            
 func modulesForType(type):
     
     var modules = Mach.Def[type].mods.duplicate()
@@ -257,18 +265,45 @@ func modulesForType(type):
             var pos = posOfSlitAtIndex(modules, Mach.Def[type].recipe.in.find(item)) + Vector3(0,0.5,0)
             var modType = moduleTypeForItemType(itemType)
             var color   = colorForItemType(itemType)
-            modules.push_back({"pos": pos, "type": modType, "color": color, "basis": basisForItemType(itemType)})
+            modules.push_back({"pos": pos, "type": modType, "color": color, "basis": scaleForItemType(itemType)})
         for item in Mach.Def[type].recipe.out:
             var itemType = item[0]
             var pos = posOfSlotAtIndex(modules, Mach.Def[type].recipe.out.find(item)) + Vector3(0,0.5,0)
             var modType = moduleTypeForItemType(itemType)
             var color   = colorForItemType(itemType)
-            modules.push_back({"pos": pos, "type": modType, "color": color, "basis": basisForItemType(itemType)})
+            modules.push_back({"pos": pos, "type": modType, "color": color, "basis": scaleForItemType(itemType)})
+    else:
+        for mod in Mach.Def[type].mods:
+            if mod.has("item"):
+                var itemType = mod.item
+                var pos
+                if mod.has("in"):
+                    pos = Vector3(mod.in.x, 1.0, mod.in.y)
+                else:
+                    pos = Vector3(mod.out.x, 1.0, mod.out.y)
+                var modType = moduleTypeForItemType(itemType)
+                var color   = colorForItemType(itemType)
+                modules.push_back({"pos": pos, "type": modType, "color": color, "basis": scaleForItemType(itemType)})
+            elif mod.has("shape"):
+                var shape = mod.shape
+                var pos
+                if mod.has("in"):
+                    pos = Vector3(mod.in.x, 1.0, mod.in.y)
+                else:
+                    pos = Vector3(mod.out.x, 1.0, mod.out.y)
+                var modType = moduleTypeForShape(shape)
+                var color   = COLOR.SHAPE
+                modules.push_back({"pos": pos, "type": modType, "color": color, "basis": scaleForShape(shape)})
+                
     return modules        
+    
+func moduleTypeForShape(shape):
+    
+    return Module.Type[Item.stringForShape(shape).to_upper()]
     
 func moduleTypeForItemType(itemType):
     
-    return Module.Type[Item.stringForShape(Item.shapeForType(itemType)).to_upper()]
+    return moduleTypeForShape(Item.shapeForType(itemType))
     
 func colorForItemType(itemType):
     

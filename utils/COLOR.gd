@@ -11,8 +11,8 @@ const GAUGE_ALERT   := Color(1.5, 0.0, 0.0)
   
 const SLIT          := Color(2, 0, 0)
 const SLOT          := Color(0.3, 0.3, 4)
-const ARROW         := Color(0.1, 0.1, 0.1)
   
+const SHAPE         := Color(0.1, 0.1, 0.1)
 const ITEM_BLACK    := Color.BLACK
 const ITEM_RED      := Color(1, 0, 0)
 const ITEM_GREEN    := Color(0, 0.8, 0)
