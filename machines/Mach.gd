@@ -20,6 +20,7 @@ enum Type {
     Cubecule,
     Molecule,
     Tree,
+    Sorter,
 }
 
 var ROT_TIP = Basis.from_euler(Vector3(deg_to_rad(35.5), 0, deg_to_rad(45)))
@@ -189,8 +190,8 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
         },
     Type.Tree: {
         "cost": {Item.Type.SphereBlue:   60, Item.Type.Molecule: 10, Item.Type.CylinderGreen: 60},
-        "recipe": { "in":   [[Item.Type.CylinderGreen, 2], [Item.Type.Molecule, 0.1], [Item.Type.SphereBlue, 2]], 
-                    "out":  [[Item.Type.Molecule, 0.1, Item.Type.CubeBlack, 1.0]], "time": 1.0 },
+        "recipe": { "in":   [[Item.Type.CylinderGreen, 1], [Item.Type.Molecule, 0.1], [Item.Type.SphereBlue, 1]], 
+                    "out":  [[Item.Type.Molecule, 0.05, Item.Type.CubeBlack, 1.0]], "time": 4.0 },
         "mods": [
                 {"in":  Belt.NEIGHBOR[Belt.N], "dir": Belt.N,  "color": COLOR.TREE_BUILDING},
                 {"in":  Belt.NEIGHBOR[Belt.W], "dir": Belt.W,  "color": COLOR.TREE_BUILDING},
@@ -207,7 +208,16 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
                 {"pos": Vector3( 0, CANOPY_Y, 1), "type": Module.Type.TREE_CANOPY,  "color": COLOR.TREE_CANOPY}, 
                 {"pos": Vector3( 0, CANOPY_Y,-1), "type": Module.Type.TREE_CANOPY,  "color": COLOR.TREE_CANOPY}, 
                 ],
-    }
+        },
+    Type.Sorter: {
+        "cost": {Item.Type.Molecule: 10},
+        "mods": [
+                {"in":   Belt.NEIGHBOR[Belt.W], "dir": Belt.W,                                 "color": COLOR.TUNNEL},
+                {"out":  Belt.NEIGHBOR[Belt.N], "dir": Belt.N, "type": Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
+                {"out":  Belt.NEIGHBOR[Belt.E], "dir": Belt.E, "type": Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
+                {"out":  Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "type": Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
+                ],
+        }
 }
 
 var Types     : Array[Type]

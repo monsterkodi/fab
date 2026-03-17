@@ -130,7 +130,7 @@ func setOrientation(o : int):
             
 func hasSlotArrows():
     
-    return type not in [Mach.Type.Tunnel, Mach.Type.Tunnel2, Mach.Type.Tunnel3]
+    return type not in [Mach.Type.Tunnel, Mach.Type.Tunnel2, Mach.Type.Tunnel3, Mach.Type.Sorter]
 
 func hasSlitArrows():
     
@@ -149,7 +149,8 @@ func consume(delta:float):
                 if slits[i].idle:
                     slits[i].idle = 0
                     if bdg and hasSlitArrows():
-                        bdg.modules[2*i + 1].color = COLOR.BUILDING
+                        #bdg.modules[2*i + 1].color = COLOR.BUILDING
+                        bdg.modules[2*i + 1].color = bdg.modules[2*i].color # major suck!
                         bdg.modules[2*i + 1].trans.origin.y = 0.9
                         mst.add(bdg)
         else:
@@ -178,7 +179,8 @@ func produce(delta:float):
                 if slots[i].idle:
                     slots[i].idle = 0
                     if bdg and hasSlotArrows(): # this sucks!
-                        bdg.modules[slits.size() * 2 + 2*i + 1].color = COLOR.BUILDING # crap
+                        #bdg.modules[slits.size() * 2 + 2*i + 1].color = COLOR.BUILDING # crap
+                        bdg.modules[slits.size() * 2 + 2*i + 1].color = bdg.modules[slits.size() * 2 + 2*i].color # even more major suckiness!
                         bdg.modules[slits.size() * 2 + 2*i + 1].trans.origin.y = 0.9
                         mst.add(bdg)
         else:
