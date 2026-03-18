@@ -47,10 +47,13 @@ var itemMap : Array[ItemMap] = []
 
 func _ready():
     
-    $CubeCross.multimesh.mesh = MachMeshes.cubeCross(    0.4,      [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
-    $TubeCross.multimesh.mesh = MachMeshes.cylinderCross(0.4, 0.1, [COLOR.ITEM_GREEN, COLOR.ITEM_BLUE, COLOR.ITEM_RED])
-    $Cubecule.multimesh.mesh  = MachMeshes.cubecule(     0.4, 0.133, 0.133, [COLOR.ITEM_BLACK, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE])
-    $Molecule.multimesh.mesh  = MachMeshes.molecule(     0.5, 0.05, 0.1, [COLOR.ITEM_BLACK, COLOR.ITEM_RED,   COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
+    for shape in Item.Shape:
+        add_child(Item.multiMeshForShape(Item.Shape[shape]))
+    
+    #$CubeCross.multimesh.mesh = MachMeshes.cubeCross(    0.4,      [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
+    #$TubeCross.multimesh.mesh = MachMeshes.cylinderCross(0.4, 0.1, [COLOR.ITEM_GREEN, COLOR.ITEM_BLUE, COLOR.ITEM_RED])
+    #$Cubecule.multimesh.mesh  = MachMeshes.cubecule(     0.4, 0.133, 0.133, [COLOR.ITEM_BLACK, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE])
+    #$Molecule.multimesh.mesh  = MachMeshes.molecule(     0.4, 0.04, 0.09, [COLOR.ITEM_BLACK, COLOR.ITEM_RED,   COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
     for child in get_children():
         child.multimesh.instance_count = 10000
         child.multimesh.visible_instance_count = 0

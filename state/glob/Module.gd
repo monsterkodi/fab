@@ -54,7 +54,7 @@ func meshForType(type : Type):
         Module.Type.CUBECROSS:          mesh = MachMeshes.cubeCross(1.0, [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
         Module.Type.TUBECROSS:          mesh = MachMeshes.cylinderCross(1.0, 0.25, [COLOR.ITEM_GREEN, COLOR.ITEM_BLUE, COLOR.ITEM_RED])
         Module.Type.CUBECULE:           mesh = MachMeshes.cubecule(1.0, 0.3,  0.3, [COLOR.ITEM_BLACK, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE])
-        Module.Type.MOLECULE:           mesh = MachMeshes.molecule(1.0, 0.1, 0.2, [COLOR.ITEM_BLACK, COLOR.ITEM_RED,   COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
+        Module.Type.MOLECULE:           mesh = MachMeshes.molecule(1.0, 0.1, 0.21, [COLOR.ITEM_BLACK, COLOR.ITEM_RED,   COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
     return mesh
     
 func multiMeshForType(type : Type, isGhost = false):

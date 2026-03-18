@@ -2,9 +2,11 @@ class_name MachineBurner
 extends Machine
 
 var consumedEnergy = 0
+var gearIndex = -1
 
 func _init(p, o):
     
+    gearIndex = Mach.indexOfModule(Mach.Type.Burner, Module.Type.GEAR)
     super._init(Mach.Type.Burner, p, o) 
     
 func consumeItemAtSlit(item, slit): 
@@ -23,6 +25,6 @@ func produceItemAtSlot(slot):
 
 func rotate(delta: float):
     
-    if bdg:
-        bdg.modules[5].trans = bdg.modules[5].trans.rotated_local(Vector3.UP, delta)
+    if bdg and gearIndex >= 0:
+        bdg.modules[gearIndex].trans = bdg.modules[gearIndex].trans.rotated_local(Vector3.UP, delta)
         mst.add(bdg)

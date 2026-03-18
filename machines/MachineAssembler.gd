@@ -2,14 +2,16 @@ class_name MachineAssembler
 extends Machine
 
 var recipe
-var consumed = [0, 0, 0]
-var producing = false
+var consumed   = [0, 0, 0]
+var producing  = false
 var canProduce = false
-var elapsed = 0
+var elapsed    = 0
+var gearIndex  = -1
 
 func _init(t, p, o):
     
-    recipe = Mach.recipeForType(t)
+    recipe    = Mach.recipeForType(t)
+    gearIndex = Mach.indexOfModule(t, Module.Type.GEAR)
     super._init(t, p, o) 
     
 func saveData(): return super.saveData() + [consumed, canProduce, producing, elapsed]
@@ -67,6 +69,6 @@ func produceItemAtSlot(slot):
 
 func rotateGear(delta: float):
     
-    if bdg:
-        bdg.modules[9].trans = bdg.modules[9].trans.rotated_local(Vector3.UP, delta)
+    if bdg and gearIndex >= 0:
+        bdg.modules[gearIndex].trans = bdg.modules[gearIndex].trans.rotated_local(Vector3.UP, delta)
         mst.add(bdg)

@@ -104,3 +104,38 @@ class Inst:
         shape = Item.shapeForType(type)
         
     func dpos(): return Vector3i(pos.x, pos.y, dir)
+
+func meshForShape(shape : Shape):
+    
+    var mesh
+    match shape:
+        Shape.Cube:               mesh = BoxMesh.new(); mesh.size = Vector3(0.3, 0.3, 0.3)
+        Shape.Torus:              mesh = TorusMesh.new(); mesh.outer_radius = 0.17; mesh.inner_radius = 0.055; mesh.ring_segments = 8; mesh.rings = 24
+        Shape.Sphere:             mesh = SphereMesh.new(); mesh.radius = 0.2; mesh.height = 0.4; mesh.radial_segments = 24; mesh.rings = 12
+        Shape.Cylinder:           mesh = CylinderMesh.new(); mesh.top_radius = 0.18; mesh.bottom_radius = 0.18; mesh.height = 0.3; mesh.rings = 1; mesh.radial_segments = 16
+        Shape.CubeCross:          mesh = MachMeshes.cubeCross(    0.4,      [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
+        Shape.TubeCross:          mesh = MachMeshes.cylinderCross(0.4, 0.1, [COLOR.ITEM_GREEN, COLOR.ITEM_BLUE, COLOR.ITEM_RED])
+        Shape.Cubecule:           mesh = MachMeshes.cubecule(     0.4, 0.133, 0.133, [COLOR.ITEM_BLACK, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE])
+        Shape.Molecule:           mesh = MachMeshes.molecule(     0.4, 0.04, 0.09, [COLOR.ITEM_BLACK, COLOR.ITEM_RED,   COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
+    return mesh
+    
+func multiMeshForShape(shape : Shape):
+    
+    var mm = MultiMeshInstance3D.new()
+    mm.name = stringForShape(shape)
+    mm.multimesh = MultiMesh.new()
+    mm.multimesh.mesh = meshForShape(shape)
+    assert(mm.multimesh.mesh)
+    
+    mm.material_override =  preload("uid://bi5n2lthhnyix")
+        
+    mm.multimesh.transform_format = MultiMesh.TRANSFORM_3D
+    match shape:
+        Shape.CubeCross, \
+        Shape.TubeCross, \
+        Shape.Cubecule, \
+        Shape.Molecule: 
+            mm.multimesh.use_colors = false
+        _ : mm.multimesh.use_colors = true
+
+    return mm  

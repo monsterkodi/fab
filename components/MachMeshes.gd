@@ -595,7 +595,7 @@ func molecule(width : float, crossRadius : float, sphereRadius : float, colors :
     var st = SurfaceTool.new()    
     var w  = width/2 - 2*sphereRadius
 
-    st.append_from(cylinderCross(width- 3*sphereRadius, crossRadius, [colors[0], colors[0], colors[0]], segments), 0, Transform3D.IDENTITY)
+    #st.append_from(cylinderCross(width- 3*sphereRadius, crossRadius, [colors[0], colors[0], colors[0]], segments), 0, Transform3D.IDENTITY)
     
     sphere(st, Vector3(-w-sphereRadius, 0, 0), sphereRadius, colors[1], segments)
     sphere(st, Vector3( w+sphereRadius, 0, 0), sphereRadius, colors[1], segments)

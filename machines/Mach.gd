@@ -198,6 +198,7 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
                 {"in":  Belt.NEIGHBOR[Belt.W], "dir": Belt.W,  "color": COLOR.TREE_BUILDING},
                 {"in":  Belt.NEIGHBOR[Belt.S], "dir": Belt.S,  "color": COLOR.TREE_BUILDING},
                 {"out": Belt.NEIGHBOR[Belt.E], "dir": Belt.E,  "color": COLOR.TREE_BUILDING},
+                {"pos": Vector3( 1, 1, 0),        "type": Module.Type.GEAR,         "color": COLOR.BUILDING},
                 {"pos": Vector3(0, 0.5, 0),       "type": Module.Type.CUBE,         "color": COLOR.TREE_BRANCH},
                 {"pos": Vector3(0, 1.0, 0),       "type": Module.Type.TREE_BRANCH,  "color": COLOR.TREE_BRANCH},
                 {"pos": Vector3( 1, BRANCH_Y, 0), "type": Module.Type.TREE_BRANCH,  "color": COLOR.TREE_BRANCH, "scale": 0.5},
@@ -213,18 +214,18 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
     Type.Sorter: {
         "cost": {Item.Type.CubeBlack: 50},
         "mods": [
-                {"in":   Belt.NEIGHBOR[Belt.W], "dir": Belt.W,                                 "color": COLOR.TUNNEL},
-                {"out":  Belt.NEIGHBOR[Belt.N], "dir": Belt.N, "type": Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
-                {"out":  Belt.NEIGHBOR[Belt.E], "dir": Belt.E, "type": Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
-                {"out":  Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "type": Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
+                {"in":   Belt.NEIGHBOR[Belt.W], "dir": Belt.W,                                 },
+                {"out":  Belt.NEIGHBOR[Belt.N], "dir": Belt.N, "type": Module.Type.TUNNEL_BOX, },
+                {"out":  Belt.NEIGHBOR[Belt.E], "dir": Belt.E, "type": Module.Type.TUNNEL_BOX, },
+                {"out":  Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "type": Module.Type.TUNNEL_BOX, },
                 ],
         },
     Type.Overflow: {
         "cost": {Item.Type.CubeBlack: 50},
         "mods": [
-                {"in":   Belt.NEIGHBOR[Belt.W], "dir": Belt.W,                                 "color": COLOR.TUNNEL},
-                {"out":  Belt.NEIGHBOR[Belt.E], "dir": Belt.E,                                 "color": COLOR.TUNNEL},
-                {"out":  Vector2i.ZERO,         "dir": Belt.N, "type": Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
+                {"in":   Belt.NEIGHBOR[Belt.W], "dir": Belt.W,                                 },
+                {"out":  Belt.NEIGHBOR[Belt.E], "dir": Belt.E,                                 },
+                {"out":  Vector2i.ZERO,         "dir": Belt.N, "type": Module.Type.TUNNEL_BOX, },
                 ],
         }
 }
@@ -286,11 +287,12 @@ func modulesForType(type):
             var color   = colorForItemType(itemType)
             modules.push_back({"pos": pos, "type": modType, "color": color, "basis": scaleForItemType(itemType)})
         for item in Mach.Def[type].recipe.out:
-            var itemType = item[0]
-            var pos = posOfSlotAtIndex(modules, Mach.Def[type].recipe.out.find(item)) + Vector3(0,0.5,0)
-            var modType = moduleTypeForItemType(itemType)
-            var color   = colorForItemType(itemType)
-            modules.push_back({"pos": pos, "type": modType, "color": color, "basis": scaleForItemType(itemType)})
+            if item.size() == 2:
+                var itemType = item[0]
+                var pos = posOfSlotAtIndex(modules, Mach.Def[type].recipe.out.find(item)) + Vector3(0,0.5,0)
+                var modType = moduleTypeForItemType(itemType)
+                var color   = colorForItemType(itemType)
+                modules.push_back({"pos": pos, "type": modType, "color": color, "basis": scaleForItemType(itemType)})
     else:
         for mod in Mach.Def[type].mods:
             if mod.has("item"):
@@ -365,6 +367,16 @@ func slotsForType(type):
             dup["pos"] = dup["out"]
             res.append(dup)
     return res
+    
+func indexOfModule(type, moduleType):
+    
+    var index = 0
+    for mod in Def[type].mods:
+        if mod.get("type", 0) == moduleType:
+            return index
+        index += 1
+        if mod.has("in") or mod.has("out"): index += 1
+    return -1
         
 func decosForType(type):
 
@@ -380,46 +392,3 @@ func recipeForType(type):
         return Def[type].recipe.duplicate()
     return null
     
-func boxTrans(slit, p : Vector3, basis : Basis) -> Transform3D:
-
-    var turns
-    match slit.dir:
-        Belt.S: turns = 0
-        Belt.W: turns = 1
-        Belt.N: turns = 2
-        Belt.E: turns = 3
-        
-    var b = basis.rotated(Vector3.UP, turns * deg_to_rad(-90))
-    return Transform3D(b, p)
-    
-func slitArrowTrans(slit, p : Vector3, basis : Basis) -> Transform3D:
-    
-    var turns
-    match slit.dir:
-        Belt.S: turns = 2
-        Belt.W: turns = 3
-        Belt.N: turns = 0
-        Belt.E: turns = 1
-        
-    var b = basis.rotated(Vector3.UP, turns * deg_to_rad(-90))
-    return Transform3D(b, p + b * slitArrowOffset())
-
-func slotArrowTrans(slot, p : Vector3, basis : Basis) -> Transform3D:
-    
-    var turns
-    match slot.dir:
-        Belt.S: turns = 0
-        Belt.W: turns = 1
-        Belt.N: turns = 2
-        Belt.E: turns = 3
-        
-    var b = basis.rotated(Vector3.UP, turns * deg_to_rad(-90))
-    return Transform3D(b, p + b * slotArrowOffset())
-    
-func slitArrowOffset() -> Vector3:
-    
-    return Vector3(0.0, 0.901, -0.2)
-
-func slotArrowOffset() -> Vector3:
-    
-    return Vector3(0.0, 0.901, 0.5)

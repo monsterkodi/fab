@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://briexx23mok40"]
+
+[ext_resource type="Script" uid="uid://d2a4t7iix5l5w" path="res://components/Poly.gd" id="1_smq2v"]
+
+[node name="Poly" type="Node3D" unique_id=548902228]
+script = ExtResource("1_smq2v")
