@@ -66,7 +66,8 @@ func pauseMenu():
         
 func pauseGame():
     
-    %MenuHandler.slideOutTop(%Hud)
+    #%MenuHandler.slideOutTop(%Hud)
+    %Hud.slideOut()
     
     get_tree().paused = true
     Post.gamePaused.emit()
@@ -75,7 +76,8 @@ func resumeGame():
     
     %MenuHandler.vanishActive()
     
-    %MenuHandler.slideInTop(%Hud)
+    #%MenuHandler.slideInTop(%Hud)
+    %Hud.slideIn()
     
     get_tree().paused = false
     Post.gameResume.emit()

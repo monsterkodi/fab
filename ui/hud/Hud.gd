@@ -22,7 +22,7 @@ func _process(delta: float):
     if not storage: return
 
     for itemType in storage.storage:
-        if storage.storage[itemType] < storage.maxItem:
+        if storage.storage[itemType] < storage.maxItem or itemType == Item.Type.Energy:
             if %ItemButtonGrid.hasButton(itemType):
                 %ItemButtonGrid.setNumber(itemType, storage.storage[itemType])
     
@@ -114,3 +114,16 @@ func storageItemChange(type):
         $ItemButtonGrid.addButton(Item.iconResForType(type), type)
     
     %ItemButtonGrid.setTextColor(type, Color(0.7, 0.7, 0.7))
+
+func slideIn():
+    
+    Utils.slideAnchorVertical( %ItemButtonGrid,    -0.1, 0.0)
+    Utils.slideAnchorVertical( %BuildButtonGrid,    1.1, 1.0)
+    Utils.slideAnchorHorizontal(%ThrottleContainer, 1.1, 1.0)
+
+func slideOut():
+
+    Utils.slideAnchorVertical(  %ItemButtonGrid,    0.0, -0.1, 0.2, false)
+    Utils.slideAnchorVertical(  %BuildButtonGrid,   1.0,  1.1, 0.2, false)
+    Utils.slideAnchorHorizontal(%ThrottleContainer, 1.0,  1.1, 0.2, false)
+    

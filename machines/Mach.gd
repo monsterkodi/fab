@@ -21,6 +21,7 @@ enum Type {
     Molecule,
     Tree,
     Sorter,
+    Overflow,
 }
 
 var ROT_TIP = Basis.from_euler(Vector3(deg_to_rad(35.5), 0, deg_to_rad(45)))
@@ -210,12 +211,20 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
                 ],
         },
     Type.Sorter: {
-        "cost": {Item.Type.Molecule: 10},
+        "cost": {Item.Type.CubeBlack: 50},
         "mods": [
                 {"in":   Belt.NEIGHBOR[Belt.W], "dir": Belt.W,                                 "color": COLOR.TUNNEL},
                 {"out":  Belt.NEIGHBOR[Belt.N], "dir": Belt.N, "type": Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
                 {"out":  Belt.NEIGHBOR[Belt.E], "dir": Belt.E, "type": Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
                 {"out":  Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "type": Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
+                ],
+        },
+    Type.Overflow: {
+        "cost": {Item.Type.CubeBlack: 50},
+        "mods": [
+                {"in":   Belt.NEIGHBOR[Belt.W], "dir": Belt.W,                                 "color": COLOR.TUNNEL},
+                {"out":  Belt.NEIGHBOR[Belt.E], "dir": Belt.E,                                 "color": COLOR.TUNNEL},
+                {"out":  Vector2i.ZERO,         "dir": Belt.N, "type": Module.Type.TUNNEL_BOX, "color": COLOR.TUNNEL},
                 ],
         }
 }

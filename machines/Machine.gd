@@ -130,7 +130,7 @@ func setOrientation(o : int):
             
 func hasSlotArrows():
     
-    return type not in [Mach.Type.Tunnel, Mach.Type.Tunnel2, Mach.Type.Tunnel3, Mach.Type.Sorter]
+    return type not in [Mach.Type.Tunnel, Mach.Type.Tunnel2, Mach.Type.Tunnel3, Mach.Type.Sorter, Mach.Type.Overflow]
 
 func hasSlitArrows():
     

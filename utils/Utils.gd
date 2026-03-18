@@ -235,3 +235,25 @@ func basisForOrientation(orientation):
 func rotateCW(node):
     
     node.transform.basis =  node.transform.basis.rotated(Vector3.UP, deg_to_rad(-90))
+
+func slideAnchorVertical(control : Control, from : float, to : float, duration : float = 0.2, ease = true):
+    
+    var tween = control.create_tween()
+    tween.set_parallel()
+    if ease:
+        tween.set_ease(Tween.EASE_OUT)
+        tween.set_trans(Tween.TRANS_QUINT)
+    tween.tween_property(control, "anchor_top",    to, duration).from(from)
+    tween.tween_property(control, "anchor_bottom", to, duration).from(from)
+    
+func slideAnchorHorizontal(control : Control, from : float, to : float, duration : float = 0.2, ease = true):
+    
+    var tween = control.create_tween()
+    tween.set_parallel()
+    if ease:
+        tween.set_ease(Tween.EASE_OUT)
+        tween.set_trans(Tween.TRANS_QUINT)
+    tween.tween_property(control, "anchor_left",  to, duration).from(from)
+    tween.tween_property(control, "anchor_right", to, duration).from(from)
+    
+    

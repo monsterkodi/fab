@@ -58,13 +58,17 @@ buttonSize = 64.0
 [node name="BuildButtonGrid" parent="." unique_id=675774317 instance=ExtResource("4_by07e")]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = -1
 anchor_top = 1.0
 anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = -12.0
+offset_right = 6.0
 grow_vertical = 0
 buttonSize = 80.0
 
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=825940381]
+[node name="ThrottleContainer" type="PanelContainer" parent="." unique_id=825940381]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -76,7 +80,7 @@ grow_horizontal = 0
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_by07e")
 
-[node name="Throttle" type="VSlider" parent="PanelContainer" unique_id=1600435605]
+[node name="Throttle" type="VSlider" parent="ThrottleContainer" unique_id=1600435605]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 400)
 layout_mode = 2
@@ -98,4 +102,4 @@ script = ExtResource("5_gt2ij")
 
 [connection signal="buttonPressed" from="ItemButtonGrid" to="." method="itemButtonPressed"]
 [connection signal="buttonPressed" from="BuildButtonGrid" to="." method="buttonPressed"]
-[connection signal="value_changed" from="PanelContainer/Throttle" to="." method="throttleValue"]
+[connection signal="value_changed" from="ThrottleContainer/Throttle" to="." method="throttleValue"]

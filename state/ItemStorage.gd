@@ -16,16 +16,18 @@ func loadData(data : Dictionary[Item.Type, int]):
         storage[type] = mini(maxItem, storage[type])
 
 func canTakeItem(type : Item.Type):
+    if type == Item.Type.Energy: return true
     return storage[type] < maxItem
     
 func addItem(type : Item.Type):
 
-    assert(storage[type] <= maxItem)
-    if storage[type] == maxItem: return
-    if storage[type] == maxItem-1:
-        storage[type] = maxItem
-        Post.storageItemMax.emit(type)
-        return
+    if type != Item.Type.Energy:
+        assert(storage[type] <= maxItem)
+        if storage[type] == maxItem: return
+        if storage[type] == maxItem-1:
+            storage[type] = maxItem
+            Post.storageItemMax.emit(type)
+            return
     if storage[type] == 0:
         Post.storageItemChange.emit(type)
     storage[type] += 1
@@ -33,12 +35,13 @@ func addItem(type : Item.Type):
 func addItems(type : Item.Type, num : int):
     
     assert(num > 0)
-    assert(storage[type] <= maxItem)
-    if storage[type] == maxItem: return
-    if storage[type] + num >= maxItem:
-        storage[type] = maxItem
-        Post.storageItemMax.emit(type)
-        return
+    if type != Item.Type.Energy:
+        assert(storage[type] <= maxItem)
+        if storage[type] == maxItem: return
+        if storage[type] + num >= maxItem:
+            storage[type] = maxItem
+            Post.storageItemMax.emit(type)
+            return
     if storage[type] == 0:
         Post.storageItemChange.emit(type)
     storage[type] += num
