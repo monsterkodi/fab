@@ -7,8 +7,6 @@ var color : Color
 func _ready():
 
     assert(type)
-    #slits = Mach.slitsForType(type)
-    #slots = Mach.slotsForType(type)
     
     if proxy:
         proxy.hide()
@@ -22,20 +20,18 @@ func setColor(c : Color):
     color = c
     if bdg:
         for module in bdg.modules:
-            if module.type == Module.Type.ARROW:
-                if module.kind == Module.Kind.SLIT:
-                    module.color = Color(4,0,0)
-                elif module.kind == Module.Kind.SLOT:
-                    module.color = Color(0.3,0.3,4)
+            if module.kind == Module.Kind.ARROW_IN:
+                module.color = Color(4,0,0)
+            elif module.kind == Module.Kind.ARROW_OUT:
+                module.color = Color(0.2,0.2,4)
             else:
                 module.color = color
         mst.add(bdg)
     
 func createBuilding():
     
-    bdg = MachState.Building.new(type, pos, Utils.basisForOrientation(orientation))
+    bdg = newBuilding()
     setColor(color)
-    mst.add(bdg)
     
 func _exit_tree():
     
@@ -45,5 +41,3 @@ func _exit_tree():
     if bdg:
         mst.del(bdg)
         bdg = null
-
-      

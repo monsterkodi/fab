@@ -65,7 +65,9 @@ func produceItemAtSlot(slot):
         var r = randf()
         for i in range(1, recipe.out[0].size(), 2):
             if r <= recipe.out[0][i]:
+                #Log.log(i, Item.stringForType(recipe.out[0][i-1]))
                 return Item.Inst.new(recipe.out[0][i-1])
+            r -= recipe.out[0][i]
 
 func rotateGear(delta: float):
     

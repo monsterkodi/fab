@@ -11,9 +11,10 @@ func _ready():
 func saveData() -> Dictionary[Item.Type, int]: return storage
 func loadData(data : Dictionary[Item.Type, int]):
     
-    storage = data 
     for type in storage:
-        storage[type] = mini(maxItem, storage[type])
+        storage[type] = data.get(type, 0)
+        if type != Item.Type.Energy:
+            storage[type] = mini(maxItem, storage[type])
 
 func canTakeItem(type : Item.Type):
     if type == Item.Type.Energy: return true

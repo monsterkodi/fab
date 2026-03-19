@@ -192,7 +192,7 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
     Type.Tree: {
         "cost": {Item.Type.SphereBlue:   60, Item.Type.Molecule: 10, Item.Type.CylinderGreen: 60},
         "recipe": { "in":   [[Item.Type.CylinderGreen, 1], [Item.Type.Molecule, 0.1], [Item.Type.SphereBlue, 1]], 
-                    "out":  [[Item.Type.Molecule, 0.05, Item.Type.CubeBlack, 1.0]], "time": 4.0 },
+                    "out":  [[Item.Type.Icosaeder, 0.05, Item.Type.Dodecaeder, 0.05, Item.Type.CubeBlack, 1.0]], "time": 4.0 },
         "mods": [
                 {"in":  Belt.NEIGHBOR[Belt.N], "dir": Belt.N,  "color": COLOR.TREE_BUILDING},
                 {"in":  Belt.NEIGHBOR[Belt.W], "dir": Belt.W,  "color": COLOR.TREE_BUILDING},
@@ -264,9 +264,9 @@ func scaleForShape(shape):
     var sy = 0.6
     var sx = 0.6
 
-    if shape in [Item.Shape.Cube, Item.Shape.Cylinder, Item.Shape.Sphere, Item.Shape.Torus]:
+    if shape in [Item.Shape.Cube, Item.Shape.Cylinder, Item.Shape.Sphere, Item.Shape.Torus, Item.Shape.Icosaeder, Item.Shape.Dodecaeder]:
         sx = 0.4
-        if shape in [Item.Shape.Torus, Item.Shape.Sphere]:
+        if shape in [Item.Shape.Torus, Item.Shape.Sphere, Item.Shape.Icosaeder, Item.Shape.Dodecaeder]:
             sy = sx
         else:
             sy = 0.2

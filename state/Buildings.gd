@@ -22,15 +22,15 @@ class Building:
             
             var isSlot = mod.has("in") or mod.has("out")
             
-            if  mod.has("out"): module.kind = Module.Kind.SLOT; module.pos = Vector3(mod.out.x, 0.5, mod.out.y)
-            elif mod.has("in"): module.kind = Module.Kind.SLIT; module.pos = Vector3(mod.in.x, 0.5, mod.in.y)
-            else:               module.kind = Module.Kind.DECO; module.pos = mod.pos
+            if  mod.has("out"):    module.kind = Module.Kind.SLOT; module.pos = Vector3(mod.out.x, 0.5, mod.out.y)
+            elif mod.has("in"):    module.kind = Module.Kind.SLIT; module.pos = Vector3(mod.in.x, 0.5, mod.in.y)
+            else:                  module.kind = Module.Kind.DECO; module.pos = mod.pos
             
-            if mod.has("color"): module.color = mod.color
-            elif isSlot:         module.color = COLOR.BUILDING
+            if mod.has("color"):   module.color = mod.color
+            elif isSlot:           module.color = COLOR.BUILDING
                 
-            if mod.has("type"):  module.type = mod.type
-            elif isSlot:         module.type = Module.Type.BOX
+            if mod.has("type"):    module.type = mod.type
+            elif isSlot:           module.type = Module.Type.BOX
             
             if mod.has("basis"):   module.basis = mod.basis
             elif mod.has("scale"): module.basis = Basis.from_scale(Vector3(mod.scale, mod.scale, mod.scale))
@@ -43,11 +43,12 @@ class Building:
                 var arrow   = Module.Inst.new(pos)
                 arrow.color = module.color
                 arrow.type  = Module.Type.ARROW
-                arrow.kind  = Module.Kind.ARROW
                 if module.kind == Module.Kind.SLIT:
+                    arrow.kind  = Module.Kind.ARROW_IN
                     arrow.pos   = module.pos + Vector3(0.2, 0.401, 0.0).rotated(Vector3.UP, deg_to_rad(-90*mod.dir))
                     arrow.basis = Basis.IDENTITY.rotated(Vector3.UP, deg_to_rad([180, 90, 0, -90][mod.dir]))
                 else:
+                    arrow.kind  = Module.Kind.ARROW_OUT
                     arrow.pos   = module.pos + Vector3(0.5, 0.401, 0.0).rotated(Vector3.UP, deg_to_rad(-90*mod.dir))                    
                     arrow.basis = module.basis
                 modules.push_back(arrow)

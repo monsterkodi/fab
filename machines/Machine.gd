@@ -50,8 +50,12 @@ func _ready():
 
 func createBuilding():
     
-    bdg = MachState.Building.new(type, pos, Utils.basisForOrientation(orientation))
+    bdg = newBuilding()
     mst.add(bdg)
+    
+func newBuilding():
+    
+    return MachState.Building.new(type, pos, Utils.basisForOrientation(orientation))
     
 func hide():
     
@@ -95,7 +99,7 @@ func rotateCW():
         slit.dir = Belt.rotateDir(slit.dir)
         
     if bdg: 
-        mst.del(bdg)
+        #mst.del(bdg)
         createBuilding()
 
 func rotateAround(center: Vector2i):
@@ -125,7 +129,7 @@ func setOrientation(o : int):
         slit.dir = Belt.orientateDir(o, slit.dir)
   
     if bdg:
-        mst.del(bdg)
+        #mst.del(bdg)
         createBuilding()
             
 func hasSlotArrows():

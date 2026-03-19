@@ -2,14 +2,50 @@ class_name MachineSorter
 extends Machine
 
 var slotItems = [-1, -1, -1]
+var typeMap   = {}
+var nextIndex = 0
 
 func _init(p, o):
     
     super._init(Mach.Type.Sorter, p, o)
+
+func saveData(): return super.saveData() + [slotItems, typeMap, nextIndex]
+func loadData(d): 
+    slotItems = d[4]
+    typeMap   = d[5]
+    nextIndex = d[6]
+    updateBuilding()
     
 func slotIndexForItem(item):
     
-    return item.type % 3
+    if not typeMap.has(item.type):
+        typeMap[item.type] = nextIndex
+        nextIndex = (nextIndex + 1) % 3
+        updateBuilding()
+    return typeMap[item.type]
+    
+func newBuilding():
+    
+    var b = super.newBuilding()
+    for t in typeMap:
+        var index    = typeMap[t]
+        var module   = Module.Inst.new(pos)
+        module.pos   = Mach.posOfSlotAtIndex(Mach.Def[type].mods, index) + Vector3(0,0.5,0)
+        module.kind  = Module.Kind.DECO
+        module.type  = Module.typeForItemType(t)
+        module.basis = Mach.scaleForItemType(t)
+        module.color = Item.colorForType(t)
+        b.modules.push_back(module)
+    b.update()
+    return b
+    
+func updateBuilding():
+    
+    if not bdg: return
+    if typeMap.size() > 3: return
+    #mst.del(bdg)
+    createBuilding()
+    #mst.add(bdg)
 
 func consumeItemAtSlit(item, slit):
     

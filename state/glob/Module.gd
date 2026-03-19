@@ -3,24 +3,26 @@ extends Node
 
 enum Type { 
     BOX, 
+    TUNNEL_BOX, 
+    FRAME, 
     ARROW, 
+    STORAGE, 
+    GEAR, 
+    TREE_BRANCH,
+    TREE_CANOPY,
     CUBE, 
     TORUS, 
     SPHERE, 
     CYLINDER, 
-    STORAGE, 
-    GEAR, 
-    FRAME, 
     CUBECROSS, 
     TUBECROSS, 
-    TUNNEL_BOX, 
     CUBECULE, 
-    MOLECULE, 
-    TREE_BRANCH,
-    TREE_CANOPY 
+    MOLECULE,
+    ICOSAEDER, 
+    DODECAEDER, 
     }
     
-enum Kind { NONE, SLIT, SLOT, ARROW, DECO }
+enum Kind { NONE, SLIT, SLOT, ARROW_IN, ARROW_OUT, DECO }
 
 class Inst:
     
@@ -34,8 +36,24 @@ class Inst:
     var pos   : Vector3
     
     func _init(p : Vector2i): bpos = p
+    
+func colorsForType(type : Type, isGhost : bool):
+    
+    if isGhost:
+        var cw = Color.WHITE
+        match type:
+            Module.Type.CUBECROSS, \
+            Module.Type.TUBECROSS: return [cw, cw, cw]
+            Module.Type.CUBECULE, \
+            Module.Type.MOLECULE:  return [cw, cw, cw, cw]
+    else: 
+        match type:  
+            Module.Type.CUBECROSS: return [COLOR.ITEM_RED,   COLOR.ITEM_GREEN, COLOR.ITEM_BLUE]
+            Module.Type.TUBECROSS: return [COLOR.ITEM_GREEN, COLOR.ITEM_BLUE,  COLOR.ITEM_RED]
+            Module.Type.CUBECULE:  return [COLOR.ITEM_BLACK, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE]
+            Module.Type.MOLECULE:  return [COLOR.ITEM_BLACK, COLOR.ITEM_RED,   COLOR.ITEM_GREEN, COLOR.ITEM_BLUE]
         
-func meshForType(type : Type):
+func meshForType(type : Type, isGhost : bool):
     
     var mesh
     match type:
@@ -51,18 +69,20 @@ func meshForType(type : Type):
         Module.Type.TORUS:              mesh = TorusMesh.new(); mesh.outer_radius = 0.5; mesh.inner_radius = 0.2; mesh.ring_segments = 12; mesh.rings = 24
         Module.Type.SPHERE:             mesh = SphereMesh.new(); mesh.radial_segments = 24; mesh.rings = 12
         Module.Type.CYLINDER:           mesh = CylinderMesh.new(); mesh.height = 1.0; mesh.rings = 1; mesh.radial_segments = 24
-        Module.Type.CUBECROSS:          mesh = MachMeshes.cubeCross(1.0, [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
-        Module.Type.TUBECROSS:          mesh = MachMeshes.cylinderCross(1.0, 0.25, [COLOR.ITEM_GREEN, COLOR.ITEM_BLUE, COLOR.ITEM_RED])
-        Module.Type.CUBECULE:           mesh = MachMeshes.cubecule(1.0, 0.3,  0.3, [COLOR.ITEM_BLACK, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE])
-        Module.Type.MOLECULE:           mesh = MachMeshes.molecule(1.0, 0.1, 0.21, [COLOR.ITEM_BLACK, COLOR.ITEM_RED,   COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
+        Module.Type.CUBECROSS:          mesh = MachMeshes.cubeCross(1.0,           colorsForType(type, isGhost))
+        Module.Type.TUBECROSS:          mesh = MachMeshes.cylinderCross(1.0, 0.25, colorsForType(type, isGhost))
+        Module.Type.CUBECULE:           mesh = MachMeshes.cubecule(1.0, 0.3,  0.3, colorsForType(type, isGhost))
+        Module.Type.MOLECULE:           mesh = MachMeshes.molecule(1.0, 0.1, 0.21, colorsForType(type, isGhost))
+        Module.Type.ICOSAEDER:          mesh = Polyhedron.icosahedron(0.5)
+        Module.Type.DODECAEDER:         mesh = Polyhedron.dodecahedron(0.5)
     return mesh
     
-func multiMeshForType(type : Type, isGhost = false):
+func multiMeshForType(type : Type, isGhost : bool):
     
     var mm = MultiMeshInstance3D.new()
     mm.name = stringForType(type)
     mm.multimesh = MultiMesh.new()
-    mm.multimesh.mesh = meshForType(type)
+    mm.multimesh.mesh = meshForType(type, isGhost)
     assert(mm.multimesh.mesh)
     
     if isGhost:
@@ -84,10 +104,15 @@ func multiMeshForType(type : Type, isGhost = false):
         Module.Type.TUBECROSS, \
         Module.Type.CUBECULE, \
         Module.Type.MOLECULE: 
-            mm.multimesh.use_colors = false
+            mm.multimesh.use_colors = isGhost
         _ : mm.multimesh.use_colors = true
 
-    return mm    
+    return mm   
+    
+func typeForItemType(itemType):
+    
+    var shape = Item.shapeForType(itemType)
+    return Type.CUBE + shape
     
 func stringForType(t):
     for key in Type:
