@@ -214,12 +214,12 @@ func advanceItems(delta):
                 updateItemTrans(imap, idx, item)
             else:
                 if not item.blckd:
-                    item.skip = 0
+                    item.skip  = 0
                     item.blckd = 1
                 else:
                     item.blckd += 1
-                    if item.blckd == 2 and item.scale == 1:
-                        item.scale = 1.2
+                    if item.blckd >= 2 and item.scale >= 1 and item.scale < 1.2:
+                        item.scale = minf(1.2, 1.0 + 0.2*item.blckd/10.0)
                         updateItemTrans(imap, idx, item)
                     if item.blckd > 20:
                         item.skip = mini(item.blckd / 10, 20)
