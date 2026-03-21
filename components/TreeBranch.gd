@@ -22,7 +22,7 @@ func generate():
 
     var mi = MeshInstance3D.new()
 
-    mi.mesh = MachMeshes.tree(width, height, thickness, upfactor)
+    mi.mesh = MachMeshes.treeBranch(width, height, thickness, upfactor)
     mi.mesh.surface_set_material(0, material)
     mi.transform = Transform3D.IDENTITY
     

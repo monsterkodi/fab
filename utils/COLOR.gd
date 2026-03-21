@@ -25,3 +25,4 @@ const GHOST_RED     := Color.RED
 const TREE_BUILDING := Color(0.035, 0.035, 0.035)
 const TREE_BRANCH   := Color(0.025, 0.025, 0.025)
 const TREE_CANOPY   := Color(0.0, 0.5, 0.0)
+const HUMUS         := Color(0.05, 0.05, 0.05)

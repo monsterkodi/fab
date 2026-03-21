@@ -10,6 +10,7 @@ enum Type {
     GEAR, 
     TREE_BRANCH,
     TREE_CANOPY,
+    TORUS_QUARTER,
     CUBE, 
     CYLINDER, 
     SPHERE, 
@@ -75,6 +76,7 @@ func meshForType(type : Type, isGhost : bool):
         Module.Type.MOLECULE:           mesh = MachMeshes.molecule(1.0, 0.1, 0.21, colorsForType(type, isGhost))
         Module.Type.ICOSAEDER:          mesh = Polyhedron.icosahedron(0.5)
         Module.Type.DODECAEDER:         mesh = Polyhedron.dodecahedron(0.5)
+        Module.Type.TORUS_QUARTER:      mesh = MachMeshes.torus(0.5, 0.4, 24, 8, 0, 6)
     return mesh
     
 func multiMeshForType(type : Type, isGhost : bool):
@@ -93,6 +95,7 @@ func multiMeshForType(type : Type, isGhost : bool):
             Module.Type.FRAME, \
             Module.Type.TUNNEL_BOX, \
             Module.Type.TREE_BRANCH, \
+            Module.Type.TORUS_QUARTER, \
             Module.Type.BOX:          mm.material_override =  preload("uid://ci4cvsq2gbob7")       
             Module.Type.ARROW:        mm.material_override =  preload("uid://dc38ipveu0heb")
             Module.Type.TREE_CANOPY:  mm.material_override =  preload("uid://bw6ugjcrosrkd")

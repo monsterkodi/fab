@@ -4,4 +4,6 @@
 
 [node name="Torus" type="Node3D" unique_id=863114442]
 script = ExtResource("1_nx0ok")
-ringSegments = 18
+segments = 12
+ringSegments = 6
+smooth = true

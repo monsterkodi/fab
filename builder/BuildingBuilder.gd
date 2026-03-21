@@ -60,6 +60,9 @@ func pointerClick(pos):
     if not fab.storage.canAfford(ghost.type): return
         
     fab.buyMachineAtPosOfType(pos, ghost.type, ghost.orientation)
+    if ghost.type == Mach.Type.Humus and randf() < 0.5:
+        pointerRotate()
+
     clearDelGhosts()
     
 func pointerDrag(pos):
@@ -72,6 +75,8 @@ func pointerDrag(pos):
             if fab.machines.has(gp):
                 return
         fab.buyMachineAtPosOfType(pos, ghost.type, ghost.orientation)
+        if ghost.type == Mach.Type.Humus and randf() < 0.5:
+            pointerRotate()
 
 func pointerRotate():
     

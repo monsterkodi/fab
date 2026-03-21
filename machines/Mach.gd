@@ -22,9 +22,11 @@ enum Type {
     Tree,
     Sorter,
     Overflow,
+    Humus,
 }
 
 var ROT_TIP = Basis.from_euler(Vector3(deg_to_rad(35.5), 0, deg_to_rad(45)))
+var ROT_180 = Basis.from_euler(Vector3(0, deg_to_rad(180), 0))
 const BRANCH_Y = 2.75
 const CANOPY_Y = 4.435
 
@@ -227,7 +229,14 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
                 {"out":  Belt.NEIGHBOR[Belt.E], "dir": Belt.E,                                 },
                 {"out":  Vector2i.ZERO,         "dir": Belt.N, "type": Module.Type.TUNNEL_BOX, },
                 ],
-        }
+        },
+    Type.Humus: {
+        "cost": {Item.Type.Dodecaeder: 1, Item.Type.Icosaeder: 1},
+        "mods": [
+            {"pos": Vector3( -0.5, 0.5, -0.5), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS }, 
+            {"pos": Vector3(  0.5, 0.5,  0.5), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_180 }, 
+        ],
+    },
 }
 
 var Types     : Array[Type]

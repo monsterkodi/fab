@@ -461,7 +461,7 @@ func skewedTube(st : SurfaceTool, startCenter, startDir, startRight, endCenter, 
         start = startRot
         end   = endRot
 
-func partialTorus(st : SurfaceTool, radius : float, thickness : float, segments : int, ringSegments : int, startSegment : int, numSegments : int, smooth : bool):
+func partialTorus(st : SurfaceTool, radius : float, thickness : float, segments : int, ringSegments : int, startSegment : int, numSegments : int, cap : bool, smooth : bool):
 
     if smooth:
         st.set_smooth_group(0)
@@ -486,6 +486,18 @@ func partialTorus(st : SurfaceTool, radius : float, thickness : float, segments 
             endRight  = Vector3(0,radius * thickness,0)
             
         skewedTube(st, startCenter, startDir, startRight, endCenter, endDir, endRight, ringSegments)
+        
+    st.set_smooth_group(-1)
+    if cap:
+        var angle = (startSegment) * stepAngle
+        var center = Vector3(radius,0,0).rotated(Vector3.UP, -deg_to_rad(angle))
+        var dir    = Vector3(0,0,1).rotated(Vector3.UP, -deg_to_rad(angle))
+        circle(st, center, radius* thickness, dir, ringSegments)
+        
+        angle  = (startSegment + numSegments) * stepAngle
+        center = Vector3(radius,0,0).rotated(Vector3.UP, -deg_to_rad(angle))
+        dir    = Vector3(0,0,-1).rotated(Vector3.UP, -deg_to_rad(angle))
+        circle(st, center, radius* thickness, dir, ringSegments)
                 
 func cylinderChamfer(st : SurfaceTool, botCenter : Vector3, topCenter : Vector3, botRadius : float, topRadius : float, botChamfer: float, topChamfer: float, segments : int = 18):
 
@@ -774,12 +786,12 @@ func treeBranch(width, height, thickness, upfactor):
     
     return st.commit()
 
-func torus(radius : float, thickness : float, segments : int, ringSegments : int, startSegment : int = 0, numSegments: int = -1, smooth = false):
+func torus(radius : float, thickness : float, segments : int, ringSegments : int, startSegment : int = 0, numSegments: int = -1, cap = true, smooth = false):
     
     var st = SurfaceTool.new()
     st.begin(Mesh.PRIMITIVE_TRIANGLES)
 
-    partialTorus(st, radius, thickness, segments, ringSegments, startSegment, numSegments, smooth)
+    partialTorus(st, radius, thickness, segments, ringSegments, startSegment, numSegments, cap, smooth)
     
     st.index()
     st.generate_normals()
