@@ -445,6 +445,48 @@ func tube(st : SurfaceTool, bot : Vector3, top: Vector3, botRadius : float, topR
         botRight = botRot
         topRight = topRot
         
+func skewedTube(st : SurfaceTool, startCenter, startDir, startRight, endCenter, endDir, endRight, segments : int):  
+    
+    var start = startRight
+    var end   = endRight
+    var startNormal = startDir.normalized()
+    var endNormal   = endDir.normalized()
+    for step in range(segments):
+        var startRot = start.rotated(startNormal, TAU / segments)
+        var endRot   = end.rotated(endNormal, TAU / segments)
+        if step == segments - 1:
+            startRot = startRight
+            endRot   = endRight
+        quad(st, startCenter + start, endCenter + end, endCenter + endRot, startCenter + startRot)
+        start = startRot
+        end   = endRot
+
+func partialTorus(st : SurfaceTool, radius : float, thickness : float, segments : int, ringSegments : int, startSegment : int, numSegments : int, smooth : bool):
+
+    if smooth:
+        st.set_smooth_group(0)
+    else:
+        st.set_smooth_group(-1)
+    
+    var stepAngle = 360.0 / segments
+    if numSegments < 0: numSegments = segments
+
+    for segment in numSegments:
+        var angle = (startSegment + segment) * stepAngle
+        var startCenter = Vector3(radius,0,0).rotated(Vector3.UP, -deg_to_rad(angle))
+        var startDir    = Vector3(0,0,1).rotated(Vector3.UP, -deg_to_rad(angle))
+        var startRight  = Vector3(0,radius * thickness,0)
+        var endCenter   = Vector3(radius,0,0).rotated(Vector3.UP, -deg_to_rad(angle + stepAngle))
+        var endDir      = Vector3(0,0,1).rotated(Vector3.UP, -deg_to_rad(angle + stepAngle))
+        var endRight    = Vector3(0,radius * thickness,0)
+        if smooth and numSegments == segments and segment == numSegments-1:
+            angle = startSegment * stepAngle
+            endCenter = Vector3(radius,0,0).rotated(Vector3.UP, -deg_to_rad(angle))
+            endDir    = Vector3(0,0,1).rotated(Vector3.UP, -deg_to_rad(angle))
+            endRight  = Vector3(0,radius * thickness,0)
+            
+        skewedTube(st, startCenter, startDir, startRight, endCenter, endDir, endRight, ringSegments)
+                
 func cylinderChamfer(st : SurfaceTool, botCenter : Vector3, topCenter : Vector3, botRadius : float, topRadius : float, botChamfer: float, topChamfer: float, segments : int = 18):
 
     st.set_smooth_group(-1) # flat shading
@@ -731,3 +773,15 @@ func treeBranch(width, height, thickness, upfactor):
     st.generate_normals()
     
     return st.commit()
+
+func torus(radius : float, thickness : float, segments : int, ringSegments : int, startSegment : int = 0, numSegments: int = -1, smooth = false):
+    
+    var st = SurfaceTool.new()
+    st.begin(Mesh.PRIMITIVE_TRIANGLES)
+
+    partialTorus(st, radius, thickness, segments, ringSegments, startSegment, numSegments, smooth)
+    
+    st.index()
+    st.generate_normals()
+    
+    return st.commit()    

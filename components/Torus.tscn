@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bcwpgr2pakgyn"]
+
+[ext_resource type="Script" uid="uid://0l821hspgjp2" path="res://components/Torus.gd" id="1_nx0ok"]
+
+[node name="Torus" type="Node3D" unique_id=863114442]
+script = ExtResource("1_nx0ok")
+ringSegments = 18

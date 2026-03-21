@@ -27,14 +27,18 @@ func slotIndexForItem(item):
 func newBuilding():
     
     var b = super.newBuilding()
+    var indexHeight = [0.5, 0.5, 0.5]
+    Log.log(typeMap)
     for t in typeMap:
         var index    = typeMap[t]
         var module   = Module.Inst.new(pos)
-        module.pos   = Mach.posOfSlotAtIndex(Mach.Def[type].mods, index) + Vector3(0,0.5,0)
+        module.pos   = Mach.posOfSlotAtIndex(Mach.Def[type].mods, index) + Vector3(0,indexHeight[index],0)
+        indexHeight[index] += 0.5
         module.kind  = Module.Kind.DECO
         module.type  = Module.typeForItemType(t)
         module.basis = Mach.scaleForItemType(t)
         module.color = Item.colorForType(t)
+        Log.log(pos, t, index, module.pos, Module.stringForModule(module))
         b.modules.push_back(module)
     b.update()
     return b
@@ -42,10 +46,8 @@ func newBuilding():
 func updateBuilding():
     
     if not bdg: return
-    if typeMap.size() > 3: return
-    #mst.del(bdg)
+    #if typeMap.size() > 3: return
     createBuilding()
-    #mst.add(bdg)
 
 func consumeItemAtSlit(item, slit):
     

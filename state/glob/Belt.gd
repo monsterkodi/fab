@@ -24,7 +24,7 @@ const INPUT_DIR    = [0b0100, 0b1000, 0b0001, 0b0010]
 const OUTPUT_DIR   = [0b0100_0000, 0b1000_0000, 0b0001_0000, 0b0010_0000]
 const SINK_TYPES   = [I_W, I_N, I_E, I_S]
 const SOURCE_TYPES = [O_E, O_S, O_W, O_N]
-
+    
 func stringForType(type):
     
     var s = "[" + String.num_int64(type) + " " + String.num_int64(type, 2).pad_zeros(8) + " "
@@ -43,7 +43,7 @@ func stringForType(type):
 func hasNoInput(type):  return not type & 0b0000_1111
 func hasNoOutput(type): return not type & 0b1111_0000
 func hasOverlap(type):  return (type & 0b1111) & ((type >> 4) & 0b1111)
-    
+
 func isInvalidType(type):
     
     var s = ""

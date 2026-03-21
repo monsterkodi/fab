@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://ckxtn3efdpkqg"]
+
+[ext_resource type="Script" uid="uid://cfo54aw07mq6g" path="res://components/TetraTree.gd" id="1_u7eio"]
+
+[node name="TetraTree" type="Node3D" unique_id=820661910]
+script = ExtResource("1_u7eio")
+points = PackedVector3Array(0, 5.51, 0, 3.61, 4.07, 0)

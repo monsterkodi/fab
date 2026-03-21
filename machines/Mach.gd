@@ -165,7 +165,7 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
         },
     Type.Cubecule:      {
         "cost": {Item.Type.CylinderWhite: 30, Item.Type.CubeCross:     30, Item.Type.Energy:       30},
-        "recipe": { "in":   [[Item.Type.CylinderWhite, 2], [Item.Type.CubeCross, 2], [Item.Type.Energy, 2]], 
+        "recipe": { "in":   [[Item.Type.CylinderWhite, 2], [Item.Type.CubeCross, 1], [Item.Type.Energy, 1]], 
                     "out":  [[Item.Type.Cubecule,      1]], "time": 2.0},
         "mods": [
                 {"in":  Belt.NEIGHBOR[Belt.W] + Belt.NEIGHBOR[Belt.N], "dir": Belt.W},
@@ -178,7 +178,7 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
         },
     Type.Molecule:      {
         "cost": {Item.Type.TubeCross:   60, Item.Type.Cubecule: 60, Item.Type.Energy:       60},
-        "recipe": { "in":  [[Item.Type.TubeCross, 4], [Item.Type.Cubecule, 4], [Item.Type.Energy, 4]], 
+        "recipe": { "in":  [[Item.Type.TubeCross, 4], [Item.Type.Cubecule, 2], [Item.Type.Energy, 4]], 
                     "out": [[Item.Type.Molecule,  1]], "time": 6.0},
         "mods": [
                 {"in":  Belt.NEIGHBOR[Belt.W] + Belt.NEIGHBOR[Belt.N], "dir": Belt.W},
@@ -341,14 +341,14 @@ func buildingNameForType(type): return "Building" + stringForType(type)
 
 func beltsForType(type):        
     
-    match type:
+    match type: 
         Type.Counter:
             return [
                 {"pos": Vector2i.ZERO, "type": Belt.I_W | Belt.O_E}
             ]
     return []
 
-func slitsForType(type):        
+func slitsForType(type):  
     
     var res = []
     for mod in Def[type].mods:

@@ -127,7 +127,7 @@ func meshForShape(shape : Shape):
         Shape.Cylinder:   mesh = CylinderMesh.new(); mesh.top_radius = 0.18; mesh.bottom_radius = 0.18; mesh.height = 0.3; mesh.rings = 1; mesh.radial_segments = 16
         Shape.CubeCross:  mesh = MachMeshes.cubeCross(    0.4,      [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
         Shape.TubeCross:  mesh = MachMeshes.cylinderCross(0.4, 0.1, [COLOR.ITEM_GREEN, COLOR.ITEM_BLUE, COLOR.ITEM_RED])
-        Shape.Cubecule:   mesh = MachMeshes.cubecule(     0.4, 0.133, 0.133, [COLOR.ITEM_BLACK, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE])
+        Shape.Cubecule:   mesh = MachMeshes.cubecule(     0.4, 0.3, 0.12, [COLOR.ITEM_BLACK, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE])
         Shape.Molecule:   mesh = MachMeshes.molecule(     0.4, 0.04, 0.09, [COLOR.ITEM_BLACK, COLOR.ITEM_RED,   COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
         Shape.Icosaeder:  mesh = Polyhedron.icosahedron(  0.2 )
         Shape.Dodecaeder: mesh = Polyhedron.dodecahedron( 0.2 )
