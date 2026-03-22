@@ -225,6 +225,7 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
                 {"out":  Belt.NEIGHBOR[Belt.N], "dir": Belt.N, "type": Module.Type.TUNNEL_BOX, },
                 {"out":  Belt.NEIGHBOR[Belt.E], "dir": Belt.E, "type": Module.Type.TUNNEL_BOX, },
                 {"out":  Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "type": Module.Type.TUNNEL_BOX, },
+                {"pos":  Vector3(0,0.1,0), "dir": Belt.W, "type": Module.Type.BOX, "color": COLOR.BUILDING, "basis": Basis.from_scale(Vector3(1,1,1))},
                 ],
         },
     Type.Overflow: {
@@ -233,6 +234,7 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
                 {"in":   Belt.NEIGHBOR[Belt.W], "dir": Belt.W,                                 },
                 {"out":  Belt.NEIGHBOR[Belt.E], "dir": Belt.E,                                 },
                 {"out":  Vector2i.ZERO,         "dir": Belt.N, "type": Module.Type.TUNNEL_BOX, },
+                {"pos":  Vector3(0,0.85,-0.5),        "dir": Belt.N, "type": Module.Type.ARROW,      "color": COLOR.BUILDING, "basis": ROT_90 * Basis.from_scale(Vector3(2,1.5,2)) },
                 ],
         },
     Type.Humus: {

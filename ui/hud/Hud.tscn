@@ -66,6 +66,21 @@ offset_top = -12.0
 offset_right = 6.0
 grow_vertical = 0
 buttonSize = 80.0
+columns = 32
+tooltip = true
+
+[node name="BuildGroupGrid" parent="." unique_id=1897497644 instance=ExtResource("4_by07e")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = -12.0
+offset_right = 6.0
+grow_vertical = 0
+buttonSize = 80.0
+columns = 1
 
 [node name="ThrottleContainer" type="PanelContainer" parent="." unique_id=825940381]
 unique_name_in_owner = true
@@ -101,5 +116,7 @@ offset_bottom = 40.0
 script = ExtResource("5_gt2ij")
 
 [connection signal="buttonPressed" from="ItemButtonGrid" to="." method="itemButtonPressed"]
-[connection signal="buttonPressed" from="BuildButtonGrid" to="." method="buttonPressed"]
+[connection signal="buttonContext" from="BuildButtonGrid" to="." method="buildingButtonContext"]
+[connection signal="buttonPressed" from="BuildButtonGrid" to="." method="buildingButtonPressed"]
+[connection signal="buttonPressed" from="BuildGroupGrid" to="." method="groupButtonPressed"]
 [connection signal="value_changed" from="ThrottleContainer/Throttle" to="." method="throttleValue"]

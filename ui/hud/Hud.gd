@@ -3,19 +3,46 @@ extends Control
 
 var storage : ItemStorage
 
+var buttonGroups = [
+    ["Rect"],
+    ["Belt"],
+    ["Tunnel", "Tunnel2", "Tunnel3"],
+    ["Storage", "Counter"],
+    ["Prism", "Mixer"],
+    ["Burner"],
+    ["Whitener", "Cylinder", "Sphere"],
+    ["CubeCross", "TubeCross", "Cubecule", "Molecule"],
+    ["Tree", "Root"],
+    ["Sorter", "Overflow"],
+    ["Humus", "Farm", "Ranch"],
+    ["Del"]
+]
+
 func _ready():
     
     Post.subscribe(self)
     
-    $BuildButtonGrid.addButton("res://icons/buildings/BuildingRect.png", "Rect")
+    for group in buttonGroups:
+        $BuildButtonGrid.addButton(iconForString(group[0]), group[0])
     
-    for type in Mach.Types:
-        if type == Mach.Type.Belt:
-            $BuildButtonGrid.addButton("res://icons/buildings/BuildingBelt.png", type)
-        else:
-            $BuildButtonGrid.addButton("res://icons/machines/" + Mach.stringForType(type) + ".png", type)
+    $BuildGroupGrid.hide()
+    
+func iconForString(string : String):
+    
+    match string:
+        "Rect": return "res://icons/buildings/BuildingRect.png"
+        "Belt": return "res://icons/buildings/BuildingBelt.png"
+        "Del" : return "res://icons/buildings/BuildingDel.png"
+        _ : return "res://icons/machines/" + string + ".png"
         
-    $BuildButtonGrid.addButton("res://icons/buildings/BuildingDel.png", "Del")
+func groupIndexForString(string : String):
+    
+    for index in buttonGroups.size():
+        var group = buttonGroups[index]
+        for item in group:
+            if item == string:
+                return index
+    return -1
     
 func _process(delta: float):
     
@@ -44,10 +71,6 @@ func activateButton(index):
     if index >= 0 and index < btns.size():
         btns[index].button_pressed = true
     
-func buttonPressed(buildingName : String):
-   
-    Post.activateBuilder.emit(buildingName.replace("Building", ""))
-
 func _shortcut_input(event: InputEvent):
     
     if not event.pressed: return
@@ -86,10 +109,44 @@ func _unhandled_key_input(event: InputEvent):
             if event.keycode >= KEY_1 and event.keycode <= KEY_9:
                 activateButton(event.keycode-KEY_1+1)
 
-func itemButtonPressed(itemName : String):
+func buildingButtonPressed(buildingName : String):
 
-    for i in range(50):
-        Utils.fabState().storage.addItem(Item.typeForString(itemName.replace("Item", "")))
+    Post.activateBuilder.emit(buildingName)
+
+func buildingButtonContext(buildingName : String):
+    
+    var groupIndex = groupIndexForString(buildingName)
+    var group = buttonGroups[groupIndex]
+    if group.size() > 1:
+        $BuildGroupGrid.delButtons()
+        for itemIndex in range(group.size()-1, -1, -1):
+            var item = group[itemIndex]
+            $BuildGroupGrid.addButton(iconForString(item), item)
+        $BuildGroupGrid.reset_size()
+        var buttonPos = %BuildButtonGrid.buttonPosAtIndex(groupIndex)
+        $BuildGroupGrid.position = Vector2(buttonPos.x + %BuildButtonGrid.position.x, 1080 - group.size() * ($BuildGroupGrid.buttonSize + 8))
+        $BuildGroupGrid.show()
+
+func groupButtonPressed(buildingName : String):
+    
+    var index = groupIndexForString(buildingName)
+    while buttonGroups[index][0] != buildingName:
+        buttonGroups[index].push_back(buttonGroups[index].pop_front()) 
+        
+    $BuildButtonGrid.delButtons()
+    for group in buttonGroups:
+        $BuildButtonGrid.addButton(iconForString(group[0]), group[0])
+    
+    $BuildGroupGrid.hide()
+    Post.activateBuilder.emit(buildingName)
+
+func infoTooltip(string : String, button : Button):
+    
+    $BuildGroupGrid.hide()
+    
+func itemButtonPressed(itemType : Item.Type):
+
+    Utils.fabState().storage.addItems(itemType, 100)
 
 func throttleValue(value: float):
     
