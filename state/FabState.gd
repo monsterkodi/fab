@@ -2,6 +2,7 @@ class_name FabState
 extends Node
 
 var machines:      Dictionary[Vector2i, Machine]
+var fruits:        Dictionary[Vector2i, Item.Type] 
 var gameSpeed:     float = 1.0
 
 @onready var storage: ItemStorage = $ItemStorage
@@ -101,7 +102,14 @@ func outSpace(pos : Vector2i, dir : int, advance: float = 0.5) -> float:
             else:
                 return space - Belt.HALFSIZE
     return advance
+
+func machineOfTypeAtPos(type : Mach.Type, pos : Vector2i):
     
+    if machines.has(pos):    
+        if machines[pos].type == type:
+            return machines[pos]
+    return null
+        
 func newMachine(type : Mach.Type, pos : Vector2i, orientation : int) -> Machine:
     
     var path = "res://machines/Machine" + Mach.stringForType(type) + ".gd"
@@ -388,3 +396,15 @@ func clearGhosts():
     
     for ghost in $Ghosts.get_children():
         ghost.queue_free()
+
+func addFruitAtPos(pos, fruit):
+    
+    fruits[pos] = fruit
+    
+func fruitAtPos(pos):
+    
+    return fruits.get(pos, -1)
+    
+func delFruitAtPos(pos):
+    
+    fruits.erase(pos)

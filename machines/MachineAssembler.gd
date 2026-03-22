@@ -47,11 +47,17 @@ func produce(delta:float):
         canProduce = false
         for i in recipe.in.size():
             consumed[i] -= recipe.in[i][1]
+            
     if producing:
-        elapsed += delta
-        if elapsed < recipe.time:
-            rotateGear(-deg_to_rad(delta * 360 / 16))
+        produceDelta(delta)
+            
     super.produce(delta)
+    
+func produceDelta(delta):
+    
+    elapsed += delta
+    if elapsed < recipe.time:
+        rotateGear(-deg_to_rad(delta * 360 / 16))
     
 func produceItemAtSlot(slot):
     
@@ -63,12 +69,18 @@ func produceItemAtSlot(slot):
     if recipe.out[0].size() == 2:
         return Item.Inst.new(recipe.out[0][0])
     else:
-        var r = randf()
-        for i in range(1, recipe.out[0].size(), 2):
-            if r <= recipe.out[0][i]:
-                #Log.log(i, Item.stringForType(recipe.out[0][i-1]))
-                return Item.Inst.new(recipe.out[0][i-1])
-            r -= recipe.out[0][i]
+        var item = chooseOutItemType()
+        if item >= 0:
+            return Item.Inst.new(item)
+        
+func chooseOutItemType():
+    
+    var r = randf()
+    for i in range(1, recipe.out[0].size(), 2):
+        if r <= recipe.out[0][i]:
+            return recipe.out[0][i-1]
+        r -= recipe.out[0][i]
+    return -1
 
 func rotateGear(delta: float):
     

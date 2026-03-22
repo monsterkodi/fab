@@ -101,6 +101,14 @@ func _shortcut_input(event: InputEvent):
         Post.gameSpeedReset.emit()
         get_viewport().set_input_as_handled()
         return
+        
+    if event.is_action("hide_hud"):
+        if %ItemButtonGrid.anchor_top < 0:
+            slideIn()
+        else:
+            slideOut()
+        get_viewport().set_input_as_handled()
+        return
 
 func _unhandled_key_input(event: InputEvent):
     
@@ -171,16 +179,25 @@ func storageItemChange(type):
         $ItemButtonGrid.addButton(Item.iconResForType(type), type)
     
     %ItemButtonGrid.setTextColor(type, Color(0.7, 0.7, 0.7))
+    
+func slideInItems():     Utils.slideAnchorVertical(  %ItemButtonGrid,   -0.15, 0.0)
+func slideInBuild():     Utils.slideAnchorVertical(  %BuildButtonGrid,   1.1,  1.0)
+func slideInThrottle():  Utils.slideAnchorHorizontal(%ThrottleContainer, 1.1,  1.0)
+
+func slideOutItems():    Utils.slideAnchorVertical(  %ItemButtonGrid,    %ItemButtonGrid.anchor_top, -0.15, 0.2, false)
+func slideOutBuild():    Utils.slideAnchorVertical(  %BuildButtonGrid,   %BuildButtonGrid.anchor_top,  1.1,  0.2, false)
+func slideOutThrottle(): Utils.slideAnchorHorizontal(%ThrottleContainer, %ThrottleContainer.anchor_left,  1.1,  0.2, false)
 
 func slideIn():
     
-    Utils.slideAnchorVertical( %ItemButtonGrid,    -0.1, 0.0)
-    Utils.slideAnchorVertical( %BuildButtonGrid,    1.1, 1.0)
-    Utils.slideAnchorHorizontal(%ThrottleContainer, 1.1, 1.0)
-
+    slideInItems()
+    slideInBuild()
+    slideInThrottle()
+    
 func slideOut():
 
-    Utils.slideAnchorVertical(  %ItemButtonGrid,    0.0, -0.1, 0.2, false)
-    Utils.slideAnchorVertical(  %BuildButtonGrid,   1.0,  1.1, 0.2, false)
-    Utils.slideAnchorHorizontal(%ThrottleContainer, 1.0,  1.1, 0.2, false)
+    slideOutItems()
+    slideOutBuild()
+    slideOutThrottle()
+    
     
