@@ -45,6 +45,8 @@ signal storageItemMax
 signal storageItemEmpty
 signal storageItemChange
 
+signal delFruit
+
 var sigDict : Dictionary
 
 func _ready():

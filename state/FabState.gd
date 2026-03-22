@@ -149,6 +149,9 @@ func sellMachineAtPos(pos : Vector2i):
     if machines.has(pos):
         if not machines[pos].isRoot():
             storage.refund(machines[pos].type)
+            if machines[pos].type == Mach.Type.Humus:
+                Post.delFruit.emit(pos)
+                delFruitAtPos(pos)
             machines[pos].free()
             
 func delMachineAtPos(pos : Vector2i):

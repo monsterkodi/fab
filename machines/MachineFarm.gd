@@ -2,10 +2,21 @@ class_name MachineFarm
 extends MachineAssembler
 
 var fruits = {}
+var seeds  = []
 
 func _init(p, o):
     
     super._init(Mach.Type.Farm, p, o)
+    
+    Post.subscribe(self)
+    
+func delFruit(p):
+    
+    if fruits.has(p):
+        fruits.erase(p)
+        if bdg:
+            hide()
+            show()
 
 func saveData(): 
     
@@ -21,6 +32,17 @@ func loadData(d):
         for f in d[8]:
             addFruitAtPos(Vector2i(f[0], f[1]), f[2])
 
+func consumeItemAtSlit(item, slit):
+    
+    var consm = super.consumeItemAtSlit(item, slit)
+    if not consm:
+        if slits.find(slit) >= recipe.in.size():
+            if seeds.size() < 2:
+                seeds.push_back(item.type) 
+                Log.log("seed consumed")
+                return true 
+    return consm
+
 func produceDelta(delta):
 
     super.produceDelta(delta)
@@ -33,6 +55,11 @@ func produceDelta(delta):
             addFruitAtPos(p, t)
 
 func chooseFruitType():
+    
+    if seeds.size():
+        var seed = seeds.pop_front()
+        if recipe.seed.has(seed):
+            return recipe.seed[seed]
     
     var r = randf_range(0.0, recipe.out[0][1] + recipe.out[0][3])
     if r < recipe.out[0][1]: return recipe.out[0][0]
@@ -80,7 +107,9 @@ func searchPosForPlant(p: Vector2i, visited = {}):
     visited[p] = true
     var humus = []
         
-    for d in Belt.DIRS:
+    var dirs = [0, 1, 2, 3]
+    dirs.shuffle()
+    for d in dirs:
         var np = p + Belt.NEIGHBOR[d]
         if fab.machineOfTypeAtPos(Mach.Type.Humus, np):
             if fab.fruitAtPos(np) < 0:

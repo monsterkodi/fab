@@ -247,10 +247,15 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
     Type.Farm: {
         "cost": {Item.Type.Dodecaeder: 10, Item.Type.Icosaeder: 10, Item.Type.Molecule: 10 },
         "recipe": { "in":   [[Item.Type.SphereBlue, 1], [Item.Type.Icosaeder, 0.1]], 
-            "out":  [[Item.Type.DodecaIcosa, 0.05, Item.Type.Octaeder, 0.05, Item.Type.Tetraeder, 1.0]], "time": 4.0 },
+                    "out":  [[Item.Type.DodecaIcosa, 0.05, Item.Type.Octaeder, 0.05, Item.Type.Tetraeder, 1.0]], 
+                    "time": 4.0,
+                    "seed": {   Item.Type.CubeRed:   Item.Type.Octaeder,
+                                Item.Type.CubeWhite: Item.Type.DodecaIcosa,
+                                Item.Type.CubeBlue:  Item.Type.DodecaIcosa } },
         "mods": [
                 {"in":   Belt.NEIGHBOR[Belt.S], "dir": Belt.S,                         },
                 {"in":   Belt.NEIGHBOR[Belt.S] + Belt.NEIGHBOR[Belt.E], "dir": Belt.S  },
+                {"in":   Vector2i.ZERO, "dir": Belt.N, "shape": Item.Shape.Cube        },
                 {"out":  Belt.NEIGHBOR[Belt.E], "dir": Belt.E},
                 {"pos": Vector3( 1, 1, 0),        "type": Module.Type.GEAR,             "color": COLOR.BUILDING},
                 {"pos": Vector3( -1.5, 1.0,   0.0), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_X }, 
