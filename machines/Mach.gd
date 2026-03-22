@@ -23,10 +23,15 @@ enum Type {
     Sorter,
     Overflow,
     Humus,
+    Farm,
+    Ranch,
 }
 
 var ROT_TIP = Basis.from_euler(Vector3(deg_to_rad(35.5), 0, deg_to_rad(45)))
+var ROT_90  = Basis.from_euler(Vector3(0, deg_to_rad(90), 0))
 var ROT_180 = Basis.from_euler(Vector3(0, deg_to_rad(180), 0))
+var ROT_270 = Basis.from_euler(Vector3(0, deg_to_rad(270), 0))
+var ROT_X   = Basis.from_euler(Vector3(deg_to_rad(90), 0, 0))
 const BRANCH_Y = 2.75
 const CANOPY_Y = 4.435
 
@@ -233,11 +238,49 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
     Type.Humus: {
         "cost": {Item.Type.Dodecaeder: 1, Item.Type.Icosaeder: 1},
         "mods": [
-            {"pos": Vector3( -0.5, 0.5, -0.5), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS }, 
-            {"pos": Vector3(  0.5, 0.5,  0.5), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_180 }, 
-        ],
-    },
-}
+                {"pos": Vector3( -0.5, 0.5, -0.5), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS }, 
+                {"pos": Vector3(  0.5, 0.5,  0.5), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_180 }, 
+                ],
+        },
+    Type.Farm: {
+        "cost": {Item.Type.Dodecaeder: 10, Item.Type.Icosaeder: 10, Item.Type.Molecule: 10 },
+        "recipe": { "in":   [[Item.Type.SphereBlue, 1], [Item.Type.Icosaeder, 0.1]], 
+            "out":  [[Item.Type.DodecaIcosa, 0.05, Item.Type.Octaeder, 0.05, Item.Type.Tetraeder, 1.0]], "time": 4.0 },
+        "mods": [
+                {"in":   Belt.NEIGHBOR[Belt.S], "dir": Belt.S,                         },
+                {"in":   Belt.NEIGHBOR[Belt.S] + Belt.NEIGHBOR[Belt.E], "dir": Belt.S  },
+                {"out":  Belt.NEIGHBOR[Belt.E], "dir": Belt.E},
+                {"pos": Vector3( 1, 1, 0),        "type": Module.Type.GEAR,         "color": COLOR.BUILDING},
+                {"pos": Vector3( -1.5, 1.0,   0.0), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_X }, 
+                {"pos": Vector3( -1.5, 1.0,   1.0), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_X }, 
+                {"pos": Vector3( -0.5, 1.0,   0.0), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_X * ROT_180 }, 
+                {"pos": Vector3( -0.5, 1.0,   1.0), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_X * ROT_180 }, 
+                {"pos": Vector3( -0.5, 1.5,   0.5), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_270 }, 
+                {"pos": Vector3( -0.5, 1.5,   0.5), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_180 }, 
+                {"pos": Vector3( -0.5, 1.5,   0.5), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_90 }, 
+                {"pos": Vector3( -0.5, 1.5,   0.5), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS }, 
+                ],
+        },
+    Type.Ranch: {
+        "cost": {Item.Type.Dodecaeder: 10, Item.Type.Icosaeder: 10, Item.Type.Molecule: 10 },
+        "recipe": { "in":   [[Item.Type.Tetraeder, 1], [Item.Type.Dodecaeder, 0.1]], 
+            "out":  [[Item.Type.DodecaIcosa, 0.05, Item.Type.Octaeder, 0.05, Item.Type.Tetraeder, 1.0]], "time": 4.0 },
+        "mods": [
+                {"in":   Belt.NEIGHBOR[Belt.S], "dir": Belt.S,                         },
+                {"in":   Belt.NEIGHBOR[Belt.S] + Belt.NEIGHBOR[Belt.E], "dir": Belt.S  },
+                {"out":  Belt.NEIGHBOR[Belt.E], "dir": Belt.E},
+                {"pos": Vector3( 1, 1, 0),        "type": Module.Type.GEAR,         "color": COLOR.BUILDING},
+                {"pos": Vector3( -1.5, 1.0,   0.0), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_X }, 
+                {"pos": Vector3( -1.5, 1.0,   1.0), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_X }, 
+                {"pos": Vector3( -0.5, 1.0,   0.0), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_X * ROT_180 }, 
+                {"pos": Vector3( -0.5, 1.0,   1.0), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_X * ROT_180 }, 
+                {"pos": Vector3( -0.5, 1.5,   0.5), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_270 }, 
+                {"pos": Vector3( -0.5, 1.5,   0.5), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_180 }, 
+                {"pos": Vector3( -0.5, 1.5,   0.5), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_90 }, 
+                {"pos": Vector3( -0.5, 1.5,   0.5), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS }, 
+                ],
+        },
+    }
 
 var Types     : Array[Type]
 var TypeNames : Array[String]
@@ -273,9 +316,9 @@ func scaleForShape(shape):
     var sy = 0.6
     var sx = 0.6
 
-    if shape in [Item.Shape.Cube, Item.Shape.Cylinder, Item.Shape.Sphere, Item.Shape.Torus, Item.Shape.Icosaeder, Item.Shape.Dodecaeder]:
+    if shape in [Item.Shape.Cube, Item.Shape.Cylinder, Item.Shape.Sphere, Item.Shape.Torus, Item.Shape.Icosaeder, Item.Shape.Dodecaeder, Item.Shape.Tetraeder, Item.Shape.Octaeder, Item.Shape.DodecaIcosa]:
         sx = 0.4
-        if shape in [Item.Shape.Torus, Item.Shape.Sphere, Item.Shape.Icosaeder, Item.Shape.Dodecaeder]:
+        if shape in [Item.Shape.Torus, Item.Shape.Sphere, Item.Shape.Icosaeder, Item.Shape.Dodecaeder, Item.Shape.Tetraeder, Item.Shape.Octaeder, Item.Shape.DodecaIcosa]:
             sy = sx
         else:
             sy = 0.2

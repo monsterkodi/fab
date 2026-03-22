@@ -21,6 +21,9 @@ enum Type {
     MOLECULE,
     ICOSAEDER, 
     DODECAEDER, 
+    OCTAEDER,
+    TETRAEDER,
+    DODECAICOSA,
     }
     
 enum Kind { NONE, SLIT, SLOT, ARROW_IN, ARROW_OUT, DECO }
@@ -43,16 +46,22 @@ func colorsForType(type : Type, isGhost : bool):
     if isGhost:
         var cw = Color.WHITE
         match type:
+            Module.Type.TETRAEDER,\
+            Module.Type.OCTAEDER,\
+            Module.Type.DODECAICOSA:    return [cw, cw]
             Module.Type.CUBECROSS, \
-            Module.Type.TUBECROSS: return [cw, cw, cw]
+            Module.Type.TUBECROSS:      return [cw, cw, cw]
             Module.Type.CUBECULE, \
-            Module.Type.MOLECULE:  return [cw, cw, cw, cw]
+            Module.Type.MOLECULE:       return [cw, cw, cw, cw]
     else: 
         match type:  
-            Module.Type.CUBECROSS: return [COLOR.ITEM_RED,   COLOR.ITEM_GREEN, COLOR.ITEM_BLUE]
-            Module.Type.TUBECROSS: return [COLOR.ITEM_GREEN, COLOR.ITEM_BLUE,  COLOR.ITEM_RED]
-            Module.Type.CUBECULE:  return [COLOR.ITEM_BLACK, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE]
-            Module.Type.MOLECULE:  return [COLOR.ITEM_BLACK, COLOR.ITEM_RED,   COLOR.ITEM_GREEN, COLOR.ITEM_BLUE]
+            Module.Type.TETRAEDER:      return COLOR.ITEM_TETRAEDER
+            Module.Type.OCTAEDER:       return COLOR.ITEM_OCTAEDER
+            Module.Type.DODECAICOSA:    return COLOR.ITEM_DODECAICOSA
+            Module.Type.CUBECROSS:      return COLOR.ITEM_CUBECROSS
+            Module.Type.TUBECROSS:      return COLOR.ITEM_TUBECROSS
+            Module.Type.CUBECULE:       return COLOR.ITEM_CUBECULE
+            Module.Type.MOLECULE:       return COLOR.ITEM_MOLECULE
         
 func meshForType(type : Type, isGhost : bool):
     
@@ -76,6 +85,9 @@ func meshForType(type : Type, isGhost : bool):
         Module.Type.MOLECULE:           mesh = MachMeshes.molecule(1.0, 0.1, 0.21, colorsForType(type, isGhost))
         Module.Type.ICOSAEDER:          mesh = Polyhedron.icosahedron(0.5)
         Module.Type.DODECAEDER:         mesh = Polyhedron.dodecahedron(0.5)
+        Module.Type.OCTAEDER:           mesh = Polyhedron.twinOctahedron(0.375,    colorsForType(type, isGhost))
+        Module.Type.TETRAEDER:          mesh = Polyhedron.twinTetrahedron(0.375,     colorsForType(type, isGhost))
+        Module.Type.DODECAICOSA:        mesh = Polyhedron.twinDodecahedron(0.5,    colorsForType(type, isGhost))
         Module.Type.TORUS_QUARTER:      mesh = MachMeshes.torus(0.5, 0.4, 24, 8, 0, 6)
     return mesh
     
@@ -85,6 +97,7 @@ func multiMeshForType(type : Type, isGhost : bool):
     mm.name = stringForType(type)
     mm.multimesh = MultiMesh.new()
     mm.multimesh.mesh = meshForType(type, isGhost)
+    mm.multimesh.visible_instance_count = 0
     assert(mm.multimesh.mesh)
     
     if isGhost:
@@ -103,12 +116,18 @@ func multiMeshForType(type : Type, isGhost : bool):
         
     mm.multimesh.transform_format = MultiMesh.TRANSFORM_3D
     match type:
+        Module.Type.DODECAICOSA, \
+        Module.Type.OCTAEDER, \
+        Module.Type.TETRAEDER, \
         Module.Type.CUBECROSS, \
         Module.Type.TUBECROSS, \
         Module.Type.CUBECULE, \
         Module.Type.MOLECULE: 
             mm.multimesh.use_colors = isGhost
         _ : mm.multimesh.use_colors = true
+        
+    match type:
+        _ : mm.multimesh.instance_count = 10000
 
     return mm   
     

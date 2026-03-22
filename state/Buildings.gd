@@ -127,8 +127,6 @@ func _ready():
         add_child(Module.multiMeshForType(Module.Type[typeName], isGhost))
     
     for child in get_children():
-        child.multimesh.instance_count = 1000
-        child.multimesh.visible_instance_count = 0
         var mm = ModMap.new()
         mm.msh = child
         mm.hdl = self

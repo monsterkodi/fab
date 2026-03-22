@@ -94,9 +94,9 @@ func itemAtIndex(index : int) -> Item.Inst:
 func itemsAtPos(pos : Vector2i) -> Array:
     
     var items = []
-    for pm in itemMap:
-        for d in Belt.DIRS:
-            var dpos = Vector3i(pos.x, pos.y, d)
+    for d in Belt.DIRS:
+        var dpos = Vector3i(pos.x, pos.y, d)
+        for pm in itemMap:
             if pm.map.has(dpos):
                 items.push_back(pm.ary[pm.map[dpos]])
     return items

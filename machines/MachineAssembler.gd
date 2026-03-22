@@ -16,10 +16,11 @@ func _init(t, p, o):
     
 func saveData(): return super.saveData() + [consumed, canProduce, producing, elapsed]
 func loadData(d): 
-    consumed   = d[4]
-    canProduce = d[5]
-    producing  = d[6]
-    elapsed    = d[7]
+    if d.size() > 4:
+        consumed   = d[4]
+        canProduce = d[5]
+        producing  = d[6]
+        elapsed    = d[7]
     
 func consumeItemAtSlit(item, slit):
 

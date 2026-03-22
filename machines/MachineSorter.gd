@@ -28,7 +28,6 @@ func newBuilding():
     
     var b = super.newBuilding()
     var indexHeight = [0.5, 0.5, 0.5]
-    Log.log(typeMap)
     for t in typeMap:
         var index    = typeMap[t]
         var module   = Module.Inst.new(pos)
@@ -38,7 +37,6 @@ func newBuilding():
         module.type  = Module.typeForItemType(t)
         module.basis = Mach.scaleForItemType(t)
         module.color = Item.colorForType(t)
-        Log.log(pos, t, index, module.pos, Module.stringForModule(module))
         b.modules.push_back(module)
     b.update()
     return b
@@ -46,7 +44,6 @@ func newBuilding():
 func updateBuilding():
     
     if not bdg: return
-    #if typeMap.size() > 3: return
     createBuilding()
 
 func consumeItemAtSlit(item, slit):

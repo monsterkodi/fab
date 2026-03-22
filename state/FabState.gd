@@ -349,8 +349,11 @@ func occupiedByRoot(posl):
     
     for pos in posl:
         if machines.has(pos):
-            if machines[pos].isRoot():
-                return true
+            if not machines[pos]:
+                machines.erase(pos)
+            else:
+                if machines[pos].isRoot():
+                    return true
     return false
         
 func ghostForMachine(machine, color) -> Ghost:

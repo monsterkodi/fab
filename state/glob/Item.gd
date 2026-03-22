@@ -26,6 +26,7 @@ enum Type {
     Dodecaeder,
     Octaeder,
     Tetraeder,
+    DodecaIcosa,
 }
 
 enum Shape {
@@ -41,6 +42,7 @@ enum Shape {
     Dodecaeder,
     Octaeder,
     Tetraeder,
+    DodecaIcosa,
 }
 
 var Types      : Array[Type]
@@ -72,6 +74,7 @@ var TypeInfo = [                                 # energy  white   round  sphere
     [Shape.Dodecaeder,    COLOR.ITEM_BLUE,       8.0,         0,      0,   0 ],
     [Shape.Octaeder,      COLOR.ITEM_WHITE,      4.0,         0,      0,   0 ],
     [Shape.Tetraeder,     COLOR.ITEM_BLACK,      8.0,         0,      0,   0 ],
+    [Shape.DodecaIcosa,   COLOR.ITEM_BLACK,      8.0,         0,      0,   0 ],
 ]
 
 func _init():
@@ -121,18 +124,19 @@ func meshForShape(shape : Shape):
     
     var mesh
     match shape:
-        Shape.Cube:       mesh = BoxMesh.new(); mesh.size = Vector3(0.3, 0.3, 0.3)
-        Shape.Torus:      mesh = TorusMesh.new(); mesh.outer_radius = 0.17; mesh.inner_radius = 0.055; mesh.ring_segments = 8; mesh.rings = 24
-        Shape.Sphere:     mesh = SphereMesh.new(); mesh.radius = 0.2; mesh.height = 0.4; mesh.radial_segments = 24; mesh.rings = 12
-        Shape.Cylinder:   mesh = CylinderMesh.new(); mesh.top_radius = 0.18; mesh.bottom_radius = 0.18; mesh.height = 0.3; mesh.rings = 1; mesh.radial_segments = 16
-        Shape.CubeCross:  mesh = MachMeshes.cubeCross(    0.4,      [COLOR.ITEM_RED, COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
-        Shape.TubeCross:  mesh = MachMeshes.cylinderCross(0.4, 0.1, [COLOR.ITEM_GREEN, COLOR.ITEM_BLUE, COLOR.ITEM_RED])
-        Shape.Cubecule:   mesh = MachMeshes.cubecule(     0.4, 0.3, 0.12, [COLOR.ITEM_BLACK, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE, COLOR.ITEM_WHITE])
-        Shape.Molecule:   mesh = MachMeshes.molecule(     0.4, 0.04, 0.09, [COLOR.ITEM_BLACK, COLOR.ITEM_RED,   COLOR.ITEM_GREEN, COLOR.ITEM_BLUE])
-        Shape.Icosaeder:  mesh = Polyhedron.icosahedron(  0.2 )
-        Shape.Dodecaeder: mesh = Polyhedron.dodecahedron( 0.2 )
-        Shape.Octaeder:   mesh = Polyhedron.octahedron(   0.15 )
-        Shape.Tetraeder:  mesh = Polyhedron.tetrahedron(  0.2 )
+        Shape.Cube:        mesh = BoxMesh.new(); mesh.size = Vector3(0.3, 0.3, 0.3)
+        Shape.Torus:       mesh = TorusMesh.new(); mesh.outer_radius = 0.17; mesh.inner_radius = 0.055; mesh.ring_segments = 8; mesh.rings = 24
+        Shape.Sphere:      mesh = SphereMesh.new(); mesh.radius = 0.2; mesh.height = 0.4; mesh.radial_segments = 24; mesh.rings = 12
+        Shape.Cylinder:    mesh = CylinderMesh.new(); mesh.top_radius = 0.18; mesh.bottom_radius = 0.18; mesh.height = 0.3; mesh.rings = 1; mesh.radial_segments = 16
+        Shape.CubeCross:   mesh = MachMeshes.cubeCross(    0.4,             COLOR.ITEM_CUBECROSS)
+        Shape.TubeCross:   mesh = MachMeshes.cylinderCross(0.4, 0.1,        COLOR.ITEM_TUBECROSS)
+        Shape.Cubecule:    mesh = MachMeshes.cubecule(     0.4, 0.3, 0.12,  COLOR.ITEM_CUBECULE)
+        Shape.Molecule:    mesh = MachMeshes.molecule(     0.4, 0.04, 0.09, COLOR.ITEM_MOLECULE)
+        Shape.Icosaeder:   mesh = Polyhedron.icosahedron(  0.2 )
+        Shape.Dodecaeder:  mesh = Polyhedron.dodecahedron( 0.2 )
+        Shape.Octaeder:    mesh = Polyhedron.twinOctahedron( 0.15,          COLOR.ITEM_OCTAEDER)
+        Shape.Tetraeder:   mesh = Polyhedron.twinTetrahedron( 0.15,          COLOR.ITEM_TETRAEDER)
+        Shape.DodecaIcosa: mesh = Polyhedron.twinDodecahedron( 0.2,         COLOR.ITEM_DODECAICOSA)
     return mesh
     
 func multiMeshForShape(shape : Shape):
@@ -147,6 +151,9 @@ func multiMeshForShape(shape : Shape):
         
     mm.multimesh.transform_format = MultiMesh.TRANSFORM_3D
     match shape:
+        Shape.DodecaIcosa, \
+        Shape.Tetraeder, \
+        Shape.Octaeder, \
         Shape.CubeCross, \
         Shape.TubeCross, \
         Shape.Cubecule, \
