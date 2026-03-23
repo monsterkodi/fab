@@ -12,6 +12,7 @@ var gameSpeed:     float = 1.0
 @onready var itm: ItemState     = $"../ItemState"
 @onready var mst: MachState     = $"../MachState"
 @onready var gst: MachState     = $"../GhostState"
+@onready var fst: FruitState    = $"../FruitState"
 
 func sinkAtPosCanTakeItem(pos: Vector2i, item : Item.Inst):
     
@@ -400,9 +401,20 @@ func clearGhosts():
     for ghost in $Ghosts.get_children():
         ghost.queue_free()
 
-func addFruitAtPos(pos, fruit):
+func addFruitAtPos(pos, t):
     
-    fruits[pos] = fruit
+    fruits[pos] = t
+    var item = Item.Inst.new(t)
+    item.pos = pos
+    item.scale = 0.0
+    fst.add(pos, item)
+    
+func scaleFruitAtPos(pos, s):
+    
+    var item = fst.itemAtPos(pos)
+    if item:
+        item.scale = s * 2.0
+        fst.add(pos, item)
     
 func fruitAtPos(pos):
     
@@ -410,4 +422,5 @@ func fruitAtPos(pos):
     
 func delFruitAtPos(pos):
     
+    fst.del(pos)
     fruits.erase(pos)

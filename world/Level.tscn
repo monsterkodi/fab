@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://crjdati3mqanw" path="res://state/ItemState.tscn" id="8_ioj0i"]
 [ext_resource type="PackedScene" uid="uid://b0tqyvht5fp52" path="res://state/TempState.tscn" id="8_kp7rj"]
 [ext_resource type="PackedScene" uid="uid://dq0uh1pt40co1" path="res://state/Buildings.tscn" id="9_kp7rj"]
+[ext_resource type="Script" uid="uid://deeuh5allcrp3" path="res://state/FruitState.gd" id="10_5sqgi"]
 [ext_resource type="PackedScene" uid="uid://dyukdydgv7gfn" path="res://state/Ghosts.tscn" id="10_ioj0i"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w56at"]
@@ -50,5 +51,8 @@ process_mode = 1
 [node name="ItemState" parent="." unique_id=774702764 instance=ExtResource("8_ioj0i")]
 
 [node name="MachState" parent="." unique_id=2084936293 instance=ExtResource("9_kp7rj")]
+
+[node name="FruitState" parent="." unique_id=127139608 instance=ExtResource("9_kp7rj")]
+script = ExtResource("10_5sqgi")
 
 [node name="GhostState" parent="." unique_id=2004242388 instance=ExtResource("10_ioj0i")]

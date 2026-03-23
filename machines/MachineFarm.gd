@@ -2,6 +2,7 @@ class_name MachineFarm
 extends MachineAssembler
 
 var fruits = {}
+var mature = []
 var seeds  = []
 
 func _init(p, o):
@@ -14,9 +15,7 @@ func delFruit(p):
     
     if fruits.has(p):
         fruits.erase(p)
-        if bdg:
-            hide()
-            show()
+        fab.delFruitAtPos(p)
 
 func saveData(): 
     
@@ -39,20 +38,45 @@ func consumeItemAtSlit(item, slit):
         if slits.find(slit) >= recipe.in.size():
             if seeds.size() < 2:
                 seeds.push_back(item.type) 
-                Log.log("seed consumed")
                 return true 
     return consm
+    
+func produce(delta:float):
+    
+    for fp in fruits:
+        var fruit = fruits[fp]
+        if fruit[1] < 1.0:
+            fruit[1] = minf(1.0, fruit[1] + delta / recipe.grow)
+            fab.scaleFruitAtPos(fp, fruit[1])
+            if fruit[1] >= 1.0:
+                mature.push_back(fp)                
+    super.produce(delta)    
 
 func produceDelta(delta):
-
+        
     super.produceDelta(delta)
     
     if elapsed >= recipe.time:
-
+        elapsed   = 0.0
+        producing = false
         var p = findPosForPlant()
         if p:
-            var t = chooseFruitType()
-            addFruitAtPos(p, [t, 0])
+            addFruitAtPos(p, [chooseFruitType(), 0])
+
+func produceItemAtSlot(slot):
+    
+    if not mature.is_empty():
+        var fp = mature.pop_front()
+        var t = fruits[fp][0] 
+        delFruit(fp)
+        
+        if elapsed >= recipe.time:
+            elapsed   = 0.0
+            producing = false
+        
+        return Item.Inst.new(t)
+    else:
+        return super.produceItemAtSlot(slot)
 
 func chooseFruitType():
     
@@ -67,39 +91,18 @@ func chooseFruitType():
 
 func addFruitAtPos(p, f):
     
-    if bdg:
-        var module = fruitModule(p, f)
-        bdg.modules.push_back(module)
-        bdg.update()
-        
     fruits[p] = f
     fab.addFruitAtPos(p, f[0])
     
-func newBuilding():
+func findPosForPlant():
     
-    bdg = super.newBuilding()
     if not fruits.is_empty():
         for fp in fruits:
-            bdg.modules.push_back(fruitModule(fp, fruits[fp]))
-        bdg.update()
-    return bdg
-    
-func fruitModule(p : Vector2i, f : Array):
-    
-    var t = f[0]
-    var module   = Module.Inst.new(pos)
-    module.pos   = Vector3(p.x - pos.x, 1.0, p.y - pos.y)
-    module.kind  = Module.Kind.DECO
-    module.type  = Module.typeForItemType(t)
-    module.basis = Mach.scaleForItemType(t)
-    module.color = Item.colorForType(t)
-    return module
-        
-func findPosForPlant():
+            return searchPosForPlant(fp)
     
     var p = pos + Belt.orientatePos(orientation, Vector2i(-2,0))
     if fab.fruitAtPos(p) < 0 and fab.machineOfTypeAtPos(Mach.Type.Humus, p):
-        return p    
+        return p
        
     return searchPosForPlant(p) 
             
