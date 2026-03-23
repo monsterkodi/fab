@@ -63,8 +63,9 @@ func delItems(type : Item.Type, num : int):
 func reset():
     
     for type in Item.Types:
-        storage[type] = 1000
+        storage[type] = 0
 
+    storage[Item.Type.Energy]    = 10
     storage[Item.Type.CubeBlack] = 100
     
 func canAfford(type):

@@ -52,7 +52,7 @@ func produceDelta(delta):
         var p = findPosForPlant()
         if p:
             var t = chooseFruitType()
-            addFruitAtPos(p, t)
+            addFruitAtPos(p, [t, 0])
 
 func chooseFruitType():
     
@@ -65,15 +65,15 @@ func chooseFruitType():
     if r < recipe.out[0][1]: return recipe.out[0][0]
     return recipe.out[0][2]
 
-func addFruitAtPos(p, t):
+func addFruitAtPos(p, f):
     
     if bdg:
-        var module = fruitModule(p, t)
+        var module = fruitModule(p, f)
         bdg.modules.push_back(module)
         bdg.update()
         
-    fruits[p] = t
-    fab.addFruitAtPos(p, t)
+    fruits[p] = f
+    fab.addFruitAtPos(p, f[0])
     
 func newBuilding():
     
@@ -84,8 +84,9 @@ func newBuilding():
         bdg.update()
     return bdg
     
-func fruitModule(p : Vector2i, t : Item.Type):
+func fruitModule(p : Vector2i, f : Array):
     
+    var t = f[0]
     var module   = Module.Inst.new(pos)
     module.pos   = Vector3(p.x - pos.x, 1.0, p.y - pos.y)
     module.kind  = Module.Kind.DECO

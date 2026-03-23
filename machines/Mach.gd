@@ -113,7 +113,7 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
                 ],
         },
     Type.Whitener:      {
-        "cost": {Item.Type.Energy:        10},
+        "cost": {Item.Type.Energy:        10, Item.Type.CubeRed:   10 },
         "mods": [
                 {"in":  Vector2i.ZERO,         "dir": Belt.W, "shape": Item.Shape.Cube},
                 {"in":  Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "item":  Item.Type.Energy},
@@ -121,7 +121,7 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
                 ],
         },
     Type.Cylinder:      {
-        "cost": {Item.Type.Energy:        20},
+        "cost": {Item.Type.Energy:        20, Item.Type.CubeGreen: 20 },
         "mods": [
                 {"in":  Vector2i.ZERO,         "dir": Belt.W, "shape": Item.Shape.Cube},
                 {"in":  Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "item":  Item.Type.Energy},
@@ -129,7 +129,7 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
                 ],
         },
     Type.Sphere:        {
-        "cost": {Item.Type.Energy:        30},
+        "cost": {Item.Type.Energy:        30, Item.Type.CubeBlue: 30 },
         "mods": [
                 {"in":  Vector2i.ZERO,         "dir": Belt.W, "shape": Item.Shape.Cylinder},
                 {"in":  Belt.NEIGHBOR[Belt.S], "dir": Belt.S, "item":  Item.Type.Energy},
@@ -219,7 +219,7 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
                 ],
         },
     Type.Sorter: {
-        "cost": {Item.Type.CubeBlack: 50},
+        "cost": {Item.Type.Icosaeder: 10},
         "mods": [
                 {"in":   Belt.NEIGHBOR[Belt.W], "dir": Belt.W,                                 },
                 {"out":  Belt.NEIGHBOR[Belt.N], "dir": Belt.N, "type": Module.Type.TUNNEL_BOX, },
@@ -229,7 +229,7 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
                 ],
         },
     Type.Overflow: {
-        "cost": {Item.Type.CubeBlack: 50},
+        "cost": {Item.Type.Dodecaeder: 10},
         "mods": [
                 {"in":   Belt.NEIGHBOR[Belt.W], "dir": Belt.W,                                 },
                 {"out":  Belt.NEIGHBOR[Belt.E], "dir": Belt.E,                                 },
@@ -238,14 +238,14 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
                 ],
         },
     Type.Humus: {
-        "cost": {Item.Type.Dodecaeder: 1, Item.Type.Icosaeder: 1},
+        "cost": {Item.Type.Dodecaeder: 10, Item.Type.Icosaeder: 10},
         "mods": [
                 {"pos": Vector3( -0.5, 0.5, -0.5), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS }, 
                 {"pos": Vector3(  0.5, 0.5,  0.5), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_180 }, 
                 ],
         },
     Type.Farm: {
-        "cost": {Item.Type.Dodecaeder: 10, Item.Type.Icosaeder: 10, Item.Type.Molecule: 10 },
+        "cost": { Item.Type.SphereBlue: 10, Item.Type.Icosaeder: 10 },
         "recipe": { "in":   [[Item.Type.SphereBlue, 1], [Item.Type.Icosaeder, 0.1]], 
                     "out":  [[Item.Type.DodecaIcosa, 0.05, Item.Type.Octaeder, 0.05, Item.Type.Tetraeder, 1.0]], 
                     "time": 4.0,
@@ -269,7 +269,7 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
                 ],
         },
     Type.Ranch: {
-        "cost": {Item.Type.Dodecaeder: 10, Item.Type.Icosaeder: 10, Item.Type.Molecule: 10 },
+        "cost": {Item.Type.Tetraeder: 10, Item.Type.Dodecaeder: 10 },
         "recipe": { "in":   [[Item.Type.Tetraeder, 1], [Item.Type.Dodecaeder, 0.1]], 
             "out":  [[Item.Type.DodecaIcosa, 0.05, Item.Type.Octaeder, 0.05, Item.Type.Tetraeder, 1.0]], "time": 4.0 },
         "mods": [

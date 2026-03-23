@@ -177,6 +177,7 @@ func storageItemChange(type):
     
     if not %ItemButtonGrid.hasButton(type):
         $ItemButtonGrid.addButton(Item.iconResForType(type), type)
+        
     
     %ItemButtonGrid.setTextColor(type, Color(0.7, 0.7, 0.7))
     

@@ -9,10 +9,10 @@ signal buttonContext
 @export var tooltip : bool = false
 @export var icons : Array[String]
 
-var buttonGroup : ButtonGroup
-var buttonMap : Dictionary # maps type to button index
-var buttonTypes : Dictionary # maps button to type
-var hoverButton : Button
+var buttonGroup  : ButtonGroup
+var buttonMap    : Dictionary # maps type to button index
+var buttonTypes  : Dictionary # maps button to type
+var hoverButton  : Button
 var tooltipTimer : Timer
 
 func _ready():

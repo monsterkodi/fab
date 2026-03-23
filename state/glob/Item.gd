@@ -2,6 +2,7 @@ extends Node
 # singleton Item
 
 enum Type {
+    Energy,    
     CubeBlack,
     CubeRed,
     CubeGreen,
@@ -17,7 +18,6 @@ enum Type {
     SphereGreen,
     SphereBlue,
     SphereWhite,
-    Energy,
     CubeCross,
     TubeCross,
     Cubecule,
@@ -50,6 +50,7 @@ var TypeNames  : Array[String]
 var ShapeNames : Array[String]
 
 var TypeInfo = [                                 # energy  white   round  sphere
+    [Shape.Torus,         COLOR.ENERGY,          1.0 ,        0,      0,   0   ],    
     [Shape.Cube,          COLOR.ITEM_BLACK,      0.1 ,      0.2,    0.1,   0   ],
     [Shape.Cube,          COLOR.ITEM_RED,        0.05,      0.1,    0.1,   0   ],
     [Shape.Cube,          COLOR.ITEM_GREEN,      0.05,      0.1,    0.1,   0   ],
@@ -65,7 +66,6 @@ var TypeInfo = [                                 # energy  white   round  sphere
     [Shape.Sphere,        COLOR.ITEM_GREEN,      0.15,        0,      0,   0 ],
     [Shape.Sphere,        COLOR.ITEM_BLUE,       0.15,        0,      0,   0 ],
     [Shape.Sphere,        COLOR.ITEM_WHITE,      0.644,       0,      0,   0 ],
-    [Shape.Torus,         COLOR.ENERGY,          1.0 ,        0,      0,   0 ],
     [Shape.CubeCross,     COLOR.ITEM_BLACK,      1.0,         0,      0,   0 ],
     [Shape.TubeCross,     COLOR.ITEM_BLACK,      2.0,         0,      0,   0 ],
     [Shape.Cubecule,      COLOR.ITEM_BLACK,      4.0,         0,      0,   0 ],
