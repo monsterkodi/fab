@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bhrehvjlydr2q"]
 
 [ext_resource type="Script" uid="uid://wdupn7eefvj6" path="res://state/FabState.gd" id="1_w3g87"]
+[ext_resource type="Script" uid="uid://ddfjoc1qqclmd" path="res://state/ItemStats.gd" id="1_y5rsm"]
 [ext_resource type="Script" uid="uid://7c5iyp1g5vda" path="res://state/ItemStorage.gd" id="2_y5rsm"]
 
 [node name="FabState" type="Node" unique_id=261405774]
@@ -14,3 +15,6 @@ script = ExtResource("1_w3g87")
 
 [node name="ItemStorage" type="Node" parent="." unique_id=58592968]
 script = ExtResource("2_y5rsm")
+
+[node name="ItemStats" type="Node" parent="." unique_id=1242402190]
+script = ExtResource("1_y5rsm")

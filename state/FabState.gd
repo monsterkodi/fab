@@ -6,6 +6,7 @@ var fruits:        Dictionary[Vector2i, Item.Type]
 var gameSpeed:     float = 1.0
 
 @onready var storage: ItemStorage = $ItemStorage
+@onready var stats:   ItemStats = $ItemStats
 
 @onready var tst: TrackState    = $"../TrackState"
 @onready var tmp: TrackState    = $"../TempState"
@@ -279,13 +280,16 @@ func isOccupied(pos : Vector2i):
     
 func _physics_process(delta: float):
 
+    var d = delta * gameSpeed
     for machine in $Machines.get_children():
-        machine.consume(delta * gameSpeed)
+        machine.consume(d)
 
-    itm.advanceItems(delta * gameSpeed)
+    itm.advanceItems(d)
     
     for machine in $Machines.get_children():
-        machine.produce(delta * gameSpeed)
+        machine.produce(d)
+        
+    Post.fabState.emit(d)
     
 func clearTemp(): tmp.clear()
         

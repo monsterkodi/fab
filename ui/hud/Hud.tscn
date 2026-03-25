@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bp3vplo7lbscx" path="res://ui/hud/IconButtonGrid.tscn" id="4_by07e"]
 [ext_resource type="Script" uid="uid://dh8b0v6p5ptva" path="res://ui/hud/InfoTooltip.gd" id="5_gt2ij"]
 [ext_resource type="Texture2D" uid="uid://b0t70vyg7itco" path="res://img/checkbox_on.svg" id="5_ks410"]
+[ext_resource type="Script" uid="uid://c6hs8ctffhb7g" path="res://ui/hud/ItemGraphs.gd" id="6_dqfrj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_by07e"]
 content_margin_left = 6.0
@@ -115,8 +116,23 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("5_gt2ij")
 
+[node name="ItemGraphs" type="Panel" parent="." unique_id=922969564]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -760.0
+offset_top = 144.07
+offset_right = 760.0
+offset_bottom = 496.0697
+grow_horizontal = 2
+script = ExtResource("6_dqfrj")
+
+[connection signal="buttonContext" from="ItemButtonGrid" to="." method="itemButtonContext"]
 [connection signal="buttonPressed" from="ItemButtonGrid" to="." method="itemButtonPressed"]
 [connection signal="buttonContext" from="BuildButtonGrid" to="." method="buildingButtonContext"]
 [connection signal="buttonPressed" from="BuildButtonGrid" to="." method="buildingButtonPressed"]
 [connection signal="buttonPressed" from="BuildGroupGrid" to="." method="groupButtonPressed"]
 [connection signal="value_changed" from="ThrottleContainer/Throttle" to="." method="throttleValue"]
+[connection signal="draw" from="ItemGraphs" to="ItemGraphs" method="drawGraph"]

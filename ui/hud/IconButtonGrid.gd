@@ -126,6 +126,6 @@ func _input(event: InputEvent):
     
     if event is InputEventMouseButton:
         if hoverButton and event.button_index == 2 and event.pressed:
-            buttonContext.emit(buttonName(hoverButton))
+            buttonContext.emit(buttonTypes[hoverButton])
         
     

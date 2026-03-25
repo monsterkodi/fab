@@ -154,7 +154,13 @@ func infoTooltip(string : String, button : Button):
     
 func itemButtonPressed(itemType : Item.Type):
 
-    Utils.fabState().storage.addItems(itemType, 100)
+    #Utils.fabState().storage.addItems(itemType, 100)
+    Post.itemGraphAdd.emit(itemType)
+
+func itemButtonContext(itemType : Item.Type):
+
+    #Utils.fabState().storage.delItems(itemType, 1000)
+    Post.itemGraphDel.emit(itemType)
 
 func throttleValue(value: float):
     
@@ -200,5 +206,6 @@ func slideOut():
     slideOutItems()
     slideOutBuild()
     slideOutThrottle()
+    $ItemGraphs.hide()
     
     

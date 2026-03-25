@@ -11,6 +11,12 @@ func _init(p, o):
     
     Post.subscribe(self)
     
+func _exit_tree():
+    for fp in fruits.keys():
+        delFruit(fp)
+    assert(fruits.is_empty())
+    super._exit_tree()
+    
 func delFruit(p):
     
     if fruits.has(p):

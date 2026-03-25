@@ -46,6 +46,11 @@ signal storageItemEmpty
 signal storageItemChange
 
 signal delFruit
+signal itemStats
+signal fabState
+
+signal itemGraphAdd
+signal itemGraphDel
 
 var sigDict : Dictionary
 
