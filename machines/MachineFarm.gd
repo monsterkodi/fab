@@ -5,13 +5,14 @@ var fruits = {}
 var mature = []
 var seeds  = []
 
-func _init(p, o):
+func _init(p, o, t = Mach.Type.Farm):
     
-    super._init(Mach.Type.Farm, p, o)
+    super._init(t, p, o)
     
     Post.subscribe(self)
     
 func _exit_tree():
+    
     for fp in fruits.keys():
         delFruit(fp)
     assert(fruits.is_empty())
@@ -90,11 +91,10 @@ func chooseFruitType():
         var seed = seeds.pop_front()
         if recipe.seed.has(seed):
             return recipe.seed[seed]
+            
+    var keys = recipe.seed.keys()
+    return recipe.seed[keys[randi_range(0, keys.size()-1)]]
     
-    var r = randf_range(0.0, recipe.out[0][1] + recipe.out[0][3])
-    if r < recipe.out[0][1]: return recipe.out[0][0]
-    return recipe.out[0][2]
-
 func addFruitAtPos(p, f):
     
     fruits[p] = f
@@ -133,4 +133,3 @@ func searchPosForPlant(p: Vector2i, visited = {}):
         if fp: return fp
         
     return null
-    

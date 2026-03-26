@@ -247,12 +247,10 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
     Type.Farm: {
         "cost": { Item.Type.SphereBlue: 10, Item.Type.Icosaeder: 10 },
         "recipe": { "in":   [[Item.Type.SphereBlue, 1], [Item.Type.Icosaeder, 0.1]], 
-                    "out":  [[Item.Type.DodecaIcosa, 0.0, Item.Type.Octaeder, 0.0, Item.Type.Tetraeder, 1.0]], 
                     "time": 1.0,
                     "grow": 120.0,
                     "seed": {   Item.Type.CubeRed:   Item.Type.Octaeder,
-                                Item.Type.CubeWhite: Item.Type.DodecaIcosa,
-                                Item.Type.CubeBlue:  Item.Type.DodecaIcosa } },
+                                Item.Type.CubeBlue:  Item.Type.Tetraeder } },
         "mods": [
                 {"in":   Belt.NEIGHBOR[Belt.S], "dir": Belt.S,                         },
                 {"in":   Belt.NEIGHBOR[Belt.S] + Belt.NEIGHBOR[Belt.E], "dir": Belt.S  },
@@ -272,11 +270,16 @@ var Def : Dictionary[Mach.Type,Dictionary] = {
     Type.Ranch: {
         "cost": {Item.Type.Tetraeder: 10, Item.Type.Dodecaeder: 10 },
         "recipe": { "in":   [[Item.Type.Tetraeder, 1], [Item.Type.Dodecaeder, 0.1]], 
-            "out":  [[Item.Type.DodecaIcosa, 0.05, Item.Type.Octaeder, 0.05, Item.Type.Tetraeder, 1.0]], "time": 4.0 },
+                    "time": 1.0,
+                    "grow": 120.0, 
+                    "seed": {   Item.Type.CubeRed:   Item.Type.DodecaIcosa,
+                                Item.Type.CubeGreen: Item.Type.DodecaIcosa,
+                                Item.Type.CubeWhite: Item.Type.IcosaDodeca, 
+                                Item.Type.CubeBlue:  Item.Type.IcosaDodeca, } },
         "mods": [
                 {"in":   Belt.NEIGHBOR[Belt.S], "dir": Belt.S,                         },
                 {"in":   Belt.NEIGHBOR[Belt.S] + Belt.NEIGHBOR[Belt.E], "dir": Belt.S  },
-                {"in":   Vector2i.ZERO, "dir": Belt.N, "shape": Item.Shape.Cylinder    },
+                {"in":   Vector2i.ZERO, "dir": Belt.N, "shape": Item.Shape.Cube        },
                 {"out":  Belt.NEIGHBOR[Belt.E], "dir": Belt.E},
                 {"pos": Vector3( 1, 1, 0),          "type": Module.Type.GEAR,           "color": COLOR.BUILDING},
                 {"pos": Vector3( -1.5, 1.0,   0.0), "type": Module.Type.TORUS_QUARTER,  "color": COLOR.HUMUS, "basis": ROT_X }, 
@@ -347,13 +350,14 @@ func modulesForType(type):
             var modType = moduleTypeForItemType(itemType)
             var color   = colorForItemType(itemType)
             modules.push_back({"pos": pos, "type": modType, "color": color, "basis": scaleForItemType(itemType)})
-        for item in Mach.Def[type].recipe.out:
-            if item.size() == 2:
-                var itemType = item[0]
-                var pos = posOfSlotAtIndex(modules, Mach.Def[type].recipe.out.find(item)) + Vector3(0,0.5,0)
-                var modType = moduleTypeForItemType(itemType)
-                var color   = colorForItemType(itemType)
-                modules.push_back({"pos": pos, "type": modType, "color": color, "basis": scaleForItemType(itemType)})
+        if Mach.Def[type].recipe.has("out"):
+            for item in Mach.Def[type].recipe.out:
+                if item.size() == 2:
+                    var itemType = item[0]
+                    var pos = posOfSlotAtIndex(modules, Mach.Def[type].recipe.out.find(item)) + Vector3(0,0.5,0)
+                    var modType = moduleTypeForItemType(itemType)
+                    var color   = colorForItemType(itemType)
+                    modules.push_back({"pos": pos, "type": modType, "color": color, "basis": scaleForItemType(itemType)})
     else:
         for mod in Mach.Def[type].mods:
             if mod.has("item"):

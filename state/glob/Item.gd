@@ -27,6 +27,7 @@ enum Type {
     Octaeder,
     Tetraeder,
     DodecaIcosa,
+    IcosaDodeca,
 }
 
 enum Shape {
@@ -43,6 +44,7 @@ enum Shape {
     Octaeder,
     Tetraeder,
     DodecaIcosa,
+    IcosaDodeca,
 }
 
 var Types      : Array[Type]
@@ -75,6 +77,7 @@ var TypeInfo = [                                 # energy  white   round  sphere
     [Shape.Octaeder,      COLOR.ITEM_WHITE,      4.0,         0,      0,   0 ],
     [Shape.Tetraeder,     COLOR.ITEM_RED,        8.0,         0,      0,   0 ],
     [Shape.DodecaIcosa,   COLOR.ITEM_WHITE,      8.0,         0,      0,   0 ],
+    [Shape.IcosaDodeca,   COLOR.ITEM_BLUE,       8.0,         0,      0,   0 ],
 ]
 
 func _init():
@@ -135,8 +138,9 @@ func meshForShape(shape : Shape):
         Shape.Icosaeder:   mesh = Polyhedron.icosahedron(  0.2 )
         Shape.Dodecaeder:  mesh = Polyhedron.dodecahedron( 0.2 )
         Shape.Octaeder:    mesh = Polyhedron.twinOctahedron( 0.15,          COLOR.ITEM_OCTAEDER)
-        Shape.Tetraeder:   mesh = Polyhedron.twinTetrahedron( 0.15,          COLOR.ITEM_TETRAEDER)
+        Shape.Tetraeder:   mesh = Polyhedron.twinTetrahedron( 0.15,         COLOR.ITEM_TETRAEDER)
         Shape.DodecaIcosa: mesh = Polyhedron.twinDodecahedron( 0.2,         COLOR.ITEM_DODECAICOSA)
+        Shape.IcosaDodeca: mesh = Polyhedron.twinIcosahedron( 0.2,          COLOR.ITEM_ICOSADODECA)
     return mesh
     
 func multiMeshForShape(shape : Shape):
@@ -152,6 +156,7 @@ func multiMeshForShape(shape : Shape):
     mm.multimesh.transform_format = MultiMesh.TRANSFORM_3D
     match shape:
         Shape.DodecaIcosa, \
+        Shape.IcosaDodeca, \
         Shape.Tetraeder, \
         Shape.Octaeder, \
         Shape.CubeCross, \

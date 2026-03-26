@@ -64,6 +64,23 @@ func twinDodecahedron(scale : float, colors : Array):
     var basis = Basis.from_scale(Vector3(scale, scale, scale))
     generateMesh(st, DODECA_INDEX, DODECA_VERTEX, basis)
     st.set_color(colors[1])
+    basis = Basis.from_scale(Vector3(scale*0.9, scale*0.9, scale*0.9))
+    generateMesh(st, ICOSA_INDEX, ICOSA_VERTEX, basis.rotated(Vector3.UP, deg_to_rad(80)))
+    st.index()
+    st.generate_normals()
+    
+    return st.commit()      
+
+func twinIcosahedron(scale : float, colors : Array):
+
+    var st = SurfaceTool.new()
+    
+    st.begin(Mesh.PRIMITIVE_TRIANGLES)
+    st.set_smooth_group(-1)
+    st.set_color(colors[0])
+    var basis = Basis.from_scale(Vector3(scale, scale, scale))
+    generateMesh(st, DODECA_INDEX, DODECA_VERTEX, basis)
+    st.set_color(colors[1])
     generateMesh(st, ICOSA_INDEX, ICOSA_VERTEX, basis.rotated(Vector3.UP, deg_to_rad(80)))
     st.index()
     st.generate_normals()

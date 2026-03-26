@@ -1,6 +1,6 @@
 class_name MachineRanch
-extends MachineAssembler
+extends MachineFarm
 
 func _init(p, o):
     
-    super._init(Mach.Type.Ranch, p, o)
+    super._init(p, o, Mach.Type.Ranch)
